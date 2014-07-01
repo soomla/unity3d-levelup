@@ -88,19 +88,19 @@ namespace Soomla.Levelup
 
 
 
-		protected override void _setSlowestDuration(Level level, double duration) {
+		virtual protected void _setSlowestDuration(Level level, double duration) {
 			// TODO: WIE
 		}
 		
-		protected override double _getSlowestDuration(Level level) {
+		virtual protected double _getSlowestDuration(Level level) {
 			// TODO: WIE
 		}
 		
-		protected override void _setFastestDuration(Level level, double duration) {
+		virtual protected void _setFastestDuration(Level level, double duration) {
 			// TODO: WIE
 		}
 		
-		protected override double _getFastestDuration(Level level) {
+		virtual protected double _getFastestDuration(Level level) {
 			// TODO: WIE
 		}
 		
@@ -108,30 +108,30 @@ namespace Soomla.Levelup
 		
 		/** Level Times Started **/
 		
-		protected override int _incTimesStarted(Level level) {
+		virtual protected int _incTimesStarted(Level level) {
 			// TODO: WIE
 		}
 		
-		protected override int _decTimesStarted(Level level) {
+		virtual protected int _decTimesStarted(Level level) {
 			// TODO: WIE
 		}
 		
-		protected override int _getTimesStarted(Level level) {
+		virtual protected int _getTimesStarted(Level level) {
 			// TODO: WIE
 		}
 		
 		
 		/** Level Times Played **/
 		
-		protected override int _incTimesPlayed(Level level) {
+		virtual protected int _incTimesPlayed(Level level) {
 			// TODO: WIE
 		}
 		
-		protected override int _decTimesPlayed(Level level){
+		virtual protected int _decTimesPlayed(Level level){
 			// TODO: WIE
 		} 
 		
-		protected override int _getTimesPlayed(Level level) {
+		virtual protected int _getTimesPlayed(Level level) {
 			// TODO: WIE
 		}
 	}
