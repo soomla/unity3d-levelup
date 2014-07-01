@@ -1,0 +1,9 @@
+[submodule "submodules/ios-store"]
+	path = submodules/ios-store
+	url = git@github.com:soomla/ios-store.git
+[submodule "submodules/android-store"]
+	path = submodules/android-store
+	url = git@github.com:soomla/android-store.git
+[submodule "submodules/soomla-unity3d-core"]
+	path = submodules/soomla-unity3d-core
+	url = git@github.com:refaelos/soomla-unity3d-core.git

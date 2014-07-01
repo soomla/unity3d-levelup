@@ -1,0 +1,5 @@
+
+echo "creating unitypackage for Soomla"
+/Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -logFile create_unity.log -projectPath ${SOOMLA_HOME}/unity3d-store/Soomla/ -exportPackage Assets/Plugins Assets/Soomla/Editor Assets/Soomla/compilations Assets/Soomla/Prefabs Assets/Soomla/Resources/soom_logo.png ../soomla-unity3d-store_release-v$1.unitypackage -quit
+
+
