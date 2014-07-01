@@ -15,33 +15,33 @@
 
 namespace Soomla.Levelup
 {
-	public class BalanceMission : Mission
+	public class RecordMission : Mission
 	{
 		public String AssociatedItemId;
-		public int DesiredBalance;
+		public double DesiredRecord;
 
-		public BalanceMission(string name, string missionId, string associatedItemId, int desiredBalance)
+		public RecordMission(string name, string missionId, string associatedItemId, double desiredRecord)
 			: base(missionId, name)
 		{
 			AssociatedItemId = associatedItemId;
-			DesiredBalance = desiredBalance;
+			DesiredRecord = desiredRecord;
 		}
 
-		public BalanceMission(string missionId, string name, List<Reward> rewards, string associatedItemId, int desiredBalance)
+		public RecordMission(string missionId, string name, List<Reward> rewards, string associatedItemId, double desiredRecord)
 			: base(missionId, name, rewards)
 		{
 			AssociatedItemId = associatedItemId;
-			DesiredBalance = desiredBalance;
+			DesiredRecord = desiredRecord;
 		}
 		
 		/// <summary>
 		/// see parent.
 		/// </summary>
-		public BalanceMission(JSONObject jsonMission)
+		public RecordMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
 			this.AssociatedItemId = jsonItem[JSONConsts.SOOM_ASSOCITEMID].str;
-			this.DesiredBalance = jsonItem[JSONConsts.SOOM_DESIRED_BALANCE].n;
+			this.DesiredRecord = jsonItem[JSONConsts.SOOM_DESIRED_RECORD].n;
 		}
 		
 		/// <summary>
@@ -51,7 +51,7 @@ namespace Soomla.Levelup
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedItemId);
-			obj.AddField(JSONConsts.SOOM_DESIRED_BALANCE, this.DesiredBalance);
+			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, this.DesiredRecord);
 
 			return obj;
 		}
