@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_unityandroidlevelup" default="compile.module.unityandroidlevelup">
+  <dirname property="module.unityandroidlevelup.basedir" file="${ant.file.module_unityandroidlevelup}"/>
+
+  <property name="module.jdk.home.unityandroidlevelup" value="${jdk.home.android}"/>
+  <property name="module.jdk.bin.unityandroidlevelup" value="${jdk.bin.android}"/>
+  <property name="module.jdk.classpath.unityandroidlevelup" value="jdk.classpath.android"/>
+
+  <property name="compiler.args.unityandroidlevelup" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+
+  <property name="unityandroidlevelup.output.dir" value="${module.unityandroidlevelup.basedir}/out/production/UnityAndroidLevelUp"/>
+
+  <path id="unityandroidlevelup.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+
+  <path id="unityandroidlevelup.module.production.classpath">
+    <path refid="${module.jdk.classpath.unityandroidlevelup}"/>
+    <pathelement location="${basedir}/libs/unity-classes.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/AndroidProfile.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/SoomlaAndroidCore.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/square-otto-1.3.2.jar"/>
+  </path>
+
+  <path id="unityandroidlevelup.runtime.production.module.classpath">
+    <pathelement location="${unityandroidlevelup.output.dir}"/>
+    <pathelement location="${basedir}/libs/unity-classes.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/AndroidProfile.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/SoomlaAndroidCore.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/square-otto-1.3.2.jar"/>
+  </path>
+
+  <path id="unityandroidlevelup.module.classpath">
+    <path refid="${module.jdk.classpath.unityandroidlevelup}"/>
+    <pathelement location="${unityandroidlevelup.output.dir}"/>
+    <pathelement location="${basedir}/libs/unity-classes.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/AndroidProfile.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/SoomlaAndroidCore.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/square-otto-1.3.2.jar"/>
+  </path>
+
+  <path id="unityandroidlevelup.runtime.module.classpath">
+    <pathelement location="${unityandroidlevelup.output.dir}"/>
+    <pathelement location="${basedir}/libs/unity-classes.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/AndroidProfile.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/SoomlaAndroidCore.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/square-otto-1.3.2.jar"/>
+  </path>
+
+
+  <patternset id="excluded.from.module.unityandroidlevelup">
+    <patternset refid="ignored.files"/>
+  </patternset>
+
+  <patternset id="excluded.from.compilation.unityandroidlevelup">
+    <patternset refid="compiler.excluded"/>
+    <patternset refid="excluded.from.module.unityandroidlevelup"/>
+  </patternset>
+
+  <path id="unityandroidlevelup.module.sourcepath">
+    <dirset dir="${module.unityandroidlevelup.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+
+  <target name="compile.module.unityandroidlevelup" depends="compile.module.unityandroidlevelup.production" description="Compile module UnityAndroidLevelUp"/>
+
+  <target name="compile.module.unityandroidlevelup.production" description="Compile module UnityAndroidLevelUp; production classes">
+    <mkdir dir="${unityandroidlevelup.output.dir}"/>
+    <javac destdir="${unityandroidlevelup.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.unityandroidlevelup}/javac">
+      <compilerarg line="${compiler.args.unityandroidlevelup}"/>
+      <bootclasspath refid="unityandroidlevelup.module.bootclasspath"/>
+      <classpath refid="unityandroidlevelup.module.production.classpath"/>
+      <src refid="unityandroidlevelup.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.unityandroidlevelup"/>
+    </javac>
+
+    <copy todir="${unityandroidlevelup.output.dir}">
+      <fileset dir="${module.unityandroidlevelup.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.unityandroidlevelup"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="clean.module.unityandroidlevelup" description="cleanup module">
+    <delete dir="${unityandroidlevelup.output.dir}"/>
+  </target>
+</project>

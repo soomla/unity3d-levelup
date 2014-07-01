@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AntConfiguration">
+    <buildFile url="file://$PROJECT_DIR$/soomla.xml">
+      <properties>
+        <property name="logging" value="true" />
+      </properties>
+    </buildFile>
+  </component>
+</project>
+
