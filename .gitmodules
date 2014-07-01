@@ -7,3 +7,6 @@
 [submodule "submodules/soomla-unity3d-core"]
 	path = submodules/soomla-unity3d-core
 	url = git@github.com:refaelos/soomla-unity3d-core.git
+[submodule "submodules/android-levelup"]
+	path = submodules/android-levelup
+	url = https://github.com/soomla/android-levelup
