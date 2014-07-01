@@ -105,11 +105,11 @@ namespace Soomla.Levelup {
 		}
 
 		public bool IsCompleted() {
-			// TODO: check if completed on iOS and Android
+			// TODO: check if completed in Mission Storage
 		}
 
 		public void SetCompleted(bool completed) {
-			// TODO: set comleted on iOS and Android
+			// TODO: set completed in Mission Storage
 
 			if (completed) {
 				// events not interesting until revoked
@@ -130,8 +130,8 @@ namespace Soomla.Levelup {
 		
 		protected void giveRewards() {
 			// The mission is completed, giving the rewards.
-			for(Reward reward : mRewards) {
-				reward.give();
+			for(Reward reward in Rewards) {
+				reward.Give();
 			}
 		}
 	}

@@ -15,22 +15,29 @@
 
 namespace Soomla.Levelup
 {
-	public class ActionMission : Mission
+	public class BalanceMission : Mission
 	{
-		public ActionMission(string missionId, string name)
+		public String AssociatedItemId;
+		public int DesiredBalance;
+
+		public BalanceMission(string name, string missionId, string associatedItemId, int desiredBalance)
 			: base(missionId, name)
 		{
+			AssociatedItemId = associatedItemId;
+			DesiredBalance = desiredBalance;
 		}
 
-		public ActionMission(string missionId, string name, List<Reward> rewards)
+		public BalanceMission(string missionId, string name, List<Reward> rewards, string associatedItemId, int desiredBalance)
 			: base(missionId, name, rewards)
 		{
+			AssociatedItemId = associatedItemId;
+			DesiredBalance = desiredBalance;
 		}
 		
 		/// <summary>
 		/// see parent.
 		/// </summary>
-		public ActionMission(JSONObject jsonMission)
+		public BalanceMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
 		}
