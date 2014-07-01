@@ -15,7 +15,7 @@
 using UnityEngine;
 using System;
 
-namespace Soomla
+namespace Soomla.Levelup
 {
 	public class GateStorage
 	{
