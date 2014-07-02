@@ -98,14 +98,14 @@ namespace Soomla.Levelup {
 		}
 
 		public void SaveAndReset() {
-			double record = ScoreStorage.getRecordScore(this); // TODO: get the record score from storage
+			double record = ScoreStorage.GetRecordScore(this); // TODO: get the record score from storage
 			if (HasTempReached(record)) {
-				ScoreStorage.setRecordScore(this, _tempScore); // TODO: set the record score in storage
+				ScoreStorage.GetRecordScore(this, _tempScore); // TODO: set the record score in storage
 			}
 			
 			performSaveActions();
 			
-			ScoreStorage.setLatestScore(this, _tempScore);  // TODO: set the latest score in storage
+			ScoreStorage.SetLatestScore(this, _tempScore);  // TODO: set the latest score in storage
 			SetTempScore(StartValue);
 		}
 
@@ -115,8 +115,8 @@ namespace Soomla.Levelup {
 			// if someone set higherBetter(false) and a start value of 100
 			// I think they expect reset to go back to 100, otherwise
 			// 0 is the best and current record and can't be beat
-			ScoreStorage.setRecordScore(this, /*0*/StartValue);
-			ScoreStorage.setLatestScore(this, /*0*/StartValue);
+			ScoreStorage.GetRecordScore(this, /*0*/StartValue);
+			ScoreStorage.SetLatestScore(this, /*0*/StartValue);
 		}
 
 		public bool HasTempReached(double scoreVal) {
@@ -124,7 +124,7 @@ namespace Soomla.Levelup {
 		}
 
 		public bool HasRecordReached(double scoreVal) {
-			double record = ScoreStorage.getRecordScore(this); 
+			double record = ScoreStorage.GetRecordScore(this); 
 			return HasScoreReached(record, scoreVal);
 		}
 
@@ -138,6 +138,18 @@ namespace Soomla.Levelup {
 
 		public virtual void SetTempScore(double score) {
 			_tempScore = score;
+		}
+
+		public double Record {
+			get {
+				return ScoreStorage.GetRecordScore(this);
+			}
+		}
+
+		public double Latest {
+			get {
+				return ScoreStorage.GetLatestScore(this);
+			}
 		}
 
 	}

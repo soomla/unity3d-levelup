@@ -79,7 +79,7 @@ namespace Soomla.Levelup
 			foreach(Gate gate in Gates) {
 				gatesJSON.Add(gate.toJSONObject());
 			}
-			obj.Add(LUJSONConsts.LU_GATES, gatesJSON);
+			obj.AddField(LUJSONConsts.LU_GATES, gatesJSON);
 
 			return obj;
 		}
