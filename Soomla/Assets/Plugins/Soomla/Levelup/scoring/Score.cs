@@ -60,7 +60,7 @@ namespace Soomla.Levelup {
 		protected Score(JSONObject jsonObj) {
 			this.ScoreId = jsonObj[LUJSONConsts.LU_SCORE_SCOREID].str;
 			if (jsonObj[JSONConsts.SOOM_NAME]) {
-				this.Name = jsonItem[JSONConsts.SOOM_NAME].str;
+				this.Name = jsonObj[JSONConsts.SOOM_NAME].str;
 			} else {
 				this.Name = "";
 			}

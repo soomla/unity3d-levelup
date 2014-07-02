@@ -19,13 +19,13 @@ namespace Soomla.Levelup
 	{
 		public List<Mission> Missions;
 
-		public Challenge(string name, string missionId, List<Mission> missions)
+		public Challenge(string missionId, string name, List<Mission> missions)
 			: base(missionId, name)
 		{
 			Missions = missions;
 		}
 
-		public Challenge(string missionId, string name, List<Reward> rewards, string associatedItemId, int desiredBalance)
+		public Challenge(string missionId, string name, List<Mission> missions, List<Reward> rewards)
 			: base(missionId, name, rewards)
 		{
 			Missions = missions;

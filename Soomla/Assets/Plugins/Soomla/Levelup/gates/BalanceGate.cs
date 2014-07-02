@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System;
 using Soomla.Store;
 
 namespace Soomla.Levelup
@@ -37,7 +38,7 @@ namespace Soomla.Levelup
 			: base(jsonGate)
 		{
 			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
-			this.DesiredBalance = jsonGate[JSONConsts.SOOM_DESIRED_BALANCE].n;
+			this.DesiredBalance = Convert.ToInt32(jsonGate[JSONConsts.SOOM_DESIRED_BALANCE].n);
 		}
 		
 		/// <summary>

@@ -28,7 +28,7 @@ namespace Soomla.Levelup
 		public PurchasableGate(string gateId, string associatedItemId)
 			: base(gateId)
 		{
-			AssociatedItemId = AssociatedItemId;
+			AssociatedItemId = associatedItemId;
 		}
 		
 		/// <summary>

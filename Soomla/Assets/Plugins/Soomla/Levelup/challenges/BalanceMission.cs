@@ -12,7 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
-using System.Collections;
+using System;
 using System.Collections.Generic;
 
 namespace Soomla.Levelup
@@ -43,7 +43,7 @@ namespace Soomla.Levelup
 			: base(jsonMission)
 		{
 			this.AssociatedItemId = jsonMission[JSONConsts.SOOM_ASSOCITEMID].str;
-			this.DesiredBalance = jsonMission[JSONConsts.SOOM_DESIRED_BALANCE].n;
+			this.DesiredBalance = Convert.ToInt32(jsonMission[JSONConsts.SOOM_DESIRED_BALANCE].n);
 		}
 		
 		/// <summary>

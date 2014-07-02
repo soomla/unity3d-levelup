@@ -45,9 +45,9 @@ namespace Soomla.Levelup {
 
 			// TODO: message is Gate as JSON
 			JSONObject json = new JSONObject (message);
-			//Gate gate = new Gate(json);
+			Gate gate = new Gate(json);
 
-			LevelupEvents.OnGateOpened(/*gate*/);
+			LevelupEvents.OnGateOpened(gate);
 		}
 
 		public void onLevelEnded(string message) {
@@ -56,9 +56,9 @@ namespace Soomla.Levelup {
 			// TODO: message is Level as Level
 
 			JSONObject json = new JSONObject (message);
-			//Level level = new Level(json);
+			Level level = new Level(json);
 			
-			LevelupEvents.OnLevelEnded(/*level*/);
+			LevelupEvents.OnLevelEnded(level);
 		}
 
 		public void onLevelStarted(string message) {
@@ -67,9 +67,9 @@ namespace Soomla.Levelup {
 			// TODO: message is Level as Level
 
 			JSONObject json = new JSONObject (message);
-			//Level level = new Level(json);
+			Level level = new Level(json);
 			
-			LevelupEvents.OnLevelEnded(/*level*/);
+			LevelupEvents.OnLevelStarted(level);
 		}
 
 		public void onMissionCompleted(string message) {
@@ -78,8 +78,8 @@ namespace Soomla.Levelup {
 			// TODO: message is Mission AND isChallenge as JSON
 
 			JSONObject json = new JSONObject (message);
-			//Mission mission = new Mission(json);
-			LevelupEvents.OnMissionCompleted(/*mission*/);
+			Mission mission = new Mission(json);
+			LevelupEvents.OnMissionCompleted(mission);
 		}
 
 		public void onMissionCompletionRevoked(string message) {
@@ -88,8 +88,8 @@ namespace Soomla.Levelup {
 			// TODO: message is Mission AND isChallenge as JSON
 
 			JSONObject json = new JSONObject (message);
-			//Mission mission = new Mission(json);
-			LevelupEvents.OnMissionCompletionRevoked(/*mission*/);
+			Mission mission = new Mission(json);
+			LevelupEvents.OnMissionCompletionRevoked(mission);
 		}
 
 		public void onScoreRecordChanged(string message) {
@@ -98,8 +98,8 @@ namespace Soomla.Levelup {
 			// TODO: message is Score as JSON
 
 			JSONObject json = new JSONObject (message);
-			// Score score = new Score(json);
-			LevelupEvents.OnScoreRecordChanged(/*score*/);
+			 Score score = new Score(json);
+			LevelupEvents.OnScoreRecordChanged(score);
 		}
 
 		public void onWorldCompleted(string message) {
@@ -108,9 +108,9 @@ namespace Soomla.Levelup {
 			// TODO: message is World as JSON
 
 			JSONObject json = new JSONObject (message);
-			// World world = new World(json);
+			 World world = new World(json);
 
-			LevelupEvents.OnWorldCompleted(/*world*/);
+			LevelupEvents.OnWorldCompleted(world);
 		}
 
 
@@ -118,10 +118,10 @@ namespace Soomla.Levelup {
 		public delegate void Action();
 
 		public static Action<Gate> OnGateOpened = delegate {}; /* TODO: Gate here */
-//		public static Action<Level> OnLevelEnded = delegate {}; /* TODO: UNCOMMENT THIS WHEN YOU HAVE LEVEL */
-//		public static Action<Level> OnLevelStarted = delegate {}; /* TODO: UNCOMMENT THIS WHEN YOU HAVE LEVEL */
-		public static Action<Mission, bool> OnMissionCompleted = delegate {}; /* TODO: Mission and bool here */
-		public static Action<Mission, bool> OnMissionCompletionRevoked = delegate {}; /* TODO: Mission and bool here */
+		public static Action<Level> OnLevelEnded = delegate {}; /* TODO: UNCOMMENT THIS WHEN YOU HAVE LEVEL */
+		public static Action<Level> OnLevelStarted = delegate {}; /* TODO: UNCOMMENT THIS WHEN YOU HAVE LEVEL */
+		public static Action<Mission> OnMissionCompleted = delegate {}; /* TODO: Mission and bool here */
+		public static Action<Mission> OnMissionCompletionRevoked = delegate {}; /* TODO: Mission and bool here */
 		public static Action<Score> OnScoreRecordChanged = delegate {}; /* TODO: Score here */
 		public static Action<World> OnWorldCompleted = delegate {}; /* TODO: World here */
 

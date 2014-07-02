@@ -44,7 +44,7 @@ namespace Soomla.Levelup
 			Range = new SRange(jsonScore[LUJSONConsts.LU_SCORE_RANGE]);
 			// descending score should start at the high bound
 			if (!HigherBetter) {
-				StartValue = range.High;
+				StartValue = Range.High;
 			}
 		}
 		
