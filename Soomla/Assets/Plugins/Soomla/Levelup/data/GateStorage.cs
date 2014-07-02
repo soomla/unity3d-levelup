@@ -40,7 +40,7 @@ namespace Soomla.Levelup
 			
 
 		public static void SetOpen(Gate gate, bool open, bool notify) {
-			_instance._setOpen(gate, give, notify);
+			_instance._setOpen(gate, open, notify);
 		}
 
 		public static bool IsRewardGiven(Gate gate) {
