@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9E9929E0-5585-4BE7-8569-97F7C8B18D56</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SoomlaIOSStore</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>072B9BD6-798C-4371-8AA4-5E4E19E68FE5</key>
+		<string>ssh://github.com/soomla/unity3d-store.git</string>
+		<key>8C88DE6C-FE45-450C-881D-12CCAAE67FBA</key>
+		<string>ssh://github.com/soomla/ios-store.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SoomlaIOSStore/SoomlaIOSStore.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>072B9BD6-798C-4371-8AA4-5E4E19E68FE5</key>
+		<string>../../..</string>
+		<key>8C88DE6C-FE45-450C-881D-12CCAAE67FBA</key>
+		<string>../../../../ios-store</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/soomla/unity3d-store.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>072B9BD6-798C-4371-8AA4-5E4E19E68FE5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8C88DE6C-FE45-450C-881D-12CCAAE67FBA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ios-store</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>072B9BD6-798C-4371-8AA4-5E4E19E68FE5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>unity3d-store</string>
+		</dict>
+	</array>
+</dict>
+</plist>

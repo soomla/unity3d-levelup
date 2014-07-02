@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C01B1D2B19508A61006936F0 /* UnitySoomla.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01B1D2A19508A61006936F0 /* UnitySoomla.mm */; };
+		C01B1D2E19508B4C006936F0 /* UnitySoomlaEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C01B1D2C19508B4C006936F0 /* UnitySoomlaEventDispatcher.h */; };
+		C01B1D2F19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01B1D2D19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm */; };
+		C0B3C5F3168C6D0C00161FAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3C5F2168C6D0C00161FAA /* Foundation.framework */; };
+		C0CF4D60183BDCA80070CC85 /* UnityCommons.h in Headers */ = {isa = PBXBuildFile; fileRef = C0CF4D58183BDCA80070CC85 /* UnityCommons.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C0CF4D63183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0CF4D5B183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C0CF4D64183BDCA80070CC85 /* UnityLevelUpEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C0CF4D5C183BDCA80070CC85 /* UnityLevelUpEventDispatcher.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C0CF4D65183BDCA80070CC85 /* UnityLevelUpEventDispatcher.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0CF4D5D183BDCA80070CC85 /* UnityLevelUpEventDispatcher.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C0B3C5ED168C6D0C00161FAA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C01B1D2A19508A61006936F0 /* UnitySoomla.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitySoomla.mm; sourceTree = "<group>"; };
+		C01B1D2C19508B4C006936F0 /* UnitySoomlaEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitySoomlaEventDispatcher.h; sourceTree = "<group>"; };
+		C01B1D2D19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitySoomlaEventDispatcher.mm; sourceTree = "<group>"; };
+		C0B3C5EF168C6D0C00161FAA /* libUnityiOSLevelUp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUnityiOSLevelUp.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0B3C5F2168C6D0C00161FAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C0CF4D58183BDCA80070CC85 /* UnityCommons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnityCommons.h; sourceTree = "<group>"; };
+		C0CF4D5B183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitySoomlaLevelUpStorage.mm; sourceTree = "<group>"; };
+		C0CF4D5C183BDCA80070CC85 /* UnityLevelUpEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnityLevelUpEventDispatcher.h; sourceTree = "<group>"; };
+		C0CF4D5D183BDCA80070CC85 /* UnityLevelUpEventDispatcher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnityLevelUpEventDispatcher.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C0B3C5EC168C6D0C00161FAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0B3C5F3168C6D0C00161FAA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C0B3C5E4168C6D0C00161FAA = {
+			isa = PBXGroup;
+			children = (
+				C0CF4D57183BDCA80070CC85 /* SoomlaUnity */,
+				C0B3C5F1168C6D0C00161FAA /* Frameworks */,
+				C0B3C5F0168C6D0C00161FAA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C0B3C5F0168C6D0C00161FAA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C0B3C5EF168C6D0C00161FAA /* libUnityiOSLevelUp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C0B3C5F1168C6D0C00161FAA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0B3C5F2168C6D0C00161FAA /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C0CF4D57183BDCA80070CC85 /* SoomlaUnity */ = {
+			isa = PBXGroup;
+			children = (
+				C01B1D2C19508B4C006936F0 /* UnitySoomlaEventDispatcher.h */,
+				C01B1D2D19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm */,
+				C01B1D2A19508A61006936F0 /* UnitySoomla.mm */,
+				C0CF4D58183BDCA80070CC85 /* UnityCommons.h */,
+				C0CF4D5B183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm */,
+				C0CF4D5C183BDCA80070CC85 /* UnityLevelUpEventDispatcher.h */,
+				C0CF4D5D183BDCA80070CC85 /* UnityLevelUpEventDispatcher.mm */,
+			);
+			path = SoomlaUnity;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C0B3C666168C6EB900161FAA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0CF4D60183BDCA80070CC85 /* UnityCommons.h in Headers */,
+				C0CF4D64183BDCA80070CC85 /* UnityLevelUpEventDispatcher.h in Headers */,
+				C01B1D2E19508B4C006936F0 /* UnitySoomlaEventDispatcher.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C0B3C5EE168C6D0C00161FAA /* UnityiOSLevelUp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C0B3C5FD168C6D0C00161FAA /* Build configuration list for PBXNativeTarget "UnityiOSLevelUp" */;
+			buildPhases = (
+				C0B3C5EB168C6D0C00161FAA /* Sources */,
+				C0B3C5EC168C6D0C00161FAA /* Frameworks */,
+				C0B3C5ED168C6D0C00161FAA /* CopyFiles */,
+				C0B3C666168C6EB900161FAA /* Headers */,
+				C09762A81900726F000A4403 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnityiOSLevelUp;
+			productName = SoomlaIOSStore;
+			productReference = C0B3C5EF168C6D0C00161FAA /* libUnityiOSLevelUp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C0B3C5E6168C6D0C00161FAA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = SOOMLA;
+			};
+			buildConfigurationList = C0B3C5E9168C6D0C00161FAA /* Build configuration list for PBXProject "UnityiOSLevelUp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C0B3C5E4168C6D0C00161FAA;
+			productRefGroup = C0B3C5F0168C6D0C00161FAA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C0B3C5EE168C6D0C00161FAA /* UnityiOSLevelUp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C09762A81900726F000A4403 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "##########################################\n#\n# c.f. http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n#\n# Version 2.7\n#\n# Latest Change:\n# - Supports iPhone 5 / iPod Touch 5 (uses Apple's workaround to lipo bug)\n#\n# Purpose:\n#   Automatically create a Universal static library for iPhone + iPad + iPhone Simulator from within XCode\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n\nset -e\nset -o pipefail\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -project \\\"${PROJECT_NAME}.xcodeproj\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\" BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" SYMROOT=\\\"${SYMROOT}\\\"\n\nxcodebuild -configuration \"${CONFIGURATION}\" -project \"${PROJECT_NAME}.xcodeproj\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nif [[ -z $CREATING_UNIVERSAL_DIR ]]\nthen\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\nfi\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\nrm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nxcrun -sdk iphoneos lipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\necho \"Fetching headers from ${PUBLIC_HEADERS_FOLDER_PATH}\"\necho \"  (if you embed your library project in another project, you will need to add\"\necho \"   a \"User Search Headers\" build setting of: (NB INCLUDE THE DOUBLE QUOTES BELOW!)\"\necho '        \"$(TARGET_BUILD_DIR)/usr/local/include/\"'\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\" ]\nthen\nmkdir -p \"${CREATING_UNIVERSAL_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"\n# * needs to be outside the double quotes?\ncp -r \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}/\"* \"${CREATING_UNIVERSAL_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"\nfi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C0B3C5EB168C6D0C00161FAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C01B1D2B19508A61006936F0 /* UnitySoomla.mm in Sources */,
+				C0CF4D65183BDCA80070CC85 /* UnityLevelUpEventDispatcher.mm in Sources */,
+				C0CF4D63183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm in Sources */,
+				C01B1D2F19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C0B3C5FB168C6D0C00161FAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C0B3C5FC168C6D0C00161FAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C0B3C5FE168C6D0C00161FAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/SoomlaIOSStore.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${UNITY_HEADERS}/iPhone_target_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${UNITY_HEADERS}/**",
+					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
+					"../../../submodules/ios-store/submodules/soomla-ios-core/SoomlaiOSCore/**",
+				);
+				LIBRARY_SEARCH_PATHS = ../../../Soomla/Assets/Plugins/iOS/;
+				OTHER_LDFLAGS = "-ObjC";
+				PRIVATE_HEADERS_FOLDER_PATH = headers/private;
+				PRODUCT_NAME = UnityiOSLevelUp;
+				PUBLIC_HEADERS_FOLDER_PATH = headers/public;
+				SKIP_INSTALL = YES;
+				UNITY_HEADERS = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Classes;
+				UNITY_LIBS = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Libraries;
+			};
+			name = Debug;
+		};
+		C0B3C5FF168C6D0C00161FAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/SoomlaIOSStore.dst;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${UNITY_HEADERS}/iPhone_target_Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"${UNITY_HEADERS}/**",
+					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
+					"../../../submodules/ios-store/submodules/soomla-ios-core/SoomlaiOSCore/**",
+				);
+				LIBRARY_SEARCH_PATHS = ../../../Soomla/Assets/Plugins/iOS/;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRIVATE_HEADERS_FOLDER_PATH = headers/private;
+				PRODUCT_NAME = UnityiOSLevelUp;
+				PUBLIC_HEADERS_FOLDER_PATH = headers/public;
+				SKIP_INSTALL = YES;
+				UNITY_HEADERS = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Classes;
+				UNITY_LIBS = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Libraries;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C0B3C5E9168C6D0C00161FAA /* Build configuration list for PBXProject "UnityiOSLevelUp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0B3C5FB168C6D0C00161FAA /* Debug */,
+				C0B3C5FC168C6D0C00161FAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C0B3C5FD168C6D0C00161FAA /* Build configuration list for PBXNativeTarget "UnityiOSLevelUp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0B3C5FE168C6D0C00161FAA /* Debug */,
+				C0B3C5FF168C6D0C00161FAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C0B3C5E6168C6D0C00161FAA /* Project object */;
+}
