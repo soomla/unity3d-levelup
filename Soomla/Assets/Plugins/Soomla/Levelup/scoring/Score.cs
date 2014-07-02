@@ -124,22 +124,13 @@ namespace Soomla.Levelup {
 		}
 
 		public bool HasRecordReached(double scoreVal) {
-<<<<<<< Updated upstream
 			double record = ScoreStorage.getRecordScore(this); 
-=======
-			double record = 0; // TODO: REMOVE THIS!
-//			double record = ScoreStorage.getRecordScore(this);  // TODO: get the record score from storage
->>>>>>> Stashed changes
 			return HasScoreReached(record, scoreVal);
 		}
 
 		protected virtual void performSaveActions() {}
 
-<<<<<<< Updated upstream
 		private bool HasScoreReached(double score1, double score2) {
-=======
-		private bool HasRecordReached(double score1, double score2) {
->>>>>>> Stashed changes
 			return this.HigherBetter ?
 				(score1 >= score2) :
 					(score1 <= score2);

@@ -101,11 +101,11 @@ namespace Soomla.Levelup {
 			}
 		}
 
-		protected void unregisterEvents() {
+		protected virtual void unregisterEvents() {
 			// TODO: unregister for events
 		}
 
-		public bool IsCompleted() {
+		public virtual bool IsCompleted() {
 			// check if completed in Mission Storage
 			return MissionStorage.IsCompleted (this);
 		}
