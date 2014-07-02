@@ -39,16 +39,16 @@ namespace Soomla.Levelup
 		}
 			
 
-		public static void SetCompleted(Mission mission, boolean completed, boolean notify) {
+		public static void SetCompleted(Mission mission, bool completed, bool notify) {
 			_instance._setCompleted(mission, completed, notify);
 		}
 
-		public static boolean IsCompleted(Mission mission) {
+		public static bool IsCompleted(Mission mission) {
 			return _instance._isCompleted(mission);
 		}
 
 
-		virtual protected void _setCompleted(Mission mission, boolean open, boolean notify) {
+		virtual protected void _setCompleted(Mission mission, bool open, bool notify) {
 			// TODO: WIE
 		}
 

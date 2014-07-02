@@ -12,12 +12,14 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
 	public class WorldCompletionGate : Gate
 	{
-		public String AssociatedWorldId;
+		public string AssociatedWorldId;
 
 		public WorldCompletionGate(string gateId, string associatedWorldId)
 			: base(gateId)
@@ -47,14 +49,14 @@ namespace Soomla.Levelup
 
 		// TODO: register for events and handle them
 
-		public override boolean CanOpen() {
+		public override bool CanOpen() {
 			// TODO: remove THIS
 			World world = null;
 //			World world = LevelUp.getInstance().getWorld(mAssociatedWorldId); // TODO: take a world from LevelUp
 			return world != null && world.IsCompleted();
 		}
 
-		public override boolean tryOpenInner() {
+		public override bool tryOpenInner() {
 				// TODO: move this object to Store module. the following code will not work.
 
 			if (canOpen()) {

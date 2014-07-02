@@ -12,12 +12,14 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
 	public class RecordGate : Gate
 	{
-		public String AssociatedItemId;
+		public string AssociatedItemId;
 		public double DesiredRecord;
 
 		public RecordGate(string gateId, string associatedItemId, double desiredRecord)

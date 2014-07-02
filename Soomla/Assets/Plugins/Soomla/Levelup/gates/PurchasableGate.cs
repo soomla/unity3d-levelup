@@ -12,12 +12,14 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
 	public class PurchasableGate : Gate
 	{
-		public String AssociatedItemId;
+		public string AssociatedItemId;
 
 		public PurchasableGate(string gateId, string associatedItemId)
 			: base(gateId)
@@ -47,11 +49,11 @@ namespace Soomla.Levelup
 
 		// TODO: register for events and handle them
 
-		public override boolean CanOpen() {
+		public override bool CanOpen() {
 			return true;
 		}
 
-		public override boolean tryOpenInner() {
+		public override bool tryOpenInner() {
 				// TODO: move this object to Store module. the following code will not work.
 
 //			try {

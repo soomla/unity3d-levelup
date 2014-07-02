@@ -13,6 +13,9 @@
 /// limitations under the License.using System;
 
 
+using System.Collections;
+using System.Collections.Generic;
+
 namespace Soomla.Levelup
 {
 	public class GatesListOR : GatesList
@@ -24,12 +27,12 @@ namespace Soomla.Levelup
 			Gates = new GatesList<Gate>();
 		}
 
-		public GatesListOR(String gateId, Gate singleGate)
+		public GatesListOR(string gateId, Gate singleGate)
 			: base(gateId, singleGate)
 		{
 		}
 
-		public GatesListOR(String gateId, List<Gate> gates)
+		public GatesListOR(string gateId, List<Gate> gates)
 			: base(gateId, gates)
 		{
 		}

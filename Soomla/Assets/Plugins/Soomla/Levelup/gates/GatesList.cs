@@ -12,13 +12,15 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
 	public class GatesList : Gate
 	{
 		public List<Gate> Gates;
-		protected boolean AutoOpenBehavior = false;
+		protected bool AutoOpenBehavior = false;
 
 		public GatesList(string gateId)
 			: base(gateId)
@@ -26,7 +28,7 @@ namespace Soomla.Levelup
 			Gates = new GatesList<Gate>();
 		}
 
-		public GatesList(String gateId, Gate singleGate)
+		public GatesList(string gateId, Gate singleGate)
 			: base(gateId)
 		{
 			Gates = new ArrayList<Gate>();
@@ -36,7 +38,7 @@ namespace Soomla.Levelup
 			AutoOpenBehavior = true;
 		}
 
-		public GatesList(String gateId, List<Gate> gates)
+		public GatesList(string gateId, List<Gate> gates)
 			: base(gateId)
 		{
 			Gates = gates;
@@ -88,7 +90,7 @@ namespace Soomla.Levelup
 			}
 		}
 
-		public override boolean TryOpenInner() {
+		public override bool TryOpenInner() {
 			if(AutoOpenBehavior) {
 				foreach (Gate gate in Gates) {
 					gate.TryOpen();

@@ -12,12 +12,14 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
 	public class BalanceMission : Mission
 	{
-		public String AssociatedItemId;
+		public string AssociatedItemId;
 		public int DesiredBalance;
 
 		public BalanceMission(string name, string missionId, string associatedItemId, int desiredBalance)

@@ -28,7 +28,7 @@ namespace Soomla.Levelup
 	private static extern bool worldStorage_IsCompleted(IntPtr worldJson);
 	
 	
-	override protected void _setCompleted(World world, boolean completed, boolean notify) {
+	override protected void _setCompleted(World world, bool completed, bool notify) {
 		string worldJson = world.toJSONString();
 		worldStorage_SetCompleted(worldJson, completed, notify);
 	}

@@ -39,16 +39,16 @@ namespace Soomla.Levelup
 		}
 			
 
-		public static void SetOpen(Gate gate, boolean open, boolean notify) {
+		public static void SetOpen(Gate gate, bool open, bool notify) {
 			_instance._setOpen(gate, give, notify);
 		}
 
-		public static boolean IsRewardGiven(Gate gate) {
+		public static bool IsRewardGiven(Gate gate) {
 			return _instance._isOpen(gate);
 		}
 
 
-		virtual protected void _setOpen(Gate gate, boolean open, boolean notify) {
+		virtual protected void _setOpen(Gate gate, bool open, bool notify) {
 			// TODO: WIE
 		}
 

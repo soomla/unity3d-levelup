@@ -89,24 +89,23 @@ namespace Soomla.Levelup {
 		}
 
 
-		public void Inc(double amount) {
-			SetTempScore(mTempScore + amount);
+		public virtual void Inc(double amount) {
+			SetTempScore(_tempScore + amount);
 		}
 
-		public void Dec(double amount) {
-			SetTempScore(mTempScore - amount);
+		public virtual void Dec(double amount) {
+			SetTempScore(_tempScore - amount);
 		}
 
 		public void SaveAndReset() {
-			double record = 0; // TODO: REMOVE THIS!
-//			double record = ScoreStorage.getRecordScore(this); // TODO: get the record score from storage
-			if (hasTempReached(record)) {
-//				ScoreStorage.setRecordScore(this, mTempScore); // TODO: set the record score in storage
+			double record = ScoreStorage.getRecordScore(this); // TODO: get the record score from storage
+			if (HasTempReached(record)) {
+				ScoreStorage.setRecordScore(this, _tempScore); // TODO: set the record score in storage
 			}
 			
 			performSaveActions();
 			
-//			ScoreStorage.setLatestScore(this, mTempScore);  // TODO: set the latest score in storage
+			ScoreStorage.setLatestScore(this, _tempScore);  // TODO: set the latest score in storage
 			SetTempScore(StartValue);
 		}
 
@@ -120,25 +119,24 @@ namespace Soomla.Levelup {
 			ScoreStorage.setLatestScore(this, /*0*/StartValue);
 		}
 
-		public boolean HasTempReached(double scoreVal) {
+		public bool HasTempReached(double scoreVal) {
 			return HasRecordReached(_tempScore, scoreVal);
 		}
 
-		public boolean HasRecordReached(double scoreVal) {
-			double record = 0; // TODO: REMOVE THIS!
-//			double record = ScoreStorage.getRecordScore(this);  // TODO: get the record score from storage
+		public bool HasRecordReached(double scoreVal) {
+			double record = ScoreStorage.getRecordScore(this); 
 			return HasScoreReached(record, scoreVal);
 		}
 
-		protected void performSaveActions() {}
+		protected virtual void performSaveActions() {}
 
-		private boolean HasRecordReached(double score1, double score2) {
+		private bool HasScoreReached(double score1, double score2) {
 			return this.HigherBetter ?
 				(score1 >= score2) :
 					(score1 <= score2);
 		}
 
-		public void SetTempScore(double score) {
+		public virtual void SetTempScore(double score) {
 			_tempScore = score;
 		}
 

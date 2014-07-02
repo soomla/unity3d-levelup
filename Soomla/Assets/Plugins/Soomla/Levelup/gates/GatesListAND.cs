@@ -12,6 +12,8 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
@@ -24,12 +26,12 @@ namespace Soomla.Levelup
 			Gates = new GatesList<Gate>();
 		}
 
-		public GatesListAND(String gateId, Gate singleGate)
+		public GatesListAND(string gateId, Gate singleGate)
 			: base(gateId, singleGate)
 		{
 		}
 
-		public GatesListAND(String gateId, List<Gate> gates)
+		public GatesListAND(string gateId, List<Gate> gates)
 			: base(gateId, gates)
 		{
 		}

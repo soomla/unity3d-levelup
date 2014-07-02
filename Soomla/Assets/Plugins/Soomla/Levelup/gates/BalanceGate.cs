@@ -17,7 +17,7 @@ namespace Soomla.Levelup
 {
 	public class BalanceGate : Gate
 	{
-		public String AssociatedItemId;
+		public string AssociatedItemId;
 		public int DesiredBalance;
 
 		public BalanceGate(string gateId, string associatedItemId, int desiredBalance)
@@ -51,7 +51,7 @@ namespace Soomla.Levelup
 
 		// TODO: register for events and handle them
 
-		public override boolean CanOpen() {
+		public override bool CanOpen() {
 			// TODO: check in gate storage if the gate is open
 //			if (GateStorage.IsOpen(this)) {
 //				return true;
@@ -69,7 +69,7 @@ namespace Soomla.Levelup
 			return true;
 		}
 
-		public override boolean tryOpenInner() {
+		public override bool tryOpenInner() {
 			if (CanOpen()) {
 
 				// TODO: move this object to Store module. the following code will not work.

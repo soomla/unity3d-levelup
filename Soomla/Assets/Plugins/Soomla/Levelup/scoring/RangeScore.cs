@@ -29,6 +29,10 @@ namespace Soomla.Levelup
 			: base(scoreId, name, higherBetter)
 		{
 			Range = range;
+			// descending score should start at the high bound
+			if (!HigherBetter) {
+				StartValue = range.High;
+			}
 		}
 		
 		/// <summary>
@@ -38,6 +42,10 @@ namespace Soomla.Levelup
 			: base(jsonScore)
 		{
 			Range = new SRange(jsonScore[LUJSONConsts.LU_SCORE_RANGE]);
+			// descending score should start at the high bound
+			if (!HigherBetter) {
+				StartValue = range.High;
+			}
 		}
 		
 		/// <summary>
@@ -79,7 +87,7 @@ namespace Soomla.Levelup
 			base.dec(amount);
 		}
 
-		public void SetTempScore(double score) {
+		public override void SetTempScore(double score) {
 			if (score > Range.High) {
 				score = Range.High;
 			}
@@ -100,6 +108,7 @@ namespace Soomla.Levelup
 			public SRange(double low, double high) {
 				Low = low;
 				High = high;
+				// TODO: throw exception if low >= high
 			}
 
 			public SRange(JSONObject jsonObject) {

@@ -21,7 +21,7 @@ namespace Soomla.Levelup
 		
 #if UNITY_ANDROID && !UNITY_EDITOR
 
-		override protected void _setOpen(Gate gate, boolean open, boolean notify) {
+		override protected void _setOpen(Gate gate, bool open, bool notify) {
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniGateStorage = new AndroidJavaClass("com.soomla.levelup.data.GateStorage")) {
 				jniGateStorage.CallStatic("setOpen", gate.toJNIObject(), open, notify);

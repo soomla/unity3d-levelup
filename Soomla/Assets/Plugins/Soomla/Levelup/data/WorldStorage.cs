@@ -39,16 +39,16 @@ namespace Soomla.Levelup
 		}
 			
 
-		public static void SetCompleted(World world, boolean completed, boolean notify) {
+		public static void SetCompleted(World world, bool completed, bool notify) {
 			_instance._setCompleted(world, completed, notify);
 		}
 
-		public static boolean IsCompleted(World world) {
+		public static bool IsCompleted(World world) {
 			return _instance._isCompleted(world);
 		}
 
 
-		virtual protected void _setCompleted(World world, boolean open, boolean notify) {
+		virtual protected void _setCompleted(World world, bool open, bool notify) {
 			// TODO: WIE
 		}
 

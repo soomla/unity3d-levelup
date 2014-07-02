@@ -106,11 +106,13 @@ namespace Soomla.Levelup {
 		}
 
 		public bool IsCompleted() {
-			// TODO: check if completed in Mission Storage
+			// check if completed in Mission Storage
+			return MissionStorage.IsCompleted (this);
 		}
 
 		public void SetCompleted(bool completed) {
-			// TODO: set completed in Mission Storage
+			// set completed in Mission Storage
+			MissionStorage.SetCompleted (this, completed);
 
 			if (completed) {
 				// events not interesting until revoked
@@ -131,7 +133,7 @@ namespace Soomla.Levelup {
 		
 		protected void giveRewards() {
 			// The mission is completed, giving the rewards.
-			for(Reward reward in Rewards) {
+			foreach (Reward reward in Rewards) {
 				reward.Give();
 			}
 		}

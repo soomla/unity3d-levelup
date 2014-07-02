@@ -19,7 +19,7 @@ namespace Soomla.Levelup
 {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	
-	override protected void _setCompleted(World world, boolean completed, boolean notify) {
+	override protected void _setCompleted(World world, bool completed, bool notify) {
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
 			jniWorldStorage.CallStatic("setCompleted", world.toJNIObject(), completed, notify);

@@ -58,26 +58,26 @@ namespace Soomla.Levelup {
 		}
 
 
-		public boolean TryOpen() {
-			// TODO: check in gate storage if it's already open
-//			if (GateStorage.isOpen(this)) {
-//				return true;
-//			}
+		public bool TryOpen() {
+			//  check in gate storage if it's already open
+			if (GateStorage.isOpen(this)) {
+				return true;
+			}
 			
 			return tryOpenInner();
 		}
 
-		protected abstract boolean tryOpenInner();
+		protected abstract bool tryOpenInner();
 
-		public void ForceOpen(boolean open) {
-//			GateStorage.setOpen(this, open); // TODO: set the status of this to open in Gate storage
+		public void ForceOpen(bool open) {
+			GateStorage.setOpen(this, open);
 		}
 
-		public boolean IsOpen() {
-//			return GateStorage.isOpen(this);
+		public bool IsOpen() {
+			return GateStorage.isOpen(this);
 		}
 
-		public abstract boolean CanOpen();
+		public abstract bool CanOpen();
 
 	}
 }

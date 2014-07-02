@@ -30,7 +30,7 @@ namespace Soomla.Levelup
 		private static extern bool gateStorage_IsOpen(IntPtr gateJson);
 
 
-		override protected void _setOpen(Gate gate, boolean open, boolean notify) {
+		override protected void _setOpen(Gate gate, bool open, bool notify) {
 			string gateJson = gate.toJSONString();
 			gateStorage_SetOpen(gateJson, open, notify);
 		}

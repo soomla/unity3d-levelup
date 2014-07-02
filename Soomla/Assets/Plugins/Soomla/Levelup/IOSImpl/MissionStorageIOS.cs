@@ -29,7 +29,7 @@ namespace Soomla.Levelup
 	private static extern bool missionStorage_IsCompleted(IntPtr missionJson);
 
 	
-	override protected void _setCompleted(Mission mission, boolean completed, boolean notify) {
+	override protected void _setCompleted(Mission mission, bool completed, bool notify) {
 		string missionJson = mission.toJSONString();
 		missionStorage_SetCompleted(missionJson, completed, notify);
 	}

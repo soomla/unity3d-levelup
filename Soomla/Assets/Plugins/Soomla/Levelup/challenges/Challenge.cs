@@ -67,7 +67,7 @@ namespace Soomla.Levelup
 				return false;
 			}
 			
-			for (Mission mission in Missions) {
+			foreach (Mission mission in Missions) {
 				if (!mission.IsCompleted()) {
 					return false;
 				}
