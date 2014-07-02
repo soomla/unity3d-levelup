@@ -61,7 +61,7 @@ namespace Soomla.Levelup
 			try {
 				PurchasableVirtualItem pvi = (PurchasableVirtualItem) StoreInfo.GetItemByItemId(AssociatedItemId);
 				PurchaseWithMarket ptype = (PurchaseWithMarket) pvi.PurchaseType;
-				SoomlaStore.BuyMarketItem(ptype.MarketItem, GateId);
+				SoomlaStore.BuyMarketItem(ptype.MarketItem.ProductId, GateId);
 				ForceOpen(true);
 				return true;
 			} catch (VirtualItemNotFoundException e) {

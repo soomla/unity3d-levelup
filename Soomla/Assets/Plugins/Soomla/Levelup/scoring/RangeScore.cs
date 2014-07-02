@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System;
 
 namespace Soomla.Levelup
 {
@@ -84,7 +85,7 @@ namespace Soomla.Levelup
 				amount = _tempScore - Range.Low;
 			}
 
-			base.dec(amount);
+			base.Dec(amount);
 		}
 
 		public override void SetTempScore(double score) {
@@ -118,8 +119,8 @@ namespace Soomla.Levelup
 
 			public JSONObject toJSONObject(){
 				JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
-				jsonObject.Add(LUJSONConsts.LU_SCORE_RANGE_LOW, Low);
-				jsonObject.Add(LUJSONConsts.LU_SCORE_RANGE_HIGH, High);
+				jsonObject.AddField(LUJSONConsts.LU_SCORE_RANGE_LOW, Convert.ToInt32(Low));
+				jsonObject.AddField(LUJSONConsts.LU_SCORE_RANGE_HIGH, Convert.ToInt32(High));
 				
 				return jsonObject;
 			}

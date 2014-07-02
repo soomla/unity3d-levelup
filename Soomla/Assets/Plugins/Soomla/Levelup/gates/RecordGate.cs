@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -19,13 +20,15 @@ namespace Soomla.Levelup
 {
 	public class RecordGate : Gate
 	{
-		public string AssociatedItemId;
+		private const string TAG = "SOOMLA RecordGate";
+
+		public string AssociatedScoreId;
 		public double DesiredRecord;
 
-		public RecordGate(string gateId, string associatedItemId, double desiredRecord)
+		public RecordGate(string gateId, string associatedScoreId, double desiredRecord)
 			: base(gateId)
 		{
-			AssociatedItemId = associatedItemId;
+			AssociatedScoreId = associatedScoreId;
 			DesiredRecord = desiredRecord;
 		}
 		
@@ -35,7 +38,7 @@ namespace Soomla.Levelup
 		public RecordGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
+			this.AssociatedScoreId = jsonGate[JSONConsts.SOOM_ASSOCSCOREID].str;
 			this.DesiredRecord = jsonGate[JSONConsts.SOOM_DESIRED_RECORD].n;
 		}
 		
@@ -45,8 +48,8 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedItemId);
-			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, this.DesiredRecord);
+			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedScoreId);
+			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, Convert.ToInt32(this.DesiredRecord));
 
 			return obj;
 		}
@@ -67,7 +70,7 @@ namespace Soomla.Levelup
 		}
 
 		protected override bool TryOpenInner() {
-			if (canOpen()) {
+			if (CanOpen()) {
 				ForceOpen(true);
 				return true;
 			}

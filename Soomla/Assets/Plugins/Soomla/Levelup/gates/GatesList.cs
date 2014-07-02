@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
-	public class GatesList : Gate
+	public abstract class GatesList : Gate
 	{
 		public List<Gate> Gates;
 		protected bool AutoOpenBehavior = false;

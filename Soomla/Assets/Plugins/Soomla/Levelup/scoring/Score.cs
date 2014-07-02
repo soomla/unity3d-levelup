@@ -73,7 +73,7 @@ namespace Soomla.Levelup {
 			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
 			obj.AddField(JSONConsts.SOOM_NAME, this.Name);
 			obj.AddField(LUJSONConsts.LU_SCORE_SCOREID, this.ScoreId);
-			obj.AddField(LUJSONConsts.LU_SCORE_STARTVAL, this.StartValue);
+			obj.AddField(LUJSONConsts.LU_SCORE_STARTVAL, Convert.ToInt32(this.StartValue));
 			obj.AddField(LUJSONConsts.LU_SCORE_HIGHBETTER, this.HigherBetter);
 			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 			
@@ -120,7 +120,7 @@ namespace Soomla.Levelup {
 		}
 
 		public bool HasTempReached(double scoreVal) {
-			return HasRecordReached(_tempScore, scoreVal);
+			return HasScoreReached(_tempScore, scoreVal);
 		}
 
 		public bool HasRecordReached(double scoreVal) {
