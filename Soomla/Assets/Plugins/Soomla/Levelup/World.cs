@@ -70,13 +70,13 @@ namespace Soomla.Levelup {
 					Scores.Add(score.ScoreId, score);
 				}
 			}
-			
+
 			Challenges = new List<Challenge>();
 			ArrayList challengesJSON = jsonWorld[LUJSONConsts.LU_CHALLENGES].list;
 			
 			// Iterate over all challenges in the JSON array and create an instance for each one
 			foreach (JSONObject challengeJSON in challengesJSON) {
-				Challenges.add(new Challenge(challengeJSON));
+				Challenges.Add(new Challenge(challengeJSON));
 			}
 			
 			JSONObject gateListJSON = jsonWorld[LUJSONConsts.LU_GATES];
