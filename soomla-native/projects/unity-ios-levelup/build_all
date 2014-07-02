@@ -1,0 +1,6 @@
+
+rm -rf build
+
+xcodebuild -configuration Release -sdk iphoneos7.1 -project UnityiOSLevelUp.xcodeproj -target UnityiOSLevelUp clean build CREATING_UNIVERSAL_DIR=$PWD/build/release
+
+cp build/release/libUnityiOSLevelUp.a ../../../Soomla/Assets/Plugins/iOS/

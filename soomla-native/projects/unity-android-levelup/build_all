@@ -1,0 +1,1 @@
+ant -buildfile unity-android-levelup.xml -Dsoomla.filename="UnityAndroidLevelup" all
