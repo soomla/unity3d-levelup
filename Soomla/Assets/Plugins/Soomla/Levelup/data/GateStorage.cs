@@ -54,6 +54,7 @@ namespace Soomla.Levelup
 
 		virtual protected bool _isOpen(Gate gate) {
 			// TODO: WIE
+			return true;
 		}
 	}
 }
