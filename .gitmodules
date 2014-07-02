@@ -13,3 +13,6 @@
 [submodule "submodules/ios-levelup"]
 	path = submodules/ios-levelup
 	url = git@github.com:refaelos/ios-levelup.git
+[submodule "submodules/unity3d-store"]
+	path = submodules/unity3d-store
+	url = git@github.com:soomla/unity3d-store.git
