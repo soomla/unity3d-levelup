@@ -12,11 +12,14 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using Soomla.Store;
 
 namespace Soomla.Levelup
 {
 	public class BalanceGate : Gate
 	{
+		private const string TAG = "SOOMLA BalanceGate";
+
 		public string AssociatedItemId;
 		public int DesiredBalance;
 
@@ -33,8 +36,8 @@ namespace Soomla.Levelup
 		public BalanceGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			this.AssociatedItemId = jsonItem[JSONConsts.SOOM_ASSOCITEMID].str;
-			this.DesiredBalance = jsonItem[JSONConsts.SOOM_DESIRED_BALANCE].n;
+			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
+			this.DesiredBalance = jsonGate[JSONConsts.SOOM_DESIRED_BALANCE].n;
 		}
 		
 		/// <summary>
@@ -52,36 +55,33 @@ namespace Soomla.Levelup
 		// TODO: register for events and handle them
 
 		public override bool CanOpen() {
-			// TODO: check in gate storage if the gate is open
-//			if (GateStorage.IsOpen(this)) {
-//				return true;
-//			}
+			// check in gate storage if the gate is open
+			if (GateStorage.IsOpen(this)) {
+				return true;
+			}
 
-			// TODO: move this object to Store module. the following code will not work.
-//			try {
-//				if (StoreInventory.getVirtualItemBalance(mAssociatedItemId) < mDesiredBalance) {
-//					return false;
-//				}
-//			} catch (VirtualItemNotFoundException e) {
-//				SoomlaUtils.LogError(TAG, "(canPass) Couldn't find itemId. itemId: " + mAssociatedItemId);
-//				return false;
-//			}
+			try {
+				if (StoreInventory.GetItemBalance(AssociatedItemId) < DesiredBalance) {
+					return false;
+				}
+			} catch (VirtualItemNotFoundException e) {
+				SoomlaUtils.LogError(TAG, "(canPass) Couldn't find itemId. itemId: " + AssociatedItemId);
+				return false;
+			}
 			return true;
 		}
 
-		public override bool tryOpenInner() {
+		protected override bool TryOpenInner() {
 			if (CanOpen()) {
 
-				// TODO: move this object to Store module. the following code will not work.
-
-//				try {
-//					StoreInventory.takeVirtualItem(mAssociatedItemId, mDesiredBalance);
-//				} catch (VirtualItemNotFoundException e) {
-//					SoomlaUtils.LogError(TAG, "(open) Couldn't find itemId. itemId: " + mAssociatedItemId);
-//					return false;
-//				}
+				try {
+					StoreInventory.TakeItem(AssociatedItemId, DesiredBalance);
+				} catch (VirtualItemNotFoundException e) {
+					SoomlaUtils.LogError(TAG, "(open) Couldn't find itemId. itemId: " + AssociatedItemId);
+					return false;
+				}
 				
-				forceOpen(true);
+				ForceOpen(true);
 				return true;
 			}
 			

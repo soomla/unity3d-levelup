@@ -12,19 +12,23 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
-using System.Collections;
+using System;
 using System.Collections.Generic;
+
+using Soomla.Store;
 
 namespace Soomla.Levelup
 {
 	public class PurchasableGate : Gate
 	{
+		private const string TAG = "SOOMLA PurchasableGate";
+
 		public string AssociatedItemId;
 
 		public PurchasableGate(string gateId, string associatedItemId)
 			: base(gateId)
 		{
-			AssociatedItemId = associatedItemId;
+			AssociatedItemId = AssociatedItemId;
 		}
 		
 		/// <summary>
@@ -33,7 +37,7 @@ namespace Soomla.Levelup
 		public PurchasableGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			this.AssociatedItemId = jsonItem[JSONConsts.SOOM_ASSOCITEMID].str;
+			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
 		}
 		
 		/// <summary>
@@ -53,26 +57,21 @@ namespace Soomla.Levelup
 			return true;
 		}
 
-		public override bool tryOpenInner() {
-				// TODO: move this object to Store module. the following code will not work.
+		protected override bool TryOpenInner() {
+			try {
+				PurchasableVirtualItem pvi = (PurchasableVirtualItem) StoreInfo.GetItemByItemId(AssociatedItemId);
+				PurchaseWithMarket ptype = (PurchaseWithMarket) pvi.PurchaseType;
+				SoomlaStore.BuyMarketItem(ptype.MarketItem, GateId);
+				ForceOpen(true);
+				return true;
+			} catch (VirtualItemNotFoundException e) {
+				SoomlaUtils.LogError(TAG, "The item needed for purchase doesn't exist. itemId: " +
+				                     AssociatedItemId);
+			} catch (InvalidCastException e) {
+				SoomlaUtils.LogError(TAG, "The associated item is not a purchasable item. itemId: " +
+				                     AssociatedItemId);
+			}
 
-//			try {
-//				PurchasableVirtualItem pvi = (PurchasableVirtualItem) StoreInfo.getVirtualItem(mAssociatedItemId);
-//				PurchaseWithMarket ptype = (PurchaseWithMarket) pvi.getPurchaseType();
-//				SoomlaStore.getInstance().buyWithMarket(ptype.getMarketItem(), getGateId());
-//				return true;
-//			} catch (VirtualItemNotFoundException e) {
-//				SoomlaUtils.LogError(TAG, "The item needed for purchase doesn't exist. itemId: " +
-//				                     mAssociatedItemId);
-//			} catch (ClassCastException e) {
-//				SoomlaUtils.LogError(TAG, "The associated item is not a purchasable item. itemId: " +
-//				                     mAssociatedItemId);
-//			}
-//				
-//				forceOpen(true);
-//				return true;
-//			}
-			
 			return false;
 		}
 	}

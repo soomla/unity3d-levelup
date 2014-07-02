@@ -33,7 +33,7 @@ namespace Soomla.Levelup
 		public WorldCompletionGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			this.AssociatedWorldId = jsonItem[LUJSONConsts.LU_GATE_ASSOCWORLDID].str;
+			this.AssociatedWorldId = jsonGate[LUJSONConsts.LU_GATE_ASSOCWORLDID].str;
 		}
 		
 		/// <summary>
@@ -56,10 +56,10 @@ namespace Soomla.Levelup
 			return world != null && world.IsCompleted();
 		}
 
-		public override bool tryOpenInner() {
+		protected override bool TryOpenInner() {
 				// TODO: move this object to Store module. the following code will not work.
 
-			if (canOpen()) {
+			if (CanOpen()) {
 				ForceOpen(true);
 				return true;
 			}

@@ -12,7 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
-using System.Collections;
+using System;
 using System.Collections.Generic;
 
 namespace Soomla.Levelup
@@ -25,14 +25,14 @@ namespace Soomla.Levelup
 		public GatesList(string gateId)
 			: base(gateId)
 		{
-			Gates = new GatesList<Gate>();
+			Gates = new List<Gate>();
 		}
 
 		public GatesList(string gateId, Gate singleGate)
 			: base(gateId)
 		{
-			Gates = new ArrayList<Gate>();
-			Gates.add(singleGate);
+			Gates = new List<Gate>();
+			Gates.Add(singleGate);
 			
 			// "fake" gates with 1 sub-gate are auto open
 			AutoOpenBehavior = true;
@@ -50,7 +50,7 @@ namespace Soomla.Levelup
 		public GatesList(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			Gates = new GatesList<Gate>();
+			Gates = new List<Gate>();
 			List<JSONObject> gatesJSON = jsonGate[LUJSONConsts.LU_GATES].list;
 
 			// Iterate over all gates in the JSON array and for each one create
@@ -58,7 +58,7 @@ namespace Soomla.Levelup
 			foreach (JSONObject gateJSON in gatesJSON) {
 				Gate gate = Gate.fromJSONObject(gateJSON);
 				if (gate != null) {
-					Gates.add(gate);
+					Gates.Add(gate);
 				}
 			}
 			
@@ -84,13 +84,21 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		public new static GatesList fromJSONObject(JSONObject gateObj) {
+			string className = gateObj[JSONConsts.SOOM_CLASSNAME].str;
+			
+			GatesList gatesList = (GatesList) Activator.CreateInstance(Type.GetType("Soomla.Levelup." + className), new object[] { gateObj });
+			
+			return gatesList;
+		}
+
 		public int Count {
 			get {
 				return Gates.Count;
 			}
 		}
 
-		public override bool TryOpenInner() {
+		protected override bool TryOpenInner() {
 			if(AutoOpenBehavior) {
 				foreach (Gate gate in Gates) {
 					gate.TryOpen();

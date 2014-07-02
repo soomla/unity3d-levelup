@@ -12,7 +12,6 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-using UnityEngine;
 using System;
 using System.Collections.Generic;
 
@@ -60,20 +59,20 @@ namespace Soomla.Levelup {
 
 		public bool TryOpen() {
 			//  check in gate storage if it's already open
-			if (GateStorage.isOpen(this)) {
+			if (GateStorage.IsOpen(this)) {
 				return true;
 			}
-			return tryOpenInner();
+			return TryOpenInner();
 		}
 
-		protected abstract bool tryOpenInner();
+		protected abstract bool TryOpenInner();
 
 		public void ForceOpen(bool open) {
-			GateStorage.setOpen(this, open);
+			GateStorage.SetOpen(this, open);
 		}
 
-		public bool IsOpen() {
-			return GateStorage.isOpen(this);
+		public virtual bool IsOpen() {
+			return GateStorage.IsOpen(this);
 		}
 
 		public abstract bool CanOpen();
