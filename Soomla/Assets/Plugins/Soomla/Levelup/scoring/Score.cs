@@ -140,6 +140,18 @@ namespace Soomla.Levelup {
 			_tempScore = score;
 		}
 
+		public double Record {
+			get {
+				return ScoreStorage.getRecordScore(this);
+			}
+		}
+
+		public double Latest {
+			get {
+				return ScoreStorage.getLatestScore(this);
+			}
+		}
+
 	}
 }
 
