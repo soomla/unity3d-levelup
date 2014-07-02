@@ -14,6 +14,7 @@
 
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Soomla.Levelup {
@@ -47,7 +48,7 @@ namespace Soomla.Levelup {
 			WorldId = jsonWorld[LUJSONConsts.LU_WORLD_WORLDID].str;
 			
 			InnerWorlds = new Dictionary<string, World>();
-			List<JSONObject> worldsJSON = jsonWorld[LUJSONConsts.LU_WORLDS].list;
+			ArrayList worldsJSON = jsonWorld[LUJSONConsts.LU_WORLDS].list;
 			
 			// Iterate over all inner worlds in the JSON array and for each one create
 			// an instance according to the world type
@@ -59,23 +60,23 @@ namespace Soomla.Levelup {
 			}
 			
 			Scores = new Dictionary<String, Score>();
-			List<JSONObject> scoresJSON = jsonWorld[LUJSONConsts.LU_SCORES].list;
+			ArrayList scoresJSON = jsonWorld[LUJSONConsts.LU_SCORES].list;
 			
 			// Iterate over all scores in the JSON array and for each one create
 			// an instance according to the score type
 			foreach (JSONObject scoreJSON in scoresJSON) {
 				Score score = Score.fromJSONObject(scoreJSON);
 				if (score != null) {
-					Scores.put(score.ScoreId, score);
+					Scores.Add(score.ScoreId, score);
 				}
 			}
-			
+
 			Challenges = new List<Challenge>();
-			List<JSONObject> challengesJSON = jsonWorld[LUJSONConsts.LU_CHALLENGES].list;
+			ArrayList challengesJSON = jsonWorld[LUJSONConsts.LU_CHALLENGES].list;
 			
 			// Iterate over all challenges in the JSON array and create an instance for each one
 			foreach (JSONObject challengeJSON in challengesJSON) {
-				Challenges.add(new Challenge(challengeJSON));
+				Challenges.Add(new Challenge(challengeJSON));
 			}
 			
 			JSONObject gateListJSON = jsonWorld[LUJSONConsts.LU_GATES];
