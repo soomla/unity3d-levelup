@@ -23,7 +23,7 @@ namespace Soomla.Levelup
 		public GatesListAND(string gateId)
 			: base(gateId)
 		{
-			Gates = new GatesList<Gate>();
+			Gates = new List<Gate>();
 		}
 
 		public GatesListAND(string gateId, Gate singleGate)

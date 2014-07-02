@@ -14,6 +14,7 @@
 
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Soomla.Levelup {
@@ -65,10 +66,10 @@ namespace Soomla.Levelup {
 				this.Name = "";
 			}
 
-			List<JSONObject> rewardsObjs = jsonObj[JSONConsts.SOOM_REWARDS].list;
 			this.Rewards = new List<Reward>();
-			foreach(JSONObject rewardJson in rewardsObjs) {
-				this.Rewards.Add(Reward.fromJSONObject(rewardJson));
+			ArrayList/*<JSONObject>*/ jsonRewardList = jsonObj [JSONConsts.SOOM_REWARDS].list;
+			foreach (JSONObject jsonRewardObj in jsonRewardList) {
+				this.Rewards.Add(Reward.fromJSONObject(jsonRewardObj));
 			}
 		}
 

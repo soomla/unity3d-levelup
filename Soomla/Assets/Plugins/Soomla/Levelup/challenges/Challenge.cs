@@ -11,6 +11,8 @@
 /// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
+
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Soomla.Levelup
@@ -38,7 +40,7 @@ namespace Soomla.Levelup
 			: base(jsonMission)
 		{
 			Missions = new List<Mission>();
-			List<JSONObject> missionsJSON = jsonMission[LUJSONConsts.LU_MISSIONS].list;
+			ArrayList/*<JSONObject>*/ missionsJSON = jsonMission[LUJSONConsts.LU_MISSIONS].list;
 			foreach(JSONObject missionJSON in missionsJSON) {
 				Missions.Add(Mission.fromJSONObject(missionJSON));
 			}

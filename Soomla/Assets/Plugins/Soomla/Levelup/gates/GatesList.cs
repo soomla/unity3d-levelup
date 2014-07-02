@@ -13,6 +13,7 @@
 /// limitations under the License.using System;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Soomla.Levelup
@@ -51,7 +52,7 @@ namespace Soomla.Levelup
 			: base(jsonGate)
 		{
 			Gates = new List<Gate>();
-			List<JSONObject> gatesJSON = jsonGate[LUJSONConsts.LU_GATES].list;
+			ArrayList/*<JSONObject>*/ gatesJSON = jsonGate[LUJSONConsts.LU_GATES].list;
 
 			// Iterate over all gates in the JSON array and for each one create
 			// an instance according to the gate type
