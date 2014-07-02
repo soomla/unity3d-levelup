@@ -20,6 +20,7 @@ using System.Collections.Generic;
 namespace Soomla.Levelup {
 	
 	public class World {
+		private static string TAG = "SOOMLA World";
 
 		public string WorldId;
 		public GatesList Gates;

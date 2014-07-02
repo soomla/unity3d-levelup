@@ -39,6 +39,9 @@ namespace Soomla.Levelup
 		}
 			
 
+		public static void SetCompleted(World world, bool completed) {
+			SetCompleted(world, completed, true);
+		}
 		public static void SetCompleted(World world, bool completed, bool notify) {
 			_instance._setCompleted(world, completed, notify);
 		}

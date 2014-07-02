@@ -88,14 +88,14 @@ namespace Soomla.Levelup {
 
 			StartTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			Elapsed = 0;
-			State = State.Running;
+			State = LevelState.Running;
 			LevelStorage.IncTimesStarted(this);
 			
 			return true;
 		}
 
 		public void pause() {
-			if (State != State.Running) {
+			if (State != LevelState.Running) {
 				return;
 			}
 			
@@ -103,16 +103,16 @@ namespace Soomla.Levelup {
 			Elapsed += now - StartTime;
 			StartTime = 0;
 			
-			State = State.Paused;
+			State = LevelState.Paused;
 		}
 
 		public void resume() {
-			if (State != State.Paused) {
+			if (State != LevelState.Paused) {
 				return;
 			}
 			
 			StartTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			State = State.Running;
+			State = LevelState.Running;
 		}
 		
 		public double GetPlayDuration() {
@@ -120,7 +120,7 @@ namespace Soomla.Levelup {
 			long now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			long duration = Elapsed;
 			if (StartTime != 0) {
-				duration += now - mStartTime;
+				duration += now - StartTime;
 			}
 			
 			return duration / 1000.0;
@@ -137,7 +137,7 @@ namespace Soomla.Levelup {
 			
 			double duration = GetPlayDuration();
 			
-			State = State.Ended;
+			State = LevelState.Ended;
 			
 			// Calculate the slowest \ fastest durations of level play
 			
@@ -149,7 +149,7 @@ namespace Soomla.Levelup {
 				LevelStorage.SetFastestDuration(this, duration);
 			}
 			
-			foreach (Score score in Scores.values()) {
+			foreach (Score score in Scores.Values) {
 				score.SaveAndReset(); // resetting scores
 			}
 
@@ -166,7 +166,7 @@ namespace Soomla.Levelup {
 		}
 
 		public override void SetCompleted(bool completed) {
-			State = State.Completed;
+			State = LevelState.Completed;
 			base.SetCompleted(completed);
 		}
 
