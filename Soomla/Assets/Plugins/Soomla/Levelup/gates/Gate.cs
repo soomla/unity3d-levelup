@@ -72,7 +72,7 @@ namespace Soomla.Levelup {
 			GateStorage.setOpen(this, open);
 		}
 
-		public bool IsOpen() {
+		public virtual bool IsOpen() {
 			return GateStorage.isOpen(this);
 		}
 

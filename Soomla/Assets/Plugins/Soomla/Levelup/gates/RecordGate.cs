@@ -66,7 +66,7 @@ namespace Soomla.Levelup
 			return score.HasRecordReached(DesiredRecord);
 		}
 
-		public override bool TryOpenInner() {
+		protected override bool tryOpenInner() {
 			if (canOpen()) {
 				ForceOpen(true);
 				return true;

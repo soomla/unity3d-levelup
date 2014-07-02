@@ -56,7 +56,7 @@ namespace Soomla.Levelup
 			return world != null && world.IsCompleted();
 		}
 
-		public override bool tryOpenInner() {
+		protected override bool tryOpenInner() {
 				// TODO: move this object to Store module. the following code will not work.
 
 			if (canOpen()) {

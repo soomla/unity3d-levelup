@@ -150,7 +150,7 @@ namespace Soomla.Levelup {
 			return WorldStorage.IsCompleted(this);
 		}
 
-		public void SetCompleted(bool completed) {
+		public virtual void SetCompleted(bool completed) {
 			SetCompleted(completed, false);
 		}
 		public void SetCompleted(bool completed, bool recursive) {
@@ -162,7 +162,7 @@ namespace Soomla.Levelup {
 			WorldStorage.SetCompleted(this, completed);
 		}
 
-		public bool canStart() {
+		public bool CanStart() {
 			return Gates == null || Gates.IsOpen();
 		}
 

@@ -90,7 +90,7 @@ namespace Soomla.Levelup
 			}
 		}
 
-		public override bool TryOpenInner() {
+		protected override bool tryOpenInner() {
 			if(AutoOpenBehavior) {
 				foreach (Gate gate in Gates) {
 					gate.TryOpen();
