@@ -40,8 +40,8 @@ namespace Soomla.Levelup
 		public RecordMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
-			this.AssociatedItemId = jsonItem[JSONConsts.SOOM_ASSOCITEMID].str;
-			this.DesiredRecord = jsonItem[JSONConsts.SOOM_DESIRED_RECORD].n;
+			this.AssociatedItemId = jsonMission[JSONConsts.SOOM_ASSOCITEMID].str;
+			this.DesiredRecord = jsonMission[JSONConsts.SOOM_DESIRED_RECORD].n;
 		}
 		
 		/// <summary>

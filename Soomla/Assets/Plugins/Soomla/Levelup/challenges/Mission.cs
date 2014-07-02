@@ -58,7 +58,7 @@ namespace Soomla.Levelup {
 //#endif
 
 		protected Mission(JSONObject jsonObj) {
-			this.MissionId = jsonObj[LUJSONConsts.LU_MISSION_MISSIONID];
+			this.MissionId = jsonObj[LUJSONConsts.LU_MISSION_MISSIONID].str;
 			if (jsonObj[JSONConsts.SOOM_NAME]) {
 				this.Name = jsonItem[JSONConsts.SOOM_NAME].str;
 			} else {
@@ -74,8 +74,9 @@ namespace Soomla.Levelup {
 
 		public virtual JSONObject toJSONObject() {
 			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
-			obj.AddField(JSONConsts.ITEM_NAME, this.Name);
+			obj.AddField(JSONConsts.SOOM_NAME, this.Name);
 			obj.AddField(LUJSONConsts.LU_MISSION_MISSIONID, this.MissionId);
+			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 
 			JSONObject rewardsArr = new JSONObject(JSONObject.Type.ARRAY);
 			foreach(Reward reward in this.Rewards) {

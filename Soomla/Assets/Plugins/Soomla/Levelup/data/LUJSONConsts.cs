@@ -34,6 +34,7 @@ namespace Soomla.Levelup {
 		/** Gate **/
 		public const string LU_GATES             = "gates";
 		public const string LU_GATE_GATEID       = "gateId";
+		public const string LU_GATE_ASSOCWORLDID = "associatedWorldId";
 
 		/** Challenge **/
 		public const string LU_CHALLENGES        = "challenges";

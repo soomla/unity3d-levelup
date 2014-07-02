@@ -40,8 +40,8 @@ namespace Soomla.Levelup
 		public BalanceMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
-			this.AssociatedItemId = jsonItem[JSONConsts.SOOM_ASSOCITEMID].str;
-			this.DesiredBalance = jsonItem[JSONConsts.SOOM_DESIRED_BALANCE].n;
+			this.AssociatedItemId = jsonMission[JSONConsts.SOOM_ASSOCITEMID].str;
+			this.DesiredBalance = jsonMission[JSONConsts.SOOM_DESIRED_BALANCE].n;
 		}
 		
 		/// <summary>

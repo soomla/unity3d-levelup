@@ -40,7 +40,9 @@ namespace Soomla.Levelup
 		/// </summary>
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
-			return base.toJSONObject();
+			JSONObject obj = base.toJSONObject();
+
+			return obj;
 		}
 	}
 }
