@@ -44,7 +44,7 @@ namespace Soomla.Levelup
 		}
 
 		public static double GetLatestScore(Score score) {
-			_instance._getLatestScore (score);
+			return _instance._getLatestScore (score);
 		}
 
 		public static void GetRecordScore(Score score, double record) {
@@ -52,7 +52,7 @@ namespace Soomla.Levelup
 		}
 
 		public static double GetRecordScore(Score score) {
-			_instance._getRecordScore (score);
+			return _instance._getRecordScore (score);
 		}
 
 
@@ -63,6 +63,7 @@ namespace Soomla.Levelup
 		
 		virtual protected double _getLatestScore(Score score) {
 			// TODO: WIE
+			return 0;
 		}
 		
 		virtual protected void _setRecordScore(Score score, double record) {
@@ -71,6 +72,7 @@ namespace Soomla.Levelup
 		
 		virtual protected double _getRecordScore(Score score) {
 			// TODO: WIE
+			return 0;
 		}
 	}
 }

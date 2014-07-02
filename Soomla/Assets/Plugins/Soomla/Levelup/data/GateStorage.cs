@@ -39,6 +39,10 @@ namespace Soomla.Levelup
 		}
 			
 
+		public static void SetOpen(Gate gate, bool open) {
+			_instance._setOpen(gate, open, true);
+		}
+
 		public static void SetOpen(Gate gate, bool open, bool notify) {
 			_instance._setOpen(gate, open, notify);
 		}

@@ -97,7 +97,7 @@ namespace Soomla.Levelup
 			get {
 				return Gates.Count;
 			}
-		}
+		}	
 
 		protected override bool TryOpenInner() {
 			if(AutoOpenBehavior) {

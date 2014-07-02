@@ -44,7 +44,7 @@ namespace Soomla.Levelup
 		}
 		
 		public static double GetSlowestDuration(Level level) {
-			_instance._getSlowestDuration (level);
+			return _instance._getSlowestDuration (level);
 		}
 		
 		public static void SetFastestDuration(Level level, double duration) {
@@ -52,7 +52,7 @@ namespace Soomla.Levelup
 		}
 		
 		public static double GetFastestDuration(Level level) {
-			_instance._getFastestDuration (level);
+			return _instance._getFastestDuration (level);
 		}
 		
 		
@@ -60,30 +60,30 @@ namespace Soomla.Levelup
 		/** Level Times Started **/
 		
 		public static int IncTimesStarted(Level level) {
-			_instance._incTimesStarted (level);
+			return _instance._incTimesStarted (level);
 		}
 		
 		public static int DecTimesStarted(Level level) {
-			_instance._decTimesStarted (level);
+			return _instance._decTimesStarted (level);
 		}
 		
 		public static int GetTimesStarted(Level level) {
-			_instance._getTimesStarted (level);
+			return _instance._getTimesStarted (level);
 		}
 		
 		
 		/** Level Times Played **/
 		
 		public static int IncTimesPlayed(Level level) {
-			_instance._incTimesPlayed (level);
+			return _instance._incTimesPlayed (level);
 		}
 		
 		public static int DecTimesPlayed(Level level){
-			_instance._decTimesPlayed (level);
+			return _instance._decTimesPlayed (level);
 		} 
 		
 		public static int GetTimesPlayed(Level level) {
-			_instance._getTimesPlayed (level);
+			return _instance._getTimesPlayed (level);
 		}
 
 
@@ -94,6 +94,7 @@ namespace Soomla.Levelup
 		
 		virtual protected double _getSlowestDuration(Level level) {
 			// TODO: WIE
+			return 0;
 		}
 		
 		virtual protected void _setFastestDuration(Level level, double duration) {
@@ -102,6 +103,7 @@ namespace Soomla.Levelup
 		
 		virtual protected double _getFastestDuration(Level level) {
 			// TODO: WIE
+			return 0;
 		}
 		
 		
@@ -110,14 +112,17 @@ namespace Soomla.Levelup
 		
 		virtual protected int _incTimesStarted(Level level) {
 			// TODO: WIE
+			return 0;
 		}
 		
 		virtual protected int _decTimesStarted(Level level) {
 			// TODO: WIE
+			return 0;
 		}
 		
 		virtual protected int _getTimesStarted(Level level) {
 			// TODO: WIE
+			return 0;
 		}
 		
 		
@@ -125,14 +130,17 @@ namespace Soomla.Levelup
 		
 		virtual protected int _incTimesPlayed(Level level) {
 			// TODO: WIE
+			return 0;
 		}
 		
 		virtual protected int _decTimesPlayed(Level level){
 			// TODO: WIE
+			return 0;
 		} 
 		
 		virtual protected int _getTimesPlayed(Level level) {
 			// TODO: WIE
+			return 0;
 		}
 	}
 }

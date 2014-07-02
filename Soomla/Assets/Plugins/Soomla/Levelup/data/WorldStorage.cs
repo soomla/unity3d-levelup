@@ -57,6 +57,7 @@ namespace Soomla.Levelup
 
 		virtual protected bool _isCompleted(World world) {
 			// TODO: WIE
+			return false;
 		}
 	}
 }

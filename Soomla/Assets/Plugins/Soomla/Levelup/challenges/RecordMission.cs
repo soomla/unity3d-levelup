@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -53,7 +54,7 @@ namespace Soomla.Levelup
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedItemId);
-			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, this.DesiredRecord);
+			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, Convert.ToInt32(this.DesiredRecord));
 
 			return obj;
 		}

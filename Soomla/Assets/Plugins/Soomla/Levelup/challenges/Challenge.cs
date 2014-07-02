@@ -19,6 +19,8 @@ namespace Soomla.Levelup
 {
 	public class Challenge : Mission
 	{
+		private const string TAG = "SOOMLA Challenge";
+
 		public List<Mission> Missions;
 
 		public Challenge(string missionId, string name, List<Mission> missions)
@@ -53,11 +55,11 @@ namespace Soomla.Levelup
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
-			List<JSONObject> missionsJSON = new List<JSONObject>();
-			foreach (Mission mission in Missions) {
+			JSONObject missionsJSON = new JSONObject(JSONObject.Type.ARRAY);
+			foreach (Mission mission in Missions) {			
 				missionsJSON.Add(mission.toJSONObject());
 			}
-			obj.AddField(LUJSONConsts.LU_MISSIONS, missionsJSON);
+			obj.AddField(LUJSONConsts.LU_MISSIONS, missionsJSON);		
 
 			return obj;
 		}
