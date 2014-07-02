@@ -90,6 +90,13 @@ namespace Soomla.Levelup
 			}
 		}
 
+<<<<<<< Updated upstream
+=======
+//		public static GatesList FromJSONObject(JSONObject jsonObject) {
+//			return sJSONFactory.create(jsonObject, GatesList.class.getPackage().getName());
+//		}
+>>>>>>> Stashed changes
+
 		public override bool TryOpenInner() {
 			if(AutoOpenBehavior) {
 				foreach (Gate gate in Gates) {
