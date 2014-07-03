@@ -105,14 +105,12 @@ namespace Soomla.Levelup {
 		}
 #endif
 
-		protected void registerEvents() {
-			if (!IsCompleted()) {
-				// TODO: register for events
-			}
+		protected virtual void registerEvents() {
+
 		}
 
 		protected virtual void unregisterEvents() {
-			// TODO: unregister for events
+
 		}
 
 		public virtual bool IsCompleted() {

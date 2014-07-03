@@ -80,11 +80,54 @@ namespace Soomla.Levelup
 			return true;
 		}
 
+		/// <summary>
+		/// Handles mission completion events. Checks if all missions included
+		/// in the challenge are completed, and if so, sets the challenge as completed.
+		/// </summary>
+		/// <param name="completedMission">Completed mission.</param>
+		/// @Subscribe
+		public void onMissionCompleted(Mission completedMission) {
+			if (Missions.Contains(completedMission)) {
+				bool completed = true;
+				foreach (Mission mission in Missions) {
+					if (!mission.IsCompleted()) {
+						completed = false;
+						break;
+					}
+				}
+				
+				if(completed) {
+					SetCompleted(true);
+				}
+			}
+		}
+
+		/// <summary>
+		/// handle child mission revoked.
+		/// </summary>
+		/// <param name="mission">Mission.</param>
+		/// @Subscribe
+		public void onMissionCompletionRevoked(Mission mission) {
+			if (Missions.Contains(mission)) {
+				// if the challenge was completed before, but now one of its child missions
+				// was uncompleted - the challenge is revoked as well
+				if (MissionStorage.IsCompleted(this)) {
+					SetCompleted(false);
+				}
+			}
+		}
+
+		protected override void registerEvents() {
+			if (!IsCompleted()) {
+				// register for events
+				LevelupEvents.OnMissionCompleted += onMissionCompleted; 
+				LevelupEvents.OnMissionCompletionRevoked += onMissionCompletionRevoked;
+			}
+		}
+
 		protected override void unregisterEvents() {
 			SoomlaUtils.LogDebug(TAG, "ignore unregisterEvents() since challenge can be revoked by child missions revoked");
 		}
-
-		// TODO: register for events and handle them
 	}
 }
 

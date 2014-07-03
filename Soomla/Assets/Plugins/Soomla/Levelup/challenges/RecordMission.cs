@@ -20,20 +20,20 @@ namespace Soomla.Levelup
 {
 	public class RecordMission : Mission
 	{
-		public string AssociatedItemId;
+		public string AssociatedScoreId;
 		public double DesiredRecord;
 
-		public RecordMission(string name, string missionId, string associatedItemId, double desiredRecord)
+		public RecordMission(string name, string missionId, string associatedScoreId, double desiredRecord)
 			: base(missionId, name)
 		{
-			AssociatedItemId = associatedItemId;
+			AssociatedScoreId = associatedScoreId;
 			DesiredRecord = desiredRecord;
 		}
 
-		public RecordMission(string missionId, string name, List<Reward> rewards, string associatedItemId, double desiredRecord)
+		public RecordMission(string missionId, string name, List<Reward> rewards, string associatedScoreId, double desiredRecord)
 			: base(missionId, name, rewards)
 		{
-			AssociatedItemId = associatedItemId;
+			AssociatedScoreId = associatedScoreId;
 			DesiredRecord = desiredRecord;
 		}
 		
@@ -43,7 +43,7 @@ namespace Soomla.Levelup
 		public RecordMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
-			this.AssociatedItemId = jsonMission[JSONConsts.SOOM_ASSOCITEMID].str;
+			this.AssociatedScoreId = jsonMission[JSONConsts.SOOM_ASSOCITEMID].str;
 			this.DesiredRecord = jsonMission[JSONConsts.SOOM_DESIRED_RECORD].n;
 		}
 		
@@ -53,13 +53,29 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedItemId);
+			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedScoreId);
 			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, Convert.ToInt32(this.DesiredRecord));
 
 			return obj;
 		}
 
-		// TODO: register for events and handle them
+		/// <summary>
+		/// Ons the score record changed.
+		/// </summary>
+		/// <param name="score">Score.</param>
+		/// @Subscribe
+		public void onScoreRecordChanged(Score score) {
+			if (score.ScoreId.Equals(AssociatedScoreId) &&
+			    score.HasRecordReached(DesiredRecord)) {
+					SetCompleted(true);
+			}
+		}
+
+		protected override void registerEvents() {
+			if (!IsCompleted ()) {
+				LevelupEvents.OnScoreRecordChanged += onScoreRecordChanged;
+			}
+		}
 	}
 }
 

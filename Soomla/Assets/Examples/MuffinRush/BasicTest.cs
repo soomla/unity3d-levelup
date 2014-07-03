@@ -69,8 +69,18 @@ public class BasicTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SoomlaInit ("secretservice");
+//		SoomlaInit ("hansolo");
 		SoomlaStore.Initialize (new MuffinRushAssets ());
+	}
+
+	void Update() {
+		if (Application.platform == RuntimePlatform.Android) {
+			if (Input.GetKeyUp(KeyCode.Escape)) {
+				//quit application on back button
+				Application.Quit();
+				return;
+			}
+		}
 	}
 
 	private IEnumerator testLevel() {
