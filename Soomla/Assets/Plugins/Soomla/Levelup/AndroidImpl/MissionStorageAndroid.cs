@@ -17,6 +17,7 @@ using System;
 
 namespace Soomla.Levelup
 {
+	public class MissionStorageAndroid : MissionStorage {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	
 	override protected void _setCompleted(Mission mission, bool completed, bool notify) {
@@ -31,12 +32,13 @@ namespace Soomla.Levelup
 		bool completed = false;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniMissionStorage = new AndroidJavaClass("com.soomla.levelup.data.MissionStorage")) {
-			given = jniMissionStorage.CallStatic<bool>("isCompleted", mission.toJNIObject());
+			completed = jniMissionStorage.CallStatic<bool>("isCompleted", mission.toJNIObject());
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		return completed;
 	}
 	
 #endif
+	}
 }
 

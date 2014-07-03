@@ -17,6 +17,7 @@ using System;
 
 namespace Soomla.Levelup
 {
+	public class ScoreStorageAndroid : ScoreStorage {
 #if UNITY_ANDROID && !UNITY_EDITOR
 
 	override protected void _setLatestScore(Score score, double latest) {
@@ -56,5 +57,6 @@ namespace Soomla.Levelup
 	}
 
 #endif
+	}
 }
 

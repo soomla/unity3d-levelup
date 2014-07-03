@@ -96,6 +96,15 @@ namespace Soomla.Levelup {
 			return mission;
 		}
 
+#if UNITY_ANDROID 
+		//&& !UNITY_EDITOR
+		public AndroidJavaObject toJNIObject() {
+			using(AndroidJavaClass jniGateClass = new AndroidJavaClass("com.soomla.levelup.challenges.Mission")) {
+				return jniGateClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
+			}
+		}
+#endif
+
 		protected void registerEvents() {
 			if (!IsCompleted()) {
 				// TODO: register for events

@@ -17,6 +17,7 @@ using System;
 
 namespace Soomla.Levelup
 {
+	public class LevelStorageAndroid : LevelStorage {
 	#if UNITY_ANDROID && !UNITY_EDITOR
 
 	protected override void _setSlowestDuration(Level level, double duration) {
@@ -122,14 +123,16 @@ namespace Soomla.Levelup
 		return timesPlayed;
 	}
 
-	override protected void _setLatestLevel(Level level, double latest) {
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			jniLevelStorage.CallStatic("setLatestLevel", level.toJNIObject(), latest);
-		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-	}
+	//TODO: what's this? error?
+//	override protected void _setLatestLevel(Level level, double latest) {
+//		AndroidJNI.PushLocalFrame(100);
+//		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+//			jniLevelStorage.CallStatic("setLatestLevel", level.toJNIObject(), latest);
+//		}
+//		AndroidJNI.PopLocalFrame(IntPtr.Zero);
+//	}
 
 	#endif
+	}
 }
 

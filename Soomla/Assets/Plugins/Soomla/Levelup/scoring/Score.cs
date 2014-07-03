@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup {
 	
-	public abstract class Score {
+	public class Score {
 
 //#if UNITY_IOS && !UNITY_EDITOR
 //		[DllImport ("__Internal")]
@@ -33,7 +33,7 @@ namespace Soomla.Levelup {
 		public bool HigherBetter;
 		protected double _tempScore;
 
-		protected Score (string scoreId, string name)
+		public Score (string scoreId, string name)
 		{
 			this.ScoreId = scoreId;
 			this.Name = name;
@@ -41,7 +41,7 @@ namespace Soomla.Levelup {
 			this.HigherBetter = true;
 		}
 
-		protected Score (string scoreId, string name, bool higherBetter)
+		public Score (string scoreId, string name, bool higherBetter)
 		{
 			this.ScoreId = scoreId;
 			this.Name = name;
@@ -57,7 +57,7 @@ namespace Soomla.Levelup {
 //		}
 //#endif
 
-		protected Score(JSONObject jsonObj) {
+		public Score(JSONObject jsonObj) {
 			this.ScoreId = jsonObj[LUJSONConsts.LU_SCORE_SCOREID].str;
 			if (jsonObj[JSONConsts.SOOM_NAME]) {
 				this.Name = jsonObj[JSONConsts.SOOM_NAME].str;
@@ -88,6 +88,14 @@ namespace Soomla.Levelup {
 			return score;
 		}
 
+#if UNITY_ANDROID 
+		//&& !UNITY_EDITOR
+		public AndroidJavaObject toJNIObject() {
+			using(AndroidJavaClass jniScoreClass = new AndroidJavaClass("com.soomla.levelup.scoring.Score")) {
+				return jniScoreClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
+			}
+		}
+#endif
 
 		public virtual void Inc(double amount) {
 			SetTempScore(_tempScore + amount);
@@ -138,6 +146,10 @@ namespace Soomla.Levelup {
 
 		public virtual void SetTempScore(double score) {
 			_tempScore = score;
+		}
+
+		public virtual double GetTempScore() {
+			return _tempScore;
 		}
 
 		public double Record {

@@ -177,7 +177,6 @@ namespace Soomla.Levelup {
 			State = LevelState.Completed;
 			base.SetCompleted(completed);
 		}
-
 	}
 }
 

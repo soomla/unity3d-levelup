@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 
@@ -56,6 +57,14 @@ namespace Soomla.Levelup {
 			return gate;
 		}
 
+#if UNITY_ANDROID 
+//&& !UNITY_EDITOR
+		public AndroidJavaObject toJNIObject() {
+			using(AndroidJavaClass jniGateClass = new AndroidJavaClass("com.soomla.levelup.gates.Gate")) {
+				return jniGateClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
+			}
+		}
+#endif
 
 		public bool TryOpen() {
 			//  check in gate storage if it's already open

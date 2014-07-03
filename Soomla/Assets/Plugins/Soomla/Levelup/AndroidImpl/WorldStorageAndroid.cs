@@ -17,6 +17,7 @@ using System;
 
 namespace Soomla.Levelup
 {
+	public class WorldStorageAndroid : WorldStorage {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	
 	override protected void _setCompleted(World world, bool completed, bool notify) {
@@ -31,12 +32,13 @@ namespace Soomla.Levelup
 		bool completed = false;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-			given = jniWorldStorage.CallStatic<bool>("isCompleted", world.toJNIObject());
+			completed = jniWorldStorage.CallStatic<bool>("isCompleted", world.toJNIObject());
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		return completed;
 	}
 	
 #endif
+	}
 }
 

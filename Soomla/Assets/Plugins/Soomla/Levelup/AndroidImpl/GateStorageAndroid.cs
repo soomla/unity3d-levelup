@@ -33,7 +33,7 @@ namespace Soomla.Levelup
 			bool open = false;
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniGateStorage = new AndroidJavaClass("com.soomla.levelup.data.GateStorage")) {
-				given = jniGateStorage.CallStatic<bool>("isOpen", gate.toJNIObject());
+				open = jniGateStorage.CallStatic<bool>("isOpen", gate.toJNIObject());
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 			return open;

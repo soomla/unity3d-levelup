@@ -120,6 +120,14 @@ namespace Soomla.Levelup {
 			return world;
 		}
 
+#if UNITY_ANDROID 
+		//&& !UNITY_EDITOR
+		public AndroidJavaObject toJNIObject() {
+			using(AndroidJavaClass jniWorldClass = new AndroidJavaClass("com.soomla.levelup.World")) {
+				return jniWorldClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
+			}
+		}
+#endif
 
 		public Dictionary<string, double> GetRecordScores() {
 			Dictionary<string, double> records = new Dictionary<string, double>();
