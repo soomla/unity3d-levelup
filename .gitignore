@@ -13,7 +13,7 @@
 *.booproj
 
 # xcode
-create_deploys
+#create_deploys
 create_unity.log
 
 # Xcode
