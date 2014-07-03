@@ -29,6 +29,8 @@ namespace Soomla.Levelup
 		{
 			AssociatedItemId = associatedItemId;
 			DesiredBalance = desiredBalance;
+
+			registerEvents();
 		}
 		
 		/// <summary>
@@ -39,6 +41,8 @@ namespace Soomla.Levelup
 		{
 			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
 			this.DesiredBalance = Convert.ToInt32(jsonGate[JSONConsts.SOOM_DESIRED_BALANCE].n);
+
+			registerEvents();
 		}
 		
 		/// <summary>
@@ -87,6 +91,44 @@ namespace Soomla.Levelup
 			}
 			
 			return false;
+		}
+
+		/// <summary>
+		/// Handles a currency balance changed event.
+		/// </summary>
+		/// <param name="virtualCurrency">Virtual currency whose balance has changed.</param>
+		/// <param name="balance">Balance of the given virtual currency.</param>
+		/// <param name="amountAdded">Amount added to the balance.</param>
+		/// @Subscribe
+		public void onCurrencyBalanceChanged(VirtualCurrency virtualCurrency, int balance, int amountAdded) {
+			checkItemIdBalance (virtualCurrency.ItemId, balance);
+		}
+		
+		/// <summary>
+		/// Handles a good balance changed event.
+		/// </summary>
+		/// <param name="good">Virtual good whose balance has changed.</param>
+		/// <param name="balance">Balance.</param>
+		/// <param name="amountAdded">Amount added.</param>
+		/// @Subscribe
+		public void onGoodBalanceChanged(VirtualGood good, int balance, int amountAdded) {
+			checkItemIdBalance (good.ItemId, balance);
+		}
+
+
+		protected virtual void registerEvents() {
+			if (!IsOpen) {
+				StoreEvents.OnCurrencyBalanceChanged += onCurrencyBalanceChanged;
+				StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
+			}
+		}
+
+		private void checkItemIdBalance(String itemId, int balance) {
+			if (itemId.Equals(AssociatedItemId) && balance >= DesiredBalance) {
+				StoreEvents.OnCurrencyBalanceChanged -= onCurrencyBalanceChanged;
+				StoreEvents.OnGoodBalanceChanged -= onGoodBalanceChanged;
+				// gate can open now
+			}
 		}
 	}
 }

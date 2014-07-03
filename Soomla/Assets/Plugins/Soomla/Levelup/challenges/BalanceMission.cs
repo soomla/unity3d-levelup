@@ -15,6 +15,8 @@
 using System;
 using System.Collections.Generic;
 
+using Soomla.Store;
+
 namespace Soomla.Levelup
 {
 	public class BalanceMission : Mission
@@ -58,7 +60,46 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		// TODO: register for events and handle them
+		/// <summary>
+		/// Handles a currency balance changed event.
+		/// </summary>
+		/// <param name="virtualCurrency">Virtual currency whose balance has changed.</param>
+		/// <param name="balance">Balance of the given virtual currency.</param>
+		/// <param name="amountAdded">Amount added to the balance.</param>
+		/// @Subscribe
+		public void onCurrencyBalanceChanged(VirtualCurrency virtualCurrency, int balance, int amountAdded) {
+			checkItemIdBalance (virtualCurrency.ItemId, balance);
+		}
+		
+		/// <summary>
+		/// Handles a good balance changed event.
+		/// </summary>
+		/// <param name="good">Virtual good whose balance has changed.</param>
+		/// <param name="balance">Balance.</param>
+		/// <param name="amountAdded">Amount added.</param>
+		/// @Subscribe
+		public void onGoodBalanceChanged(VirtualGood good, int balance, int amountAdded) {
+			checkItemIdBalance (good.ItemId, balance);
+		}
+		
+		
+		protected override void registerEvents() {
+			base.registerEvents ();
+			StoreEvents.OnCurrencyBalanceChanged += onCurrencyBalanceChanged;
+			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
+		}
+
+		protected override void unregisterEvents() {
+			StoreEvents.OnCurrencyBalanceChanged -= onCurrencyBalanceChanged;
+			StoreEvents.OnGoodBalanceChanged -= onGoodBalanceChanged;
+			base.unregisterEvents ();
+		}
+		
+		private void checkItemIdBalance(String itemId, int balance) {
+			if (itemId.Equals(AssociatedItemId) && balance >= DesiredBalance) {
+				SetCompleted(true);
+			}
+		}
 	}
 }
 

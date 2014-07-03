@@ -29,6 +29,7 @@ namespace Soomla.Levelup
 			: base(gateId)
 		{
 			AssociatedItemId = associatedItemId;
+			registerEvents();
 		}
 		
 		/// <summary>
@@ -38,6 +39,7 @@ namespace Soomla.Levelup
 			: base(jsonGate)
 		{
 			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
+			registerEvents();
 		}
 		
 		/// <summary>
@@ -51,7 +53,25 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		// TODO: register for events and handle them
+		protected virtual void registerEvents() {
+			StoreEvents.OnItemPurchased += onItemPurchaseStarted;
+		}
+
+		protected virtual void unregisterEvents() {
+			StoreEvents.OnItemPurchased -= onItemPurchaseStarted;
+		}
+
+		/// <summary>
+		/// Handles an item purchase started event. 
+		/// </summary>
+		/// <param name="pvi">Purchasable virtual item.</param>
+		/// @Subscribe
+		public void onItemPurchaseStarted(PurchasableVirtualItem pvi) {
+			if (pvi.ItemId.Equals (AssociatedItemId)) {
+				unregisterEvents();
+				ForceOpen(true);
+			}
+		}
 
 		public override bool CanOpen() {
 			return true;

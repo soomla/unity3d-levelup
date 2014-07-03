@@ -30,6 +30,8 @@ namespace Soomla.Levelup
 		{
 			AssociatedScoreId = associatedScoreId;
 			DesiredRecord = desiredRecord;
+
+			registerEvents();
 		}
 		
 		/// <summary>
@@ -40,6 +42,8 @@ namespace Soomla.Levelup
 		{
 			this.AssociatedScoreId = jsonGate[JSONConsts.SOOM_ASSOCSCOREID].str;
 			this.DesiredRecord = jsonGate[JSONConsts.SOOM_DESIRED_RECORD].n;
+
+			registerEvents();
 		}
 		
 		/// <summary>
@@ -54,18 +58,28 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		// TODO: register for events and handle them
+		protected virtual void registerEvents() {
+			LevelupEvents.OnScoreRecordChanged += onScoreRecordChanged;
+		}
+
+		protected virtual void unregisterEvents() {
+			LevelupEvents.OnScoreRecordChanged -= onScoreRecordChanged;
+		}
+
+		public void onScoreRecordChanged(Score score) {
+			if (score.ScoreId.Equals (AssociatedScoreId)) {
+				unregisterEvents();
+				ForceOpen(true);
+			}
+		}
 
 		public override bool CanOpen() {
-			// TODO: remove THIS !
-			Score score = null;
-//			Score score = LevelUp.getInstance().getScore(mAssociatedScoreId); // TODO: get the associated score from LevelUp 
+			Score score = LevelUp.GetScore(AssociatedScoreId);
 			if (score == null) {
 				SoomlaUtils.LogError(TAG, "(canOpen) couldn't find score with scoreId: " + AssociatedScoreId);
 				return false;
 			}
-			
-			//        return score.hasTempReached(mDesiredRecord);
+
 			return score.HasRecordReached(DesiredRecord);
 		}
 
