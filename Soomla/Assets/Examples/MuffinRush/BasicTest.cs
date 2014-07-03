@@ -71,6 +71,10 @@ namespace Soomla.Test {
 		// Use this for initialization
 		void Start () {
 	//		SoomlaInit ("hansolo");
+			StoreEvents.OnSoomlaStoreInitialized += () => {
+				testScoreAsc ();
+//				testLevel();
+			};
 			SoomlaStore.Initialize (new MuffinRushAssets ());
 		}
 
