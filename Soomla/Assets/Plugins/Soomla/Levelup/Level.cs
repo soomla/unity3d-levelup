@@ -102,7 +102,7 @@ namespace Soomla.Levelup {
 			return true;
 		}
 
-		public void pause() {
+		public void Pause() {
 			if (State != LevelState.Running) {
 				return;
 			}
@@ -114,7 +114,7 @@ namespace Soomla.Levelup {
 			State = LevelState.Paused;
 		}
 
-		public void resume() {
+		public void Resume() {
 			if (State != LevelState.Paused) {
 				return;
 			}
