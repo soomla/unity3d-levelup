@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="UnityAndroidLevelUp:jar">
-    <output-path>$PROJECT_DIR$/../unity-android-levelup/out/artifacts/UnityAndroidLevelUp_jar</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/UnityAndroidLevelUp_jar</output-path>
     <root id="archive" name="UnityAndroidLevelUp.jar">
       <element id="module-output" name="UnityAndroidLevelUp" />
     </root>

@@ -120,13 +120,13 @@ namespace Soomla.Levelup {
 
 		public delegate void Action();
 
-		public static Action<Gate> OnGateOpened = delegate {}; /* TODO: Gate here */
-		public static Action<Level> OnLevelEnded = delegate {}; /* TODO: UNCOMMENT THIS WHEN YOU HAVE LEVEL */
-		public static Action<Level> OnLevelStarted = delegate {}; /* TODO: UNCOMMENT THIS WHEN YOU HAVE LEVEL */
-		public static Action<Mission> OnMissionCompleted = delegate {}; /* TODO: Mission and bool here */
-		public static Action<Mission> OnMissionCompletionRevoked = delegate {}; /* TODO: Mission and bool here */
-		public static Action<Score> OnScoreRecordChanged = delegate {}; /* TODO: Score here */
-		public static Action<World> OnWorldCompleted = delegate {}; /* TODO: World here */
+		public static Action<Gate> OnGateOpened = delegate {};
+		public static Action<Level> OnLevelEnded = delegate {};
+		public static Action<Level> OnLevelStarted = delegate {};
+		public static Action<Mission> OnMissionCompleted = delegate {};
+		public static Action<Mission> OnMissionCompletionRevoked = delegate {};
+		public static Action<Score> OnScoreRecordChanged = delegate {};
+		public static Action<World> OnWorldCompleted = delegate {};
 
 	}
 }

@@ -59,7 +59,9 @@ namespace Soomla.Levelup
 		}
 
 		protected virtual void registerEvents() {
-			LevelupEvents.OnScoreRecordChanged += onScoreRecordChanged;
+			if (!IsOpen ()) {
+				LevelupEvents.OnScoreRecordChanged += onScoreRecordChanged;
+			}
 		}
 
 		protected virtual void unregisterEvents() {
@@ -74,7 +76,7 @@ namespace Soomla.Levelup
 		}
 
 		public override bool CanOpen() {
-			Score score = LevelUp.GetScore(AssociatedScoreId);
+			Score score = LevelUp.GetInstance().GetScore(AssociatedScoreId);
 			if (score == null) {
 				SoomlaUtils.LogError(TAG, "(canOpen) couldn't find score with scoreId: " + AssociatedScoreId);
 				return false;

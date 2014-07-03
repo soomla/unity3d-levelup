@@ -54,7 +54,9 @@ namespace Soomla.Levelup
 		}
 
 		protected virtual void registerEvents() {
-			StoreEvents.OnItemPurchased += onItemPurchaseStarted;
+			if (!IsOpen()) {
+				StoreEvents.OnItemPurchased += onItemPurchaseStarted;
+			}
 		}
 
 		protected virtual void unregisterEvents() {
