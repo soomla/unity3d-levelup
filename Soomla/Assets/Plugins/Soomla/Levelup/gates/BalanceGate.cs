@@ -117,7 +117,7 @@ namespace Soomla.Levelup
 
 
 		protected virtual void registerEvents() {
-			if (!IsOpen) {
+			if (!IsOpen()) {
 				StoreEvents.OnCurrencyBalanceChanged += onCurrencyBalanceChanged;
 				StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
 			}
