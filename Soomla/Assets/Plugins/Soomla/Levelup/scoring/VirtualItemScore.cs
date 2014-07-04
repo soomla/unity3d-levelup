@@ -17,7 +17,7 @@ namespace Soomla.Levelup
 {
 	public class VirtualItemScore : Score
 	{
-		private static string TAG = "SOOMLA VirtualItemScore";
+//		private static string TAG = "SOOMLA VirtualItemScore";
 		public string AssociatedItemId;
 
 		public VirtualItemScore(string scoreId, string name, string associatedItemId)

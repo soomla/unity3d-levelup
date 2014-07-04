@@ -54,7 +54,9 @@ namespace Soomla.Levelup
 		}
 
 		protected virtual void registerEvents() {
-			StoreEvents.OnItemPurchased += onItemPurchaseStarted;
+			if (!IsOpen()) {
+				StoreEvents.OnItemPurchased += onItemPurchaseStarted;
+			}
 		}
 
 		protected virtual void unregisterEvents() {
@@ -87,9 +89,11 @@ namespace Soomla.Levelup
 			} catch (VirtualItemNotFoundException e) {
 				SoomlaUtils.LogError(TAG, "The item needed for purchase doesn't exist. itemId: " +
 				                     AssociatedItemId);
+				SoomlaUtils.LogError(TAG, e.Message);
 			} catch (InvalidCastException e) {
 				SoomlaUtils.LogError(TAG, "The associated item is not a purchasable item. itemId: " +
 				                     AssociatedItemId);
+				SoomlaUtils.LogError(TAG, e.Message);
 			}
 
 			return false;

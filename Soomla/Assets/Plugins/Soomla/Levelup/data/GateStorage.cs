@@ -40,15 +40,15 @@ namespace Soomla.Levelup
 			
 
 		public static void SetOpen(Gate gate, bool open) {
-			_instance._setOpen(gate, open, true);
+			instance._setOpen(gate, open, true);
 		}
 
 		public static void SetOpen(Gate gate, bool open, bool notify) {
-			_instance._setOpen(gate, open, notify);
+			instance._setOpen(gate, open, notify);
 		}
 
 		public static bool IsOpen(Gate gate) {
-			return _instance._isOpen(gate);
+			return instance._isOpen(gate);
 		}
 
 

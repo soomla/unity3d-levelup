@@ -40,15 +40,15 @@ namespace Soomla.Levelup
 			
 
 		public static void SetCompleted(Mission mission, bool completed) {
-			_instance._setCompleted (mission, completed, true);
+			instance._setCompleted (mission, completed, true);
 		}
 
 		public static void SetCompleted(Mission mission, bool completed, bool notify) {
-			_instance._setCompleted(mission, completed, notify);
+			instance._setCompleted(mission, completed, notify);
 		}
 
 		public static bool IsCompleted(Mission mission) {
-			return _instance._isCompleted(mission);
+			return instance._isCompleted(mission);
 		}
 
 
