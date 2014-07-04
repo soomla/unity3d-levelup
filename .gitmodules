@@ -16,3 +16,6 @@
 [submodule "submodules/unity3d-store"]
 	path = submodules/unity3d-store
 	url = git@github.com:soomla/unity3d-store.git
+[submodule "submodules/soomla-android-core"]
+	path = submodules/soomla-android-core
+	url = git@github.com:soomla/soomla-android-core.git

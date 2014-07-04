@@ -85,7 +85,7 @@ namespace Soomla.Levelup {
 		}
 
 		public virtual JSONObject toJSONObject() {
-			JSONObject obj = new JSONObject();
+			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
 
 			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 			obj.AddField(LUJSONConsts.LU_WORLD_WORLDID, WorldId);

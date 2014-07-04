@@ -1,0 +1,1 @@
+../../../../../submodules/unity3d-store/Soomla/Assets/Soomla/Editor/build-tools/Soomla_StoreRunner.py
