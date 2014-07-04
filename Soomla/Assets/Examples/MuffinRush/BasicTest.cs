@@ -84,26 +84,17 @@ namespace Soomla.Test {
 		// Use this for initialization
 		void Start () {
 	//		SoomlaInit ("hansolo");
-			UnityEngine.Debug.LogError("Start SOOMLA");
 			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
+			LevelUpEvents.Initialize();
 //			StoreEvents.OnSoomlaStoreInitialized += () => {
 //				testScoreAsc ();
 ////				testLevel();
 //			};
-			UnityEngine.Debug.LogError("Start2 SOOMLA");
 			SoomlaStore.Initialize (new MuffinRushAssets ());
 		}
 
 		public void onSoomlaStoreInitialized() {
-			UnityEngine.Debug.LogError("onSoomlaStoreInitialized SOOMLA");
-			printSomething();
 			testScoreAsc();
-			printSomething();
-			UnityEngine.Debug.LogError("onSoomlaStoreInitialized2 SOOMLA");
-		}
-
-		private void printSomething() {
-			UnityEngine.Debug.LogError("something SOOMLA");
 		}
 
 		void Update() {

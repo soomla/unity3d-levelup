@@ -60,12 +60,12 @@ namespace Soomla.Levelup
 
 		protected virtual void registerEvents() {
 			if (!IsOpen ()) {
-				LevelupEvents.OnScoreRecordChanged += onScoreRecordChanged;
+				LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			}
 		}
 
 		protected virtual void unregisterEvents() {
-			LevelupEvents.OnScoreRecordChanged -= onScoreRecordChanged;
+			LevelUpEvents.OnScoreRecordChanged -= onScoreRecordChanged;
 		}
 
 		public void onScoreRecordChanged(Score score) {

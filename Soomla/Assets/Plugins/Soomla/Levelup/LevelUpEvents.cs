@@ -22,10 +22,10 @@ namespace Soomla.Levelup {
 	/// <summary>
 	/// This class provides functions for event handling.
 	/// </summary>
-	public class LevelupEvents : MonoBehaviour {
-		private const string TAG = "SOOMLA LevelupEvents";
+	public class LevelUpEvents : MonoBehaviour {
+		private const string TAG = "SOOMLA LevelUpEvents";
 
-		private static LevelupEvents instance = null;
+		private static LevelUpEvents instance = null;
 
 		/// <summary>
 		/// Initializes game state before the game starts.
@@ -39,6 +39,18 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		public static void Initialize() {
+#if UNITY_ANDROID && !UNITY_EDITOR
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.LevelUpEventHandler")) {
+				jniEventHandler.CallStatic("initialize");
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+#elif UNITY_ANDROID && !UNITY_EDITOR
+			// TODO: implement this
+#endif
+		}
+
 		public void onGateOpened(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onGateOpened with message: " + message);
 
@@ -46,7 +58,7 @@ namespace Soomla.Levelup {
 			JSONObject json = new JSONObject (message);
 			Gate gate = Gate.fromJSONObject (json);
 
-			LevelupEvents.OnGateOpened(gate);
+			LevelUpEvents.OnGateOpened(gate);
 		}
 
 		public void onLevelEnded(string message) {
@@ -57,7 +69,7 @@ namespace Soomla.Levelup {
 			JSONObject json = new JSONObject (message);
 			Level level = Level.fromJSONObject(json);
 
-			LevelupEvents.OnLevelEnded(level);
+			LevelUpEvents.OnLevelEnded(level);
 		}
 
 		public void onLevelStarted(string message) {
@@ -68,7 +80,7 @@ namespace Soomla.Levelup {
 			JSONObject json = new JSONObject (message);
 			Level level = Level.fromJSONObject(json);
 			
-			LevelupEvents.OnLevelStarted(level);
+			LevelUpEvents.OnLevelStarted(level);
 		}
 
 		public void onMissionCompleted(string message) {
@@ -79,7 +91,7 @@ namespace Soomla.Levelup {
 			JSONObject json = new JSONObject (message);
 			Mission mission = Mission.fromJSONObject (json);
 
-			LevelupEvents.OnMissionCompleted(mission);
+			LevelUpEvents.OnMissionCompleted(mission);
 		}
 
 		public void onMissionCompletionRevoked(string message) {
@@ -90,7 +102,7 @@ namespace Soomla.Levelup {
 			JSONObject json = new JSONObject (message);
 			Mission mission = Mission.fromJSONObject (json);
 
-			LevelupEvents.OnMissionCompletionRevoked(mission);
+			LevelUpEvents.OnMissionCompletionRevoked(mission);
 		}
 
 		public void onScoreRecordChanged(string message) {
@@ -101,7 +113,7 @@ namespace Soomla.Levelup {
 			JSONObject json = new JSONObject (message);
 			Score score = Score.fromJSONObject (json);
 
-			LevelupEvents.OnScoreRecordChanged(score);
+			LevelUpEvents.OnScoreRecordChanged(score);
 		}
 
 		public void onWorldCompleted(string message) {
@@ -112,7 +124,7 @@ namespace Soomla.Levelup {
 			JSONObject json = new JSONObject (message);
 			World world = World.fromJSONObject (json);
 
-			LevelupEvents.OnWorldCompleted(world);
+			LevelUpEvents.OnWorldCompleted(world);
 		}
 
 

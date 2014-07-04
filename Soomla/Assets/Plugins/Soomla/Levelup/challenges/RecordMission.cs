@@ -73,7 +73,7 @@ namespace Soomla.Levelup
 
 		protected override void registerEvents() {
 			if (!IsCompleted ()) {
-				LevelupEvents.OnScoreRecordChanged += onScoreRecordChanged;
+				LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			}
 		}
 	}

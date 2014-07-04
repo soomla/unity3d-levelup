@@ -120,8 +120,8 @@ namespace Soomla.Levelup
 		protected override void registerEvents() {
 			if (!IsCompleted()) {
 				// register for events
-				LevelupEvents.OnMissionCompleted += onMissionCompleted; 
-				LevelupEvents.OnMissionCompletionRevoked += onMissionCompletionRevoked;
+				LevelUpEvents.OnMissionCompleted += onMissionCompleted; 
+				LevelUpEvents.OnMissionCompletionRevoked += onMissionCompletionRevoked;
 			}
 		}
 

@@ -25,36 +25,36 @@ public class LevelUpEventHandler {
 
     @Subscribe
     public void onLevelStartedEvent(LevelStartedEvent levelStartedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelStartedEvent", levelStartedEvent.Level.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelStarted", levelStartedEvent.Level.toJSONObject().toString());
     }
 
     @Subscribe
     public void onLevelEndedEvent(LevelEndedEvent levelEndedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelEndedEvent", levelEndedEvent.Level.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelEnded", levelEndedEvent.Level.toJSONObject().toString());
     }
 
     @Subscribe
     public void onWorldCompletedEvent(WorldCompletedEvent worldCompletedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onWorldCompletedEvent", worldCompletedEvent.World.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onWorldCompleted", worldCompletedEvent.World.toJSONObject().toString());
     }
 
     @Subscribe
     public void onGateOpenedEvent(GateOpenedEvent gateOpenedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onGateOpenedEvent", gateOpenedEvent.Gate.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onGateOpened", gateOpenedEvent.Gate.toJSONObject().toString());
     }
 
     @Subscribe
     public void onMissionCompletedEvent(MissionCompletedEvent missionCompletedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onMissionCompletedEvent", missionCompletedEvent.Mission.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onMissionCompleted", missionCompletedEvent.Mission.toJSONObject().toString());
     }
 
     @Subscribe
     public void onMissionCompletionRevokedEvent(MissionCompletionRevokedEvent missionCompletionRevokedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onMissionCompletionRevokedEvent", missionCompletionRevokedEvent.Mission.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onMissionCompletionRevoked", missionCompletionRevokedEvent.Mission.toJSONObject().toString());
     }
 
     @Subscribe
     public void onScoreRecordChangedEvent(ScoreRecordChangedEvent scoreRecordChangedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onScoreRecordChangedEvent", scoreRecordChangedEvent.Score.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", scoreRecordChangedEvent.Score.toJSONObject().toString());
     }
 }
