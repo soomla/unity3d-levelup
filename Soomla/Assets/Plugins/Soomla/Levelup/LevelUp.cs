@@ -39,6 +39,79 @@ namespace Soomla.Levelup {
 			return fetchWorld(worldId, InitialWorlds);
 		}
 
+		/// <summary>
+		/// Counts all levels in all worlds and inner worlds.
+		/// </summary>
+		/// <returns>The number of levels in all worlds and their inner worlds</returns>
+		public int getLevelCount() {
+			int count = 0;
+			foreach (World initialWorld in this.InitialWorlds.Values) {
+				count += getLevelCountInWorld(initialWorld);
+			}
+			return count;
+		}
+
+		/// <summary>
+		/// Counts all levels in the given world and its inner worlds.
+		/// </summary>
+		/// <param name="world">The world to examine</param>
+		/// <returns>The number of levels in the given world and its inner worlds</returns>
+		public int getLevelCountInWorld(World world) {
+			int count = 0;
+			foreach (World initialWorld in world.InnerWorlds.Values) {
+				count += getRecursiveCount(initialWorld, (World innerWorld) => {
+					return innerWorld.GetType() == typeof(Level);
+				});
+			}
+			return count;
+		}
+
+		/// <summary>
+		/// Counts all worlds and their inner worlds with or without their levels.
+		/// </summary>
+		/// <param name="withLevels">Indicates whether to count also levels</param>
+		/// <returns>The number of worlds and their inner worlds, and optionally their inner levels</returns>
+		public int getWorldCount(bool withLevels) {
+			int count = 0;
+			foreach (World initialWorld in this.InitialWorlds.Values) {
+				count += getRecursiveCount(initialWorld, (World innerWorld) => {
+					return withLevels ?
+							(innerWorld.GetType() == typeof(World) || innerWorld.GetType() == typeof(Level)) :
+							(innerWorld.GetType() == typeof(World));
+				});
+			}
+			return count;
+		}
+
+		/// <summary>
+		/// Counts all completed levels.
+		/// </summary>
+		/// <returns>The number of completed levels and their inner completed levels</returns>
+		public int getCompletedLevelCount() {
+			int count = 0;
+			foreach (World initialWorld in this.InitialWorlds.Values) {
+				count += getRecursiveCount(initialWorld, (World innerWorld) => {
+					return innerWorld.GetType() == typeof(Level) && innerWorld.IsCompleted();
+				});
+			}
+			return count;
+		}
+
+		/// <summary>
+		/// Counts the number of completed worlds.
+		/// </summary>
+		/// <returns>The number of completed worlds and their inner completed worlds</returns>
+		public int getCompletedWorldCount() {
+			int count = 0;
+			foreach (World initialWorld in this.InitialWorlds.Values) {
+				count += getRecursiveCount(initialWorld, (World innerWorld) => {
+					return innerWorld.GetType() == typeof(World) && innerWorld.IsCompleted();
+				});
+			}
+			return count;
+		}
+
+
 		private static LevelUp instance = null;
 		public static LevelUp GetInstance() {
 			if (instance == null) {
@@ -100,6 +173,22 @@ namespace Soomla.Levelup {
 			}
 			
 			return retWorld;
+		}
+
+		private int getRecursiveCount(World world, Func<World, bool> isAccepted) {
+			int count = 0;
+			
+			// If the predicate is true, increment
+			if (isAccepted(world)) {
+				count++;
+			}
+			
+			foreach (World innerWorld in world.InnerWorlds.Values) {
+				
+				// Recursively count for inner world
+				count += getRecursiveCount(innerWorld, isAccepted);
+			}
+			return count;
 		}
 
 	}
