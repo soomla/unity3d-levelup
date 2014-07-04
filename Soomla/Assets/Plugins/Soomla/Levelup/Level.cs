@@ -54,10 +54,10 @@ namespace Soomla.Levelup {
 		{
 		}
 
-		public new static Level fromJSONObject(JSONObject gateObj) {
-			string className = gateObj[JSONConsts.SOOM_CLASSNAME].str;
+		public new static Level fromJSONObject(JSONObject levelObj) {
+			string className = levelObj[JSONConsts.SOOM_CLASSNAME].str;
 			
-			Level level = (Level) Activator.CreateInstance(Type.GetType("Soomla.Levelup." + className), new object[] { gateObj });
+			Level level = (Level) Activator.CreateInstance(Type.GetType("Soomla.Levelup." + className), new object[] { levelObj });
 			
 			return level;
 		}

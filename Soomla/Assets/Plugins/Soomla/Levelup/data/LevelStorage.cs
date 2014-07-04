@@ -60,30 +60,30 @@ namespace Soomla.Levelup
 		/** Level Times Started **/
 		
 		public static int IncTimesStarted(Level level) {
-			return _instance._incTimesStarted (level);
+			return instance._incTimesStarted (level);
 		}
 		
 		public static int DecTimesStarted(Level level) {
-			return _instance._decTimesStarted (level);
+			return instance._decTimesStarted (level);
 		}
 		
 		public static int GetTimesStarted(Level level) {
-			return _instance._getTimesStarted (level);
+			return instance._getTimesStarted (level);
 		}
 		
 		
 		/** Level Times Played **/
 		
 		public static int IncTimesPlayed(Level level) {
-			return _instance._incTimesPlayed (level);
+			return instance._incTimesPlayed (level);
 		}
 		
 		public static int DecTimesPlayed(Level level){
-			return _instance._decTimesPlayed (level);
+			return instance._decTimesPlayed (level);
 		} 
 		
 		public static int GetTimesPlayed(Level level) {
-			return _instance._getTimesPlayed (level);
+			return instance._getTimesPlayed (level);
 		}
 
 

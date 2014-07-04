@@ -94,7 +94,8 @@ namespace Soomla.Test {
 		}
 
 		public void onSoomlaStoreInitialized() {
-			testScoreAsc();
+			StartCoroutine(testScoreAsc());
+			StartCoroutine(testLevel());
 		}
 
 		void Update() {
@@ -163,7 +164,7 @@ namespace Soomla.Test {
 			yield return null;
 		}
 
-		public void testScoreAsc() {
+		public IEnumerator testScoreAsc() {
 			UnityEngine.Debug.LogError("testScoreAsc SOOMLA");
 			bool higherIsBetter = true;
 			string scoreId = "score_asc";
@@ -205,7 +206,7 @@ namespace Soomla.Test {
 
 			UnityEngine.Debug.LogError("Done! SOOMLA");
 
-//			yield return null;
+			yield return null;
 		}
 	}
 }
