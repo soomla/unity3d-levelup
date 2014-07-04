@@ -43,11 +43,11 @@ namespace Soomla.Levelup
 			SetCompleted(world, completed, true);
 		}
 		public static void SetCompleted(World world, bool completed, bool notify) {
-			_instance._setCompleted(world, completed, notify);
+			instance._setCompleted(world, completed, notify);
 		}
 
 		public static bool IsCompleted(World world) {
-			return _instance._isCompleted(world);
+			return instance._isCompleted(world);
 		}
 
 

@@ -71,6 +71,7 @@ namespace Soomla.Levelup
 				}
 			} catch (VirtualItemNotFoundException e) {
 				SoomlaUtils.LogError(TAG, "(canPass) Couldn't find itemId. itemId: " + AssociatedItemId);
+				SoomlaUtils.LogError(TAG, e.Message);
 				return false;
 			}
 			return true;
@@ -83,6 +84,7 @@ namespace Soomla.Levelup
 					StoreInventory.TakeItem(AssociatedItemId, DesiredBalance);
 				} catch (VirtualItemNotFoundException e) {
 					SoomlaUtils.LogError(TAG, "(open) Couldn't find itemId. itemId: " + AssociatedItemId);
+					SoomlaUtils.LogError(TAG, e.Message);
 					return false;
 				}
 				

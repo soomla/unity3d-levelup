@@ -40,19 +40,19 @@ namespace Soomla.Levelup
 			
 
 		public static void SetSlowestDuration(Level level, double duration) {
-			_instance._setSlowestDuration (level, duration);	
+			instance._setSlowestDuration (level, duration);	
 		}
 		
 		public static double GetSlowestDuration(Level level) {
-			return _instance._getSlowestDuration (level);
+			return instance._getSlowestDuration (level);
 		}
 		
 		public static void SetFastestDuration(Level level, double duration) {
-			_instance._setFastestDuration (level, duration);
+			instance._setFastestDuration (level, duration);
 		}
 		
 		public static double GetFastestDuration(Level level) {
-			return _instance._getFastestDuration (level);
+			return instance._getFastestDuration (level);
 		}
 		
 		

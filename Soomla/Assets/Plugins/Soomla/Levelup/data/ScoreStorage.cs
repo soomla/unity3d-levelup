@@ -40,19 +40,19 @@ namespace Soomla.Levelup
 			
 
 		public static void SetLatestScore(Score score, double latest) {
-			_instance._setLatestScore (score, latest);
+			instance._setLatestScore (score, latest);
 		}
 
 		public static double GetLatestScore(Score score) {
-			return _instance._getLatestScore (score);
+			return instance._getLatestScore (score);
 		}
 
-		public static void GetRecordScore(Score score, double record) {
-			_instance._setRecordScore (score, record);
+		public static void SetRecordScore(Score score, double record) {
+			instance._setRecordScore (score, record);
 		}
 
 		public static double GetRecordScore(Score score) {
-			return _instance._getRecordScore (score);
+			return instance._getRecordScore (score);
 		}
 
 

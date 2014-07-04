@@ -36,46 +36,74 @@ namespace Soomla.Test {
 			}
 		}
 
-		bool SoomlaInit(string secret) {
-	#if UNITY_IOS && !UNITY_EDITOR
-			[DllImport ("__Internal")]
-			private static extern void soomla_SetLogDebug(bool debug);
-			[DllImport ("__Internal")]
-			private static extern void soomla_Init(string secret);
-					
-			/// <summary>
-			/// Initializes the SOOMLA SDK.
-			/// </summary>
-			public static bool Initialize() {
-				soomla_SetLogDebug(true);
-				soomla_Init(secret);
-				return true;
+		private static BasicTest instance = null;
+		void Awake(){
+			if(instance == null){ 	//making sure we only initialize one instance.
+				instance = this;
+				GameObject.DontDestroyOnLoad(this.gameObject);
+			} else {					//Destroying unused instances.
+				GameObject.Destroy(this);
 			}
-	#endif
-	#if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJNI.PushLocalFrame(100);
-			using(AndroidJavaClass jniSoomlaClass = new AndroidJavaClass("com.soomla.Soomla")) {
-				jniSoomlaClass.CallStatic("initialize", secret);
-			}
-			//init EventHandler
-			using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.SoomlaEventHandler")) {
-				jniEventHandler.CallStatic("initialize");
-			}
-			AndroidJNI.PopLocalFrame(IntPtr.Zero);
-			return true;
-
-	#endif
-			return false;
 		}
+
+//		bool SoomlaInit(string secret) {
+//	#if !UNITY_EDITOR
+//	#if UNITY_IOS
+//			[DllImport ("__Internal")]
+//			private static extern void soomla_SetLogDebug(bool debug);
+//			[DllImport ("__Internal")]
+//			private static extern void soomla_Init(string secret);
+//					
+//			/// <summary>
+//			/// Initializes the SOOMLA SDK.
+//			/// </summary>
+//			public static bool Initialize() {
+//				soomla_SetLogDebug(true);
+//				soomla_Init(secret);
+//				return true;
+//			}
+//	#endif
+//	#if UNITY_ANDROID
+//			AndroidJNI.PushLocalFrame(100);
+//			using(AndroidJavaClass jniSoomlaClass = new AndroidJavaClass("com.soomla.Soomla")) {
+//				jniSoomlaClass.CallStatic("initialize", secret);
+//			}
+//			//init EventHandler
+//			using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.SoomlaEventHandler")) {
+//				jniEventHandler.CallStatic("initialize");
+//			}
+//			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+//			return true;
+//
+//	#endif
+//	#else
+//			return false;
+//	#endif
+//		}
 
 		// Use this for initialization
 		void Start () {
 	//		SoomlaInit ("hansolo");
-			StoreEvents.OnSoomlaStoreInitialized += () => {
-				testScoreAsc ();
-//				testLevel();
-			};
+			UnityEngine.Debug.LogError("Start SOOMLA");
+			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
+//			StoreEvents.OnSoomlaStoreInitialized += () => {
+//				testScoreAsc ();
+////				testLevel();
+//			};
+			UnityEngine.Debug.LogError("Start2 SOOMLA");
 			SoomlaStore.Initialize (new MuffinRushAssets ());
+		}
+
+		public void onSoomlaStoreInitialized() {
+			UnityEngine.Debug.LogError("onSoomlaStoreInitialized SOOMLA");
+			printSomething();
+			testScoreAsc();
+			printSomething();
+			UnityEngine.Debug.LogError("onSoomlaStoreInitialized2 SOOMLA");
+		}
+
+		private void printSomething() {
+			UnityEngine.Debug.LogError("something SOOMLA");
 		}
 
 		void Update() {
@@ -144,7 +172,8 @@ namespace Soomla.Test {
 			yield return null;
 		}
 
-		public IEnumerator testScoreAsc() {
+		public void testScoreAsc() {
+			UnityEngine.Debug.LogError("testScoreAsc SOOMLA");
 			bool higherIsBetter = true;
 			string scoreId = "score_asc";
 			Score scoreAsc = new Score(scoreId, "ScoreAsc", higherIsBetter);
@@ -183,7 +212,9 @@ namespace Soomla.Test {
 			Assert.assertTrue(scoreAsc.HasRecordReached(30));
 			Assert.assertFalse(scoreAsc.HasRecordReached(31));
 
-			yield return null;
+			UnityEngine.Debug.LogError("Done! SOOMLA");
+
+//			yield return null;
 		}
 	}
 }

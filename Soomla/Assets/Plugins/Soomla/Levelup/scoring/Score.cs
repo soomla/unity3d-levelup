@@ -108,7 +108,7 @@ namespace Soomla.Levelup {
 		public void SaveAndReset() {
 			double record = ScoreStorage.GetRecordScore(this); // TODO: get the record score from storage
 			if (HasTempReached(record)) {
-				ScoreStorage.GetRecordScore(this, _tempScore); // TODO: set the record score in storage
+				ScoreStorage.SetRecordScore(this, _tempScore); // TODO: set the record score in storage
 			}
 			
 			performSaveActions();
@@ -123,7 +123,7 @@ namespace Soomla.Levelup {
 			// if someone set higherBetter(false) and a start value of 100
 			// I think they expect reset to go back to 100, otherwise
 			// 0 is the best and current record and can't be beat
-			ScoreStorage.GetRecordScore(this, /*0*/StartValue);
+			ScoreStorage.GetRecordScore(this);
 			ScoreStorage.SetLatestScore(this, /*0*/StartValue);
 		}
 
