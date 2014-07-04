@@ -17,6 +17,7 @@ using System;
 
 namespace Soomla.Levelup
 {
+	public class ScoreStorageIOS : ScoreStorage {
 #if UNITY_IOS && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
@@ -50,5 +51,6 @@ namespace Soomla.Levelup
 	}
 
 #endif
+	}
 }
 

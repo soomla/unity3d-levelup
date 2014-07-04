@@ -17,6 +17,7 @@ using System;
 
 namespace Soomla.Levelup
 {
+	public class WorldStorageIOS : WorldStorage {
 #if UNITY_IOS && !UNITY_EDITOR
 	
 	[DllImport ("__Internal")]
@@ -39,5 +40,6 @@ namespace Soomla.Levelup
 	}
 	
 #endif
+	}
 }
 

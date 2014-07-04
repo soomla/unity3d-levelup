@@ -160,6 +160,8 @@ namespace Soomla.Test {
 			Assert.assertEquals(1, lvl1.GetTimesPlayed());
 			Assert.assertEquals(1, lvl1.GetTimesStarted());
 
+			UnityEngine.Debug.LogError("Done! SOOMLA");
+
 			yield return null;
 		}
 
