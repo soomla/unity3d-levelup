@@ -14,6 +14,7 @@
 
 using UnityEngine;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
@@ -21,21 +22,21 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 	
 	[DllImport ("__Internal")]
-	private static extern void worldStorage_SetCompleted(IntPtr worldJson,
+	private static extern void worldStorage_SetCompleted(string worldJson,
 	                                                       [MarshalAs(UnmanagedType.Bool)] bool completed,
 	                                                       [MarshalAs(UnmanagedType.Bool)] bool notify);
 	[DllImport ("__Internal")]
 	[return:MarshalAs(UnmanagedType.I1)]
-	private static extern bool worldStorage_IsCompleted(IntPtr worldJson);
+	private static extern bool worldStorage_IsCompleted(string worldJson);
 	
 	
 	override protected void _setCompleted(World world, bool completed, bool notify) {
-		string worldJson = world.toJSONString();
+		string worldJson = world.toJSONObject().ToString();
 		worldStorage_SetCompleted(worldJson, completed, notify);
 	}
 	
 	override protected bool _isCompleted(World world) {
-		string worldJson = world.toJSONString();
+		string worldJson = world.toJSONObject().ToString();
 		return worldStorage_IsCompleted(worldJson);
 	}
 	

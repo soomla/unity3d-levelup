@@ -14,6 +14,7 @@
 
 using UnityEngine;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
@@ -21,32 +22,32 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
-	private static extern void scoreStorage_SetLatestScore(IntPtr scoreJson, double latest);
+	private static extern void scoreStorage_SetLatestScore(string scoreJson, double latest);
 	[DllImport ("__Internal")]
-	private static extern int scoreStorage_GetLatestScore(IntPtr scoreJson);
+	private static extern int scoreStorage_GetLatestScore(string scoreJson);
 	[DllImport ("__Internal")]
-	private static extern void scoreStorage_SetRecordScore(IntPtr scoreJson, double record);
+	private static extern void scoreStorage_SetRecordScore(string scoreJson, double record);
 	[DllImport ("__Internal")]
-	private static extern int scoreStorage_GetRecordScore(IntPtr scoreJson);
+	private static extern int scoreStorage_GetRecordScore(string scoreJson);
 
 
 	override protected void _setLatestScore(Score score, double latest) {
-		string scoreJson = score.toJSONString();
+		string scoreJson = score.toJSONObject().ToString();
 		scoreStorage_SetLatestScore(scoreJson, latest);
 	}
 	
 	override protected double _getLatestScore(Score score) {
-		string scoreJson = score.toJSONString();
+		string scoreJson = score.toJSONObject().ToString();
 		return scoreStorage_GetLatestScore(scoreJson);
 	}
 	
 	override protected void _setRecordScore(Score score, double record) {
-		string scoreJson = score.toJSONString();
+		string scoreJson = score.toJSONObject().ToString();
 		scoreStorage_SetRecordScore(scoreJson, record);
 	}
 	
 	override protected double _getRecordScore(Score score) {
-		string scoreJson = score.toJSONString();
+		string scoreJson = score.toJSONObject().ToString();
 		return scoreStorage_GetRecordScore(scoreJson);
 	}
 

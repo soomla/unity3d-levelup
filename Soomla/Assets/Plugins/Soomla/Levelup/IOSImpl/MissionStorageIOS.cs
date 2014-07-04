@@ -14,6 +14,7 @@
 
 using UnityEngine;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
@@ -21,21 +22,21 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 	
 	[DllImport ("__Internal")]
-	private static extern void missionStorage_SetCompleted(IntPtr missionJson,
+	private static extern void missionStorage_SetCompleted(string missionJson,
 	                                               [MarshalAs(UnmanagedType.Bool)] bool completed,
 	                                               [MarshalAs(UnmanagedType.Bool)] bool notify);
 	[DllImport ("__Internal")]
 	[return:MarshalAs(UnmanagedType.I1)]
-	private static extern bool missionStorage_IsCompleted(IntPtr missionJson);
+	private static extern bool missionStorage_IsCompleted(string missionJson);
 
 	
 	override protected void _setCompleted(Mission mission, bool completed, bool notify) {
-		string missionJson = mission.toJSONString();
+		string missionJson = mission.toJSONObject().ToString();
 		missionStorage_SetCompleted(missionJson, completed, notify);
 	}
 	
 	override protected bool _isCompleted(Mission mission) {
-		string missionJson = mission.toJSONString();
+		string missionJson = mission.toJSONObject().ToString();
 		return missionStorage_IsCompleted(missionJson);
 	}
 	

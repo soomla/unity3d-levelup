@@ -14,6 +14,7 @@
 
 using UnityEngine;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
@@ -21,44 +22,44 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
-	private static extern void levelStorage_SetSlowestDuration(IntPtr levelJson, double duration);
+	private static extern void levelStorage_SetSlowestDuration(string levelJson, double duration);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_GetSlowestDuration(IntPtr levelJson);
+	private static extern int levelStorage_GetSlowestDuration(string levelJson);
 	[DllImport ("__Internal")]
-	private static extern void levelStorage_SetFastestDuration(IntPtr levelJson, double duration);
+	private static extern void levelStorage_SetFastestDuration(string levelJson, double duration);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_GetFastestDuration(IntPtr levelJson);
+	private static extern int levelStorage_GetFastestDuration(string levelJson);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_IncTimesStarted(IntPtr levelJson);
+	private static extern int levelStorage_IncTimesStarted(string levelJson);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_DecTimesStarted(IntPtr levelJson);
+	private static extern int levelStorage_DecTimesStarted(string levelJson);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_GetTimesStarted(IntPtr levelJson);
+	private static extern int levelStorage_GetTimesStarted(string levelJson);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_IncTimesPlayed(IntPtr levelJson);
+	private static extern int levelStorage_IncTimesPlayed(string levelJson);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_DecTimesPlayed(IntPtr levelJson);
+	private static extern int levelStorage_DecTimesPlayed(string levelJson);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_GetTimesPlayed(IntPtr levelJson);
+	private static extern int levelStorage_GetTimesPlayed(string levelJson);
 
 
 	protected override void _setSlowestDuration(Level level, double duration) {
-		string levelJson = level.toJSONString();
+		string levelJson = level.toJSONObject().ToString();
 		levelStorage_SetSlowestDuration(levelJson, duration);
 	}
 	
 	protected override double _getSlowestDuration(Level level) {
-		string levelJson = level.toJSONString();
+		string levelJson = level.toJSONObject().ToString();
 		return levelStorage_GetSlowestDuration(levelJson);
 	}
 	
 	protected override void _setFastestDuration(Level level, double duration) {
-		string levelJson = level.toJSONString();
+		string levelJson = level.toJSONObject().ToString();
 		levelStorage_SetFastestDuration(levelJson, duration);
 	}
 	
 	protected override double _getFastestDuration(Level level) {
-		string levelJson = level.toJSONString();
+		string levelJson = level.toJSONObject().ToString();
 		return levelStorage_GetFastestDuration(levelJson);
 	}
 	
@@ -66,36 +67,36 @@ namespace Soomla.Levelup
 	/** Level Times Started **/
 	
 	protected override int _incTimesStarted(Level level) {
-		string levelJson = level.toJSONString();
-		return levelStorage_IncTimesStarted(level);
+		string levelJson = level.toJSONObject().ToString();
+		return levelStorage_IncTimesStarted(levelJson);
 	}
 	
 	protected override int _decTimesStarted(Level level) {
-		string levelJson = level.toJSONString();
-		return levelStorage_DecTimesStarted(level);
+		string levelJson = level.toJSONObject().ToString();
+		return levelStorage_DecTimesStarted(levelJson);
 	}
 	
 	protected override int _getTimesStarted(Level level) {
-		string levelJson = level.toJSONString();
-		return levelStorage_GetTimesStarted(level);
+		string levelJson = level.toJSONObject().ToString();
+		return levelStorage_GetTimesStarted(levelJson);
 	}
 	
 	
 	/** Level Times Played **/
 	
 	protected override int _incTimesPlayed(Level level) {
-		string levelJson = level.toJSONString();
-		return levelStorage_IncTimesPlayed(level);
+		string levelJson = level.toJSONObject().ToString();
+		return levelStorage_IncTimesPlayed(levelJson);
 	}
 	
 	protected override int _decTimesPlayed(Level level) {
-		string levelJson = level.toJSONString();
-		return levelStorage_DecTimesPlayed(level);
+		string levelJson = level.toJSONObject().ToString();
+		return levelStorage_DecTimesPlayed(levelJson);
 	} 
 	
 	protected override int _getTimesPlayed(Level level) {
-		string levelJson = level.toJSONString();
-		return levelStorage_GetTimesPlayed(level);
+		string levelJson = level.toJSONObject().ToString();
+		return levelStorage_GetTimesPlayed(levelJson);
 	}
 
 

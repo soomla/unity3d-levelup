@@ -14,6 +14,7 @@
 
 using UnityEngine;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
@@ -22,21 +23,21 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 
 		[DllImport ("__Internal")]
-		private static extern void gateStorage_SetOpen(IntPtr gateJson,
+		private static extern void gateStorage_SetOpen(string gateJson,
 		                                               [MarshalAs(UnmanagedType.Bool)] bool open,
 		                                               [MarshalAs(UnmanagedType.Bool)] bool notify);
 		[DllImport ("__Internal")]
 		[return:MarshalAs(UnmanagedType.I1)]
-		private static extern bool gateStorage_IsOpen(IntPtr gateJson);
+		private static extern bool gateStorage_IsOpen(string gateJson);
 
 
 		override protected void _setOpen(Gate gate, bool open, bool notify) {
-			string gateJson = gate.toJSONString();
+			string gateJson = gate.toJSONObject().ToString();
 			gateStorage_SetOpen(gateJson, open, notify);
 		}
 		
 		override protected bool _isOpen(Gate gate) {
-			string gateJson = gate.toJSONString();
+			string gateJson = gate.toJSONObject().ToString();
 			return gateStorage_IsOpen(gateJson);
 		}
 
