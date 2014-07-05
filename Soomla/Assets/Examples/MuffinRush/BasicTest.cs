@@ -223,7 +223,7 @@ namespace Soomla.Test {
 			GUI.TextArea (new Rect (10, 10, Screen.width-10, Screen.height-10), sTestLog, _textStyle);
 		}
 
-		private void createWorlds() {
+		private void createFruitsGoblins() {
 			World mainWorld = new World("main_world");
 
 			World machineA = new World("machine_a", 20, true);
@@ -234,7 +234,13 @@ namespace Soomla.Test {
 			BadgeReward bronzeMedal = new BadgeReward("badge_bronzeMedal", "Bronze Medal");
 			BadgeReward silverMedal = new BadgeReward("badge_silverMedal", "Silver Medal");
 			BadgeReward goldMedal = new BadgeReward("badge_goldMedal", "Gold Medal");
+			VirtualItemReward perfectMedal = new VirtualItemReward("item_perfectMedal", "Perfect Medal", "perfect_medal", 1);
 
+
+			/** Testing **/
+
+			Level lvl1 = (Level)machineA.InnerWorldsList[0];
+			lvl1.AssignReward(goldMedal);
 		}
 			
 		private IEnumerator testLevel() {
