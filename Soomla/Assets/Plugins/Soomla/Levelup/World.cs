@@ -16,6 +16,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Soomla.Levelup {
 	
@@ -25,6 +26,9 @@ namespace Soomla.Levelup {
 		public string WorldId;
 		public GatesList Gates;
 		public Dictionary<string, World> InnerWorlds;
+		public List<World> InnerWorldsList {
+			get { return InnerWorlds.Values.ToList(); }
+		}
 		public Dictionary<string, Score> Scores;
 		public List<Challenge> Challenges;
 
@@ -262,6 +266,21 @@ namespace Soomla.Levelup {
 		/** Reward Association **/
 
 		public void AssignReward(Reward reward) {
+			String olderReward = GetAssignedRewardId();
+			if (!string.IsNullOrEmpty(olderReward)) {
+				Reward oldReward = LevelUp.GetInstance().GetReward(olderReward);
+				if (oldReward != null) {
+					oldReward.Take();
+				}
+			}
+
+			// We have to make sure it's a repeatable reward even if no one told us it is.
+			// There's no real reason why it won't be a repeeatable.
+			if (!reward.Repeatable) {
+				reward.Repeatable = true;
+			}
+
+			reward.Give();
 			WorldStorage.SetReward(this, reward.RewardId);
 		}
 		

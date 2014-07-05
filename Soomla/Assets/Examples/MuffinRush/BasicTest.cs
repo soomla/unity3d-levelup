@@ -187,7 +187,10 @@ namespace Soomla.Test {
 			BadgeReward bronzeMedal = new BadgeReward("badge_bronzeMedal", "Bronze Medal");
 			BadgeReward silverMedal = new BadgeReward("badge_silverMedal", "Silver Medal");
 			BadgeReward goldMedal = new BadgeReward("badge_goldMedal", "Gold Medal");
+			VirtualItemReward perfectMedal = new VirtualItemReward("item_perfectMedal", "Perfect Medal", "perfect_medal", 1);
 
+			Level lvl1 = (Level)machineA.InnerWorldsList[0];
+			lvl1.AssignReward(goldMedal);
 		}
 			
 		private IEnumerator testLevel() {

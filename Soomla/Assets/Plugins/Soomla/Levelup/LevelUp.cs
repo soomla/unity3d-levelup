@@ -21,14 +21,27 @@ namespace Soomla.Levelup {
 	public class LevelUp {
 
 		public Dictionary<string, World> InitialWorlds;
+		public Dictionary<string, Reward> Rewards;
 
-		public void Initialize(List<World> initialWorlds) {
+		public void Initialize(List<World> initialWorlds, List<Reward> rewards) {
 			Dictionary<string, World> worldMap = new Dictionary<string, World>();
 			foreach (World world in initialWorlds) {
 				worldMap.Add(world.WorldId, world);
 			}
 			InitialWorlds = worldMap;
 //			save();
+
+			Dictionary<string, Reward> rewardMap = new Dictionary<string, Reward>();
+			foreach (Reward reward in rewards) {
+				rewardMap.Add(reward.RewardId, reward);
+			}
+			Rewards = rewardMap;
+		}
+
+		public Reward GetReward(string rewardId) {
+			Reward reward = null;
+			Rewards.TryGetValue(rewardId, out reward);
+			return reward;
 		}
 
 		public Score GetScore(string scoreId) {
@@ -43,10 +56,10 @@ namespace Soomla.Levelup {
 		/// Counts all levels in all worlds and inner worlds.
 		/// </summary>
 		/// <returns>The number of levels in all worlds and their inner worlds</returns>
-		public int getLevelCount() {
+		public int GetLevelCount() {
 			int count = 0;
 			foreach (World initialWorld in this.InitialWorlds.Values) {
-				count += getLevelCountInWorld(initialWorld);
+				count += GetLevelCountInWorld(initialWorld);
 			}
 			return count;
 		}
@@ -56,7 +69,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <param name="world">The world to examine</param>
 		/// <returns>The number of levels in the given world and its inner worlds</returns>
-		public int getLevelCountInWorld(World world) {
+		public int GetLevelCountInWorld(World world) {
 			int count = 0;
 			foreach (World initialWorld in world.InnerWorlds.Values) {
 				count += getRecursiveCount(initialWorld, (World innerWorld) => {
@@ -71,7 +84,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <param name="withLevels">Indicates whether to count also levels</param>
 		/// <returns>The number of worlds and their inner worlds, and optionally their inner levels</returns>
-		public int getWorldCount(bool withLevels) {
+		public int GetWorldCount(bool withLevels) {
 			int count = 0;
 			foreach (World initialWorld in this.InitialWorlds.Values) {
 				count += getRecursiveCount(initialWorld, (World innerWorld) => {
@@ -87,7 +100,7 @@ namespace Soomla.Levelup {
 		/// Counts all completed levels.
 		/// </summary>
 		/// <returns>The number of completed levels and their inner completed levels</returns>
-		public int getCompletedLevelCount() {
+		public int GetCompletedLevelCount() {
 			int count = 0;
 			foreach (World initialWorld in this.InitialWorlds.Values) {
 				count += getRecursiveCount(initialWorld, (World innerWorld) => {
@@ -101,7 +114,7 @@ namespace Soomla.Levelup {
 		/// Counts the number of completed worlds.
 		/// </summary>
 		/// <returns>The number of completed worlds and their inner completed worlds</returns>
-		public int getCompletedWorldCount() {
+		public int GetCompletedWorldCount() {
 			int count = 0;
 			foreach (World initialWorld in this.InitialWorlds.Values) {
 				count += getRecursiveCount(initialWorld, (World innerWorld) => {
