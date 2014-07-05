@@ -224,12 +224,13 @@
 			buildSettings = {
 				DSTROOT = /tmp/SoomlaIOSStore.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "${UNITY_HEADERS}/iPhone_target_Prefix.pch";
+				GCC_PREFIX_HEADER = SoomlaUnity.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"${UNITY_HEADERS}/**",
+					"${UNITY_HEADERS45}",
+					"${UNITY_HEADERS43}/**",
 					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
 					"../../../submodules/ios-store/submodules/soomla-ios-core/SoomlaiOSCore/**",
 				);
@@ -239,8 +240,10 @@
 				PRODUCT_NAME = UnityiOSLevelUp;
 				PUBLIC_HEADERS_FOLDER_PATH = headers/public;
 				SKIP_INSTALL = YES;
-				UNITY_HEADERS = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Classes/";
-				UNITY_LIBS = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Libraries/";
+				UNITY_HEADERS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Classes/";
+				UNITY_HEADERS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Classes/;
+				UNITY_LIBS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Libraries/";
+				UNITY_LIBS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Libraries/;
 			};
 			name = Debug;
 		};
@@ -250,11 +253,12 @@
 				DSTROOT = /tmp/SoomlaIOSStore.dst;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "${UNITY_HEADERS}/iPhone_target_Prefix.pch";
+				GCC_PREFIX_HEADER = SoomlaUnity.pch;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"${UNITY_HEADERS}/**",
+					"${UNITY_HEADERS45}",
+					"${UNITY_HEADERS43}/**",
 					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
 					"../../../submodules/ios-store/submodules/soomla-ios-core/SoomlaiOSCore/**",
 				);
@@ -265,8 +269,10 @@
 				PRODUCT_NAME = UnityiOSLevelUp;
 				PUBLIC_HEADERS_FOLDER_PATH = headers/public;
 				SKIP_INSTALL = YES;
-				UNITY_HEADERS = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Classes/";
-				UNITY_LIBS = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Libraries/";
+				UNITY_HEADERS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Classes/";
+				UNITY_HEADERS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Classes/;
+				UNITY_LIBS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Libraries/";
+				UNITY_LIBS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Libraries/;
 			};
 			name = Release;
 		};
