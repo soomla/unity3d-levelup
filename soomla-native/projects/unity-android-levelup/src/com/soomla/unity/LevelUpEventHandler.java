@@ -7,6 +7,7 @@ import com.soomla.levelup.events.LevelStartedEvent;
 import com.soomla.levelup.events.MissionCompletedEvent;
 import com.soomla.levelup.events.MissionCompletionRevokedEvent;
 import com.soomla.levelup.events.ScoreRecordChangedEvent;
+import com.soomla.levelup.events.WorldBadgeAssignedEvent;
 import com.soomla.levelup.events.WorldCompletedEvent;
 import com.squareup.otto.Subscribe;
 import com.unity3d.player.UnityPlayer;
@@ -56,5 +57,10 @@ public class LevelUpEventHandler {
     @Subscribe
     public void onScoreRecordChangedEvent(ScoreRecordChangedEvent scoreRecordChangedEvent) {
         UnityPlayer.UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", scoreRecordChangedEvent.Score.toJSONObject().toString());
+    }
+
+    @Subscribe
+    public void onWorldBadgeAssignedEvent(WorldBadgeAssignedEvent worldBadgeAssignedEvent) {
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onWorldBadgeAssigned", worldBadgeAssignedEvent.World.toJSONObject().toString());
     }
 }

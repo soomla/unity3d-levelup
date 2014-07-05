@@ -14,6 +14,16 @@
 #import "World.h"
 #import "WorldStorage.h"
 
+char* AutonomousStringCopy (const char* string)
+{
+    if (string == NULL)
+        return NULL;
+    
+    char* res = (char*)malloc(strlen(string) + 1);
+    strcpy(res, string);
+    return res;
+}
+
 extern "C" {
 
     void gateStorage_SetOpen(const char* sGateJson, bool open, bool notify) {
@@ -151,7 +161,6 @@ extern "C" {
 
     }
     
-    
     void worldStorage_SetCompleted(const char* sWorldJson, bool completed, bool notify) {
         NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
         NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
@@ -164,5 +173,25 @@ extern "C" {
         NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
         World* world = [World fromDictionary:worldDict];
         return [WorldStorage isWorldCompleted:world];
+    }
+    
+    void worldStorage_GetAssignedBadge(const char* sWorldJson, char** json) {
+        NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
+        NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
+        World* world = [World fromDictionary:worldDict];
+        NSString* badgeId = [WorldStorage getAssignedBadge:world];
+        if (!badgeId) {
+            badgeId = @"";
+        }
+        
+        *json = AutonomousStringCopy([badgeId UTF8String]);
+    }
+    
+    void worldStorage_SetBadge(const char* sWorldJson, const char* sBadgeRewardId) {
+        NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
+        NSString* badgeRewardId = [NSString stringWithUTF8String:sBadgeRewardId];
+        NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
+        World* world = [World fromDictionary:worldDict];
+        [WorldStorage setBadge:badgeRewardId forWorld:world];
     }
 }

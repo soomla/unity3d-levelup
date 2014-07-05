@@ -116,6 +116,9 @@ namespace Soomla.Test {
 			World machineC = new World("machine_c", 20, true);
 			World machineD = new World("machine_d", 20, true);
 
+			BadgeReward bronzeMedal = new BadgeReward("badge_bronzeMedal", "Bronze Medal");
+			BadgeReward silverMedal = new BadgeReward("badge_silverMedal", "Silver Medal");
+			BadgeReward goldMedal = new BadgeReward("badge_goldMedal", "Gold Medal");
 
 		}
 

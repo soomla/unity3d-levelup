@@ -63,6 +63,11 @@
         NSString* worldJson = [SoomlaUtils dictToJsonString:[world toDictionary]];
         UnitySendMessage("LevelUpEvents", "onWorldCompleted", [worldJson UTF8String]);
     }
+    else if ([notification.name isEqualToString:EVENT_WORLD_BADGE_ASSIGNED]) {
+        World* world = [[notification userInfo] objectForKey:DICT_ELEMENT_WORLD];
+        NSString* worldJson = [SoomlaUtils dictToJsonString:[world toDictionary]];
+        UnitySendMessage("LevelUpEvents", "onWorldBadgeAssigned", [worldJson UTF8String]);
+    }
 }
 
 @end

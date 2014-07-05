@@ -148,21 +148,59 @@ namespace Soomla.Levelup {
 		}
 #endif
 
+
+		/** For Single Score **/
+
+		public string SingleScoreId {
+			get {
+				return WorldId + "_oneScore";
+			}
+		}
+
 		public void SingleScore() {
 			// adds only one score to the Scores dict
 			Scores = new Dictionary<string, Score>();
-			Score oneScore = new Score(WorldId + "_oneScore");
+			Score oneScore = new Score(SingleScoreId);
 			Scores.Add(oneScore.ScoreId, oneScore);
 		}
 
-		public void DecScores(double amount) {
+		public void SetSingleScoreValue(double amount) {
+			SetScoreValue(SingleScoreId, amount);
+		}
+
+		public void DecSingleScore(double amount) {
+			DecScore(SingleScoreId, amount);
+		}
+
+		public void IncSingleScore(double amount) {
+			IncScore(SingleScoreId, amount);
+		}
+
+		public Score GetSingleScore() {
+			return Scores[SingleScoreId];
+		}
+
+		public double InnerWorldsSingleRecords() {
+			double ret = 0;
+			foreach(World world in InnerWorlds.Values) {
+				ret += world.GetSingleScore().Record;
+			}
+			return ret;
+		}
+
+
+
+
+		/** For more than one Score **/
+
+		public void ResetScores() {
 			if (Scores == null || Scores.Count == 0) {
-				SoomlaUtils.LogError(TAG, "(DecScores) You don't have any scores defined in this world. WorldId: " + WorldId);
+				SoomlaUtils.LogError(TAG, "(ResetScores) You don't have any scores defined in this world. WorldId: " + WorldId);
 				return;
 			}
-
+			
 			foreach (Score score in Scores.Values) {
-				DecScore(score.ScoreId, amount);
+				score.Reset();
 			}
 		}
 
@@ -170,17 +208,6 @@ namespace Soomla.Levelup {
 			Scores[scoreId].Dec(amount);
 		}
 
-		public void IncScores(double amount) {
-			if (Scores == null || Scores.Count == 0) {
-				SoomlaUtils.LogError(TAG, "(IncScores) You don't have any scores defined in this world. WorldId: " + WorldId);
-				return;
-			}
-			
-			foreach (Score score in Scores.Values) {
-				IncScore(score.ScoreId, amount);
-			}
-		}
-		
 		public void IncScore(string scoreId, double amount) {
 			Scores[scoreId].Inc(amount);
 		}
@@ -212,6 +239,9 @@ namespace Soomla.Levelup {
 			score.SetTempScore(scoreVal);
 		}
 
+
+		/** Completion **/
+
 		public bool IsCompleted() {
 			return WorldStorage.IsCompleted(this);
 		}
@@ -227,6 +257,20 @@ namespace Soomla.Levelup {
 			}
 			WorldStorage.SetCompleted(this, completed);
 		}
+
+
+		/** Reward Association **/
+
+		private BadgeReward AssociatedReward;
+
+		public void AssignBadge(BadgeReward badgeReward) {
+			WorldStorage.SetBadge(this, badgeReward.RewardId);
+		}
+		
+		public String GetAssignedBadgeId() {
+			return WorldStorage.GetAssignedBadge(this);
+		}
+
 
 		public bool CanStart() {
 			return Gates == null || Gates.IsOpen();
