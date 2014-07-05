@@ -1,15 +1,15 @@
 
-#import "UnitySoomlaEventDispatcher.h"
+#import "UnitySoomlaLevelUpEventDispatcher.h"
 #import "SoomlaEventHandling.h"
 #import "Reward.h"
 #import "SoomlaUtils.h"
 
-@implementation UnitySoomlaEventDispatcher
+@implementation UnitySoomlaLevelUpEventDispatcher
 
 + (void)initialize {
-    static UnitySoomlaEventDispatcher* instance = nil;
+    static UnitySoomlaLevelUpEventDispatcher* instance = nil;
     if (!instance) {
-        instance = [[UnitySoomlaEventDispatcher alloc] init];
+        instance = [[UnitySoomlaLevelUpEventDispatcher alloc] init];
     }
 }
 

@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C01B1D2B19508A61006936F0 /* UnitySoomla.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01B1D2A19508A61006936F0 /* UnitySoomla.mm */; };
-		C01B1D2E19508B4C006936F0 /* UnitySoomlaEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C01B1D2C19508B4C006936F0 /* UnitySoomlaEventDispatcher.h */; };
-		C01B1D2F19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01B1D2D19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm */; };
+		C01B1D2E19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C01B1D2C19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.h */; };
+		C01B1D2F19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.mm in Sources */ = {isa = PBXBuildFile; fileRef = C01B1D2D19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.mm */; };
 		C0B3C5F3168C6D0C00161FAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3C5F2168C6D0C00161FAA /* Foundation.framework */; };
 		C0CF4D60183BDCA80070CC85 /* UnityCommons.h in Headers */ = {isa = PBXBuildFile; fileRef = C0CF4D58183BDCA80070CC85 /* UnityCommons.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C0CF4D63183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0CF4D5B183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -31,8 +31,8 @@
 
 /* Begin PBXFileReference section */
 		C01B1D2A19508A61006936F0 /* UnitySoomla.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitySoomla.mm; sourceTree = "<group>"; };
-		C01B1D2C19508B4C006936F0 /* UnitySoomlaEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitySoomlaEventDispatcher.h; sourceTree = "<group>"; };
-		C01B1D2D19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitySoomlaEventDispatcher.mm; sourceTree = "<group>"; };
+		C01B1D2C19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitySoomlaLevelUpEventDispatcher.h; sourceTree = "<group>"; };
+		C01B1D2D19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnitySoomlaLevelUpEventDispatcher.mm; sourceTree = "<group>"; };
 		C0B3C5EF168C6D0C00161FAA /* libUnityiOSLevelUp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUnityiOSLevelUp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3C5F2168C6D0C00161FAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C0CF4D58183BDCA80070CC85 /* UnityCommons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnityCommons.h; sourceTree = "<group>"; };
@@ -81,8 +81,8 @@
 		C0CF4D57183BDCA80070CC85 /* SoomlaUnity */ = {
 			isa = PBXGroup;
 			children = (
-				C01B1D2C19508B4C006936F0 /* UnitySoomlaEventDispatcher.h */,
-				C01B1D2D19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm */,
+				C01B1D2C19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.h */,
+				C01B1D2D19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.mm */,
 				C01B1D2A19508A61006936F0 /* UnitySoomla.mm */,
 				C0CF4D58183BDCA80070CC85 /* UnityCommons.h */,
 				C0CF4D5B183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm */,
@@ -101,7 +101,7 @@
 			files = (
 				C0CF4D60183BDCA80070CC85 /* UnityCommons.h in Headers */,
 				C0CF4D64183BDCA80070CC85 /* UnityLevelUpEventDispatcher.h in Headers */,
-				C01B1D2E19508B4C006936F0 /* UnitySoomlaEventDispatcher.h in Headers */,
+				C01B1D2E19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,7 +177,7 @@
 				C01B1D2B19508A61006936F0 /* UnitySoomla.mm in Sources */,
 				C0CF4D65183BDCA80070CC85 /* UnityLevelUpEventDispatcher.mm in Sources */,
 				C0CF4D63183BDCA80070CC85 /* UnitySoomlaLevelUpStorage.mm in Sources */,
-				C01B1D2F19508B4C006936F0 /* UnitySoomlaEventDispatcher.mm in Sources */,
+				C01B1D2F19508B4C006936F0 /* UnitySoomlaLevelUpEventDispatcher.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

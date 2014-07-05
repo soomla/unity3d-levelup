@@ -1,6 +1,6 @@
 #import "SoomlaConfig.h"
 #import "Soomla.h"
-#import "UnitySoomlaEventDispatcher.h"
+#import "UnitySoomlaLevelUpEventDispatcher.h"
 
 extern "C"{
 
@@ -9,7 +9,7 @@ extern "C"{
     }
 
 	void soomla_Init(const char* secret){
-        [UnitySoomlaEventDispatcher initialize];
+        [UnitySoomlaLevelUpEventDispatcher initialize];
         
 		[Soomla initializeWithSecret:[NSString stringWithUTF8String:secret]];
 	}

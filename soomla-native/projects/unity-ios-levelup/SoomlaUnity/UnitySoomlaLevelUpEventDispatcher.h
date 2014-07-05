@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UnitySoomlaEventDispatcher : NSObject{
+@interface UnitySoomlaLevelUpEventDispatcher : NSObject{
     
 }
 - (id)init;
