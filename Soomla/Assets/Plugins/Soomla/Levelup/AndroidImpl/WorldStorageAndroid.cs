@@ -20,23 +20,41 @@ namespace Soomla.Levelup
 	public class WorldStorageAndroid : WorldStorage {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	
-	override protected void _setCompleted(World world, bool completed, bool notify) {
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-			jniWorldStorage.CallStatic("setCompleted", world.toJNIObject(), completed, notify);
+		override protected void _setCompleted(World world, bool completed, bool notify) {
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
+				jniWorldStorage.CallStatic("setCompleted", world.toJNIObject(), completed, notify);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-	}
-	
-	override protected bool _isCompleted(World world) {
-		bool completed = false;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-			completed = jniWorldStorage.CallStatic<bool>("isCompleted", world.toJNIObject());
+		
+		override protected bool _isCompleted(World world) {
+			bool completed = false;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
+				completed = jniWorldStorage.CallStatic<bool>("isCompleted", world.toJNIObject());
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return completed;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return completed;
-	}
+
+		override protected void _setReward(World world, string rewardId) {
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
+				jniWorldStorage.CallStatic("setReward", world.toJNIObject(), rewardId);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+		}
+		
+		override protected string _getAssignedReward(World world) {
+			string rewardId;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
+				rewardId = jniWorldStorage.CallStatic<string>("getAssignedReward", world.toJNIObject());
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return rewardId;
+		}
 	
 #endif
 	}

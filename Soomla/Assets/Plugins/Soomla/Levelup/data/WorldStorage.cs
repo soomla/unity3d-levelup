@@ -50,6 +50,14 @@ namespace Soomla.Levelup
 			return instance._isCompleted(world);
 		}
 
+		public static void SetReward(World world, string rewardId) {
+			instance._setReward(world, rewardId);
+		}
+
+		public static string GetAssignedReward(World world) {
+			return instance._getAssignedReward(world);
+		}
+
 
 		virtual protected void _setCompleted(World world, bool open, bool notify) {
 			// TODO: WIE
@@ -58,6 +66,15 @@ namespace Soomla.Levelup
 		virtual protected bool _isCompleted(World world) {
 			// TODO: WIE
 			return false;
+		}
+
+		virtual protected void _setReward(World world, string rewardId) {
+			// TODO: WIE
+		}
+
+		virtual protected string _getAssignedReward(World world) {
+			// TODO: WIE
+			return null;
 		}
 	}
 }
