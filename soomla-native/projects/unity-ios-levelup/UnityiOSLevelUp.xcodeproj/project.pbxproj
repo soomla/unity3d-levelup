@@ -229,7 +229,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"${UNITY_HEADERS45}",
+					"${UNITY_HEADERS45}/**",
 					"${UNITY_HEADERS43}/**",
 					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
 					"../../../submodules/ios-store/submodules/soomla-ios-core/SoomlaiOSCore/**",
@@ -257,7 +257,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"${UNITY_HEADERS45}",
+					"${UNITY_HEADERS45}/**",
 					"${UNITY_HEADERS43}/**",
 					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
 					"../../../submodules/ios-store/submodules/soomla-ios-core/SoomlaiOSCore/**",

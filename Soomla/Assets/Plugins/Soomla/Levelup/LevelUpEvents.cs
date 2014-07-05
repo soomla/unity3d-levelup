@@ -25,6 +25,10 @@ namespace Soomla.Levelup {
 	public class LevelUpEvents : MonoBehaviour {
 		private const string TAG = "SOOMLA LevelUpEvents";
 
+#if UNITY_IOS && !UNITY_EDITOR
+		[DllImport ("__Internal")]
+		private static extern void soomlaLevelup_Init();
+#endif
 		private static LevelUpEvents instance = null;
 
 		/// <summary>
@@ -46,8 +50,8 @@ namespace Soomla.Levelup {
 				jniEventHandler.CallStatic("initialize");
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
-#elif UNITY_ANDROID && !UNITY_EDITOR
-			// TODO: implement this
+#elif UNITY_IOS && !UNITY_EDITOR
+			soomlaLevelup_Init();
 #endif
 		}
 

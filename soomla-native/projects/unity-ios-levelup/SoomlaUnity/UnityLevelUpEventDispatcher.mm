@@ -8,6 +8,12 @@
 #import "Score.h"
 #import "SoomlaUtils.h"
 
+extern "C" {
+    void soomlaLevelup_Init() {
+        [UnityLevelUpEventDispatcher initialize];
+    }
+}
+
 @implementation UnityLevelUpEventDispatcher
 
 + (void)initialize {

@@ -169,8 +169,8 @@ namespace Soomla.Test {
 			LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			LevelUpEvents.OnWorldCompleted += onWorldCompleted;
 
-			StartCoroutine (testScoreAsc());
 			StartCoroutine(testLevel());
+//			StartCoroutine (testScoreAsc());
 		}
 
 		private void onGateOpen(Gate gate) {
