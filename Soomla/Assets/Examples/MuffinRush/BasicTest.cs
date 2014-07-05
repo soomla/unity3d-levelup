@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 using Soomla;
 using Soomla.Levelup;
@@ -13,24 +14,58 @@ namespace Soomla.Test {
 
 		private const string TAG = "SOOMLA-TEST BasicTest";
 
+		private static string sTestLog;
+
+		GUIStyle _textStyle = new GUIStyle();
+
 		private class Assert {
+
+			private static string getStackTrace() {
+				string stacktrace = "";
+				StackTrace stackTrace = new StackTrace ();           // get call stack
+				StackFrame[] stackFrames = stackTrace.GetFrames ();  // get method calls (frames)
+		
+				// write call stack method names
+				foreach (StackFrame stackFrame in stackFrames) {
+						stacktrace += stackFrame.ToString ();
+				}
+
+				return stacktrace;
+			}
+
 			public static void assertTrue(bool cond) {
 				if (!cond) {
+					sTestLog += "<color=red>FAIL!</color>\n";
+//					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
+					sTestLog += getStackTrace() + "\n";
+					UnityEngine.Debug.LogException(new Exception("assertTrue"));
 					throw new Exception("assertTrue");
 				}
 			}
 			public static void assertFalse(bool cond) {
 				if (cond) {
+					sTestLog += "<color=red>FAIL!</color>\n";
+//					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
+					sTestLog += getStackTrace() + "\n";
+					UnityEngine.Debug.LogException(new Exception("assertTrue"));
 					throw new Exception("assertTrue");
 				}
 			}
 			public static void assertEquals<T>(T expected, T actual) {
 				if (!expected.Equals (actual)) {
+					sTestLog += string.Format("<color=red>FAIL! expected:{0} actual:{1}</color>\n", expected, actual);
+//					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
+					sTestLog += getStackTrace() + "\n";
+					UnityEngine.Debug.LogException(new Exception(expected + "!=" + actual));
 					throw new Exception(expected + "!=" + actual);
 				}
 			}
 			public static void assertEquals(double actual, double expected, double percision) {
 				if (Math.Abs(actual-expected) > percision) {
+					sTestLog += string.Format("<color=red>FAIL! expected:{0} actual:{1} percision:{2}</color>\n", expected, actual, percision);
+					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
+//					sTestLog += getStackTrace() + "\n";
+					UnityEngine.Debug.LogException(new Exception(expected + "!=" + actual + "(percision:" + percision + ")"));
 					throw new Exception(expected + "!=" + actual);
 				}
 			}
@@ -44,6 +79,8 @@ namespace Soomla.Test {
 			} else {					//Destroying unused instances.
 				GameObject.Destroy(this);
 			}
+
+			sTestLog = "";
 		}
 
 //		bool SoomlaInit(string secret) {
@@ -83,18 +120,45 @@ namespace Soomla.Test {
 
 		// Use this for initialization
 		void Start () {
+
+			_textStyle.wordWrap = true;
+			_textStyle.richText = true;	
+			_textStyle.normal.textColor = Color.white;
+			_textStyle.fontSize = 14;
+
+			// clear last DB storage so test run anew
+			string dbPath = null;
+#if UNITY_ANDROID
+			dbPath = "/private" + Application.persistentDataPath + "/store.kv.db";
+#elif UNITY_IOS
+			dbPath = "/private" + Application.persistentDataPath + "/../Library/Application Support/store.kv.db";
+#endif
+			if (dbPath != null) {
+				UnityEngine.Debug.LogWarning ("TESTING-> db file exists?=" + System.IO.File.Exists(dbPath));
+				UnityEngine.Debug.LogWarning ("TESTING-> delete db file at:" + dbPath);
+				System.IO.File.Delete (dbPath);
+			}
+
+
 	//		SoomlaInit ("hansolo");
 			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
 			LevelUpEvents.Initialize();
-//			StoreEvents.OnSoomlaStoreInitialized += () => {
-//				testScoreAsc ();
-////				testLevel();
-//			};
 			SoomlaStore.Initialize (new MuffinRushAssets ());
 		}
 
 		public void onSoomlaStoreInitialized() {
-			StartCoroutine(testScoreAsc());
+//			Coroutine<bool> testScoreAscCR = Coroutine<bool>(testScoreAsc());
+//			yield return testScoreAscCR.coroutine;
+//			try {
+//				if (testScoreAscCR.Value) {
+//				}
+//
+//			}
+//			catch (Exception e) {
+//				//and handle any exceptions here
+//			}
+
+			StartCoroutine (testScoreAsc());
 			StartCoroutine(testLevel());
 		}
 
@@ -106,6 +170,10 @@ namespace Soomla.Test {
 					return;
 				}
 			}
+		}
+
+		void OnGUI() {
+			GUI.TextArea (new Rect (10, 10, Screen.width-10, Screen.height-10), sTestLog, _textStyle);
 		}
 
 		private void createWorlds() {
@@ -121,8 +189,10 @@ namespace Soomla.Test {
 			BadgeReward goldMedal = new BadgeReward("badge_goldMedal", "Gold Medal");
 
 		}
-
+			
 		private IEnumerator testLevel() {
+			sTestLog += "testLevel...";
+
 			List<World> worlds = new List<World>();
 			Level lvl1 = new Level("lvl1", false);
 			worlds.Add(lvl1);
@@ -142,6 +212,7 @@ namespace Soomla.Test {
 			// check level time measure
 			double playDuration = lvl1.GetPlayDuration();
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
+			sTestLog += "playDuration = " + playDuration + "\n";
 			Assert.assertTrue(playDuration >= 1);
 			Assert.assertFalse(playDuration > 2);
 			
@@ -150,6 +221,7 @@ namespace Soomla.Test {
 			// make sure no changes after pause
 			playDuration = lvl1.GetPlayDuration();
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
+			sTestLog += "playDuration = " + playDuration + "\n";;
 			Assert.assertTrue(playDuration >= 1);
 			Assert.assertFalse(playDuration > 2);
 			Assert.assertTrue(lvl1.State == Level.LevelState.Paused);
@@ -159,6 +231,7 @@ namespace Soomla.Test {
 			// make sure working after resume
 			playDuration = lvl1.GetPlayDuration();
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
+			sTestLog += "playDuration = " + playDuration + "\n";;
 			Assert.assertTrue(playDuration >= 2);
 			Assert.assertFalse(playDuration > 3);
 			Assert.assertTrue(lvl1.State == Level.LevelState.Running);
@@ -169,18 +242,22 @@ namespace Soomla.Test {
 			
 			lvl1.SetCompleted(true);
 			Assert.assertTrue(lvl1.IsCompleted());
-			
-			Assert.assertEquals(playDuration, lvl1.GetSlowestDuration(), 0.1);
-			Assert.assertEquals(playDuration, lvl1.GetFastestDuration(), 0.1);
+
+			// it seems there is a delay of ~0.5-1.0 seconds of saving to storage
+			Assert.assertEquals(playDuration, lvl1.GetSlowestDuration(), 0.9);
+			Assert.assertEquals(playDuration, lvl1.GetFastestDuration(), 0.9);
 			Assert.assertEquals(1, lvl1.GetTimesPlayed());
 			Assert.assertEquals(1, lvl1.GetTimesStarted());
 
 			UnityEngine.Debug.LogError("Done! SOOMLA");
 
+			sTestLog += "<color=green>SUCCESS</color>\n";
+
 			yield return null;
 		}
 
 		public IEnumerator testScoreAsc() {
+			sTestLog += "testScoreAsc...";
 			UnityEngine.Debug.LogError("testScoreAsc SOOMLA");
 			bool higherIsBetter = true;
 			string scoreId = "score_asc";
@@ -222,7 +299,45 @@ namespace Soomla.Test {
 
 			UnityEngine.Debug.LogError("Done! SOOMLA");
 
+			sTestLog += "<color=green>SUCCESS</color>\n";					
+
 			yield return null;
+		}
+	}
+
+	public class Coroutine<T>{
+		public T Value {
+			get{
+				if(e != null){
+					throw e;
+				}
+				return returnVal;
+			}
+		}
+		private T returnVal;
+		private Exception e;
+		public Coroutine coroutine;
+		
+		public IEnumerator InternalRoutine(IEnumerator coroutine){
+			while(true){
+				try{
+					if(!coroutine.MoveNext()){
+						yield break;
+					}
+				}
+				catch(Exception e){
+					this.e = e;
+					yield break;
+				}
+				object yielded = coroutine.Current;
+				if(yielded != null && yielded.GetType() == typeof(T)){
+					returnVal = (T)yielded;
+					yield break;
+				}
+				else{
+					yield return coroutine.Current;
+				}
+			}
 		}
 	}
 }
