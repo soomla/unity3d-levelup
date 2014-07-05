@@ -108,6 +108,10 @@ namespace Soomla.Test {
 			}
 		}
 
+		private void createWorlds() {
+
+		}
+
 		private IEnumerator testLevel() {
 			List<World> worlds = new List<World>();
 			Level lvl1 = new Level("lvl1");
