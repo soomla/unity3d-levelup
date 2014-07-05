@@ -20,8 +20,8 @@ namespace Soomla.Levelup
 	{
 		public SRange Range;
 
-		public RangeScore(string scoreId, string name, SRange range)
-			: base(scoreId, name)
+		public RangeScore(string scoreId, SRange range)
+			: base(scoreId)
 		{
 			Range = range;
 		}

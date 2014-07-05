@@ -33,10 +33,10 @@ namespace Soomla.Levelup {
 		public bool HigherBetter;
 		protected double _tempScore;
 
-		public Score (string scoreId, string name)
+		public Score (string scoreId)
 		{
 			this.ScoreId = scoreId;
-			this.Name = name;
+			this.Name = "temp_score_name";
 			this.StartValue = 0;
 			this.HigherBetter = true;
 		}

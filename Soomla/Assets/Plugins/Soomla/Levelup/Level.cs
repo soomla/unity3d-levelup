@@ -34,8 +34,8 @@ namespace Soomla.Levelup {
 		
 		public LevelState State = LevelState.Idle;
 
-		public Level(String worldId)
-			: base(worldId) 
+		public Level(String worldId, bool singleScore)
+			: base(worldId, singleScore) 
 		{
 		}
 		
@@ -76,14 +76,6 @@ namespace Soomla.Levelup {
 		
 		public double GetFastestDuration() {
 			return LevelStorage.GetFastestDuration(this);
-		}
-		
-		public void DecScore(string scoreId, double amount) {
-			Scores[scoreId].Dec(amount);
-		}
-		
-		public void IncScore(string scoreId, double amount) {
-			Scores[scoreId].Inc(amount);
 		}
 
 

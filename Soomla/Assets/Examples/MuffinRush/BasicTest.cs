@@ -109,12 +109,19 @@ namespace Soomla.Test {
 		}
 
 		private void createWorlds() {
+			World mainWorld = new World("main_world");
+
+			World machineA = new World("machine_a", 20, true);
+			World machineB = new World("machine_b", 20, true);
+			World machineC = new World("machine_c", 20, true);
+			World machineD = new World("machine_d", 20, true);
+
 
 		}
 
 		private IEnumerator testLevel() {
 			List<World> worlds = new List<World>();
-			Level lvl1 = new Level("lvl1");
+			Level lvl1 = new Level("lvl1", false);
 			worlds.Add(lvl1);
 			
 			//LevelUp.Initialize(worlds);
