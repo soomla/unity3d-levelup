@@ -26,14 +26,14 @@ namespace Soomla.Levelup
 		                                                       [MarshalAs(UnmanagedType.Bool)] bool completed,
 		                                                       [MarshalAs(UnmanagedType.Bool)] bool notify);
 		[DllImport ("__Internal")]
-		private static extern void worldStorage_SetBadge(string worldJson, string badgeRewardId);
+		private static extern void worldStorage_SetReward(string worldJson, string rewardId);
 
 		[DllImport ("__Internal")]
 		[return:MarshalAs(UnmanagedType.I1)]
 		private static extern bool worldStorage_IsCompleted(string worldJson);
 
 		[DllImport ("__Internal")]
-		private static extern void worldStorage_GetAssignedBadge(string worldJson, out IntPtr json);
+		private static extern void worldStorage_GetAssignedReward(string worldJson, out IntPtr json);
 		
 		
 		override protected void _setCompleted(World world, bool completed, bool notify) {
@@ -46,22 +46,22 @@ namespace Soomla.Levelup
 			return worldStorage_IsCompleted(worldJson);
 		}
 
-		override protected void _setBadge(World world, string badgeRewardId) {
+		override protected void _setReward(World world, string rewardId) {
 			string worldJson = world.toJSONObject().ToString();
-			worldStorage_SetBadge(worldJson, badgeRewardId);
+			worldStorage_SetReward(worldJson, rewardId);
 		}
 		
-		override protected string _getAssignedBadge(World world) {
+		override protected string _getAssignedReward(World world) {
 			string worldJson = world.toJSONObject().ToString();
 
 			IntPtr p = IntPtr.Zero;
-			worldStorage_GetAssignedBadge(worldJson, out p);
+			worldStorage_GetAssignedReward(worldJson, out p);
 //			IOS_ErrorCodes.CheckAndThrowException(err);
 			
-			string rewardBadgeId = Marshal.PtrToStringAnsi(p);
+			string rewardId = Marshal.PtrToStringAnsi(p);
 			Marshal.FreeHGlobal(p);
 
-			return rewardBadgeId;
+			return rewardId;
 		}
 #endif
 	}

@@ -261,14 +261,12 @@ namespace Soomla.Levelup {
 
 		/** Reward Association **/
 
-		private BadgeReward AssociatedReward;
-
-		public void AssignBadge(BadgeReward badgeReward) {
-			WorldStorage.SetBadge(this, badgeReward.RewardId);
+		public void AssignReward(Reward reward) {
+			WorldStorage.SetReward(this, reward.RewardId);
 		}
 		
-		public String GetAssignedBadgeId() {
-			return WorldStorage.GetAssignedBadge(this);
+		public String GetAssignedRewardId() {
+			return WorldStorage.GetAssignedReward(this);
 		}
 
 

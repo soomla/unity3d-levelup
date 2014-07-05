@@ -38,22 +38,22 @@ namespace Soomla.Levelup
 			return completed;
 		}
 
-		override protected void _setBadge(World world, string badgeRewardId) {
+		override protected void _setReward(World world, string rewardId) {
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-				jniWorldStorage.CallStatic("setBadge", world.toJNIObject(), badgeRewardId);
+				jniWorldStorage.CallStatic("setReward", world.toJNIObject(), rewardId);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
 		
-		override protected string _getAssignedBadge(World world) {
-			string badgeId;
+		override protected string _getAssignedReward(World world) {
+			string rewardId;
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-				badgeId = jniWorldStorage.CallStatic<string>("getAssignedBadge", world.toJNIObject());
+				rewardId = jniWorldStorage.CallStatic<string>("getAssignedReward", world.toJNIObject());
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
-			return badgeId;
+			return rewardId;
 		}
 	
 #endif

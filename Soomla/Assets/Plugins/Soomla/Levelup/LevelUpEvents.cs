@@ -127,15 +127,15 @@ namespace Soomla.Levelup {
 			LevelUpEvents.OnWorldCompleted(world);
 		}
 
-		public void onWorldBadgeAssigned(string message) {
-			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onWorldBadgeAssigned with message: " + message);
+		public void onWorldAssignedReward(string message) {
+			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onWorldAssignedReward with message: " + message);
 			
 			// message is World as JSON
 			
 			JSONObject json = new JSONObject (message);
 			World world = World.fromJSONObject (json);
 			
-			LevelUpEvents.OnWorldBadgeAssigned(world);
+			LevelUpEvents.OnWorldAssignedReward(world);
 		}
 
 
@@ -156,7 +156,7 @@ namespace Soomla.Levelup {
 
 		public static Action<World> OnWorldCompleted = delegate {};
 
-		public static Action<World> OnWorldBadgeAssigned = delegate {};
+		public static Action<World> OnWorldAssignedReward = delegate {};
 
 	}
 }

@@ -50,12 +50,12 @@ namespace Soomla.Levelup
 			return instance._isCompleted(world);
 		}
 
-		public static void SetBadge(World world, string badgeRewardId) {
-			instance._setBadge(world, badgeRewardId);
+		public static void SetReward(World world, string rewardId) {
+			instance._setReward(world, rewardId);
 		}
 
-		public static string GetAssignedBadge(World world) {
-			return instance._getAssignedBadge(world);
+		public static string GetAssignedReward(World world) {
+			return instance._getAssignedReward(world);
 		}
 
 
@@ -68,11 +68,11 @@ namespace Soomla.Levelup
 			return false;
 		}
 
-		virtual protected void _setBadge(World world, string badgeRewardId) {
+		virtual protected void _setReward(World world, string rewardId) {
 			// TODO: WIE
 		}
 
-		virtual protected string _getAssignedBadge(World world) {
+		virtual protected string _getAssignedReward(World world) {
 			// TODO: WIE
 			return null;
 		}

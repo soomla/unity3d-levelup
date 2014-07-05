@@ -175,23 +175,23 @@ extern "C" {
         return [WorldStorage isWorldCompleted:world];
     }
     
-    void worldStorage_GetAssignedBadge(const char* sWorldJson, char** json) {
+    void worldStorage_GetAssignedReward(const char* sWorldJson, char** json) {
         NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
         NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
         World* world = [World fromDictionary:worldDict];
-        NSString* badgeId = [WorldStorage getAssignedBadge:world];
-        if (!badgeId) {
-            badgeId = @"";
+        NSString* rewardId = [WorldStorage getAssignedReward:world];
+        if (!rewardId) {
+            rewardId = @"";
         }
         
-        *json = AutonomousStringCopy([badgeId UTF8String]);
+        *json = AutonomousStringCopy([rewardId UTF8String]);
     }
     
-    void worldStorage_SetBadge(const char* sWorldJson, const char* sBadgeRewardId) {
+    void worldStorage_SetBadge(const char* sWorldJson, const char* sRewardId) {
         NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
-        NSString* badgeRewardId = [NSString stringWithUTF8String:sBadgeRewardId];
+        NSString* rewardId = [NSString stringWithUTF8String:sRewardId];
         NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
         World* world = [World fromDictionary:worldDict];
-        [WorldStorage setBadge:badgeRewardId forWorld:world];
+        [WorldStorage setReward:rewardId forWorld:world];
     }
 }
