@@ -43,7 +43,7 @@ namespace Soomla.Levelup
 		public RecordMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
-			this.AssociatedScoreId = jsonMission[JSONConsts.SOOM_ASSOCITEMID].str;
+			this.AssociatedScoreId = jsonMission[JSONConsts.SOOM_ASSOCSCOREID].str;
 			this.DesiredRecord = jsonMission[JSONConsts.SOOM_DESIRED_RECORD].n;
 		}
 		
@@ -53,7 +53,7 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedScoreId);
+			obj.AddField(JSONConsts.SOOM_ASSOCSCOREID, this.AssociatedScoreId);
 			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, Convert.ToInt32(this.DesiredRecord));
 
 			return obj;

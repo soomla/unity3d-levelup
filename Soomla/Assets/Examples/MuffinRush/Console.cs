@@ -33,7 +33,9 @@ namespace Consolation
 		/// The (squared) acceleration above which the window should open.
 		/// </summary>
 		public float shakeAcceleration = 3f;
-		
+
+		public bool ManualMode = false;
+
 		#endregion
 		
 		readonly List<Log> logs = new List<Log>();
@@ -62,12 +64,14 @@ namespace Consolation
 		
 		void OnEnable ()
 		{
-			Application.RegisterLogCallback(HandleLog);
+			if(!ManualMode)
+				Application.RegisterLogCallback(HandleLog);
 		}
 		
 		void OnDisable ()
 		{
-			Application.RegisterLogCallback(null);
+			if(!ManualMode)
+				Application.RegisterLogCallback(null);
 		}
 		
 		void Update ()
@@ -139,7 +143,7 @@ namespace Consolation
 		/// <param name="message">Message.</param>
 		/// <param name="stackTrace">Trace of where the message came from.</param>
 		/// <param name="type">Type of message (error, exception, warning, assert).</param>
-		void HandleLog (string message, string stackTrace, LogType type)
+		public void HandleLog (string message, string stackTrace, LogType type)
 		{
 			logs.Add(new Log {
 				message = message,

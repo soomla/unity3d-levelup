@@ -52,7 +52,7 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedScoreId);
+			obj.AddField(JSONConsts.SOOM_ASSOCSCOREID, this.AssociatedScoreId);
 			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, Convert.ToInt32(this.DesiredRecord));
 
 			return obj;

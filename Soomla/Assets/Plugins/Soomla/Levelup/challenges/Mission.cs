@@ -99,8 +99,8 @@ namespace Soomla.Levelup {
 #if UNITY_ANDROID 
 		//&& !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {
-			using(AndroidJavaClass jniGateClass = new AndroidJavaClass("com.soomla.levelup.challenges.Mission")) {
-				return jniGateClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
+			using(AndroidJavaClass jniClass = new AndroidJavaClass("com.soomla.levelup.challenges.Mission")) {
+				return jniClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
 			}
 		}
 #endif
