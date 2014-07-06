@@ -39,12 +39,14 @@ namespace Soomla.Levelup {
 			if(instance == null){ 	// making sure we only initialize one instance.
 				instance = this;
 				GameObject.DontDestroyOnLoad(this.gameObject);
+				Initialize();
 			} else {				// Destroying unused instances.
 				GameObject.Destroy(this.gameObject);
 			}
 		}
 
 		public static void Initialize() {
+			SoomlaUtils.LogDebug (TAG, "Initialize");
 #if UNITY_ANDROID && !UNITY_EDITOR
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.LevelUpEventHandler")) {

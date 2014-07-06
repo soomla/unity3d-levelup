@@ -100,7 +100,9 @@ namespace Soomla.Levelup {
 		//&& !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {
 			using(AndroidJavaClass jniClass = new AndroidJavaClass("com.soomla.levelup.challenges.Mission")) {
-				return jniClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
+				string json = toJSONObject().print();
+				SoomlaUtils.LogError(TAG, "json:"+json);
+				return jniClass.CallStatic<AndroidJavaObject>("fromJSONString", json);
 			}
 		}
 #endif
