@@ -14,6 +14,7 @@ namespace Soomla.Test {
 
 		private const string TAG = "SOOMLA-TEST BasicTest";
 
+		private static bool sAssertionError = false;
 		private static string sTestLog;
 
 		private Queue<Dictionary<string, object>> _eventQueue;
@@ -37,6 +38,7 @@ namespace Soomla.Test {
 
 			public static void assertTrue(bool cond) {
 				if (!cond) {
+					sAssertionError = true;
 					sTestLog += "<color=red>FAIL!</color>\n";
 //					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
 					sTestLog += getStackTrace() + "\n";
@@ -46,6 +48,7 @@ namespace Soomla.Test {
 			}
 			public static void assertFalse(bool cond) {
 				if (cond) {
+					sAssertionError = true;
 					sTestLog += "<color=red>FAIL!</color>\n";
 //					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
 					sTestLog += getStackTrace() + "\n";
@@ -55,6 +58,7 @@ namespace Soomla.Test {
 			}
 			public static void assertEquals<T>(T expected, T actual) {
 				if (!expected.Equals (actual)) {
+					sAssertionError = true;
 					sTestLog += string.Format("<color=red>FAIL! expected:{0} actual:{1}</color>\n", expected, actual);
 //					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
 					sTestLog += getStackTrace() + "\n";
@@ -64,6 +68,7 @@ namespace Soomla.Test {
 			}
 			public static void assertEquals(double actual, double expected, double percision) {
 				if (Math.Abs(actual-expected) > percision) {
+					sAssertionError = true;
 					sTestLog += string.Format("<color=red>FAIL! expected:{0} actual:{1} percision:{2}</color>\n", expected, actual, percision);
 					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
 //					sTestLog += getStackTrace() + "\n";
@@ -184,10 +189,14 @@ namespace Soomla.Test {
 			LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			LevelUpEvents.OnWorldCompleted += onWorldCompleted;
 
-			StartCoroutine(testLevel());
+			StartCoroutine(runTests());
+		}
+
+		private IEnumerator runTests() {
+			yield return StartCoroutine(testLevel());
 			Assert.assertTrue (_eventQueue.Count == 0);
-//			StartCoroutine (testScoreAsc());
-//			Assert.assertTrue (_eventQueue.Count == 0);
+			yield return StartCoroutine (testScoreAsc());
+			Assert.assertTrue (_eventQueue.Count == 0);
 		}
 
 		private void onGateOpen(Gate gate) {
@@ -195,9 +204,22 @@ namespace Soomla.Test {
 		}
 
 		private void onLevelEnded(Level level) {
+			string worldId = level.WorldId;
+			string msg = "<color=yellow>onEvent/onLevelEnded:</color>" + worldId;
+			sTestLog += msg + "\n";
+			SoomlaUtils.LogDebug(TAG, msg);
+			Dictionary<string, object> expected = _eventQueue.Dequeue ();
+			Assert.assertEquals(expected["id"], worldId);
 		}
 
 		private void onLevelStarted(Level level) {
+			string worldId = level.WorldId;
+			string msg = "<color=yellow>onEvent/onLevelStarted:</color>" + worldId;
+			sTestLog += msg + "\n";
+			SoomlaUtils.LogDebug(TAG, msg);
+			Dictionary<string, object> expected = _eventQueue.Dequeue ();
+			Assert.assertEquals(expected["id"], worldId);
+			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		private void onMissionCompleted(Mission mission) {
@@ -214,7 +236,8 @@ namespace Soomla.Test {
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
 			Assert.assertEquals(expected["id"], scoreId);
-			Assert.assertEquals((double)expected["val"], record, 0.1);
+			Assert.assertEquals(expected["val"] as double? ?? 0.9999, record, 0.1);
+			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		private void onWorldCompleted(World world) {
@@ -224,6 +247,7 @@ namespace Soomla.Test {
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
 			Assert.assertEquals(expected["id"], worldId);
+			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		void Update() {
@@ -273,11 +297,23 @@ namespace Soomla.Test {
 			Assert.assertTrue(lvl1.CanStart());
 			Assert.assertTrue(lvl1.State == Level.LevelState.Idle);
 
+			// setup expected event queue
 			_eventQueue.Clear ();
-
-			_eventQueue.Enqueue (new Dictionary<string, object> {
+			Dictionary<string, object> evtLvlStarted = new Dictionary<string, object> {
+				{ "handler", "onLevelStarted" },
 				{ "id", "lvl1" }
-			});
+			};
+			Dictionary<string, object> evtLvlEnded = new Dictionary<string, object> {
+				{ "handler", "onLevelEnded" },
+				{ "id", "lvl1" }
+			};
+			Dictionary<string, object> evtWorldCompleted = new Dictionary<string, object> {
+				{ "handler", "onWorldCompleted" },
+				{ "id", "lvl1" }
+			};
+			_eventQueue.Enqueue (evtLvlStarted); // level started
+			_eventQueue.Enqueue (evtLvlEnded); // level ended
+			_eventQueue.Enqueue (evtWorldCompleted); // world completed
 			
 			lvl1.Start();
 			Assert.assertTrue(lvl1.State == Level.LevelState.Running);
@@ -325,7 +361,10 @@ namespace Soomla.Test {
 
 			UnityEngine.Debug.LogError("Done! SOOMLA");
 
-			sTestLog += "<color=green>SUCCESS</color>\n";
+			if (!sAssertionError) {
+				sTestLog += "<color=green>SUCCESS</color>\n";
+			}
+			sAssertionError = false;
 
 			yield return null;
 		}
@@ -340,6 +379,7 @@ namespace Soomla.Test {
 			_eventQueue.Clear ();
 
 			_eventQueue.Enqueue (new Dictionary<string, object> {
+				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
 				{ "val", 0 }
 			});
@@ -354,8 +394,9 @@ namespace Soomla.Test {
 			Assert.assertEquals(10, scoreAsc.GetTempScore(), 0.01);
 	//		mExpectedRecordValue = 10;
 			_eventQueue.Enqueue (new Dictionary<string, object> {
+				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
-				{ "val", 10 }
+				{ "val", 10.0 }
 			});
 			scoreAsc.SaveAndReset();
 			Assert.assertEquals(10, scoreAsc.Latest, 0.01);
@@ -363,8 +404,9 @@ namespace Soomla.Test {
 			scoreAsc.SetTempScore(20);
 	//		mExpectedRecordValue = 0;
 			_eventQueue.Enqueue (new Dictionary<string, object> {
+				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
-				{ "val", 0 }
+				{ "val", 0.0 }
 			});
 			scoreAsc.Reset();
 			Assert.assertEquals(0, scoreAsc.Latest, 0.01);
@@ -374,8 +416,9 @@ namespace Soomla.Test {
 			Assert.assertFalse(scoreAsc.HasTempReached(31));
 	//		mExpectedRecordValue = 30;
 			_eventQueue.Enqueue (new Dictionary<string, object> {
+				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
-				{ "val", 30 }
+				{ "val", 30.0 }
 			});
 			scoreAsc.SaveAndReset();
 			Assert.assertEquals(30, scoreAsc.Latest, 0.01);
@@ -383,8 +426,9 @@ namespace Soomla.Test {
 			scoreAsc.SetTempScore(15);
 	//		mExpectedRecordValue = 30;
 			_eventQueue.Enqueue (new Dictionary<string, object> {
+				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
-				{ "val", 30 }
+				{ "val", 30.0 }
 			});
 			scoreAsc.SaveAndReset();
 			Assert.assertEquals(15, scoreAsc.Latest, 0.01);
@@ -394,7 +438,10 @@ namespace Soomla.Test {
 
 			UnityEngine.Debug.LogError("Done! SOOMLA");
 
-			sTestLog += "<color=green>SUCCESS</color>\n";					
+			if (!sAssertionError) {
+				sTestLog += "<color=green>SUCCESS</color>\n";
+			}
+			sAssertionError = false;					
 
 			yield return null;
 		}
