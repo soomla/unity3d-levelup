@@ -104,7 +104,7 @@ namespace Soomla.Levelup {
 			}
 			
 			JSONObject gateListJSON = jsonWorld[LUJSONConsts.LU_GATES];
-			if (gateListJSON != null) {
+			if (gateListJSON != null && gateListJSON.keys != null && gateListJSON.keys.Count > 0) {
 				Gates = GatesList.fromJSONObject (gateListJSON);
 			}
 		}

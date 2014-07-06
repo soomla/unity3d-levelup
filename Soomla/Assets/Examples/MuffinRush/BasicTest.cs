@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 using Soomla;
 using Soomla.Levelup;
@@ -150,18 +151,36 @@ namespace Soomla.Test {
 			_textStyle.fontSize = 14;
 
 			// clear last DB storage so test run anew
+			string dbName = "store.kv.db";
 			string dbPath = null;
 #if UNITY_ANDROID
-			dbPath = "/private" + Application.persistentDataPath + "/store.kv.db";
-#elif UNITY_IOS
-			dbPath = "/private" + Application.persistentDataPath + "/../Library/Application Support/store.kv.db";
+			// file approach seems to not work
+//			dbPath = Application.persistentDataPath + "/" + dbName;
+			// even replacing the path doesn't
+//			dbPath = Regex.Replace(dbPath, "/.+/data/com", "/data/data/com");
+
+			// try via Context (works)
+			UnityEngine.Debug.LogWarning("TESTING-> try to delete db via Context.deleteDatabase..");
+			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+			AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+			bool deleted = jo.Call<bool>("deleteDatabase", new object[] {dbName});
+			UnityEngine.Debug.LogWarning ("TESTING-> deleted?=" + deleted);
+			
+			#elif UNITY_IOS
+			dbPath = "/private" + Application.persistentDataPath + "/../Library/Application Support/" + dbName;
 #endif
 			if (dbPath != null) {
+				UnityEngine.Debug.LogWarning ("TESTING-> db file at:" + dbPath);
 				bool exists = System.IO.File.Exists(dbPath);
 				UnityEngine.Debug.LogWarning ("TESTING-> db file exists?=" + exists);
 				if(exists) {
-					UnityEngine.Debug.LogWarning ("TESTING-> delete db file at:" + dbPath);
+					UnityEngine.Debug.LogWarning ("TESTING-> DELETE db file at:" + dbPath);
+#if UNITY_ANDROID
+					// file approach seems to not work
 					System.IO.File.Delete (dbPath);
+#elif UNITY_IOS
+					System.IO.File.Delete (dbPath);
+#endif
 				}
 			}
 
