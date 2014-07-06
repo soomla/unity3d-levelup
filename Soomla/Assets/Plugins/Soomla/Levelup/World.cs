@@ -72,7 +72,7 @@ namespace Soomla.Levelup {
 			WorldId = jsonWorld[LUJSONConsts.LU_WORLD_WORLDID].str;
 			
 			InnerWorlds = new Dictionary<string, World>();
-			ArrayList worldsJSON = jsonWorld[LUJSONConsts.LU_WORLDS].list;
+			List<JSONObject> worldsJSON = jsonWorld[LUJSONConsts.LU_WORLDS].list;
 			
 			// Iterate over all inner worlds in the JSON array and for each one create
 			// an instance according to the world type
@@ -84,7 +84,7 @@ namespace Soomla.Levelup {
 			}
 			
 			Scores = new Dictionary<String, Score>();
-			ArrayList scoresJSON = jsonWorld[LUJSONConsts.LU_SCORES].list;
+			List<JSONObject> scoresJSON = jsonWorld[LUJSONConsts.LU_SCORES].list;
 			
 			// Iterate over all scores in the JSON array and for each one create
 			// an instance according to the score type
@@ -96,7 +96,7 @@ namespace Soomla.Levelup {
 			}
 
 			Challenges = new List<Challenge>();
-			ArrayList challengesJSON = jsonWorld[LUJSONConsts.LU_CHALLENGES].list;
+			List<JSONObject> challengesJSON = jsonWorld[LUJSONConsts.LU_CHALLENGES].list;
 			
 			// Iterate over all challenges in the JSON array and create an instance for each one
 			foreach (JSONObject challengeJSON in challengesJSON) {
@@ -104,7 +104,9 @@ namespace Soomla.Levelup {
 			}
 			
 			JSONObject gateListJSON = jsonWorld[LUJSONConsts.LU_GATES];
-			Gates = GatesList.fromJSONObject(gateListJSON);
+			if (gateListJSON != null) {
+				Gates = GatesList.fromJSONObject (gateListJSON);
+			}
 		}
 
 		public virtual JSONObject toJSONObject() {

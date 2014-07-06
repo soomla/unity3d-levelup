@@ -42,7 +42,7 @@ namespace Soomla.Levelup
 			: base(jsonMission)
 		{
 			Missions = new List<Mission>();
-			ArrayList/*<JSONObject>*/ missionsJSON = jsonMission[LUJSONConsts.LU_MISSIONS].list;
+			List<JSONObject> missionsJSON = jsonMission[LUJSONConsts.LU_MISSIONS].list;
 			foreach(JSONObject missionJSON in missionsJSON) {
 				Missions.Add(Mission.fromJSONObject(missionJSON));
 			}

@@ -52,7 +52,7 @@ namespace Soomla.Levelup
 			: base(jsonGate)
 		{
 			Gates = new List<Gate>();
-			ArrayList/*<JSONObject>*/ gatesJSON = jsonGate[LUJSONConsts.LU_GATES].list;
+			List<JSONObject> gatesJSON = jsonGate[LUJSONConsts.LU_GATES].list;
 
 			// Iterate over all gates in the JSON array and for each one create
 			// an instance according to the gate type

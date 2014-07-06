@@ -67,7 +67,7 @@ namespace Soomla.Levelup {
 			}
 
 			this.Rewards = new List<Reward>();
-			ArrayList/*<JSONObject>*/ jsonRewardList = jsonObj [JSONConsts.SOOM_REWARDS].list;
+			List<JSONObject> jsonRewardList = jsonObj [JSONConsts.SOOM_REWARDS].list;
 			foreach (JSONObject jsonRewardObj in jsonRewardList) {
 				this.Rewards.Add(Reward.fromJSONObject(jsonRewardObj));
 			}

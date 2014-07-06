@@ -84,6 +84,21 @@ namespace Soomla.Test {
 
 			sTestLog = "";
 			_eventQueue = new Queue<Dictionary<string, object>> ();
+
+//			JSONObject jsonObject = new JSONObject (@"{
+//  ""scores"" : [
+//
+//  ],
+//  ""className"" : ""Level"",
+//""challenges"" : [
+//
+//  ],
+//  ""worldId"" : ""lvl1"",
+//  ""worlds"" : [
+//
+//  ]
+//}");
+//			Level.fromJSONObject (jsonObject);
 		}
 
 //		bool SoomlaInit(string secret) {
@@ -170,7 +185,9 @@ namespace Soomla.Test {
 			LevelUpEvents.OnWorldCompleted += onWorldCompleted;
 
 			StartCoroutine(testLevel());
+			Assert.assertTrue (_eventQueue.Count == 0);
 //			StartCoroutine (testScoreAsc());
+//			Assert.assertTrue (_eventQueue.Count == 0);
 		}
 
 		private void onGateOpen(Gate gate) {
@@ -304,9 +321,7 @@ namespace Soomla.Test {
 			Assert.assertEquals(playDuration, lvl1.GetSlowestDuration(), 0.9);
 			Assert.assertEquals(playDuration, lvl1.GetFastestDuration(), 0.9);
 			Assert.assertEquals(1, lvl1.GetTimesPlayed());
-			Assert.assertEquals(1, lvl1.GetTimesStarted());
-
-			Assert.assertTrue (_eventQueue.Count == 0);
+			Assert.assertEquals(1, lvl1.GetTimesStarted());		
 
 			UnityEngine.Debug.LogError("Done! SOOMLA");
 
@@ -376,8 +391,6 @@ namespace Soomla.Test {
 			Assert.assertEquals(30, scoreAsc.Record, 0.01);
 			Assert.assertTrue(scoreAsc.HasRecordReached(30));
 			Assert.assertFalse(scoreAsc.HasRecordReached(31));
-
-			Assert.assertTrue (_eventQueue.Count == 0);
 
 			UnityEngine.Debug.LogError("Done! SOOMLA");
 
