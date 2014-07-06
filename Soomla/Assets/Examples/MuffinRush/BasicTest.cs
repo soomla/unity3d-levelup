@@ -157,9 +157,12 @@ namespace Soomla.Test {
 			dbPath = "/private" + Application.persistentDataPath + "/../Library/Application Support/store.kv.db";
 #endif
 			if (dbPath != null) {
-				UnityEngine.Debug.LogWarning ("TESTING-> db file exists?=" + System.IO.File.Exists(dbPath));
-				UnityEngine.Debug.LogWarning ("TESTING-> delete db file at:" + dbPath);
-				System.IO.File.Delete (dbPath);
+				bool exists = System.IO.File.Exists(dbPath);
+				UnityEngine.Debug.LogWarning ("TESTING-> db file exists?=" + exists);
+				if(exists) {
+					UnityEngine.Debug.LogWarning ("TESTING-> delete db file at:" + dbPath);
+					System.IO.File.Delete (dbPath);
+				}
 			}
 
 
