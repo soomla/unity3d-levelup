@@ -187,7 +187,7 @@ extern "C" {
         *json = AutonomousStringCopy([rewardId UTF8String]);
     }
     
-    void worldStorage_SetBadge(const char* sWorldJson, const char* sRewardId) {
+    void worldStorage_SetReward(const char* sWorldJson, const char* sRewardId) {
         NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
         NSString* rewardId = [NSString stringWithUTF8String:sRewardId];
         NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];

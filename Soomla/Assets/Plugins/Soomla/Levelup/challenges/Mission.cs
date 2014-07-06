@@ -58,7 +58,7 @@ namespace Soomla.Levelup {
 //		}
 //#endif
 
-		protected Mission(JSONObject jsonObj) {
+		public Mission(JSONObject jsonObj) {
 			this.MissionId = jsonObj[LUJSONConsts.LU_MISSION_MISSIONID].str;
 			if (jsonObj[JSONConsts.SOOM_NAME]) {
 				this.Name = jsonObj[JSONConsts.SOOM_NAME].str;

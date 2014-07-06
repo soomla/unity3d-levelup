@@ -37,7 +37,7 @@ namespace Soomla.Levelup {
 //		}
 //#endif
 
-		protected Gate(JSONObject jsonObj) {
+		public Gate(JSONObject jsonObj) {
 			this.GateId = jsonObj[LUJSONConsts.LU_GATE_GATEID].str;
 		}
 
