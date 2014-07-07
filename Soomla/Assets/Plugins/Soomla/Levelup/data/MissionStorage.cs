@@ -52,14 +52,38 @@ namespace Soomla.Levelup
 		}
 
 
-		virtual protected void _setCompleted(Mission mission, bool open, bool notify) {
-			// TODO: WIE
+		protected void _setCompleted(Mission mission, bool completed, bool notify) {
+			string key = keyMissionCompleted (mission.MissionId);
+			if (completed) {
+				PlayerPrefs.SetString(key, "yes");
+
+				if (notify) {
+					LevelUpEvents.OnMissionCompleted(mission);
+				}
+			} else {
+				PlayerPrefs.DeleteKey(key);
+
+				if (notify) {
+					LevelUpEvents.OnMissionCompletionRevoked(mission);
+				}
+			}
 		}
 
-		virtual protected bool _isCompleted(Mission mission) {
-			// TODO: WIE
-			return false;
+		protected bool _isCompleted(Mission mission) {
+			string key = keyMissionCompleted (mission.MissionId);
+			string val = PlayerPrefs.GetString (key);
+			return val != null;
 		}
+
+		private static string keyMissions(string missionId, string postfix) {
+			return LevelUp.DB_KEY_PREFIX + "missions." + missionId + "." + postfix;
+		}
+		
+		private static string keyMissionCompleted(string missionId) {
+			return keyMissions(missionId, "completed");
+		}
+
+
 	}
 }
 
