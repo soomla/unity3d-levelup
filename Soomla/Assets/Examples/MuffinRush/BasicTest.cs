@@ -107,6 +107,19 @@ namespace Soomla.Test {
 			sTestLog = "";
 			_eventQueue = new Queue<Dictionary<string, object>> ();
 
+			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
+
+			LevelUpEvents.OnGateOpened += onGateOpen;
+			LevelUpEvents.OnLevelEnded += onLevelEnded;
+			LevelUpEvents.OnLevelStarted += onLevelStarted;
+			LevelUpEvents.OnMissionCompleted += onMissionCompleted;
+			LevelUpEvents.OnMissionCompletionRevoked += onMissionCompletedRevoked;
+			LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
+			LevelUpEvents.OnWorldCompleted += onWorldCompleted;
+			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
+			CoreEvents.OnRewardGiven += onRewardGiven;
+			CoreEvents.OnRewardTaken += onRewardTaken;
+
 //			JSONObject jsonObject = new JSONObject (@"{
 //  ""scores"" : [
 //
@@ -201,7 +214,6 @@ namespace Soomla.Test {
 			}
 
 	//		SoomlaInit ("hansolo");
-			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
 			// TBD: these are are initialized internally
 			// TBD: is that ok, or from outside?
 //			CoreEvents.Initialize ();
@@ -224,17 +236,6 @@ namespace Soomla.Test {
 //			catch (Exception e) {
 //				//and handle any exceptions here
 //			}
-
-			LevelUpEvents.OnGateOpened += onGateOpen;
-			LevelUpEvents.OnLevelEnded += onLevelEnded;
-			LevelUpEvents.OnLevelStarted += onLevelStarted;
-			LevelUpEvents.OnMissionCompleted += onMissionCompleted;
-			LevelUpEvents.OnMissionCompletionRevoked += onMissionCompletedRevoked;
-			LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
-			LevelUpEvents.OnWorldCompleted += onWorldCompleted;
-			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
-			CoreEvents.OnRewardGiven += onRewardGiven;
-			CoreEvents.OnRewardTaken += onRewardTaken;
 
 			StartCoroutine(runTests());
 //			runTests ();
@@ -1536,7 +1537,7 @@ namespace Soomla.Test {
 		}
 
 		private void onGoodBalanceChanged(VirtualGood vg, int balance, int amountAdded) {
-			string itemId = goodBalanceChangedEvent.getGood().getItemId();
+			string itemId = vg.ItemId;
 			string msg = "<color=yellow>onEvent/GoodBalanceChangedEvent:</color>" + itemId;
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
@@ -1544,8 +1545,8 @@ namespace Soomla.Test {
 			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			
 			Assert.assertEquals(expected["itemId"], itemId);
-			ssert.assertEquals(expected["balance"], balance);
-			ssert.assertEquals(expected["added"], amountAdded);
+			Assert.assertEquals(expected["balance"], balance);
+			Assert.assertEquals(expected["added"], amountAdded);
 			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
