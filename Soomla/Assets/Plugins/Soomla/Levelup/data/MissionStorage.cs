@@ -53,6 +53,7 @@ namespace Soomla.Levelup
 
 
 		protected void _setCompleted(Mission mission, bool completed, bool notify) {
+#if UNITY_EDITOR
 			string key = keyMissionCompleted (mission.MissionId);
 			if (completed) {
 				PlayerPrefs.SetString(key, "yes");
@@ -67,13 +68,22 @@ namespace Soomla.Levelup
 					LevelUpEvents.OnMissionCompletionRevoked(mission);
 				}
 			}
+#endif
 		}
 
 		protected bool _isCompleted(Mission mission) {
+#if UNITY_EDITOR
 			string key = keyMissionCompleted (mission.MissionId);
 			string val = PlayerPrefs.GetString (key);
 			return val != null;
+#else
+			return false;
+#endif
 		}
+
+
+
+		/** keys **/
 
 		private static string keyMissions(string missionId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "missions." + missionId + "." + postfix;

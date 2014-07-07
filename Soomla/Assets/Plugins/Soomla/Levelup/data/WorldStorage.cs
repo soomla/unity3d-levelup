@@ -59,10 +59,12 @@ namespace Soomla.Levelup
 		}
 
 
-		protected void _setCompleted(World world, bool open, bool notify) {
+
+		protected void _setCompleted(World world, bool completed, bool notify) {
+#if UNITY_EDITOR
 			string key = keyWorldCompleted(world.WorldId);
 			
-			if (open) {
+			if (completed) {
 				PlayerPrefs.SetString(key, "yes");
 				
 				if (notify) {
@@ -71,21 +73,26 @@ namespace Soomla.Levelup
 			} else {
 				PlayerPrefs.DeleteKey(key);
 			}
+#endif
 		}
 
 		protected bool _isCompleted(World world) {
+#if UNITY_EDITOR
 			string key = keyWorldCompleted(world.WorldId);
 			string val = PlayerPrefs.GetString (key);
 			return val != null;
+#else
+			return false;
+#endif
 		}
 
 
 		/** World Reward **/
 
-
 		protected void _setReward(World world, string rewardId) {
+#if UNITY_EDITOR
 			string key = keyReward (world.WorldId);
-			if (rewardId != null && rewardId.Length > 0) {
+			if (!string.IsNullOrEmpty(rewardId)) {
 				PlayerPrefs.SetString(key, rewardId);
 			} else {
 				PlayerPrefs.DeleteKey(key);
@@ -93,12 +100,21 @@ namespace Soomla.Levelup
 
 			// Notify world was assigned a reward
 			LevelUpEvents.OnWorldAssignedReward(world);
+#endif
 		}
 
 		protected string _getAssignedReward(World world) {
+#if UNITY_EDITOR
 			string key = keyReward (world.WorldId);
 			return PlayerPrefs.GetString (key);
+#else
+			return null;
+#endif
 		}
+
+
+
+		/** keys **/
 
 		private static string keyWorlds(string worldId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "worlds." + worldId + "." + postfix;

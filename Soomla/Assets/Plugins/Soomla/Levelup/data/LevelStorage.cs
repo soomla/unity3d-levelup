@@ -89,26 +89,39 @@ namespace Soomla.Levelup
 
 
 		protected void _setSlowestDuration(Level level, double duration) {
+#if UNITY_EDITOR
 			string key = keySlowestDuration (level.WorldId);
 			string val = duration.ToString ();
 			PlayerPrefs.SetString (key, val);
+#endif
 		}
 		
 		protected double _getSlowestDuration(Level level) {
+#if UNITY_EDITOR
 			string key = keySlowestDuration (level.WorldId);
 			string val = PlayerPrefs.GetString (key);
-			return val == null ? double.MinValue : double.Parse (val);
+			return val == null ? 0 : double.Parse (val);
+#else
+			return 0;
+#endif
 		}
 		
 		protected void _setFastestDuration(Level level, double duration) {
+#if UNITY_EDITOR
 			string key = keyFastestDuration (level.WorldId);
 			string val = duration.ToString ();
+			PlayerPrefs.SetString (key, val);
+#endif
 		}
 		
 		protected double _getFastestDuration(Level level) {
+#if UNITY_EDITOR
 			string key = keyFastestDuration (level.WorldId);
 			string val = PlayerPrefs.GetString (key);
-			return val == null ? double.MaxValue : double.Parse (val);
+			return val == null ? 0 : double.Parse (val);
+#else
+			return 0;
+#endif
 		}
 		
 		
@@ -116,6 +129,7 @@ namespace Soomla.Levelup
 		/** Level Times Started **/
 		
 		protected int _incTimesStarted(Level level) {
+#if UNITY_EDITOR
 			int started = _getTimesStarted(level);
 			if (started < 0) { /* can't be negative */
 				started = 0;
@@ -128,9 +142,13 @@ namespace Soomla.Levelup
 			LevelUpEvents.OnLevelStarted (level);
 
 			return started + 1;
+#else
+			return 0l
+#endif
 		}
 		
 		protected int _decTimesStarted(Level level) {
+#if UNITY_EDITOR
 			int started = _getTimesStarted(level);
 			if (started <= 0) { /* can't be negative or zero */
 				return 0;
@@ -140,9 +158,13 @@ namespace Soomla.Levelup
 			PlayerPrefs.SetString (key, startedStr);
 
 			return started - 1;
+#else
+			return 0;
+#endif
 		}
 		
 		protected int _getTimesStarted(Level level) {
+#if UNITY_EDITOR
 			string key = keyTimesStarted(level.WorldId);
 			string val = PlayerPrefs.GetString (key);
 			
@@ -152,12 +174,16 @@ namespace Soomla.Levelup
 			}
 			
 			return started;
+#else
+			return 0;
+#endif
 		}
 		
 		
 		/** Level Times Played **/
 		
 		protected int _incTimesPlayed(Level level) {
+#if UNITY_EDITOR
 			int played = _getTimesPlayed(level);
 			if (played < 0) { /* can't be negative */
 				played = 0;
@@ -170,9 +196,13 @@ namespace Soomla.Levelup
 			LevelUpEvents.OnLevelEnded (level);
 			
 			return played + 1;
+#else
+			return 0;
+#endif
 		}
 		
 		protected int _decTimesPlayed(Level level){
+#if UNITY_EDITOR
 			int played = _getTimesPlayed(level);
 			if (played <= 0) { /* can't be negative or zero */
 				return 0;
@@ -182,9 +212,13 @@ namespace Soomla.Levelup
 			PlayerPrefs.SetString (key, playedStr);
 			
 			return played - 1;
+#else
+			return 0;
+#endif
 		} 
 		
 		protected int _getTimesPlayed(Level level) {
+#if UNITY_EDITOR
 			string key = keyTimesPlayed(level.WorldId);
 			string val = PlayerPrefs.GetString (key);
 			
@@ -194,6 +228,9 @@ namespace Soomla.Levelup
 			}
 			
 			return played;
+#else
+			return 0;
+#endif
 		}
 
 

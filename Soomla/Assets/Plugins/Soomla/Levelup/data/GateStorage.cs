@@ -53,6 +53,7 @@ namespace Soomla.Levelup
 
 
 		protected void _setOpen(Gate gate, bool open, bool notify) {
+#if UNITY_EDITOR
 			string key = keyGateOpen(gate.GateId);
 			
 			if (open) {
@@ -64,13 +65,21 @@ namespace Soomla.Levelup
 			} else {
 				PlayerPrefs.DeleteKey(key);
 			}
+#endif
 		}
 
 		protected bool _isOpen(Gate gate) {
+#if UNITY_EDITOR
 			string key = keyGateOpen(gate.GateId);
 			string val = PlayerPrefs.GetString (key);
 			return val != null;
+#else
+			return false;
+#endif
 		}
+
+
+		/** keys **/
 
 		private static string keyGateOpen(string gateId) {
 			return keyGates(gateId, "open");

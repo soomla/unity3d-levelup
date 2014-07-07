@@ -58,30 +58,46 @@ namespace Soomla.Levelup
 
 
 		protected void _setLatestScore(Score score, double latest) {
+#if UNITY_EDITOR
 			string key = keyLatestScore (score.ScoreId);
 			string val = latest.ToString ();
 			PlayerPrefs.SetString (key, val);
+#endif
 		}
 		
 		protected double _getLatestScore(Score score) {
+#if UNITY_EDITOR
 			string key = keyLatestScore (score.ScoreId);
 			string val = PlayerPrefs.GetString (key);
-			return val == null ? 0 : double.Parse (val);
+			return val == null ? score.StartValue : double.Parse (val);
+#else
+			return score.StartValue;
+#endif
 		}
 		
 		protected void _setRecordScore(Score score, double record) {
+#if UNITY_EDITOR
 			string key = keyRecordScore (score.ScoreId);
 			string val = record.ToString ();
 			PlayerPrefs.SetString (key, val);
 
 			LevelUpEvents.OnScoreRecordChanged (score);
+#endif
 		}
 		
 		protected double _getRecordScore(Score score) {
+#if UNITY_EDITOR
 			string key = keyRecordScore (score.ScoreId);
 			string val = PlayerPrefs.GetString (key);
-			return val == null ? 0 : double.Parse (val);
+			return val == null ? score.StartValue : double.Parse (val);
+#else
+			return score.StartValue;
+#endif
 		}
+
+
+
+		/** keys **/
 
 		private static string keyScores(string scoreId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "scores." + scoreId + "." + postfix;
