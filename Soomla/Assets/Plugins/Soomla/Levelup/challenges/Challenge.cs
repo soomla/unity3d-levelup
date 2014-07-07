@@ -21,7 +21,7 @@ namespace Soomla.Levelup
 	{
 		private const string TAG = "SOOMLA Challenge";
 
-		public List<Mission> Missions;
+		public List<Mission> Missions = new List<Mission>();
 
 		public Challenge(string missionId, string name, List<Mission> missions)
 			: base(missionId, name)
