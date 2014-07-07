@@ -1,5 +1,64 @@
 
-echo "creating unitypackage for Soomla"
-/Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -logFile create_unity.log -projectPath ${SOOMLA_HOME}/unity3d-store/Soomla/ -exportPackage Assets/Plugins Assets/Soomla/Editor Assets/Soomla/compilations Assets/Soomla/Prefabs Assets/Soomla/Resources/soom_logo.png ../soomla-unity3d-store_release-v$1.unitypackage -quit
+echo "creating unitypackage for SOOMLA Core"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -logFile create_unity.log \
+  -projectPath $PWD/Soomla/ \
+  -exportPackage \
+    Assets/Plugins/Android/AndroidManifest.xml \
+    Assets/Plugins/Android/SoomlaAndroidCore.jar \
+    Assets/Plugins/Android/square-otto-1.3.2.jar \
+    Assets/Plugins/Android/UnitySoomlaAndroidCore.jar \
+    Assets/Plugins/iOS/libSoomlaIOSCore.a \
+    Assets/Plugins/iOS/libUnitySoomlaiOSCore.a \
+    Assets/Plugins/Soomla/Core \
+    Assets/Soomla/Editor/SoomlaPostBuild.cs \
+    Assets/Soomla/Editor/SoomlaSettingsEditor.cs \
+    Assets/Soomla/Editor/build-tools/mod_pbxproj.pyc \
+    Assets/Soomla/Prefabs/CoreEvents.prefab \
+    Assets/Soomla/Resources/SoomlaEditorScript.asset \
+    Assets/Soomla/Resources/soom_logo.png \
+  $PWD/soomla-unity3d-core.unitypackage \
+  -quit
+
+echo "creating unitypackage for SOOMLA Store"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -logFile create_unity.log \
+  -projectPath $PWD/Soomla/ \
+  -exportPackage \
+    Assets/Examples \
+    Assets/Plugins/Android/AndroidManifest.xml \
+    Assets/Plugins/Android/AndroidStore.jar \
+    Assets/Plugins/Android/AndroidStoreGooglePlay.jar \
+    Assets/Plugins/Android/UnityAndroidStore.jar \
+    Assets/Plugins/iOS/libSoomlaiOSStore.a \
+    Assets/Plugins/iOS/libUnityiOSStore.a \
+    Assets/Plugins/Soomla/Store \
+    Assets/Resources \
+    Assets/Soomla/compilations \
+    Assets/Soomla/Editor/build-tools/Soomla_StoreRunner.py \
+    Assets/Soomla/Prefabs/StoreEvents.prefab \
+    Assets/Soomla/Resources \
+  $PWD/soomla-unity3d-store.unitypackage \
+  -quit
 
 
+echo "creating unitypackage for SOOMLA LevelUp"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -logFile create_unity.log \
+  -projectPath $PWD/Soomla/ \
+  -exportPackage \
+    Assets/Plugins/Android/AndroidLevelUp.jar \
+    Assets/Plugins/Android/UnityAndroidLevelup.jar \
+    Assets/Plugins/iOS/libSoomlaiOSLevelUp.a \
+    Assets/Plugins/iOS/libUnityiOSLevelUp.a \
+    Assets/Plugins/Soomla/Levelup \
+    Assets/Soomla/Editor/build-tools/Soomla_LevelupRunner.py \
+    Assets/Soomla/Prefabs/LevelUpEvents.prefab \
+  $PWD/soomla-unity3d-levelup.unitypackage \
+  -quit
