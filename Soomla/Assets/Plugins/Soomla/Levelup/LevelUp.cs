@@ -31,11 +31,13 @@ namespace Soomla.Levelup {
 			InitialWorlds = worldMap;
 //			save();
 
-			Dictionary<string, Reward> rewardMap = new Dictionary<string, Reward>();
-			foreach (Reward reward in rewards) {
-				rewardMap.Add(reward.RewardId, reward);
+			if (rewards != null) {
+				Dictionary<string, Reward> rewardMap = new Dictionary<string, Reward> ();
+				foreach (Reward reward in rewards) {
+						rewardMap.Add (reward.RewardId, reward);
+				}
+				Rewards = rewardMap;
 			}
-			Rewards = rewardMap;
 		}
 
 		public Reward GetReward(string rewardId) {
