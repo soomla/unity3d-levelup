@@ -57,23 +57,44 @@ namespace Soomla.Levelup
 
 
 
-		virtual protected void _setLatestScore(Score score, double latest) {
-			// TODO: WIE	
+		protected void _setLatestScore(Score score, double latest) {
+			string key = keyLatestScore (score.ScoreId);
+			string val = latest.ToString ();
+			PlayerPrefs.SetString (key, val);
 		}
 		
-		virtual protected double _getLatestScore(Score score) {
-			// TODO: WIE
-			return 0;
+		protected double _getLatestScore(Score score) {
+			string key = keyLatestScore (score.ScoreId);
+			string val = PlayerPrefs.GetString (key);
+			return val == null ? 0 : double.Parse (val);
 		}
 		
-		virtual protected void _setRecordScore(Score score, double record) {
-			// TODO: WIE
+		protected void _setRecordScore(Score score, double record) {
+			string key = keyRecordScore (score.ScoreId);
+			string val = record.ToString ();
+			PlayerPrefs.SetString (key, val);
+
+			LevelUpEvents.OnScoreRecordChanged (score);
 		}
 		
-		virtual protected double _getRecordScore(Score score) {
-			// TODO: WIE
-			return 0;
+		protected double _getRecordScore(Score score) {
+			string key = keyRecordScore (score.ScoreId);
+			string val = PlayerPrefs.GetString (key);
+			return val == null ? 0 : double.Parse (val);
 		}
+
+		private static string keyScores(string scoreId, string postfix) {
+			return LevelUp.DB_KEY_PREFIX + "scores." + scoreId + "." + postfix;
+		}
+		
+		private static string keyLatestScore(string scoreId) {
+			return keyScores(scoreId, "latest");
+		}
+		
+		private static string keyRecordScore(string scoreId) {
+			return keyScores(scoreId, "record");
+		}
+
 	}
 }
 
