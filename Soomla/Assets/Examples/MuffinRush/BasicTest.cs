@@ -355,10 +355,11 @@ namespace Soomla.Test {
 		private void createFruitsGoblins() {
 			World mainWorld = new World("main_world");
 
-			World machineA = new World("machine_a", 20, true);
-			World machineB = new World("machine_b", 20, true);
-			World machineC = new World("machine_c", 20, true);
-			World machineD = new World("machine_d", 20, true);
+			Score s = new Score("numberScore");
+			World machineA = new World("machine_a", 20, s);
+			World machineB = new World("machine_b", 20, s);
+			World machineC = new World("machine_c", 20, s);
+			World machineD = new World("machine_d", 20, s);
 
 			mainWorld.InnerWorlds.Add(machineA.WorldId, machineA);
 			mainWorld.InnerWorlds.Add(machineB.WorldId, machineB);
@@ -382,7 +383,7 @@ namespace Soomla.Test {
 			sTestLog += "testLevel...";		
 
 			List<World> worlds = new List<World>();
-			Level lvl1 = new Level("lvl1", false);
+			Level lvl1 = new Level("lvl1", new Score("numberScore"));
 			worlds.Add(lvl1);
 			
 			//LevelUp.Initialize(worlds);

@@ -34,8 +34,8 @@ namespace Soomla.Levelup {
 		
 		public LevelState State = LevelState.Idle;
 
-		public Level(String worldId, bool singleScore)
-			: base(worldId, singleScore) 
+		public Level(String worldId, Score score)
+			: base(worldId, score) 
 		{
 		}
 		
@@ -134,7 +134,7 @@ namespace Soomla.Levelup {
 				SoomlaUtils.LogError(TAG, "end() called without prior start()! ignoring.");
 				return;
 			}
-			
+
 			double duration = GetPlayDuration();
 			
 			State = LevelState.Ended;
