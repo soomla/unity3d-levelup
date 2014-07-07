@@ -52,7 +52,7 @@ namespace Soomla.Levelup
 		}
 
 
-		protected static void _setOpen(Gate gate, bool open, bool notify) {
+		protected void _setOpen(Gate gate, bool open, bool notify) {
 			string key = keyGateOpen(gate.GateId);
 			
 			if (open) {
@@ -66,7 +66,7 @@ namespace Soomla.Levelup
 			}
 		}
 
-		protected static bool _isOpen(Gate gate) {
+		protected bool _isOpen(Gate gate) {
 			string key = keyGateOpen(gate.GateId);
 			string val = PlayerPrefs.GetString (key);
 			return val != null;

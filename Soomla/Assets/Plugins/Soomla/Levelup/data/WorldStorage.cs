@@ -59,7 +59,7 @@ namespace Soomla.Levelup
 		}
 
 
-		protected static void _setCompleted(World world, bool open, bool notify) {
+		protected void _setCompleted(World world, bool open, bool notify) {
 			string key = keyWorldCompleted(world.WorldId);
 			
 			if (open) {
@@ -73,7 +73,7 @@ namespace Soomla.Levelup
 			}
 		}
 
-		protected static bool _isCompleted(World world) {
+		protected bool _isCompleted(World world) {
 			string key = keyWorldCompleted(world.WorldId);
 			string val = PlayerPrefs.GetString (key);
 			return val != null;
@@ -83,7 +83,7 @@ namespace Soomla.Levelup
 		/** World Reward **/
 
 
-		protected static void _setReward(World world, string rewardId) {
+		protected void _setReward(World world, string rewardId) {
 			string key = keyReward (world.WorldId);
 			if (rewardId != null && rewardId.Length > 0) {
 				PlayerPrefs.SetString(key, rewardId);
@@ -95,20 +95,20 @@ namespace Soomla.Levelup
 			LevelUpEvents.OnWorldAssignedReward(world);
 		}
 
-		protected static string _getAssignedReward(World world) {
+		protected string _getAssignedReward(World world) {
 			string key = keyReward (world.WorldId);
 			return PlayerPrefs.GetString (key);
 		}
 
-		private static String keyWorlds(String worldId, String postfix) {
+		private static string keyWorlds(string worldId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "worlds." + worldId + "." + postfix;
 		}
 		
-		private static String keyWorldCompleted(String worldId) {
+		private static string keyWorldCompleted(string worldId) {
 			return keyWorlds(worldId, "completed");
 		}
 		
-		private static String keyReward(String worldId) {
+		private static string keyReward(string worldId) {
 			return keyWorlds(worldId, "assignedReward");
 		}
 
