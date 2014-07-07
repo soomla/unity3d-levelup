@@ -20,6 +20,8 @@ namespace Soomla.Levelup {
 	
 	public class LevelUp {
 
+		public static readonly string DB_KEY_PREFIX = "soomla.levelup.";
+
 		public World InitialWorld;
 		public Dictionary<string, Reward> Rewards;
 

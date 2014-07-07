@@ -52,14 +52,34 @@ namespace Soomla.Levelup
 		}
 
 
-		virtual protected void _setOpen(Gate gate, bool open, bool notify) {
-			// TODO: WIE
+		protected static void _setOpen(Gate gate, bool open, bool notify) {
+			string key = keyGateOpen(gate.GateId);
+			
+			if (open) {
+				PlayerPrefs.SetString(key, "yes");
+
+				if (notify) {
+					LevelUpEvents.OnGateOpened(gate);
+				}
+			} else {
+				PlayerPrefs.DeleteKey(key);
+			}
 		}
 
-		virtual protected bool _isOpen(Gate gate) {
-			// TODO: WIE
-			return true;
+		protected static bool _isOpen(Gate gate) {
+			string key = keyGateOpen(gate.GateId);
+			string val = PlayerPrefs.GetString (key);
+			return val != null;
 		}
+
+		private static string keyGateOpen(string gateId) {
+			return keyGates(gateId, "open");
+		}
+
+		private static string keyGates(string gateId, string postfix) {
+			return LevelUp.DB_KEY_PREFIX + "gates." + gateId + "." + postfix;
+		}
+
 	}
 }
 
