@@ -100,7 +100,7 @@ namespace Soomla.Levelup
 #if UNITY_EDITOR
 			string key = keySlowestDuration (level.WorldId);
 			string val = PlayerPrefs.GetString (key);
-			return val == null ? 0 : double.Parse (val);
+			return (string.IsNullOrEmpty(val)) ? 0 : double.Parse (val);
 #else
 			return 0;
 #endif
@@ -118,7 +118,7 @@ namespace Soomla.Levelup
 #if UNITY_EDITOR
 			string key = keyFastestDuration (level.WorldId);
 			string val = PlayerPrefs.GetString (key);
-			return val == null ? 0 : double.Parse (val);
+			return (string.IsNullOrEmpty(val)) ? 0 : double.Parse (val);
 #else
 			return 0;
 #endif
@@ -169,7 +169,7 @@ namespace Soomla.Levelup
 			string val = PlayerPrefs.GetString (key);
 			
 			int started = 0;
-			if (val != null) {
+			if (!string.IsNullOrEmpty(val)) {
 				started = int.Parse(val);
 			}
 			
@@ -223,7 +223,7 @@ namespace Soomla.Levelup
 			string val = PlayerPrefs.GetString (key);
 			
 			int played = 0;
-			if (val != null) {
+			if (!string.IsNullOrEmpty(val)) {
 				played = int.Parse(val);
 			}
 			

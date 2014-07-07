@@ -69,7 +69,7 @@ namespace Soomla.Levelup
 #if UNITY_EDITOR
 			string key = keyLatestScore (score.ScoreId);
 			string val = PlayerPrefs.GetString (key);
-			return val == null ? score.StartValue : double.Parse (val);
+			return (string.IsNullOrEmpty(val)) ? score.StartValue : double.Parse (val);
 #else
 			return score.StartValue;
 #endif
@@ -89,7 +89,7 @@ namespace Soomla.Levelup
 #if UNITY_EDITOR
 			string key = keyRecordScore (score.ScoreId);
 			string val = PlayerPrefs.GetString (key);
-			return val == null ? score.StartValue : double.Parse (val);
+			return (string.IsNullOrEmpty(val)) ? score.StartValue : double.Parse (val);
 #else
 			return score.StartValue;
 #endif

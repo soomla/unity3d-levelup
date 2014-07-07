@@ -52,7 +52,7 @@ namespace Soomla.Test {
 					sTestLog += "<color=red>FAIL!</color>\n";
 //					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
 					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
-					UnityEngine.Debug.LogException(new Exception("assertTrue"));
+					UnityEngine.Debug.LogException(new Exception("assertFalse"));
 //					throw new Exception("assertTrue");
 					return false;
 				}
@@ -223,6 +223,7 @@ namespace Soomla.Test {
 			IStoreAssets testAssets = new TestAssets();
 			SoomlaUtils.LogDebug(TAG, "IStoreAssets:" + testAssets.ToString ());
 			SoomlaStore.Initialize (testAssets);
+			StartCoroutine(runTests());
 		}
 
 		public void onSoomlaStoreInitialized() {
@@ -459,7 +460,7 @@ namespace Soomla.Test {
 			Assert.assertEquals(1, lvl1.GetTimesPlayed());
 			Assert.assertEquals(1, lvl1.GetTimesStarted());		
 
-			UnityEngine.Debug.LogError("Done! SOOMLA");
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
 
 			if (!sAssertionError) {
 				sTestLog += "<color=green>SUCCESS</color>\n";
@@ -471,7 +472,7 @@ namespace Soomla.Test {
 
 		public IEnumerator testScoreAsc() {
 			sTestLog += "testScoreAsc...";
-			UnityEngine.Debug.LogError("testScoreAsc SOOMLA");
+			UnityEngine.Debug.LogWarning("testScoreAsc SOOMLA");
 			bool higherIsBetter = true;
 			string scoreId = "score_asc";
 			Score scoreAsc = new Score(scoreId, "ScoreAsc", higherIsBetter);		
@@ -487,7 +488,7 @@ namespace Soomla.Test {
 			scoreAsc.Inc(10);
 			Assert.assertEquals(10, scoreAsc.GetTempScore(), 0.01);
 	//		//mExpectedRecordValue = 10;
-			SoomlaUtils.LogError (TAG, "Enqueue 10.0");
+			SoomlaUtils.LogWarning (TAG, "Enqueue 10.0");
 				_eventQueue.Enqueue (new Dictionary<string, object> {
 				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
@@ -510,7 +511,7 @@ namespace Soomla.Test {
 			Assert.assertTrue(scoreAsc.HasTempReached(30));
 			Assert.assertFalse(scoreAsc.HasTempReached(31));
 	//		//mExpectedRecordValue = 30;
-			SoomlaUtils.LogError (TAG, "Enqueue 30.0");
+			SoomlaUtils.LogWarning (TAG, "Enqueue 30.0");
 				_eventQueue.Enqueue (new Dictionary<string, object> {
 				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
@@ -521,7 +522,7 @@ namespace Soomla.Test {
 			Assert.assertEquals(30, scoreAsc.Record, 0.01);
 			scoreAsc.SetTempScore(15);
 	//		//mExpectedRecordValue = 30;
-				SoomlaUtils.LogError (TAG, "Enqueue 30.0");
+			SoomlaUtils.LogWarning (TAG, "Enqueue 30.0");
 				_eventQueue.Enqueue (new Dictionary<string, object> {
 				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
@@ -533,7 +534,7 @@ namespace Soomla.Test {
 			Assert.assertTrue(scoreAsc.HasRecordReached(30));
 			Assert.assertFalse(scoreAsc.HasRecordReached(31));
 
-			UnityEngine.Debug.LogError("Done! SOOMLA");
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
 
 			if (!sAssertionError) {
 				sTestLog += "<color=green>SUCCESS</color>\n";
@@ -545,7 +546,7 @@ namespace Soomla.Test {
 	
 		public IEnumerator testScoreDsc() {
 			sTestLog += "testScoreDsc...";
-			UnityEngine.Debug.LogError("testScoreDsc SOOMLA");
+			UnityEngine.Debug.LogWarning("testScoreDsc SOOMLA");
 			double desiredRecord = 20;
 			string scoreId = "score_dsc";
 			Score scoreDsc = new Score(scoreId, "ScoreDsc", false);
@@ -607,7 +608,7 @@ namespace Soomla.Test {
 			Assert.assertTrue(scoreDsc.HasRecordReached(20));
 			Assert.assertFalse(scoreDsc.HasRecordReached(19));
 
-			UnityEngine.Debug.LogError("Done! SOOMLA");
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
 			
 			if (!sAssertionError) {
 				sTestLog += "<color=green>SUCCESS</color>\n";
@@ -620,7 +621,7 @@ namespace Soomla.Test {
 		
 		public IEnumerator testRangeScoreOverflow() {
 			sTestLog += "testRangeScoreOverflow...";
-			UnityEngine.Debug.LogError("testRangeScoreOverflow SOOMLA");
+			UnityEngine.Debug.LogWarning("testRangeScoreOverflow SOOMLA");
 			string scoreIdUp = "testRangeScoreOverflow_score_up_id";
 			RangeScore rangeScoreUp = new RangeScore(scoreIdUp, "RangeScore", true, new RangeScore.SRange(0, 100));
 			string scoreIdDown = "testRangeScoreOverflow_score_down_id";
@@ -658,7 +659,7 @@ namespace Soomla.Test {
 			rangeScoreDown.Inc(10);
 			Assert.assertEquals(100, rangeScoreDown.GetTempScore(), 0.01);
 
-			UnityEngine.Debug.LogError("Done! SOOMLA");
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
 			
 			if (!sAssertionError) {
 				sTestLog += "<color=green>SUCCESS</color>\n";
@@ -671,7 +672,7 @@ namespace Soomla.Test {
 		
 		public IEnumerator testRecordMission() {
 			sTestLog += "testRecordMission...";
-			UnityEngine.Debug.LogError("testRecordMission SOOMLA");
+			UnityEngine.Debug.LogWarning("testRecordMission SOOMLA");
 
 			string missionId = "record_mission";
 			string scoreId = "record_mission_score";
@@ -725,7 +726,7 @@ namespace Soomla.Test {
 
 			recordMission.SetCompleted(false);
 
-			UnityEngine.Debug.LogError("Done! SOOMLA");
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
 			
 			if (!sAssertionError) {
 				sTestLog += "<color=green>SUCCESS</color>\n";
@@ -812,7 +813,7 @@ namespace Soomla.Test {
 			Assert.assertTrue(balanceMission.IsCompleted());
 			Assert.assertTrue(virtualItemReward.Owned);
 
-			UnityEngine.Debug.LogError("Done! SOOMLA");
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
 			
 			if (!sAssertionError) {
 				sTestLog += "<color=green>SUCCESS</color>\n";
@@ -825,7 +826,7 @@ namespace Soomla.Test {
 		
 		public IEnumerator testChallenge() {
 			sTestLog += "testChallenge...";
-			UnityEngine.Debug.LogError("testChallenge SOOMLA");
+			UnityEngine.Debug.LogWarning("testChallenge SOOMLA");
 
 			string missionId1 = "challenge_mission1";
 			Mission mission1 = new ActionMission(missionId1, "ChallengeMission1");
@@ -897,7 +898,7 @@ namespace Soomla.Test {
 			// (currently not taken)
 			Assert.assertFalse(badgeReward.Owned);	
 
-			UnityEngine.Debug.LogError("Done! SOOMLA");
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
 			
 			if (!sAssertionError) {
 				sTestLog += "<color=green>SUCCESS</color>\n";
@@ -1469,7 +1470,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 
 //			string expectedGateEventId = isGatesList ?
 //				(isAdHocGate ? gateId : mExpectedGatesListEventId) :
@@ -1485,7 +1486,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			Assert.assertEquals(expected["id"], worldId);
 		}
 		
@@ -1495,7 +1496,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			Assert.assertEquals(expected["id"], worldId);
 			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
@@ -1507,7 +1508,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			Assert.assertEquals(expected["id"], missionId);
 			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
@@ -1519,7 +1520,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			Assert.assertEquals(expected["id"], missionId);
 			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
@@ -1531,7 +1532,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			Assert.assertEquals(expected["id"], scoreId);
 			Assert.assertEquals(expected["val"] as double? ?? 0.9999, record, 0.1);
 			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -1543,7 +1544,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			Assert.assertEquals(expected["id"], worldId);
 			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
@@ -1554,7 +1555,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			
 			Assert.assertEquals(expected["itemId"], itemId);
 			Assert.assertEquals(expected["balance"], balance);
@@ -1568,7 +1569,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			Assert.assertEquals(expected["id"], rewardId);
 			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
@@ -1579,7 +1580,7 @@ namespace Soomla.Test {
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
 			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			SoomlaUtils.LogWarning (TAG, "_eventQueue.Count="+_eventQueue.Count);
 			Assert.assertEquals(expected["id"], rewardId);
 			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}

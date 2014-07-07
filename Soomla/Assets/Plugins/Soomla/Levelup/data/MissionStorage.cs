@@ -75,7 +75,7 @@ namespace Soomla.Levelup
 #if UNITY_EDITOR
 			string key = keyMissionCompleted (mission.MissionId);
 			string val = PlayerPrefs.GetString (key);
-			return val != null;
+			return !string.IsNullOrEmpty(val);
 #else
 			return false;
 #endif
