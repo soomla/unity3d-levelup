@@ -20,7 +20,7 @@ namespace Soomla.Levelup
 {
 	public abstract class GatesList : Gate
 	{
-		public List<Gate> Gates;
+		public List<Gate> Gates = new List<Gate>();
 		protected bool AutoOpenBehavior = false;
 
 		public GatesList(string gateId)

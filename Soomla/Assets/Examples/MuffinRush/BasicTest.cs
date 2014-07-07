@@ -19,14 +19,6 @@ namespace Soomla.Test {
 		public Regex UUID_REGEX =
 			new Regex("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
 		
-		public const string ITEM_ID_BALANCE_GATE = "item_balance_gate";
-		public const string ITEM_ID_BALANCE_MISSION = "balance_mission_item_id";
-		public const string ITEM_ID_BALANCE_MISSION_REWARD = "balance_mission_reward_item_id";
-		public const string ITEM_ID_PURCHASE_GATE_VI = "item_purchase_gate_vi";
-		public const string ITEM_ID_PURCHASE_GATE_MARKET = "item_purchase_gate_market";
-		public const string ITEM_ID_VI_SCORE = "item_vi_score";
-		public const string ITEM_ID_VI_REWARD = "item_vi_reward";
-		
 		private static bool sAssertionError = false;
 		private static string sTestLog;
 
@@ -208,16 +200,17 @@ namespace Soomla.Test {
 				}
 			}
 
-
 	//		SoomlaInit ("hansolo");
 			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
 			// TBD: these are are initialized internally
 			// TBD: is that ok, or from outside?
 //			CoreEvents.Initialize ();
 //			LevelUpEvents.Initialize ();
-			MuffinRushAssets assets = new MuffinRushAssets ();
-			SoomlaUtils.LogDebug(TAG, "IStoreAssets:" + assets.ToString ());
-			SoomlaStore.Initialize (assets);
+
+//			MuffinRushAssets muffinAssets = new MuffinRushAssets ();
+			IStoreAssets testAssets = new TestAssets();
+			SoomlaUtils.LogDebug(TAG, "IStoreAssets:" + testAssets.ToString ());
+			SoomlaStore.Initialize (testAssets);
 		}
 
 		public void onSoomlaStoreInitialized() {
@@ -263,6 +256,11 @@ namespace Soomla.Test {
 //			yield return StartCoroutine(testRecordMission ());
 //			if (!Assert.Equals (0, _eventQueue.Count)) {
 //				dumpQueue("testRecordMission");
+//			}
+//			yield return StartCoroutine(testBalanceMission ());
+//			yield return new WaitForSeconds (2);
+//			if (!Assert.Equals (0, _eventQueue.Count)) {
+//				dumpQueue("testBalanceMission");
 //			}
 			yield return StartCoroutine(testChallenge ());
 			yield return new WaitForSeconds (2);
@@ -731,54 +729,91 @@ namespace Soomla.Test {
 		}
 		
 		
-//		public void testBalanceMission() {
-//			string missionId = "balance_mission_id";
-//			string balanceMissionItemId = "balance_mission_item_id";
-//			string rewardId = "balance_mission_reward_id";
-//			string rewardItemId = "balance_mission_reward_item_id";
-//			
-//			VirtualItemReward virtualItemReward = new VirtualItemReward(rewardId, "ItemReward", rewardItemId, 1);
-//			List<Reward> rewards = new List<Reward>();
-//			rewards.Add(virtualItemReward);
-//			BalanceMission balanceMission = new BalanceMission(
-//				missionId, "BalanceMission",
-//				rewards, balanceMissionItemId, 5);
-//			
-//			// assert basics
-//			Assert.assertFalse(balanceMission.IsCompleted());
-//			Assert.assertFalse(virtualItemReward.Owned);
-//			try {
-//				Assert.assertEquals(0, StoreInventory.GetItemBalance(ITEM_ID_BALANCE_MISSION));
-//			} catch (VirtualItemNotFoundException e) {
-//				Assert.fail(e.ToString());
-//			}
-//			
-//			// give less and assert false completed/rewarded
-//			// set event expectations
-//			mVirtualItemExpectationQueue.Add(new VirtualItemBalanceEventExpectation(ITEM_ID_BALANCE_MISSION, 3, 3));
-//			try {
-//				StoreInventory.GiveItem(balanceMissionItemId, 3);
-//			} catch (VirtualItemNotFoundException e) {
-//				Assert.fail(e.ToString());
-//			}
-//			
-//			// set event expectations
+		public IEnumerator testBalanceMission() {
+			string missionId = "balance_mission_id";
+			string balanceMissionItemId = "balance_mission_item_id";
+			string rewardId = "balance_mission_reward_id";
+			string rewardItemId = "balance_mission_reward_item_id";
+			
+			VirtualItemReward virtualItemReward = new VirtualItemReward(rewardId, "ItemReward", rewardItemId, 1);
+			List<Reward> rewards = new List<Reward>();
+			rewards.Add(virtualItemReward);
+			BalanceMission balanceMission = new BalanceMission(
+				missionId, "BalanceMission",
+				rewards, balanceMissionItemId, 5);
+
+			_eventQueue.Clear ();
+
+			// assert basics
+			Assert.assertFalse(balanceMission.IsCompleted());
+			Assert.assertFalse(virtualItemReward.Owned);
+			try {
+				Assert.assertEquals(0, StoreInventory.GetItemBalance(TestAssets.ITEM_ID_BALANCE_MISSION));
+			} catch (VirtualItemNotFoundException e) {
+				Assert.fail(e);
+			}
+			
+			// give less and assert false completed/rewarded
+			// set event expectations
+			//mVirtualItemExpectationQueue.Add(new VirtualItemBalanceEventExpectation(ITEM_ID_BALANCE_MISSION, 3, 3));
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onGoodBalanceChanged" },
+				{ "itemId", TestAssets.ITEM_ID_BALANCE_MISSION }, 
+				{ "added", 3 }, 
+				{ "balance", 3 }
+			});
+			try {
+				StoreInventory.GiveItem(balanceMissionItemId, 3);
+			} catch (VirtualItemNotFoundException e) {
+				Assert.fail(e);
+			}
+			
+			// set event expectations
 //			mVirtualItemExpectationQueue.Add(new VirtualItemBalanceEventExpectation(ITEM_ID_BALANCE_MISSION, 2, 5));
-//			// this will happen directly after
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onGoodBalanceChanged" },
+				{ "itemId", TestAssets.ITEM_ID_BALANCE_MISSION }, 
+				{ "added", 2 }, 
+				{ "balance", 5 }
+			});
+			// this will happen directly after
 //			mVirtualItemExpectationQueue.Add(new VirtualItemBalanceEventExpectation(ITEM_ID_BALANCE_MISSION_REWARD, 1, 1));
-//			
-//			//mExpectedMissionEventId = missionId;
-//			//mExpectedRewardEventId = rewardId;
-//			
-//			try {
-//				StoreInventory.GiveItem(balanceMissionItemId, 2);
-//			} catch (VirtualItemNotFoundException e) {
-//				Assert.fail(e.ToString());
-//			}
-//			
-//			Assert.assertTrue(balanceMission.IsCompleted());
-//			Assert.assertTrue(virtualItemReward.Owned);
-//		}
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onGoodBalanceChanged" },
+				{ "itemId", TestAssets.ITEM_ID_BALANCE_MISSION_REWARD }, 
+				{ "added", 1 }, 
+				{ "balance", 1 }
+			});
+			
+			//mExpectedMissionEventId = missionId;
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onMissionCompleted" },
+				{ "id", missionId }
+			});
+			//mExpectedRewardEventId = rewardId;
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onRewardGiven" },
+				{ "id", rewardId }
+			});
+			
+			try {
+				StoreInventory.GiveItem(balanceMissionItemId, 2);
+			} catch (VirtualItemNotFoundException e) {
+				Assert.fail(e);
+			}
+			
+			Assert.assertTrue(balanceMission.IsCompleted());
+			Assert.assertTrue(virtualItemReward.Owned);
+
+			UnityEngine.Debug.LogError("Done! SOOMLA");
+			
+			if (!sAssertionError) {
+				sTestLog += "<color=green>SUCCESS</color>\n";
+			}
+			sAssertionError = false;
+
+			yield return null;
+		}
 		
 		
 		public IEnumerator testChallenge() {
@@ -799,8 +834,10 @@ namespace Soomla.Test {
 			string challengeId = "challenge_id";
 			Challenge challenge = new Challenge(challengeId, "Challenge", missions, rewards);
 
-//			Level lvlChlg = new Level ("lvlChlg", null, null, new List<Challenge> () {challenge});
-//			LevelUp.GetInstance ().Initialize (new List<World>{lvlChlg}, null);
+			Level lvlChlg = new Level ("lvlChlg", null, null, new List<Challenge> () {challenge});
+			LevelUp.GetInstance ().Initialize (lvlChlg, null);
+			// TODO: will this create the challenge instance?
+			LevelUp.GetInstance().GetCompletedLevelCount ();
 
 			_eventQueue.Clear ();
 
@@ -1499,23 +1536,17 @@ namespace Soomla.Test {
 		}
 
 		private void onGoodBalanceChanged(VirtualGood vg, int balance, int amountAdded) {
-//			final String itemId = goodBalanceChangedEvent.getGood().getItemId();
-//			System.out.println("onEvent/GoodBalanceChangedEvent:" + itemId);
-//			
-//			Assert.assertFalse(mVirtualItemExpectationQueue.isEmpty());
-//			VirtualItemBalanceEventExpectation expectation = mVirtualItemExpectationQueue.remove();
-//			
-//			Assert.assertEquals(expectation.ExpectedVirtualItemId, itemId);
-//			Assert.assertEquals(expectation.ExpectedVirtualItemAmountAdded, goodBalanceChangedEvent.getAmountAdded());
-//			Assert.assertEquals(expectation.ExpectedVirtualItemBalance, goodBalanceChangedEvent.getBalance());
-
-//			string worldId = world.WorldId;
-//			string msg = "<color=yellow>onEvent/onWorldCompleted:</color>" + worldId;
-//			sTestLog += msg + "\n";
-//			SoomlaUtils.LogDebug(TAG, msg);
-//			Dictionary<string, object> expected = _eventQueue.Dequeue ();
-//			Assert.assertEquals(expected["id"], worldId);
-//			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
+			string itemId = goodBalanceChangedEvent.getGood().getItemId();
+			string msg = "<color=yellow>onEvent/GoodBalanceChangedEvent:</color>" + itemId;
+			sTestLog += msg + "\n";
+			SoomlaUtils.LogDebug(TAG, msg);
+			Dictionary<string, object> expected = _eventQueue.Dequeue ();
+			SoomlaUtils.LogError (TAG, "_eventQueue.Count="+_eventQueue.Count);
+			
+			Assert.assertEquals(expected["itemId"], itemId);
+			ssert.assertEquals(expected["balance"], balance);
+			ssert.assertEquals(expected["added"], amountAdded);
+			Assert.assertEquals(expected["handler"], System.Reflection.MethodBase.GetCurrentMethod().Name);
 		}
 
 		private void onRewardGiven(Reward reward) {
