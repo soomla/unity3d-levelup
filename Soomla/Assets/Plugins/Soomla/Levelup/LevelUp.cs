@@ -20,15 +20,11 @@ namespace Soomla.Levelup {
 	
 	public class LevelUp {
 
-		public Dictionary<string, World> InitialWorlds;
+		public World InitialWorld;
 		public Dictionary<string, Reward> Rewards;
 
-		public void Initialize(List<World> initialWorlds, List<Reward> rewards) {
-			Dictionary<string, World> worldMap = new Dictionary<string, World>();
-			foreach (World world in initialWorlds) {
-				worldMap.Add(world.WorldId, world);
-			}
-			InitialWorlds = worldMap;
+		public void Initialize(World initialWorld, List<Reward> rewards) {
+			InitialWorld = initialWorld;
 //			save();
 
 			Dictionary<string, Reward> rewardMap = new Dictionary<string, Reward>();
@@ -45,11 +41,21 @@ namespace Soomla.Levelup {
 		}
 
 		public Score GetScore(string scoreId) {
-			return fetchScoreFromWorlds(scoreId, InitialWorlds);
+			Score retScore = null;
+			InitialWorld.Scores.TryGetValue(scoreId, out retScore);
+			if (retScore == null) {
+				retScore = fetchScoreFromWorlds(scoreId, InitialWorld.InnerWorlds);
+			}
+			
+			return retScore;
 		}
 
 		public World GetWorld(string worldId) {
-			return fetchWorld(worldId, InitialWorlds);
+			if (InitialWorld.WorldId == worldId) {
+				return InitialWorld;
+			}
+
+			return fetchWorld(worldId, InitialWorld.InnerWorlds);
 		}
 
 		/// <summary>
@@ -57,11 +63,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The number of levels in all worlds and their inner worlds</returns>
 		public int GetLevelCount() {
-			int count = 0;
-			foreach (World initialWorld in this.InitialWorlds.Values) {
-				count += GetLevelCountInWorld(initialWorld);
-			}
-			return count;
+			return GetLevelCountInWorld(InitialWorld);
 		}
 
 		/// <summary>
@@ -85,15 +87,11 @@ namespace Soomla.Levelup {
 		/// <param name="withLevels">Indicates whether to count also levels</param>
 		/// <returns>The number of worlds and their inner worlds, and optionally their inner levels</returns>
 		public int GetWorldCount(bool withLevels) {
-			int count = 0;
-			foreach (World initialWorld in this.InitialWorlds.Values) {
-				count += getRecursiveCount(initialWorld, (World innerWorld) => {
-					return withLevels ?
-							(innerWorld.GetType() == typeof(World) || innerWorld.GetType() == typeof(Level)) :
-							(innerWorld.GetType() == typeof(World));
-				});
-			}
-			return count;
+			return getRecursiveCount(InitialWorld, (World innerWorld) => {
+				return withLevels ?
+					(innerWorld.GetType() == typeof(World) || innerWorld.GetType() == typeof(Level)) :
+						(innerWorld.GetType() == typeof(World));
+			});
 		}
 
 		/// <summary>
@@ -101,13 +99,9 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The number of completed levels and their inner completed levels</returns>
 		public int GetCompletedLevelCount() {
-			int count = 0;
-			foreach (World initialWorld in this.InitialWorlds.Values) {
-				count += getRecursiveCount(initialWorld, (World innerWorld) => {
-					return innerWorld.GetType() == typeof(Level) && innerWorld.IsCompleted();
-				});
-			}
-			return count;
+			return getRecursiveCount(InitialWorld, (World innerWorld) => {
+				return innerWorld.GetType() == typeof(Level) && innerWorld.IsCompleted();
+			});
 		}
 
 		/// <summary>
@@ -115,13 +109,9 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The number of completed worlds and their inner completed worlds</returns>
 		public int GetCompletedWorldCount() {
-			int count = 0;
-			foreach (World initialWorld in this.InitialWorlds.Values) {
-				count += getRecursiveCount(initialWorld, (World innerWorld) => {
-					return innerWorld.GetType() == typeof(World) && innerWorld.IsCompleted();
-				});
-			}
-			return count;
+			return getRecursiveCount(InitialWorld, (World innerWorld) => {
+				return innerWorld.GetType() == typeof(World) && innerWorld.IsCompleted();
+			});
 		}
 
 
@@ -150,12 +140,8 @@ namespace Soomla.Levelup {
 
 		private JSONObject toJSONObject() {
 			JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
-			
-			JSONObject worldsJSON = new JSONObject(JSONObject.Type.ARRAY);
-			foreach (World world in InitialWorlds.Values) {
-				worldsJSON.Add(world.toJSONObject());
-			}
-			jsonObject.AddField(LUJSONConsts.LU_WORLDS, worldsJSON);
+
+			jsonObject.AddField(LUJSONConsts.LU_MAIN_WORLD, InitialWorld.toJSONObject());
 			
 			return jsonObject;
 		}
@@ -165,7 +151,7 @@ namespace Soomla.Levelup {
 		private Score fetchScoreFromWorlds(string scoreId, Dictionary<string, World> worlds) {
 			Score retScore = null;
 			foreach (World world in worlds.Values) {
-				retScore = world.Scores[scoreId];
+				world.Scores.TryGetValue(scoreId, out retScore);
 				if (retScore == null) {
 					retScore = fetchScoreFromWorlds(scoreId, world.InnerWorlds);
 				}
@@ -178,7 +164,8 @@ namespace Soomla.Levelup {
 		}
 		
 		private World fetchWorld(string worldId, Dictionary<string, World> worlds) {
-			World retWorld = worlds[worldId];
+			World retWorld;
+			worlds.TryGetValue(worldId, out retWorld);
 			if (retWorld == null) {
 				foreach (World world in worlds.Values) {
 					retWorld = fetchWorld(worldId, world.InnerWorlds);

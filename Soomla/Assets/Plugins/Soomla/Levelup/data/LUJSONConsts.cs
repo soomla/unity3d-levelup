@@ -21,6 +21,8 @@ namespace Soomla.Levelup {
 	/// </summary>
 	public static class LUJSONConsts
 	{
+		/** LevelUp **/
+		public const string LU_MAIN_WORLD        = "mainWorld";
 
 		/** Score **/
 		public const string LU_SCORES            = "scores";

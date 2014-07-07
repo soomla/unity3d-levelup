@@ -356,11 +356,17 @@ namespace Soomla.Test {
 			World machineC = new World("machine_c", 20, true);
 			World machineD = new World("machine_d", 20, true);
 
+			mainWorld.InnerWorlds.Add(machineA.WorldId, machineA);
+			mainWorld.InnerWorlds.Add(machineB.WorldId, machineB);
+			mainWorld.InnerWorlds.Add(machineC.WorldId, machineC);
+			mainWorld.InnerWorlds.Add(machineD.WorldId, machineD);
+
 			BadgeReward bronzeMedal = new BadgeReward("badge_bronzeMedal", "Bronze Medal");
 			BadgeReward silverMedal = new BadgeReward("badge_silverMedal", "Silver Medal");
 			BadgeReward goldMedal = new BadgeReward("badge_goldMedal", "Gold Medal");
 			VirtualItemReward perfectMedal = new VirtualItemReward("item_perfectMedal", "Perfect Medal", "perfect_medal", 1);
 
+			LevelUp.GetInstance().Initialize(mainWorld, new List<Reward>() { bronzeMedal, silverMedal, goldMedal, perfectMedal });
 
 			/** Testing **/
 
