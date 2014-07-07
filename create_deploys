@@ -29,7 +29,6 @@ echo "creating unitypackage for SOOMLA Store"
   -logFile create_unity.log \
   -projectPath $PWD/Soomla/ \
   -exportPackage \
-    Assets/Examples \
     Assets/Plugins/Android/AndroidManifest.xml \
     Assets/Plugins/Android/AndroidStore.jar \
     Assets/Plugins/Android/AndroidStoreGooglePlay.jar \
@@ -37,7 +36,6 @@ echo "creating unitypackage for SOOMLA Store"
     Assets/Plugins/iOS/libSoomlaiOSStore.a \
     Assets/Plugins/iOS/libUnityiOSStore.a \
     Assets/Plugins/Soomla/Store \
-    Assets/Resources \
     Assets/Soomla/compilations \
     Assets/Soomla/Editor/build-tools/Soomla_StoreRunner.py \
     Assets/Soomla/Prefabs/StoreEvents.prefab \
