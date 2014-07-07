@@ -1095,7 +1095,7 @@ namespace Soomla.Test {
 //			
 //			WorldCompletionGate lvl1CompletionGate =
 //				new WorldCompletionGate(worldGateId, lvl1Id);
-//			lvl2.addGate(lvl1CompletionGate);
+//			lvl2.Gates.Gates.Add(lvl1CompletionGate);
 //			
 //			worlds.Add(lvl1);
 //			worlds.Add(lvl2);
