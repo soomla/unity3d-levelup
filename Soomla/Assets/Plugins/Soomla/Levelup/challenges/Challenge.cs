@@ -87,16 +87,20 @@ namespace Soomla.Levelup
 		/// <param name="completedMission">Completed mission.</param>
 		/// @Subscribe
 		public void onMissionCompleted(Mission completedMission) {
+			SoomlaUtils.LogDebug (TAG, "onMissionCompleted");
 			if (Missions.Contains(completedMission)) {
+				SoomlaUtils.LogDebug (TAG, string.Format ("Mission {0} is part of challenge {1} ({2}) total", completedMission.MissionId, MissionId, Missions.Count));
 				bool completed = true;
 				foreach (Mission mission in Missions) {
 					if (!mission.IsCompleted()) {
+						SoomlaUtils.LogDebug (TAG, "challenge mission not completed?=" + mission.MissionId);
 						completed = false;
 						break;
 					}
 				}
 				
 				if(completed) {
+					SoomlaUtils.LogDebug (TAG, string.Format ("Challenge {0} completed!", MissionId));
 					SetCompleted(true);
 				}
 			}
@@ -118,7 +122,9 @@ namespace Soomla.Levelup
 		}
 
 		protected override void registerEvents() {
+			SoomlaUtils.LogDebug (TAG, "registerEvents called");
 			if (!IsCompleted()) {
+				SoomlaUtils.LogDebug (TAG, "registering!");
 				// register for events
 				LevelUpEvents.OnMissionCompleted += onMissionCompleted; 
 				LevelUpEvents.OnMissionCompletionRevoked += onMissionCompletionRevoked;

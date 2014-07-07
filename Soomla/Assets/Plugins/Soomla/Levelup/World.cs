@@ -145,6 +145,44 @@ namespace Soomla.Levelup {
 			return world;
 		}
 
+		// Equality
+		
+		public override bool Equals(System.Object obj)
+		{
+			// If parameter is null return false.
+			if (obj == null)
+			{
+				return false;
+			}
+			
+			// If parameter cannot be cast to Point return false.
+			World w = obj as World;
+			if ((System.Object)w == null)
+			{
+				return false;
+			}
+			
+			// Return true if the fields match:
+			return (WorldId == w.WorldId);
+		}
+		
+		public bool Equals(World w)
+		{
+			// If parameter is null return false:
+			if ((object)w == null)
+			{
+				return false;
+			}
+			
+			// Return true if the fields match:
+			return (WorldId == w.WorldId);
+		}
+		
+		public override int GetHashCode()
+		{
+			return WorldId.GetHashCode();
+		}
+
 #if UNITY_ANDROID 
 		//&& !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {

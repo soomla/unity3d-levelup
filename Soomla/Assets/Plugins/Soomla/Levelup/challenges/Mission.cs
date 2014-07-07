@@ -96,6 +96,44 @@ namespace Soomla.Levelup {
 			return mission;
 		}
 
+		// Equality
+		
+		public override bool Equals(System.Object obj)
+		{
+			// If parameter is null return false.
+			if (obj == null)
+			{
+				return false;
+			}
+			
+			// If parameter cannot be cast to Point return false.
+			Mission m = obj as Mission;
+			if ((System.Object)m == null)
+			{
+				return false;
+			}
+			
+			// Return true if the fields match:
+			return (MissionId == m.MissionId);
+		}
+		
+		public bool Equals(Mission m)
+		{
+			// If parameter is null return false:
+			if ((object)m == null)
+			{
+				return false;
+			}
+			
+			// Return true if the fields match:
+			return (MissionId == m.MissionId);
+		}
+		
+		public override int GetHashCode()
+		{
+			return MissionId.GetHashCode();
+		}
+
 #if UNITY_ANDROID 
 		//&& !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {

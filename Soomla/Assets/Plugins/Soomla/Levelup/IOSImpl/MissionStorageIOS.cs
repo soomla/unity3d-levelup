@@ -15,6 +15,7 @@
 using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
+using Soomla;
 
 namespace Soomla.Levelup
 {
@@ -37,7 +38,9 @@ namespace Soomla.Levelup
 	
 	override protected bool _isCompleted(Mission mission) {
 		string missionJson = mission.toJSONObject().ToString();
-		return missionStorage_IsCompleted(missionJson);
+		bool completed = missionStorage_IsCompleted(missionJson);
+		SoomlaUtils.LogDebug("SOOMLA/UNITY MissionStorageIOS", string.Format("mission {0} completed={1}", mission.MissionId, completed));
+		return completed;
 	}
 	
 #endif

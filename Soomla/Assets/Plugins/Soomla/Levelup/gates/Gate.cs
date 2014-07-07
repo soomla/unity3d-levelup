@@ -57,6 +57,44 @@ namespace Soomla.Levelup {
 			return gate;
 		}
 
+		// Equality
+		
+		public override bool Equals(System.Object obj)
+		{
+			// If parameter is null return false.
+			if (obj == null)
+			{
+				return false;
+			}
+			
+			// If parameter cannot be cast to Point return false.
+			Gate g = obj as Gate;
+			if ((System.Object)g == null)
+			{
+				return false;
+			}
+			
+			// Return true if the fields match:
+			return (GateId == g.GateId);
+		}
+		
+		public bool Equals(Gate g)
+		{
+			// If parameter is null return false:
+			if ((object)g == null)
+			{
+				return false;
+			}
+			
+			// Return true if the fields match:
+			return (GateId == g.GateId);
+		}
+		
+		public override int GetHashCode()
+		{
+			return GateId.GetHashCode();
+		}
+
 #if UNITY_ANDROID 
 //&& !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {

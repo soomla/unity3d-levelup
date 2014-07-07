@@ -782,7 +782,7 @@ namespace Soomla.Test {
 			string missionId1 = "challenge_mission1";
 			Mission mission1 = new ActionMission(missionId1, "ChallengeMission1");
 			string missionId2 = "challenge_mission2";
-			Mission mission2 = new ActionMission(missionId2, "ChallengeMission1");
+			Mission mission2 = new ActionMission(missionId2, "ChallengeMission2");
 			List<Mission> missions = new List<Mission>();
 			missions.Add(mission1);
 			missions.Add(mission2);
@@ -792,6 +792,9 @@ namespace Soomla.Test {
 			rewards.Add(badgeReward);
 			string challengeId = "challenge_id";
 			Challenge challenge = new Challenge(challengeId, "Challenge", missions, rewards);
+
+//			Level lvlChlg = new Level ("lvlChlg", null, null, new List<Challenge> () {challenge});
+//			LevelUp.GetInstance ().Initialize (new List<World>{lvlChlg}, null);
 
 			_eventQueue.Clear ();
 
