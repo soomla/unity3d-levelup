@@ -88,60 +88,137 @@ namespace Soomla.Levelup
 
 
 
-		virtual protected void _setSlowestDuration(Level level, double duration) {
-			// TODO: WIE
+		protected void _setSlowestDuration(Level level, double duration) {
+			string key = keySlowestDuration (level.WorldId);
+			string val = duration.ToString ();
+			PlayerPrefs.SetString (key, val);
 		}
 		
-		virtual protected double _getSlowestDuration(Level level) {
-			// TODO: WIE
-			return 0;
+		protected double _getSlowestDuration(Level level) {
+			string key = keySlowestDuration (level.WorldId);
+			string val = PlayerPrefs.GetString (key);
+			return val == null ? double.MinValue : double.Parse (val);
 		}
 		
-		virtual protected void _setFastestDuration(Level level, double duration) {
-			// TODO: WIE
+		protected void _setFastestDuration(Level level, double duration) {
+			string key = keyFastestDuration (level.WorldId);
+			string val = duration.ToString ();
 		}
 		
-		virtual protected double _getFastestDuration(Level level) {
-			// TODO: WIE
-			return 0;
+		protected double _getFastestDuration(Level level) {
+			string key = keyFastestDuration (level.WorldId);
+			string val = PlayerPrefs.GetString (key);
+			return val == null ? double.MaxValue : double.Parse (val);
 		}
 		
 		
 		
 		/** Level Times Started **/
 		
-		virtual protected int _incTimesStarted(Level level) {
-			// TODO: WIE
-			return 0;
+		protected int _incTimesStarted(Level level) {
+			int started = _getTimesStarted(level);
+			if (started < 0) { /* can't be negative */
+				started = 0;
+			}
+			string startedStr = (started + 1).ToString();
+			string key = keyTimesStarted(level.WorldId);
+			PlayerPrefs.SetString (key, startedStr);
+
+			// Notify level has started
+			LevelUpEvents.OnLevelStarted (level);
+
+			return started + 1;
 		}
 		
-		virtual protected int _decTimesStarted(Level level) {
-			// TODO: WIE
-			return 0;
+		protected int _decTimesStarted(Level level) {
+			int started = _getTimesStarted(level);
+			if (started <= 0) { /* can't be negative or zero */
+				return 0;
+			}
+			string startedStr = (started - 1).ToString();
+			string key = keyTimesStarted(level.WorldId);
+			PlayerPrefs.SetString (key, startedStr);
+
+			return started - 1;
 		}
 		
-		virtual protected int _getTimesStarted(Level level) {
-			// TODO: WIE
-			return 0;
+		protected int _getTimesStarted(Level level) {
+			string key = keyTimesStarted(level.WorldId);
+			string val = PlayerPrefs.GetString (key);
+			
+			int started = 0;
+			if (val != null) {
+				started = int.Parse(val);
+			}
+			
+			return started;
 		}
 		
 		
 		/** Level Times Played **/
 		
-		virtual protected int _incTimesPlayed(Level level) {
-			// TODO: WIE
-			return 0;
+		protected int _incTimesPlayed(Level level) {
+			int played = _getTimesPlayed(level);
+			if (played < 0) { /* can't be negative */
+				played = 0;
+			}
+			string playedStr = (played + 1).ToString();
+			string key = keyTimesPlayed(level.WorldId);
+			PlayerPrefs.SetString (key, playedStr);
+			
+			// Notify level has ended
+			LevelUpEvents.OnLevelEnded (level);
+			
+			return played + 1;
 		}
 		
-		virtual protected int _decTimesPlayed(Level level){
-			// TODO: WIE
-			return 0;
+		protected int _decTimesPlayed(Level level){
+			int played = _getTimesPlayed(level);
+			if (played <= 0) { /* can't be negative or zero */
+				return 0;
+			}
+			string playedStr = (played - 1).ToString();
+			string key = keyTimesPlayed(level.WorldId);
+			PlayerPrefs.SetString (key, playedStr);
+			
+			return played - 1;
 		} 
 		
-		virtual protected int _getTimesPlayed(Level level) {
-			// TODO: WIE
-			return 0;
+		protected int _getTimesPlayed(Level level) {
+			string key = keyTimesPlayed(level.WorldId);
+			string val = PlayerPrefs.GetString (key);
+			
+			int played = 0;
+			if (val != null) {
+				played = int.Parse(val);
+			}
+			
+			return played;
 		}
+
+
+		/** Keys **/
+
+		private static string keyLevels(string levelId, string postfix) {
+			return LevelUp.DB_KEY_PREFIX + "levels." + levelId + "." + postfix;
+		}
+		
+		private static string keyTimesStarted(string levelId) {
+			return keyLevels(levelId, "started");
+		}
+		
+		private static string keyTimesPlayed(string levelId) {
+			return keyLevels(levelId, "played");
+		}
+		
+		private static string keySlowestDuration(string levelId) {
+			return keyLevels(levelId, "slowest");
+		}
+		
+		private static string keyFastestDuration(string levelId) {
+			return keyLevels(levelId, "fastest");
+		}
+
 	}
 }
 
