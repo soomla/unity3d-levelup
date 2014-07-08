@@ -19,10 +19,17 @@ namespace Soomla.Test {
 		public Regex UUID_REGEX =
 			new Regex("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
 
+		// this is the screen (UI) log buffer
 		private static string sTestLog;
+		// flag indicating error on a test (raised in Assert, need to clear on each test)
 		private static bool sAssertionError = false;
+		// expected events queue
+		// test should push expected events in order here
+		// test should assert it's empty when done
 		private Queue<Dictionary<string, object>> _eventQueue;
 
+		// some simple GUI for test log
+		// TODO: scrolling is shitty on my android, but ok on iPod
 		GUIStyle _textStyle = new GUIStyle();
 		public Vector2 scrollPosition = Vector2.zero;
 		Touch touch;
@@ -30,8 +37,12 @@ namespace Soomla.Test {
 		float timeTouchPhaseEnded;
 		float inertiaDuration = 0.5f;
 
+		///
+		/// Simple assertions class for tests
+		/// 
 		private class Assert {
 
+			// get the line in the test that triggered this assertion
 			private static string GetAssertCaller() {
 				StackTrace st = new StackTrace (true);
 				foreach (StackFrame r in st.GetFrames()) {
@@ -46,15 +57,19 @@ namespace Soomla.Test {
 					}
 				}
 
-				return "ERROR";
+				return "ERROR"; // should not get here!
 			}
 
+			// make sure cond is true, return true if no assertion error
 			public static bool assertTrue(bool cond) {
 				if (!cond) {
+					// raise flag
 					sAssertionError = true;
+					// append to UI log
 					sTestLog += "<color=red>FAIL!</color>\n";
 //					sTestLog += UnityEngine.StackTraceUtility.ExtractStackTrace () + "\n";
 					sTestLog += GetAssertCaller() + "\n";
+					// unity stacktrace in (device) log
 					UnityEngine.Debug.LogException(new Exception("assertTrue"));
 //					throw new Exception("assertTrue");
 					return false;
@@ -88,6 +103,7 @@ namespace Soomla.Test {
 
 				return true;
 			}
+			// comparing doubles requires an epsilon (percision)
 			public static bool assertEquals(double actual, double expected, double percision) {
 				if (Math.Abs(actual-expected) > percision) {
 					sAssertionError = true;
@@ -101,6 +117,7 @@ namespace Soomla.Test {
 				return true;
 			}
 
+			// when you just want to fail a test with exception you got
 			public static void fail(Exception e) {
 				sAssertionError = true;
 				sTestLog += "<color=red>FAIL!</color>\n";
@@ -111,6 +128,7 @@ namespace Soomla.Test {
 			}
 		}
 
+		// singleton Unity Object
 		private static BasicTest instance = null;
 		void Awake(){
 			if(instance == null){ 	//making sure we only initialize one instance.
@@ -120,10 +138,13 @@ namespace Soomla.Test {
 				GameObject.Destroy(this);
 			}
 
+			// init log and queue
 			sTestLog = "";
 			_eventQueue = new Queue<Dictionary<string, object>> ();
 
+			// register events
 			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
+			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
 
 			LevelUpEvents.OnGateOpened += onGateOpen;
 			LevelUpEvents.OnLevelEnded += onLevelEnded;
@@ -132,69 +153,20 @@ namespace Soomla.Test {
 			LevelUpEvents.OnMissionCompletionRevoked += onMissionCompletedRevoked;
 			LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			LevelUpEvents.OnWorldCompleted += onWorldCompleted;
-			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
+
 			CoreEvents.OnRewardGiven += onRewardGiven;
 			CoreEvents.OnRewardTaken += onRewardTaken;
 
-//			JSONObject jsonObject = new JSONObject (@"{
-//  ""scores"" : [
-//
-//  ],
-//  ""className"" : ""Level"",
-//""challenges"" : [
-//
-//  ],
-//  ""worldId"" : ""lvl1"",
-//  ""worlds"" : [
-//
-//  ]
-//}");
-//			Level.fromJSONObject (jsonObject);
+			// delete sqlite or PlayerPrefs before running tests
+			// otherwise stuff will be completed from last test runs etc.
+			deleteLocalDB ();
 		}
 
-//		bool SoomlaInit(string secret) {
-//	#if !UNITY_EDITOR
-//	#if UNITY_IOS
-//			[DllImport ("__Internal")]
-//			private static extern void soomla_SetLogDebug(bool debug);
-//			[DllImport ("__Internal")]
-//			private static extern void soomla_Init(string secret);
-//					
-//			/// <summary>
-//			/// Initializes the SOOMLA SDK.
-//			/// </summary>
-//			public static bool Initialize() {
-//				soomla_SetLogDebug(true);
-//				soomla_Init(secret);
-//				return true;
-//			}
-//	#endif
-//	#if UNITY_ANDROID
-//			AndroidJNI.PushLocalFrame(100);
-//			using(AndroidJavaClass jniSoomlaClass = new AndroidJavaClass("com.soomla.Soomla")) {
-//				jniSoomlaClass.CallStatic("initialize", secret);
-//			}
-//			//init EventHandler
-//			using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.SoomlaEventHandler")) {
-//				jniEventHandler.CallStatic("initialize");
-//			}
-//			AndroidJNI.PopLocalFrame(IntPtr.Zero);
-//			return true;
-//
-//	#endif
-//	#else
-//			return false;
-//	#endif
-//		}
-
-		// Use this for initialization
-		void Start () {
-
-			_textStyle.wordWrap = true;
-			_textStyle.richText = true;	
-			_textStyle.normal.textColor = Color.white;
-			_textStyle.fontSize = Screen.width / 30;
-
+		/// <summary>
+		/// Delete sqlite db file on device or PlayerPrefs in Unity
+		/// otherwise stuff will be completed from last test runs etc.
+		/// </summary>
+		private void deleteLocalDB() {
 			string dbName = "store.kv.db";
 #if UNITY_EDITOR
 			UnityEngine.Debug.LogWarning("TESTING-> PlayerPrefs.DeleteAll()");
@@ -208,7 +180,7 @@ namespace Soomla.Test {
 			//// even replacing the path doesn't
 			// dbPath = Regex.Replace(dbPath, "/.+/data/com", "/data/data/com");
 			// System.IO.File.Delete (dbPath);
-
+			
 			// try via Context (works)
 			UnityEngine.Debug.LogWarning("TESTING-> try to delete db via Context.deleteDatabase..");
 			AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
@@ -219,7 +191,7 @@ namespace Soomla.Test {
 			// clear last DB storage so test run anew
 			string dbName = "store.kv.db";
 			string dbPath = null;
-		
+			
 			dbPath = "/private" + Application.persistentDataPath + "/../Library/Application Support/" + dbName;
 			if (dbPath != null) {
 				UnityEngine.Debug.LogWarning ("TESTING-> db file at:" + dbPath);
@@ -230,8 +202,17 @@ namespace Soomla.Test {
 				}
 			}
 #endif
+		}
 
-	//		SoomlaInit ("hansolo");
+		// Use this for initialization
+		void Start () {
+
+			// set UI stuff
+			_textStyle.wordWrap = true;
+			_textStyle.richText = true;	
+			_textStyle.normal.textColor = Color.white;
+			_textStyle.fontSize = Screen.width / 30;
+
 			// TBD: these are are initialized internally
 			// TBD: is that ok, or from outside?
 //			CoreEvents.Initialize ();
@@ -241,35 +222,28 @@ namespace Soomla.Test {
 			IStoreAssets testAssets = new TestAssets();
 			SoomlaUtils.LogDebug(TAG, "IStoreAssets:" + testAssets.ToString ());
 			SoomlaStore.Initialize (testAssets);
-#if UNITY_EDITOR
-			StartCoroutine(runTests());
-#endif
 		}
 
+		// run tests after store is initialized
 		public void onSoomlaStoreInitialized() {
-//			Coroutine<bool> testScoreAscCR = Coroutine<bool>(testScoreAsc());
-//			yield return testScoreAscCR.coroutine;
-//			try {
-//				if (testScoreAscCR.Value) {
-//				}
-//
-//			}
-//			catch (Exception e) {
-//				//and handle any exceptions here
-//			}
-#if !UNITY_EDITOR
 			StartCoroutine(runTests());
-#endif
-//			runTests ();
 		}
 
+		/// <summary>
+		/// Runs the tests.
+		/// Notice the structure, wait for each test to complete
+		/// using <code>yield return</code> otherwise events could get out
+		/// of order
+		/// 
+		/// </summary>
+		/// <returns>The tests.</returns>
 		private IEnumerator/*void*/ runTests() {
 			// Android: FAIL
-//			yield return StartCoroutine(testScoreAsc ());
+			yield return StartCoroutine(testScoreAsc ());
 			// Android: FAIL
-//			yield return StartCoroutine(testScoreDsc ());
+			yield return StartCoroutine(testScoreDsc ());
 			// Andorid: FAIL
-//			yield return StartCoroutine(testRangeScoreOverflow ());
+			yield return StartCoroutine(testRangeScoreOverflow ());
 			// Android: PASS
 			yield return StartCoroutine(testBalanceMission ());
 			// Android: PASS
@@ -277,13 +251,16 @@ namespace Soomla.Test {
 			yield return StartCoroutine(testRecordMission ());
 			// iOS: Reward Taken FAIL
 			// Android: PASS
-//			yield return StartCoroutine(testChallenge ());
+			yield return StartCoroutine(testChallenge ());
 			// Android: PASS
-//			yield return StartCoroutine(testLevel());
+			yield return StartCoroutine(testLevel ());
+			// Android: FAIL
+			yield return StartCoroutine (testRecordGateWithRangeScore ());
 
 			yield return null;
 		}
 
+		// util
 		private static string DictToString(Dictionary<string, object> dict) {
 			string str = "";
 			foreach( KeyValuePair<string, object> kvp in dict )
@@ -295,6 +272,8 @@ namespace Soomla.Test {
 			return str;
 		}
 
+		// read all left over events in queue, print them out
+		// and clear queue
 		private void dumpQueue(string testName) {
 			string queueLog = "";
 			while (_eventQueue.Count > 0) {
@@ -306,6 +285,7 @@ namespace Soomla.Test {
 			}
 		}
 
+		// touch events handling (Scroll) and exit (back) on Android
 		void Update() {
 			if (Application.platform == RuntimePlatform.Android) {
 				if (Input.GetKeyUp(KeyCode.Escape)) {
@@ -350,6 +330,7 @@ namespace Soomla.Test {
 			}
 		}
 
+		// very simple GUI for tests log on device
 		void OnGUI() {
 
 			GUILayout.BeginArea (new Rect(10, 10, Screen.width-10, Screen.height-10));
@@ -366,6 +347,7 @@ namespace Soomla.Test {
 //			GUI.EndScrollView ();
 		}
 
+		// rafa's test?
 		private void createFruitsGoblins() {
 			World mainWorld = new World("main_world");
 
@@ -393,9 +375,25 @@ namespace Soomla.Test {
 			lvl1.AssignReward(goldMedal);
 		}
 			
-		private IEnumerator testLevel() {
-			sTestLog += "testLevel...\n";		
 
+		// TESTS ported from Android tests
+
+
+		/// <summary>
+		/// Tests the level
+		/// 
+		/// Will document this test more thoroughly as the guide for the rest
+		/// 
+		/// </summary>
+		/// <returns>The level.</returns>
+		private IEnumerator testLevel() {
+			// clear error flag
+			sAssertionError = false;
+			// print some info
+			sTestLog += "testLevel...\n";	
+			UnityEngine.Debug.LogWarning("testLevel SOOMLA");
+
+			// setup LevelUp structure/objects
 			Level lvl1 = new Level("lvl1", new Score("numberScore"));
 			LevelUp.GetInstance().Initialize(lvl1, null);
 			
@@ -403,8 +401,10 @@ namespace Soomla.Test {
 			Assert.assertTrue(lvl1.CanStart());
 			Assert.assertTrue(lvl1.State == Level.LevelState.Idle);
 
-			// setup expected event queue
+			// clear event queue, very important!
 			_eventQueue.Clear ();
+
+			// setup expected events from next action
 			Dictionary<string, object> evtLvlStarted = new Dictionary<string, object> {
 				{ "handler", "onLevelStarted" },
 				{ "id", "lvl1" }
@@ -421,10 +421,12 @@ namespace Soomla.Test {
 			_eventQueue.Enqueue (evtLvlStarted); // level started
 			_eventQueue.Enqueue (evtLvlEnded); // level ended
 			_eventQueue.Enqueue (evtWorldCompleted); // world completed
-			
+
+			// this should trigger the events
 			lvl1.Start();
 			Assert.assertTrue(lvl1.State == Level.LevelState.Running);
-			
+
+			// this both waits for the events and tests the level timing
 			yield return new WaitForSeconds(1);
 			// check level time measure
 			double playDuration = lvl1.GetPlayDuration();
@@ -466,12 +468,20 @@ namespace Soomla.Test {
 			Assert.assertEquals(1, lvl1.GetTimesPlayed());
 			Assert.assertEquals(1, lvl1.GetTimesStarted());		
 
-			UnityEngine.Debug.LogWarning("Done! SOOMLA");
+			// wait for any leftover events
+			yield return new WaitForSeconds (2);
 
+			// make sure event queue is empty
+			if (!Assert.Equals (0, _eventQueue.Count)) {
+				dumpQueue(System.Reflection.MethodBase.GetCurrentMethod().Name);
+			}
+
+			// print/GUI some indications
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
+			
 			if (!sAssertionError) {
 				sTestLog += "<color=green>SUCCESS</color>\n";
 			}
-			
 
 			yield return null;
 		}
@@ -480,6 +490,7 @@ namespace Soomla.Test {
 			sAssertionError = false;
 			sTestLog += "testScoreAsc...\n";
 			UnityEngine.Debug.LogWarning("testScoreAsc SOOMLA");
+
 			bool higherIsBetter = true;
 			string scoreId = "score_asc";
 			Score scoreAsc = new Score(scoreId, "ScoreAsc", higherIsBetter);		
@@ -1030,15 +1041,15 @@ namespace Soomla.Test {
 //		}
 		
 		
-		public void testRecordGateWithRangeScore() {
+		public IEnumerator testRecordGateWithRangeScore() {
 			sAssertionError = false;
-			sTestLog += "testChallenge...\n";
-			UnityEngine.Debug.LogWarning("testChallenge SOOMLA");
+			sTestLog += "testRecordGateWithRangeScore...\n";
+			UnityEngine.Debug.LogWarning("testRecordGateWithRangeScore SOOMLA");
 
 			string lvl1Id = "lvl1_recordgate_rangescore";
 			string lvl2Id = "lvl2_recordgate_rangescore";
 			string scoreId = "range_score";
-			RangeScore rangeScore = new RangeScore(scoreId, "RangeScore", new RangeScore.SRange(0, 100));
+			RangeScore rangeScore = new RangeScore(scoreId, "RangeScore", true, new RangeScore.SRange(0, 100));
 			string recordGateId = "record_gate";
 			RecordGate recordGate = new RecordGate(recordGateId, scoreId, 100);
 
@@ -1601,7 +1612,10 @@ namespace Soomla.Test {
 //			Assert.assertEquals(LevelUp.GetInstance().GetCompletedWorldCount(), 2);
 //		}
 		
-		// EVENTS
+		// EVENT HANDLERS - TESTING EVENTS
+		// event handlers take the next expected event from the queue
+		// make sure the correct handler was called, the correct event
+		// and properties that the test expected
 
 		private void onGateOpen(Gate gate) {
 			string gateId = gate.GateId;
