@@ -6,7 +6,6 @@ echo "creating unitypackage for SOOMLA Core"
   -logFile create_unity.log \
   -projectPath $PWD/Soomla/ \
   -exportPackage \
-    Assets/Plugins/Android/AndroidManifest.xml \
     Assets/Plugins/Android/SoomlaAndroidCore.jar \
     Assets/Plugins/Android/square-otto-1.3.2.jar \
     Assets/Plugins/Android/UnitySoomlaAndroidCore.jar \
@@ -29,7 +28,6 @@ echo "creating unitypackage for SOOMLA Store"
   -logFile create_unity.log \
   -projectPath $PWD/Soomla/ \
   -exportPackage \
-    Assets/Plugins/Android/AndroidManifest.xml \
     Assets/Plugins/Android/AndroidStore.jar \
     Assets/Plugins/Android/AndroidStoreGooglePlay.jar \
     Assets/Plugins/Android/UnityAndroidStore.jar \
