@@ -264,21 +264,22 @@ namespace Soomla.Test {
 		}
 
 		private IEnumerator/*void*/ runTests() {
-			// FAIL
-//			StartCoroutine(testScoreAsc ());
-			// FAIL
-//			StartCoroutine(testScoreDsc ());
-			// FAIL
-//			StartCoroutine(testRangeScoreOverflow ());
-			// PASS (Android)
-//			StartCoroutine(testBalanceMission ());
-			// CRASH iOS
-			StartCoroutine(testRecordMission ());
+			// Android: FAIL
+//			yield return StartCoroutine(testScoreAsc ());
+			// Android: FAIL
+//			yield return StartCoroutine(testScoreDsc ());
+			// Andorid: FAIL
+//			yield return StartCoroutine(testRangeScoreOverflow ());
+			// Android: PASS
+			yield return StartCoroutine(testBalanceMission ());
+			// Android: PASS
+			// iOS CRASH (TODO: should not call [super init] on Mission)
+			yield return StartCoroutine(testRecordMission ());
 			// iOS: Reward Taken FAIL
-			// Android: Challenge not completed FAIL
-//			StartCoroutine(testChallenge ());
-			// PASS
-//			StartCoroutine(testLevel());
+			// Android: PASS
+//			yield return StartCoroutine(testChallenge ());
+			// Android: PASS
+//			yield return StartCoroutine(testLevel());
 
 			yield return null;
 		}
@@ -498,7 +499,7 @@ namespace Soomla.Test {
 			Assert.assertEquals(10, scoreAsc.GetTempScore(), 0.01);
 	//		//mExpectedRecordValue = 10;
 			SoomlaUtils.LogWarning (TAG, "Enqueue 10.0");
-				_eventQueue.Enqueue (new Dictionary<string, object> {
+			_eventQueue.Enqueue (new Dictionary<string, object> {
 				{ "handler", "onScoreRecordChanged" },
 				{ "id", scoreId }, 
 				{ "val", 10.0 }
@@ -679,6 +680,7 @@ namespace Soomla.Test {
 			rangeScoreDown.Inc(10);
 			Assert.assertEquals(100, rangeScoreDown.GetTempScore(), 0.01);
 
+			// wait for events
 			yield return new WaitForSeconds (2);
 			
 			if (!Assert.Equals (0, _eventQueue.Count)) {
@@ -740,7 +742,10 @@ namespace Soomla.Test {
 			
 			score.SetTempScore(desiredScore);
 			score.SaveAndReset();
-			
+
+			// wait for events
+			yield return new WaitForSeconds (2);
+
 			Assert.assertTrue(recordMission.IsCompleted());
 			Assert.assertTrue(badgeReward.Owned);
 			
@@ -757,6 +762,7 @@ namespace Soomla.Test {
 
 			recordMission.SetCompleted(false);
 
+			// wait for events
 			yield return new WaitForSeconds (2);
 			
 			if (!Assert.Equals (0, _eventQueue.Count)) {
@@ -909,6 +915,9 @@ namespace Soomla.Test {
 			});
 
 			mission1.SetCompleted(true);
+
+			// wait for events
+			yield return new WaitForSeconds (2);
 			
 			//mExpectedMissionEventId = missionId2;
 			_eventQueue.Enqueue(new Dictionary<string, object> {
@@ -930,7 +939,10 @@ namespace Soomla.Test {
 			Assert.assertFalse(badgeReward.Owned);
 			
 			mission2.SetCompleted(true);
-			
+
+			// wait for events
+			yield return new WaitForSeconds (2);
+
 			Assert.assertTrue(challenge.IsCompleted());
 			
 			// test revoke
@@ -949,6 +961,10 @@ namespace Soomla.Test {
 				{ "id", rewardId }, 
 			});
 			mission1.SetCompleted(false);
+
+			// wait for events
+			yield return new WaitForSeconds (2);
+
 			Assert.assertFalse(challenge.IsCompleted());
 			// TODO: should this be true or false? (should it be taken?)
 			// (currently not taken on iOS)
@@ -1014,72 +1030,136 @@ namespace Soomla.Test {
 //		}
 		
 		
-//		public void testRecordGateWithRangeScore() {
-//			List<World> worlds = new List<World>();
-//			string lvl1Id = "lvl1_recordgate_rangescore";
-//			Level lvl1 = new Level(lvl1Id, false);
-//			string lvl2Id = "lvl2_recordgate_rangescore";
-//			Level lvl2 = new Level(lvl2Id, true);
-//			string scoreId = "range_score";
-//			RangeScore rangeScore = new RangeScore(scoreId, "RangeScore", new RangeScore.SRange(0, 100));
-//			string recordGateId = "record_gate";
-//			RecordGate recordGate = new RecordGate(recordGateId, scoreId, 100);
-//			lvl1.addScore(rangeScore);
-//			lvl2.addGate(recordGate);
-//			
-//			worlds.Add(lvl1);
-//			worlds.Add(lvl2);
-//			
-//			LevelUp.GetInstance().Initialize(worlds, null);
-//			
-//			// open level
-//			Assert.assertTrue(lvl1.CanStart());
-//			// protected by gate
-//			Assert.assertFalse(lvl2.CanStart());
-//			
-//			//mExpectedWorldEventId = lvl1Id;
-//			
-//			lvl1.Start();
-//			
-//			int i = 0;
-//			Assert.assertFalse(recordGate.IsOpen());
-//			Assert.assertFalse(recordGate.CanOpen());
-//			while (i < 100) {
-//				rangeScore.Inc(1);
-//				++i;
-//			}
-//			Assert.assertFalse(recordGate.IsOpen());
-//			Assert.assertFalse(recordGate.CanOpen());
-//			
-//			//mExpectedGateEventId = recordGateId;
-//			//mExpectedScoreEventId = scoreId;
-//			//mExpectedRecordValue = 100;
-//			
-//			rangeScore.Inc(1);
-//			
-//			lvl1.End(true);
-//			
-//			Assert.assertFalse(recordGate.IsOpen());
-//			Assert.assertTrue(recordGate.CanOpen());
-//			
-//			bool opened = recordGate.TryOpen();
-//			Assert.assertTrue(opened);
-//			Assert.assertTrue(recordGate.IsOpen());
-//			Assert.assertTrue(recordGate.CanOpen());
-//			
-//			Assert.assertTrue(lvl2.CanStart());
-//			
-//			//mExpectedWorldEventId = lvl2Id;
-//			
-//			lvl2.Start();
-//			lvl2.End(true);
-//			
-//			Assert.assertTrue(lvl2.IsCompleted());
-//			
-//			// test json serialization
-//			//        string json = KeyValueStorage.getValue(LevelUp.DB_KEY_PREFIX + "model");
-//			//        writeFile("tests/levelup.json", json);
-//		}
+		public void testRecordGateWithRangeScore() {
+			sAssertionError = false;
+			sTestLog += "testChallenge...\n";
+			UnityEngine.Debug.LogWarning("testChallenge SOOMLA");
+
+			string lvl1Id = "lvl1_recordgate_rangescore";
+			string lvl2Id = "lvl2_recordgate_rangescore";
+			string scoreId = "range_score";
+			RangeScore rangeScore = new RangeScore(scoreId, "RangeScore", new RangeScore.SRange(0, 100));
+			string recordGateId = "record_gate";
+			RecordGate recordGate = new RecordGate(recordGateId, scoreId, 100);
+
+			World world = new World ("world_recordgate_rangescore");
+			Level lvl1 = new Level(lvl1Id, null);
+			Level lvl2 = new Level(lvl2Id, null);
+			lvl1.Scores.Add(scoreId, rangeScore);
+			lvl2.Gates.Add(recordGate);
+
+			LevelUp.GetInstance().Initialize(world, null);
+			LevelUp.GetInstance ().InitialWorld.AddInnerWorld (lvl1);
+			LevelUp.GetInstance ().InitialWorld.AddInnerWorld (lvl2);
+			
+			// open level
+			Assert.assertTrue(lvl1.CanStart());
+			// protected by gate
+			Assert.assertFalse(lvl2.CanStart());
+			
+			//mExpectedWorldEventId = lvl1Id;
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onLevelStarted" },
+				{ "id", lvl1Id }, 
+			});
+			
+			lvl1.Start();
+
+			yield return new WaitForSeconds (1);
+			
+			int i = 0;
+			Assert.assertFalse(recordGate.IsOpen());
+			Assert.assertFalse(recordGate.CanOpen());
+			while (i < 100) {
+				rangeScore.Inc(1);
+				++i;
+			}
+			Assert.assertFalse(recordGate.IsOpen());
+			Assert.assertFalse(recordGate.CanOpen());
+
+			//mExpectedScoreEventId = scoreId;
+			//mExpectedRecordValue = 100;
+			//mExpectedGateEventId = recordGateId;
+			_eventQueue.Enqueue (new Dictionary<string, object> {
+				{ "handler", "onScoreRecordChanged" },
+				{ "id", scoreId }, 
+				{ "val", 100 }
+			});
+			// gate canOpen
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onLevelEnded" },
+				{ "id", lvl1Id }, 
+			});
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onWorldCompleted" },
+				{ "id", lvl1Id }, 
+			});
+			
+			rangeScore.Inc(1);
+			
+			lvl1.End(true);
+
+			// wait for events
+			yield return new WaitForSeconds (2);
+			
+			Assert.assertFalse(recordGate.IsOpen());
+			Assert.assertTrue(recordGate.CanOpen());
+
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onGateOpen" },
+				{ "id", recordGateId }, 
+			});
+
+			bool opened = recordGate.TryOpen();
+
+			// wait for events
+			yield return new WaitForSeconds (2);
+
+			Assert.assertTrue(opened);
+			Assert.assertTrue(recordGate.IsOpen());
+			Assert.assertTrue(recordGate.CanOpen());
+			
+			Assert.assertTrue(lvl2.CanStart());
+			
+			//mExpectedWorldEventId = lvl2Id;
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onLevelStarted" },
+				{ "id", lvl2Id }, 
+			});
+			lvl2.Start();
+
+			yield return new WaitForSeconds (1);
+
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onLevelEnded" },
+				{ "id", lvl2Id }, 
+			});
+			_eventQueue.Enqueue(new Dictionary<string, object> {
+				{ "handler", "onWorldCompleted" },
+				{ "id", lvl2Id }, 
+			});
+
+			lvl2.End(true);
+
+			// wait for events
+			yield return new WaitForSeconds (2);
+
+			Assert.assertTrue(lvl2.IsCompleted());
+
+			yield return new WaitForSeconds (2);
+			
+			if (!Assert.Equals (0, _eventQueue.Count)) {
+				dumpQueue(System.Reflection.MethodBase.GetCurrentMethod().Name);
+			}
+			
+			UnityEngine.Debug.LogWarning("Done! SOOMLA");
+			
+			if (!sAssertionError) {
+				sTestLog += "<color=green>SUCCESS</color>\n";
+			}
+			
+			yield return null;
+		}
 //		
 //		
 //		public void testBalanceGate() {
