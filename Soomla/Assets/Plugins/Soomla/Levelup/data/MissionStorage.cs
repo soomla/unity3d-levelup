@@ -52,7 +52,7 @@ namespace Soomla.Levelup
 		}
 
 
-		protected void _setCompleted(Mission mission, bool completed, bool notify) {
+		protected virtual void _setCompleted(Mission mission, bool completed, bool notify) {
 #if UNITY_EDITOR
 			string key = keyMissionCompleted (mission.MissionId);
 			if (completed) {
@@ -71,7 +71,7 @@ namespace Soomla.Levelup
 #endif
 		}
 
-		protected bool _isCompleted(Mission mission) {
+		protected virtual bool _isCompleted(Mission mission) {
 #if UNITY_EDITOR
 			string key = keyMissionCompleted (mission.MissionId);
 			string val = PlayerPrefs.GetString (key);

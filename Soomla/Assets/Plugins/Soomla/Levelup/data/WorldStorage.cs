@@ -60,7 +60,7 @@ namespace Soomla.Levelup
 
 
 
-		protected void _setCompleted(World world, bool completed, bool notify) {
+		protected virtual void _setCompleted(World world, bool completed, bool notify) {
 #if UNITY_EDITOR
 			string key = keyWorldCompleted(world.WorldId);
 			
@@ -76,7 +76,7 @@ namespace Soomla.Levelup
 #endif
 		}
 
-		protected bool _isCompleted(World world) {
+		protected virtual bool _isCompleted(World world) {
 #if UNITY_EDITOR
 			string key = keyWorldCompleted(world.WorldId);
 			string val = PlayerPrefs.GetString (key);
@@ -89,7 +89,7 @@ namespace Soomla.Levelup
 
 		/** World Reward **/
 
-		protected void _setReward(World world, string rewardId) {
+		protected virtual void _setReward(World world, string rewardId) {
 #if UNITY_EDITOR
 			string key = keyReward (world.WorldId);
 			if (!string.IsNullOrEmpty(rewardId)) {
@@ -103,7 +103,7 @@ namespace Soomla.Levelup
 #endif
 		}
 
-		protected string _getAssignedReward(World world) {
+		protected virtual string _getAssignedReward(World world) {
 #if UNITY_EDITOR
 			string key = keyReward (world.WorldId);
 			return PlayerPrefs.GetString (key);

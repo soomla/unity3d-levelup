@@ -57,7 +57,7 @@ namespace Soomla.Levelup
 
 
 
-		protected void _setLatestScore(Score score, double latest) {
+		protected virtual void _setLatestScore(Score score, double latest) {
 #if UNITY_EDITOR
 			string key = keyLatestScore (score.ScoreId);
 			string val = latest.ToString ();
@@ -65,7 +65,7 @@ namespace Soomla.Levelup
 #endif
 		}
 		
-		protected double _getLatestScore(Score score) {
+		protected virtual double _getLatestScore(Score score) {
 #if UNITY_EDITOR
 			string key = keyLatestScore (score.ScoreId);
 			string val = PlayerPrefs.GetString (key);
@@ -75,7 +75,7 @@ namespace Soomla.Levelup
 #endif
 		}
 		
-		protected void _setRecordScore(Score score, double record) {
+		protected virtual void _setRecordScore(Score score, double record) {
 #if UNITY_EDITOR
 			string key = keyRecordScore (score.ScoreId);
 			string val = record.ToString ();
@@ -85,7 +85,7 @@ namespace Soomla.Levelup
 #endif
 		}
 		
-		protected double _getRecordScore(Score score) {
+		protected virtual double _getRecordScore(Score score) {
 #if UNITY_EDITOR
 			string key = keyRecordScore (score.ScoreId);
 			string val = PlayerPrefs.GetString (key);
