@@ -165,6 +165,13 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		public void Restart(bool completed) {
+			if (State == LevelState.Running || State == LevelState.Paused) {
+				End(completed);
+			}
+			Start();
+		}
+
 		public override void SetCompleted(bool completed) {
 			State = LevelState.Completed;
 			base.SetCompleted(completed);
