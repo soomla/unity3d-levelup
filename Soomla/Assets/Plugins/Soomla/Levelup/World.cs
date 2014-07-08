@@ -274,12 +274,16 @@ namespace Soomla.Levelup {
 		}
 
 		public void SetScoreValue(string scoreId, double scoreVal) {
+			SetScoreValue(scoreId, scoreVal, false);
+		}
+
+		public void SetScoreValue(string scoreId, double scoreVal, bool onlyIfBetter) {
 			Score score = Scores[scoreId];
 			if (score == null) {
 				SoomlaUtils.LogError(TAG, "(setScore) Can't find scoreId: " + scoreId + "  worldId: " + WorldId);
 				return;
 			}
-			score.SetTempScore(scoreVal);
+			score.SetTempScore(scoreVal, onlyIfBetter);
 		}
 
 

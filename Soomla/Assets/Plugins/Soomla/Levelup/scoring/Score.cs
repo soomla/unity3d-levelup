@@ -145,6 +145,13 @@ namespace Soomla.Levelup {
 		}
 
 		public virtual void SetTempScore(double score) {
+			SetTempScore(score, false);
+		}
+
+		public virtual void SetTempScore(double score, bool onlyIfBetter) {
+			if (onlyIfBetter && !HasScoreReached(score, _tempScore)) {
+				return;
+			}
 			_tempScore = score;
 		}
 

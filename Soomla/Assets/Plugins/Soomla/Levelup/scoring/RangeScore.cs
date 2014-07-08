@@ -88,15 +88,15 @@ namespace Soomla.Levelup
 			base.Dec(amount);
 		}
 
-		public override void SetTempScore(double score) {
+		public override void SetTempScore(double score, bool onlyIfBetter) {
 			if (score > Range.High) {
 				score = Range.High;
 			}
 			if (score < Range.Low) {
 				score = Range.Low;
 			}
-
-			base.SetTempScore(score);
+			
+			base.SetTempScore(score, onlyIfBetter);
 		}
 
 		public class SRange {
