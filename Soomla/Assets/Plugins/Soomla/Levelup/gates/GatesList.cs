@@ -99,6 +99,31 @@ namespace Soomla.Levelup
 			}
 		}	
 
+		public void Add(Gate gate) {
+			Gates.Add(gate);
+		}
+
+		public void Remove(Gate gate) {
+			Gates.Remove(gate);
+		}
+
+		public Gate this[string gateId] {
+			get { 
+				foreach(Gate g in Gates) {
+					if (g.GateId == gateId) {
+						return g;
+					}
+				}
+
+				return null;
+			}
+		}
+
+		public Gate this[int idx] {
+			get { return Gates[idx]; }
+			set {  Gates[idx] = value; }
+		}
+
 		protected override bool TryOpenInner() {
 			if(AutoOpenBehavior) {
 				foreach (Gate gate in Gates) {

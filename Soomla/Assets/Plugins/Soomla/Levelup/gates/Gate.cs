@@ -95,6 +95,29 @@ namespace Soomla.Levelup {
 			return GateId.GetHashCode();
 		}
 
+		public static bool operator ==(Gate a, Gate b)
+		{
+			// If both are null, or both are same instance, return true.
+			if (System.Object.ReferenceEquals(a, b))
+			{
+				return true;
+			}
+			
+			// If one is null, but not both, return false.
+			if (((object)a == null) || ((object)b == null))
+			{
+				return false;
+			}
+			
+			// Return true if the fields match:
+			return a.GateId == b.GateId;
+		}
+		
+		public static bool operator !=(Gate a, Gate b)
+		{
+			return !(a == b);
+		}
+
 #if UNITY_ANDROID 
 //&& !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {
