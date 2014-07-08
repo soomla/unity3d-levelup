@@ -239,19 +239,19 @@ namespace Soomla.Test {
 		/// <returns>The tests.</returns>
 		private IEnumerator/*void*/ runTests() {
 			// Android: FAIL
-			yield return StartCoroutine(testScoreAsc ());
-			// Android: FAIL
-			yield return StartCoroutine(testScoreDsc ());
-			// Andorid: FAIL
-			yield return StartCoroutine(testRangeScoreOverflow ());
-			// Android: PASS
-			yield return StartCoroutine(testBalanceMission ());
-			// Android: PASS
-			// iOS CRASH (TODO: should not call [super init] on Mission)
-			yield return StartCoroutine(testRecordMission ());
-			// iOS: Reward Taken FAIL
-			// Android: PASS
-			yield return StartCoroutine(testChallenge ());
+//			yield return StartCoroutine(testScoreAsc ());
+//			// Android: FAIL
+//			yield return StartCoroutine(testScoreDsc ());
+//			// Andorid: FAIL
+//			yield return StartCoroutine(testRangeScoreOverflow ());
+//			// Android: PASS
+//			yield return StartCoroutine(testBalanceMission ());
+//			// Android: PASS
+//			// iOS CRASH (TODO: should not call [super init] on Mission)
+//			yield return StartCoroutine(testRecordMission ());
+//			// iOS: Reward Taken FAIL
+//			// Android: PASS
+//			yield return StartCoroutine(testChallenge ());
 			// Android: PASS
 			yield return StartCoroutine(testLevel ());
 			// Android: FAIL
@@ -1055,8 +1055,11 @@ namespace Soomla.Test {
 
 			World world = new World ("world_recordgate_rangescore");
 			Level lvl1 = new Level(lvl1Id, null);
-			Level lvl2 = new Level(lvl2Id, null);
+			Level lvl2 = new Level(lvl2Id, new GatesListOR("recordgate_rangescore_or_gate"), 
+			                       new Dictionary<string, Score>(),
+			                       new List<Challenge>());
 			lvl1.Scores.Add(scoreId, rangeScore);
+			// lame, this will NPE if empty GateList not in c'torf
 			lvl2.Gates.Add(recordGate);
 
 			LevelUp.GetInstance().Initialize(world, null);
@@ -1137,6 +1140,7 @@ namespace Soomla.Test {
 				{ "handler", "onLevelStarted" },
 				{ "id", lvl2Id }, 
 			});
+
 			lvl2.Start();
 
 			yield return new WaitForSeconds (1);
