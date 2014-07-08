@@ -25,6 +25,8 @@ namespace Soomla.Levelup
 			: base(gateId)
 		{
 			AssociatedWorldId = associatedWorldId;
+
+			registerEvents();
 		}
 		
 		/// <summary>
@@ -34,6 +36,8 @@ namespace Soomla.Levelup
 			: base(jsonGate)
 		{
 			this.AssociatedWorldId = jsonGate[LUJSONConsts.LU_GATE_ASSOCWORLDID].str;
+
+			registerEvents();
 		}
 		
 		/// <summary>
@@ -47,17 +51,12 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		// TODO: register for events and handle them
-
 		public override bool CanOpen() {
-			// TODO: remove THIS
-			World world = null;
-//			World world = LevelUp.getInstance().getWorld(mAssociatedWorldId); // TODO: take a world from LevelUp
+			World world = LevelUp.GetInstance().GetWorld(AssociatedWorldId);
 			return world != null && world.IsCompleted();
 		}
 
 		protected override bool TryOpenInner() {
-				// TODO: move this object to Store module. the following code will not work.
 
 			if (CanOpen()) {
 				ForceOpen(true);
@@ -66,6 +65,23 @@ namespace Soomla.Levelup
 			
 			return false;
 		}
+
+		protected virtual void registerEvents() {
+			if (!IsOpen ()) {
+				LevelUpEvents.OnWorldCompleted += onWorldCompleted;
+			}
+		}
+		
+		protected virtual void unregisterEvents() {
+			LevelUpEvents.OnWorldCompleted -= onWorldCompleted;
+		}
+
+		public void onWorldCompleted(World world) {
+			if (world.WorldId == AssociatedWorldId) {
+				unregisterEvents();
+			}
+		}
+
 	}
 }
 

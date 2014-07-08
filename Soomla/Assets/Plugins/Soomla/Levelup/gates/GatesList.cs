@@ -117,8 +117,6 @@ namespace Soomla.Levelup
 			}
 		}
 
-		// TODO: register for events and handle them
-
 	}
 }
 

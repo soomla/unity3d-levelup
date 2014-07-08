@@ -99,8 +99,6 @@ namespace Soomla.Levelup
 			base.SetTempScore(score);
 		}
 
-		// TODO: register for events and handle them
-
 		public class SRange {
 
 			public double Low;

@@ -11,13 +11,13 @@
 /// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
-
+using Soomla.Store;
 
 namespace Soomla.Levelup
 {
 	public class VirtualItemScore : Score
 	{
-//		private static string TAG = "SOOMLA VirtualItemScore";
+		private static string TAG = "SOOMLA VirtualItemScore";
 		public string AssociatedItemId;
 
 		public VirtualItemScore(string scoreId, string associatedItemId)
@@ -52,20 +52,17 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-
-		// TODO: this function cannot be run b/c there won't always be a connection with Store module. maybe move this whole object to Store.
-//		protected override void performSaveActions() {
-//			base.performSaveActions();
-//			try {
-//				int amount = _tempScore;
-//				StoreInventory.GiveVirtualItem(AssociatedItemId, amount);
-//			} catch (VirtualItemNotFoundException e) {
-//				SoomlaUtils.LogError(TAG, "Couldn't find item associated with a given " +
-//				                     "VirtualItemScore. itemId: " + AssociatedItemId);
-//			}
-//		}
-
-		// TODO: register for events and handle them
+		protected override void performSaveActions() {
+			base.performSaveActions();
+			try {
+				int amount = (int)_tempScore;
+				StoreInventory.GiveItem(AssociatedItemId, amount);
+			} catch (VirtualItemNotFoundException e) {
+				SoomlaUtils.LogError(TAG, "Couldn't find item associated with a given " +
+				                     "VirtualItemScore. itemId: " + AssociatedItemId);
+				SoomlaUtils.LogError(TAG, e.Message);
+			}
+		}
 
 	}
 }

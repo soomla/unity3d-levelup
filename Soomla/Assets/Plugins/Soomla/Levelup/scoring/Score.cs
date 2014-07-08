@@ -106,14 +106,14 @@ namespace Soomla.Levelup {
 		}
 
 		public void SaveAndReset() {
-			double record = ScoreStorage.GetRecordScore(this); // TODO: get the record score from storage
+			double record = ScoreStorage.GetRecordScore(this);
 			if (HasTempReached(record)) {
-				ScoreStorage.SetRecordScore(this, _tempScore); // TODO: set the record score in storage
+				ScoreStorage.SetRecordScore(this, _tempScore);
 			}
 			
 			performSaveActions();
 			
-			ScoreStorage.SetLatestScore(this, _tempScore);  // TODO: set the latest score in storage
+			ScoreStorage.SetLatestScore(this, _tempScore);
 			SetTempScore(StartValue);
 		}
 

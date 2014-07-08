@@ -68,8 +68,6 @@ namespace Soomla.Levelup
 			return false;
 		}
 
-		// TODO: register for events and handle them
-
 	}
 }
 

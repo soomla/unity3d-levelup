@@ -57,8 +57,6 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		// TODO: register for events and handle them
-
 		public override bool CanOpen() {
 			// check in gate storage if the gate is open
 			if (GateStorage.IsOpen(this)) {

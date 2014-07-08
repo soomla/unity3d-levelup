@@ -71,8 +71,6 @@ namespace Soomla.Levelup
 			return true;
 		}
 
-		// TODO: register for events and handle them
-
 	}
 }
 
