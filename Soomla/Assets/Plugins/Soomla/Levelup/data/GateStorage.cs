@@ -80,7 +80,7 @@ namespace Soomla.Levelup
 
 
 		/** keys **/
-
+#if UNITY_EDITOR
 		private static string keyGateOpen(string gateId) {
 			return keyGates(gateId, "open");
 		}
@@ -88,7 +88,7 @@ namespace Soomla.Levelup
 		private static string keyGates(string gateId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "gates." + gateId + "." + postfix;
 		}
-
+#endif
 	}
 }
 

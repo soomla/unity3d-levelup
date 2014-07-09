@@ -115,7 +115,7 @@ namespace Soomla.Levelup
 
 
 		/** keys **/
-
+#if UNITY_EDITOR
 		private static string keyWorlds(string worldId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "worlds." + worldId + "." + postfix;
 		}
@@ -127,7 +127,7 @@ namespace Soomla.Levelup
 		private static string keyReward(string worldId) {
 			return keyWorlds(worldId, "assignedReward");
 		}
-
+#endif
 	}
 }
 

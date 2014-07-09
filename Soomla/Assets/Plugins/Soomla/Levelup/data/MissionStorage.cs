@@ -84,7 +84,7 @@ namespace Soomla.Levelup
 
 
 		/** keys **/
-
+#if UNITY_EDITOR
 		private static string keyMissions(string missionId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "missions." + missionId + "." + postfix;
 		}
@@ -92,7 +92,7 @@ namespace Soomla.Levelup
 		private static string keyMissionCompleted(string missionId) {
 			return keyMissions(missionId, "completed");
 		}
-
+#endif
 
 	}
 }
