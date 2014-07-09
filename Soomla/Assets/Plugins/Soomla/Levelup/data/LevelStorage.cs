@@ -235,7 +235,7 @@ namespace Soomla.Levelup
 
 
 		/** Keys **/
-
+#if UNITY_EDITOR
 		private static string keyLevels(string levelId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "levels." + levelId + "." + postfix;
 		}
@@ -255,7 +255,7 @@ namespace Soomla.Levelup
 		private static string keyFastestDuration(string levelId) {
 			return keyLevels(levelId, "fastest");
 		}
-
+#endif
 	}
 }
 
