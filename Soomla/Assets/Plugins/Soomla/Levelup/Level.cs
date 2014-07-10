@@ -135,32 +135,32 @@ namespace Soomla.Levelup {
 				return;
 			}
 
-			double duration = GetPlayDuration();
-			
 			State = LevelState.Ended;
-			
-			// Calculate the slowest \ fastest durations of level play
-			
-			if (duration > GetSlowestDuration()) {
-				LevelStorage.SetSlowestDuration(this, duration);
-			}
-			
-			if (duration < GetFastestDuration()) {
-				LevelStorage.SetFastestDuration(this, duration);
-			}
-			
-			foreach (Score score in Scores.Values) {
-				score.SaveAndReset(); // resetting scores
-			}
 
-			// Count number of times this level was played
-			LevelStorage.IncTimesPlayed(this);
-			
-			// reset timers
-			StartTime = 0;
-			Elapsed = 0;
-			
-			if(completed) {
+			if (completed) {
+				double duration = GetPlayDuration();
+				
+				// Calculate the slowest \ fastest durations of level play
+				
+				if (duration > GetSlowestDuration()) {
+					LevelStorage.SetSlowestDuration(this, duration);
+				}
+				
+				if (duration < GetFastestDuration()) {
+					LevelStorage.SetFastestDuration(this, duration);
+				}
+				
+				foreach (Score score in Scores.Values) {
+					score.SaveAndReset(); // resetting scores
+				}
+
+				// Count number of times this level was played
+				LevelStorage.IncTimesPlayed(this);
+				
+				// reset timers
+				StartTime = 0;
+				Elapsed = 0;
+
 				SetCompleted(true);
 			}
 		}
