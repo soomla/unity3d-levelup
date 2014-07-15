@@ -27,6 +27,8 @@ namespace Soomla.Levelup {
 		protected Gate (string gateId)
 		{
 			this.GateId = gateId;
+
+			registerEvents();
 		}
 		
 //#if UNITY_ANDROID && !UNITY_EDITOR
@@ -39,6 +41,8 @@ namespace Soomla.Levelup {
 
 		public Gate(JSONObject jsonObj) {
 			this.GateId = jsonObj[LUJSONConsts.LU_GATE_GATEID].str;
+
+			registerEvents();
 		}
 
 		public virtual JSONObject toJSONObject() {
@@ -118,8 +122,7 @@ namespace Soomla.Levelup {
 			return !(a == b);
 		}
 
-#if UNITY_ANDROID 
-//&& !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {
 			using(AndroidJavaClass jniGateClass = new AndroidJavaClass("com.soomla.levelup.gates.Gate")) {
 				return jniGateClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
@@ -127,26 +130,48 @@ namespace Soomla.Levelup {
 		}
 #endif
 
-		public bool TryOpen() {
+		public bool Open() {
 			//  check in gate storage if it's already open
 			if (GateStorage.IsOpen(this)) {
 				return true;
 			}
-			return TryOpenInner();
+			return openInner();
 		}
-
-		protected abstract bool TryOpenInner();
 
 		public void ForceOpen(bool open) {
+			bool isOpen = IsOpen();
+			if (isOpen == open) {
+				// if it's already open why open it again?
+				return;
+			}
+
 			GateStorage.SetOpen(this, open);
+			if (open) {
+				unregisterEvents();
+			} else {
+				// we can do this here ONLY becasue we check 'isOpen == open' a few lines above.
+				registerEvents();
+			}
 		}
 
-		public virtual bool IsOpen() {
+		public bool IsOpen() {
 			return GateStorage.IsOpen(this);
 		}
 
-		public abstract bool CanOpen();
+		public bool CanOpen() {
+			// check in gate storage if the gate is open
+			if (GateStorage.IsOpen(this)) {
+				return true;
+			}
 
+			return canOpenInner();
+		}
+
+		protected abstract void registerEvents();
+		protected abstract void unregisterEvents();
+
+		protected abstract bool canOpenInner();
+		protected abstract bool openInner();
 	}
 }
 

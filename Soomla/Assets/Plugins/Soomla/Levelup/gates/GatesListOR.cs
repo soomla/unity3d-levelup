@@ -45,21 +45,7 @@ namespace Soomla.Levelup
 		{
 		}
 
-		public override bool IsOpen() {
-			if(AutoOpenBehavior) {
-				foreach (Gate gate in Gates) {
-					if (gate.IsOpen()) {
-						return true;
-					}
-				}
-				return false;
-			}
-			else {
-				return base.IsOpen();
-			}
-		}
-
-		public override bool CanOpen() {
+		protected override bool canOpenInner() {
 			foreach (Gate gate in Gates) {
 				if (!gate.IsOpen()) {
 					return true;

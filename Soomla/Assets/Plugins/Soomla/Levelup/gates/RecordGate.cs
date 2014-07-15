@@ -30,8 +30,6 @@ namespace Soomla.Levelup
 		{
 			AssociatedScoreId = associatedScoreId;
 			DesiredRecord = desiredRecord;
-
-			registerEvents();
 		}
 		
 		/// <summary>
@@ -42,8 +40,6 @@ namespace Soomla.Levelup
 		{
 			this.AssociatedScoreId = jsonGate[JSONConsts.SOOM_ASSOCSCOREID].str;
 			this.DesiredRecord = jsonGate[JSONConsts.SOOM_DESIRED_RECORD].n;
-
-			registerEvents();
 		}
 		
 		/// <summary>
@@ -58,35 +54,40 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		protected virtual void registerEvents() {
+		protected override void registerEvents() {
 			if (!IsOpen ()) {
 				LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			}
 		}
 
-		protected virtual void unregisterEvents() {
+		protected override void unregisterEvents() {
 			LevelUpEvents.OnScoreRecordChanged -= onScoreRecordChanged;
 		}
 
 		public void onScoreRecordChanged(Score score) {
-			if (score.ScoreId.Equals (AssociatedScoreId)) {
-				unregisterEvents();
+			if (score.ScoreId == AssociatedScoreId) {
+				// We were thinking what will happen if the score's record will be broken over and over again.
+				// It might have made this function being called over and over again.
+				// It won't be called b/c ForceOpen(true) calls 'unregisterEvents' inside.
 				ForceOpen(true);
 			}
 		}
 
-		public override bool CanOpen() {
+		protected override bool canOpenInner() {
 			Score score = LevelUp.GetInstance().GetScore(AssociatedScoreId);
 			if (score == null) {
-				SoomlaUtils.LogError(TAG, "(canOpen) couldn't find score with scoreId: " + AssociatedScoreId);
+				SoomlaUtils.LogError(TAG, "(canOpenInner) couldn't find score with scoreId: " + AssociatedScoreId);
 				return false;
 			}
 
 			return score.HasRecordReached(DesiredRecord);
 		}
 
-		protected override bool TryOpenInner() {
+		protected override bool openInner() {
 			if (CanOpen()) {
+
+				// There's nothing to do here... If the DesiredRecord was reached then the gate is just open.
+
 				ForceOpen(true);
 				return true;
 			}

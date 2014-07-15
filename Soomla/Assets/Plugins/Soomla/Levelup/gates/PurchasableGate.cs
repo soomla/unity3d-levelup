@@ -29,7 +29,6 @@ namespace Soomla.Levelup
 			: base(gateId)
 		{
 			AssociatedItemId = associatedItemId;
-			registerEvents();
 		}
 		
 		/// <summary>
@@ -39,7 +38,6 @@ namespace Soomla.Levelup
 			: base(jsonGate)
 		{
 			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
-			registerEvents();
 		}
 		
 		/// <summary>
@@ -53,13 +51,13 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		protected virtual void registerEvents() {
+		protected override void registerEvents() {
 			if (!IsOpen()) {
 				StoreEvents.OnItemPurchased += onItemPurchased;
 			}
 		}
 
-		protected virtual void unregisterEvents() {
+		protected override void unregisterEvents() {
 			StoreEvents.OnItemPurchased -= onItemPurchased;
 		}
 
@@ -70,16 +68,15 @@ namespace Soomla.Levelup
 		/// @Subscribe
 		public void onItemPurchased(PurchasableVirtualItem pvi, string payload) {
 			if (pvi.ItemId == AssociatedItemId && payload == this.GateId) {
-				unregisterEvents();
 				ForceOpen(true);
 			}
 		}
 
-		public override bool CanOpen() {
+		protected override bool canOpenInner() {
 			return true;
 		}
 
-		protected override bool TryOpenInner() {
+		protected override bool openInner() {
 			try {
 				StoreInventory.BuyItem(AssociatedItemId, this.GateId);
 				return true;

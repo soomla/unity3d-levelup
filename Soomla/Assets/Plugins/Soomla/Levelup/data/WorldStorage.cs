@@ -43,6 +43,13 @@ namespace Soomla.Levelup
 			SetCompleted(world, completed, true);
 		}
 		public static void SetCompleted(World world, bool completed, bool notify) {
+			bool currentStatus = IsCompleted(world);
+			if (currentStatus == completed) {
+				// we don't need to set the status of a world to the same status over and over again.
+				// couldn't only cause trouble.
+				return;
+			}
+
 			instance._setCompleted(world, completed, notify);
 		}
 

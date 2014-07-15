@@ -21,7 +21,6 @@ namespace Soomla.Levelup
 	public abstract class GatesList : Gate
 	{
 		protected List<Gate> Gates = new List<Gate>();
-		protected bool AutoOpenBehavior = false;
 
 		public GatesList(string gateId)
 			: base(gateId)
@@ -34,9 +33,6 @@ namespace Soomla.Levelup
 		{
 			Gates = new List<Gate>();
 			Gates.Add(singleGate);
-			
-			// "fake" gates with 1 sub-gate are auto open
-			AutoOpenBehavior = true;
 		}
 
 		public GatesList(string gateId, List<Gate> gates)
@@ -61,11 +57,6 @@ namespace Soomla.Levelup
 				if (gate != null) {
 					Gates.Add(gate);
 				}
-			}
-			
-			if (Gates.Count < 2) {
-				// "fake" gates with 1 sub-gate are auto open
-				AutoOpenBehavior = true;
 			}
 		}
 		
@@ -124,22 +115,33 @@ namespace Soomla.Levelup
 			set {  Gates[idx] = value; }
 		}
 
-		protected override bool TryOpenInner() {
-			if(AutoOpenBehavior) {
-				foreach (Gate gate in Gates) {
-					gate.TryOpen();
-				}
-				
-				return IsOpen();
+		protected override void registerEvents() {
+			if (!IsOpen ()) {
+				LevelUpEvents.OnGateOpened += onGateOpened;
 			}
-			else {
+		}
+		
+		protected override void unregisterEvents() {
+			LevelUpEvents.OnGateOpened -= onGateOpened;
+		}
+
+		private void onGateOpened(Gate gate) {
+			if(Gates.Contains(gate)) {
 				if (CanOpen()) {
 					ForceOpen(true);
-					return true;
 				}
-				
-				return false;
 			}
+		}
+
+		protected override bool openInner() {
+			if (CanOpen()) {
+
+				// There's nothing to do here... If CanOpen returns true it means that the gates list meets the condition for being opened.
+
+				ForceOpen(true);
+				return true;
+			}
+			return false;
 		}
 
 	}

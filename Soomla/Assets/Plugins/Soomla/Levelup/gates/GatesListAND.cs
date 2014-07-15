@@ -44,25 +44,7 @@ namespace Soomla.Levelup
 		{
 		}
 
-		public override bool IsOpen() {
-			// this flag is required since World/Level
-			// actually creates a fake AND gate (list) even for a single gate
-			// it means that it should answer true when the (only) child subgate is open
-			// without being required to open the (anonymous) AND parent
-			if(AutoOpenBehavior) {
-				foreach (Gate gate in Gates) {
-					if (!gate.IsOpen()) {
-						return false;
-					}
-				}
-				return true;
-			}
-			else {
-				return base.IsOpen();
-			}
-		}
-
-		public override bool CanOpen() {
+		protected override bool canOpenInner() {
 			foreach (Gate gate in Gates) {
 				if (!gate.IsOpen()) {
 					return false;

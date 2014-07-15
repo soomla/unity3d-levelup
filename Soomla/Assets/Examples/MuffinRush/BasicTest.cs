@@ -1124,7 +1124,7 @@ namespace Soomla.Test {
 				{ "id", recordGateId }, 
 			});
 
-			bool opened = recordGate.TryOpen();
+			bool opened = recordGate.Open();
 
 			// wait for events
 			yield return new WaitForSeconds (2);

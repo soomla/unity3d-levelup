@@ -29,8 +29,6 @@ namespace Soomla.Levelup
 		{
 			AssociatedItemId = associatedItemId;
 			DesiredBalance = desiredBalance;
-
-			registerEvents();
 		}
 		
 		/// <summary>
@@ -41,8 +39,6 @@ namespace Soomla.Levelup
 		{
 			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
 			this.DesiredBalance = Convert.ToInt32(jsonGate[JSONConsts.SOOM_DESIRED_BALANCE].n);
-
-			registerEvents();
 		}
 		
 		/// <summary>
@@ -57,35 +53,21 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		public override bool CanOpen() {
-			// check in gate storage if the gate is open
-			if (GateStorage.IsOpen(this)) {
-				return true;
-			}
-
+		protected override bool canOpenInner() {
 			try {
-				if (StoreInventory.GetItemBalance(AssociatedItemId) < DesiredBalance) {
-					return false;
-				}
+				return (StoreInventory.GetItemBalance(AssociatedItemId) >= DesiredBalance);
 			} catch (VirtualItemNotFoundException e) {
-				SoomlaUtils.LogError(TAG, "(canPass) Couldn't find itemId. itemId: " + AssociatedItemId);
+				SoomlaUtils.LogError(TAG, "(canOpenInner) Couldn't find itemId. itemId: " + AssociatedItemId);
 				SoomlaUtils.LogError(TAG, e.Message);
 				return false;
 			}
-			return true;
 		}
 
-		protected override bool TryOpenInner() {
+		protected override bool openInner() {
 			if (CanOpen()) {
 
-				try {
-					StoreInventory.TakeItem(AssociatedItemId, DesiredBalance);
-				} catch (VirtualItemNotFoundException e) {
-					SoomlaUtils.LogError(TAG, "(open) Couldn't find itemId. itemId: " + AssociatedItemId);
-					SoomlaUtils.LogError(TAG, e.Message);
-					return false;
-				}
-				
+				// There's nothing to do here... If the DesiredBalance was reached then the gate is just open.
+
 				ForceOpen(true);
 				return true;
 			}
@@ -116,18 +98,21 @@ namespace Soomla.Levelup
 		}
 
 
-		protected virtual void registerEvents() {
+		protected override void registerEvents() {
 			if (!IsOpen()) {
 				StoreEvents.OnCurrencyBalanceChanged += onCurrencyBalanceChanged;
 				StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
 			}
 		}
 
+		protected override void unregisterEvents() {
+			StoreEvents.OnCurrencyBalanceChanged -= onCurrencyBalanceChanged;
+			StoreEvents.OnGoodBalanceChanged -= onGoodBalanceChanged;
+		}
+
 		private void checkItemIdBalance(String itemId, int balance) {
-			if (itemId.Equals(AssociatedItemId) && balance >= DesiredBalance) {
-				StoreEvents.OnCurrencyBalanceChanged -= onCurrencyBalanceChanged;
-				StoreEvents.OnGoodBalanceChanged -= onGoodBalanceChanged;
-				// gate can open now
+			if (itemId == AssociatedItemId && balance >= DesiredBalance) {
+				ForceOpen(true);
 			}
 		}
 	}
