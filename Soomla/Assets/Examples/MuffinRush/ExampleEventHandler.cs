@@ -71,7 +71,7 @@ namespace Soomla.Store.Example {
 		/// Handles an item purchase event. 
 		/// </summary>
 		/// <param name="pvi">Purchasable virtual item.</param>
-		public void onItemPurchased(PurchasableVirtualItem pvi) {
+		public void onItemPurchased(PurchasableVirtualItem pvi, string payload) {
 
 		}
 

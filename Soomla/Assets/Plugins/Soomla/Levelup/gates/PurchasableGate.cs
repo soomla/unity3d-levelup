@@ -55,12 +55,12 @@ namespace Soomla.Levelup
 
 		protected virtual void registerEvents() {
 			if (!IsOpen()) {
-				StoreEvents.OnItemPurchased += onItemPurchaseStarted;
+				StoreEvents.OnItemPurchased += onItemPurchased;
 			}
 		}
 
 		protected virtual void unregisterEvents() {
-			StoreEvents.OnItemPurchased -= onItemPurchaseStarted;
+			StoreEvents.OnItemPurchased -= onItemPurchased;
 		}
 
 		/// <summary>
@@ -68,8 +68,8 @@ namespace Soomla.Levelup
 		/// </summary>
 		/// <param name="pvi">Purchasable virtual item.</param>
 		/// @Subscribe
-		public void onItemPurchaseStarted(PurchasableVirtualItem pvi) {
-			if (pvi.ItemId.Equals (AssociatedItemId)) {
+		public void onItemPurchased(PurchasableVirtualItem pvi, string payload) {
+			if (pvi.ItemId == AssociatedItemId && payload == this.GateId) {
 				unregisterEvents();
 				ForceOpen(true);
 			}
@@ -81,17 +81,14 @@ namespace Soomla.Levelup
 
 		protected override bool TryOpenInner() {
 			try {
-				PurchasableVirtualItem pvi = (PurchasableVirtualItem) StoreInfo.GetItemByItemId(AssociatedItemId);
-				PurchaseWithMarket ptype = (PurchaseWithMarket) pvi.PurchaseType;
-				SoomlaStore.BuyMarketItem(ptype.MarketItem.ProductId, GateId);
-				ForceOpen(true);
+				StoreInventory.BuyItem(AssociatedItemId, this.GateId);
 				return true;
 			} catch (VirtualItemNotFoundException e) {
 				SoomlaUtils.LogError(TAG, "The item needed for purchase doesn't exist. itemId: " +
 				                     AssociatedItemId);
 				SoomlaUtils.LogError(TAG, e.Message);
-			} catch (InvalidCastException e) {
-				SoomlaUtils.LogError(TAG, "The associated item is not a purchasable item. itemId: " +
+			} catch (InsufficientFundsException e) {
+				SoomlaUtils.LogError(TAG, "There's not enough funds to purchase this item. itemId: " +
 				                     AssociatedItemId);
 				SoomlaUtils.LogError(TAG, e.Message);
 			}
