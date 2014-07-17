@@ -67,7 +67,7 @@ namespace Soomla.Levelup
 		public override bool IsCompleted() {
 			// could happen in construction
 			// need to return false in order to register for child events
-			if(Missions == null) {
+			if(Missions == null || Missions.IsEmpty()) {
 				return false;
 			}
 			
