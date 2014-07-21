@@ -33,6 +33,7 @@ namespace Soomla.Levelup {
 		public const string LU_SCORE_RANGE_HIGH  = "high";
 
 		/** Gate **/
+		public const string LU_GATE              = "gate";
 		public const string LU_GATES             = "gates";
 
 		/** Challenge **/

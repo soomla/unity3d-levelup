@@ -1055,12 +1055,11 @@ namespace Soomla.Test {
 
 			World world = new World ("world_recordgate_rangescore");
 			Level lvl1 = new Level(lvl1Id, null);
-			Level lvl2 = new Level(lvl2Id, new GatesListOR("recordgate_rangescore_or_gate"), 
+			Level lvl2 = new Level(lvl2Id, recordGate, 
 			                       new Dictionary<string, Score>(),
 			                       new List<Challenge>());
 			lvl1.Scores.Add(scoreId, rangeScore);
-			// lame, this will NPE if empty GateList not in c'torf
-			lvl2.Gates.Add(recordGate);
+
 
 			LevelUp.GetInstance().Initialize(world, null);
 			LevelUp.GetInstance ().InitialWorld.AddInnerWorld (lvl1);

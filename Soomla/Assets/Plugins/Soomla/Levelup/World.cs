@@ -24,7 +24,7 @@ namespace Soomla.Levelup {
 	public class World : SoomlaEntity {
 		private static string TAG = "SOOMLA World";
 
-		public GatesList Gates;
+		public Gate Gate;
 		public Dictionary<string, World> InnerWorlds = new Dictionary<string, World>();
 		public List<World> InnerWorldsList {
 			get { return InnerWorlds.Values.ToList(); }
@@ -59,12 +59,12 @@ namespace Soomla.Levelup {
 			}
 		}
 
-		public World(string id, GatesList gates, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Challenge> challenges)
+		public World(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Challenge> challenges)
 			: base(id)
 		{
 			this.InnerWorlds = (innerWorlds != null) ? innerWorlds : new Dictionary<string, World>();
 			this.Scores = (scores != null) ? scores : new Dictionary<string, Score>();
-			this.Gates = gates;
+			this.Gate = gate;
 			this.Challenges = (challenges != null) ? challenges : new List<Challenge>();
 		}
 
@@ -103,9 +103,9 @@ namespace Soomla.Levelup {
 				Challenges.Add(new Challenge(challengeJSON));
 			}
 			
-			JSONObject gateListJSON = jsonWorld[LUJSONConsts.LU_GATES];
-			if (gateListJSON != null && gateListJSON.keys != null && gateListJSON.keys.Count > 0) {
-				Gates = GatesList.fromJSONObject (gateListJSON);
+			JSONObject gateJSON = jsonWorld[LUJSONConsts.LU_GATE];
+			if (gateJSON != null && gateJSON.keys != null && gateJSON.keys.Count > 0) {
+				Gate = Gate.fromJSONObject (gateJSON);
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace Soomla.Levelup {
 			JSONObject obj = base.toJSONObject();
 
 			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
-			obj.AddField(LUJSONConsts.LU_GATES, (Gates==null ? new JSONObject(JSONObject.Type.OBJECT) : Gates.toJSONObject()));
+			obj.AddField(LUJSONConsts.LU_GATE, (Gate==null ? new JSONObject(JSONObject.Type.OBJECT) : Gate.toJSONObject()));
 			
 			JSONObject worldsArr = new JSONObject(JSONObject.Type.ARRAY);
 			foreach (World world in InnerWorlds.Values) {
@@ -294,7 +294,7 @@ namespace Soomla.Levelup {
 
 
 		public bool CanStart() {
-			return Gates == null || Gates.IsOpen();
+			return Gate == null || Gate.IsOpen();
 		}
 
 	}
