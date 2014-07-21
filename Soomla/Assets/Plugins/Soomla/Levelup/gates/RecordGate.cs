@@ -25,8 +25,8 @@ namespace Soomla.Levelup
 		public string AssociatedScoreId;
 		public double DesiredRecord;
 
-		public RecordGate(string gateId, string associatedScoreId, double desiredRecord)
-			: base(gateId)
+		public RecordGate(string id, string associatedScoreId, double desiredRecord)
+			: base(id)
 		{
 			AssociatedScoreId = associatedScoreId;
 			DesiredRecord = desiredRecord;
@@ -65,7 +65,7 @@ namespace Soomla.Levelup
 		}
 
 		public void onScoreRecordChanged(Score score) {
-			if (score.ScoreId == AssociatedScoreId) {
+			if (score.ID == AssociatedScoreId) {
 				// We were thinking what will happen if the score's record will be broken over and over again.
 				// It might have made this function being called over and over again.
 				// It won't be called b/c ForceOpen(true) calls 'unregisterEvents' inside.

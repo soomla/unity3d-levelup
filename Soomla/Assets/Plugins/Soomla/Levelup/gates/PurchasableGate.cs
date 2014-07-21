@@ -25,8 +25,8 @@ namespace Soomla.Levelup
 
 		public string AssociatedItemId;
 
-		public PurchasableGate(string gateId, string associatedItemId)
-			: base(gateId)
+		public PurchasableGate(string id, string associatedItemId)
+			: base(id)
 		{
 			AssociatedItemId = associatedItemId;
 		}
@@ -67,7 +67,7 @@ namespace Soomla.Levelup
 		/// <param name="pvi">Purchasable virtual item.</param>
 		/// @Subscribe
 		public void onItemPurchased(PurchasableVirtualItem pvi, string payload) {
-			if (pvi.ItemId == AssociatedItemId && payload == this.GateId) {
+			if (pvi.ItemId == AssociatedItemId && payload == this.ID) {
 				ForceOpen(true);
 			}
 		}
@@ -78,7 +78,7 @@ namespace Soomla.Levelup
 
 		protected override bool openInner() {
 			try {
-				StoreInventory.BuyItem(AssociatedItemId, this.GateId);
+				StoreInventory.BuyItem(AssociatedItemId, this.ID);
 				return true;
 			} catch (VirtualItemNotFoundException e) {
 				SoomlaUtils.LogError(TAG, "The item needed for purchase doesn't exist. itemId: " +

@@ -20,14 +20,14 @@ namespace Soomla.Levelup
 		private static string TAG = "SOOMLA VirtualItemScore";
 		public string AssociatedItemId;
 
-		public VirtualItemScore(string scoreId, string associatedItemId)
-			: base(scoreId)
+		public VirtualItemScore(string id, string associatedItemId)
+			: base(id)
 		{
 			AssociatedItemId = associatedItemId;
 		}
 
-		public VirtualItemScore(string scoreId, string name, bool higherBetter, string associatedItemId)
-			: base(scoreId, name, higherBetter)
+		public VirtualItemScore(string id, string name, bool higherBetter, string associatedItemId)
+			: base(id, name, higherBetter)
 		{
 			AssociatedItemId = associatedItemId;
 		}

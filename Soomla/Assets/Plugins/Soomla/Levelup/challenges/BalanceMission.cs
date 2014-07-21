@@ -24,15 +24,15 @@ namespace Soomla.Levelup
 		public string AssociatedItemId;
 		public int DesiredBalance;
 
-		public BalanceMission(string name, string missionId, string associatedItemId, int desiredBalance)
-			: base(missionId, name)
+		public BalanceMission(string id, string name, string associatedItemId, int desiredBalance)
+			: base(id, name)
 		{
 			AssociatedItemId = associatedItemId;
 			DesiredBalance = desiredBalance;
 		}
 
-		public BalanceMission(string missionId, string name, List<Reward> rewards, string associatedItemId, int desiredBalance)
-			: base(missionId, name, rewards)
+		public BalanceMission(string id, string name, List<Reward> rewards, string associatedItemId, int desiredBalance)
+			: base(id, name, rewards)
 		{
 			AssociatedItemId = associatedItemId;
 			DesiredBalance = desiredBalance;
@@ -81,10 +81,8 @@ namespace Soomla.Levelup
 		public void onGoodBalanceChanged(VirtualGood good, int balance, int amountAdded) {
 			checkItemIdBalance (good.ItemId, balance);
 		}
-		
-		
+
 		protected override void registerEvents() {
-			base.registerEvents ();
 			StoreEvents.OnCurrencyBalanceChanged += onCurrencyBalanceChanged;
 			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
 		}
@@ -92,7 +90,6 @@ namespace Soomla.Levelup
 		protected override void unregisterEvents() {
 			StoreEvents.OnCurrencyBalanceChanged -= onCurrencyBalanceChanged;
 			StoreEvents.OnGoodBalanceChanged -= onGoodBalanceChanged;
-			base.unregisterEvents ();
 		}
 		
 		private void checkItemIdBalance(String itemId, int balance) {

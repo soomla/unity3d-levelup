@@ -20,19 +20,19 @@ namespace Soomla.Levelup
 	public class GatesListAND : GatesList
 	{
 
-		public GatesListAND(string gateId)
-			: base(gateId)
+		public GatesListAND(string id)
+			: base(id)
 		{
 			Gates = new List<Gate>();
 		}
 
-		public GatesListAND(string gateId, Gate singleGate)
-			: base(gateId, singleGate)
+		public GatesListAND(string id, Gate singleGate)
+			: base(id, singleGate)
 		{
 		}
 
-		public GatesListAND(string gateId, List<Gate> gates)
-			: base(gateId, gates)
+		public GatesListAND(string id, List<Gate> gates)
+			: base(id, gates)
 		{
 		}
 		

@@ -32,7 +32,7 @@ namespace Soomla.Levelup {
 			if (rewards != null) {
 				Dictionary<string, Reward> rewardMap = new Dictionary<string, Reward> ();
 				foreach (Reward reward in rewards) {
-						rewardMap.Add (reward.RewardId, reward);
+						rewardMap.Add (reward.ID, reward);
 				}
 				Rewards = rewardMap;
 			}
@@ -55,7 +55,7 @@ namespace Soomla.Levelup {
 		}
 
 		public World GetWorld(string worldId) {
-			if (InitialWorld.WorldId == worldId) {
+			if (InitialWorld.ID == worldId) {
 				return InitialWorld;
 			}
 

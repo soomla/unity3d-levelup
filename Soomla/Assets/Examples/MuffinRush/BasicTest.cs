@@ -357,10 +357,10 @@ namespace Soomla.Test {
 			World machineC = new World("machine_c", 20, s);
 			World machineD = new World("machine_d", 20, s);
 
-			mainWorld.InnerWorlds.Add(machineA.WorldId, machineA);
-			mainWorld.InnerWorlds.Add(machineB.WorldId, machineB);
-			mainWorld.InnerWorlds.Add(machineC.WorldId, machineC);
-			mainWorld.InnerWorlds.Add(machineD.WorldId, machineD);
+			mainWorld.InnerWorlds.Add(machineA.ID, machineA);
+			mainWorld.InnerWorlds.Add(machineB.ID, machineB);
+			mainWorld.InnerWorlds.Add(machineC.ID, machineC);
+			mainWorld.InnerWorlds.Add(machineD.ID, machineD);
 
 			BadgeReward bronzeMedal = new BadgeReward("badge_bronzeMedal", "Bronze Medal");
 			BadgeReward silverMedal = new BadgeReward("badge_silverMedal", "Silver Medal");
@@ -1622,7 +1622,7 @@ namespace Soomla.Test {
 		// and properties that the test expected
 
 		private void onGateOpen(Gate gate) {
-			string gateId = gate.GateId;
+			string gateId = gate.ID;
 			bool isGatesList = gate is GatesList;
 			bool isAdHocGate = UUID_REGEX.IsMatch (gateId);
 			string msg = "<color=yellow>onEvent/onGateOpen:</color>" + gateId;
@@ -1640,7 +1640,7 @@ namespace Soomla.Test {
 		}
 		
 		private void onLevelEnded(Level level) {
-			string worldId = level.WorldId;
+			string worldId = level.ID;
 			string msg = "<color=yellow>onEvent/onLevelEnded:</color>" + worldId;
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
@@ -1652,7 +1652,7 @@ namespace Soomla.Test {
 		}
 		
 		private void onLevelStarted(Level level) {
-			string worldId = level.WorldId;
+			string worldId = level.ID;
 			string msg = "<color=yellow>onEvent/onLevelStarted:</color>" + worldId;
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
@@ -1664,7 +1664,7 @@ namespace Soomla.Test {
 		}
 		
 		private void onMissionCompleted(Mission mission) {
-			string missionId = mission.MissionId;
+			string missionId = mission.ID;
 			bool isChallenge = mission is Challenge;
 			string msg = "<color=yellow>onEvent/onMissionCompleted:</color>" + missionId;
 			sTestLog += msg + "\n";
@@ -1677,7 +1677,7 @@ namespace Soomla.Test {
 		}
 		
 		private void onMissionCompletedRevoked(Mission mission) {
-			string missionId = mission.MissionId;
+			string missionId = mission.ID;
 			bool isChallenge = mission is Challenge;
 			string msg = "<color=yellow>onEvent/onMissionCompletedRevoked:</color>" + missionId;
 			sTestLog += msg + "\n";
@@ -1690,7 +1690,7 @@ namespace Soomla.Test {
 		}
 		
 		private void onScoreRecordChanged(Score score) {
-			string scoreId = score.ScoreId;
+			string scoreId = score.ID;
 			double record = score.Record;
 			string msg = "<color=yellow>onEvent/onScoreRecordChanged:</color>" + score + "->" + record;
 			sTestLog += msg + "\n";
@@ -1704,7 +1704,7 @@ namespace Soomla.Test {
 		}
 		
 		private void onWorldCompleted(World world) {
-			string worldId = world.WorldId;
+			string worldId = world.ID;
 			string msg = "<color=yellow>onEvent/onWorldCompleted:</color>" + worldId;
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
@@ -1731,7 +1731,7 @@ namespace Soomla.Test {
 		}
 
 		private void onRewardGiven(Reward reward) {
-			string rewardId = reward.RewardId;
+			string rewardId = reward.ID;
 			string msg = "<color=yellow>onEvent/onRewardGiven:</color>" + rewardId;
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);
@@ -1743,7 +1743,7 @@ namespace Soomla.Test {
 		}
 
 		private void onRewardTaken(Reward reward) {
-			string rewardId = reward.RewardId;
+			string rewardId = reward.ID;
 			string msg = "<color=yellow>onEvent/onRewardTaken:</color>" + rewardId;
 			sTestLog += msg + "\n";
 			SoomlaUtils.LogDebug(TAG, msg);

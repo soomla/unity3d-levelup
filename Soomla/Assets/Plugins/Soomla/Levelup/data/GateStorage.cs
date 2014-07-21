@@ -54,7 +54,7 @@ namespace Soomla.Levelup
 
 		protected virtual void _setOpen(Gate gate, bool open, bool notify) {
 #if UNITY_EDITOR
-			string key = keyGateOpen(gate.GateId);
+			string key = keyGateOpen(gate.ID);
 			
 			if (open) {
 				PlayerPrefs.SetString(key, "yes");
@@ -70,7 +70,7 @@ namespace Soomla.Levelup
 
 		protected virtual bool _isOpen(Gate gate) {
 #if UNITY_EDITOR
-			string key = keyGateOpen(gate.GateId);
+			string key = keyGateOpen(gate.ID);
 			string val = PlayerPrefs.GetString (key);
 			return !string.IsNullOrEmpty(val);
 #else

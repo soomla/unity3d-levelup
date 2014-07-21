@@ -34,18 +34,18 @@ namespace Soomla.Levelup {
 		
 		public LevelState State = LevelState.Idle;
 
-		public Level(String worldId, Score score)
-			: base(worldId, score) 
+		public Level(String id, Score score)
+			: base(id, score) 
 		{
 		}
 		
-		public Level(string worldId, GatesList gates, Dictionary<string, Score> scores, List<Challenge> challenges)
-			: base(worldId, gates, new Dictionary<string, World>(), scores, challenges)
+		public Level(string id, GatesList gates, Dictionary<string, Score> scores, List<Challenge> challenges)
+			: base(id, gates, new Dictionary<string, World>(), scores, challenges)
 		{
 		}
 
-		public Level(string worldId, GatesList gates, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Challenge> challenges)
-			: base(worldId, gates, innerWorlds, scores, challenges)
+		public Level(string id, GatesList gates, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Challenge> challenges)
+			: base(id, gates, innerWorlds, scores, challenges)
 		{
 		}
 
@@ -80,7 +80,7 @@ namespace Soomla.Levelup {
 
 
 		public bool Start() {
-			SoomlaUtils.LogDebug(TAG, "Starting level with worldId: " + WorldId);
+			SoomlaUtils.LogDebug(TAG, "Starting level with world id: " + ID);
 			
 			if (!CanStart()) {
 				return false;

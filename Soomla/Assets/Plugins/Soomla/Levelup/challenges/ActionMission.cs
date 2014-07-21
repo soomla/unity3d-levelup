@@ -20,13 +20,13 @@ namespace Soomla.Levelup
 {
 	public class ActionMission : Mission
 	{
-		public ActionMission(string missionId, string name)
-			: base(missionId, name)
+		public ActionMission(string id, string name)
+			: base(id, name)
 		{
 		}
 
-		public ActionMission(string missionId, string name, List<Reward> rewards)
-			: base(missionId, name, rewards)
+		public ActionMission(string id, string name, List<Reward> rewards)
+			: base(id, name, rewards)
 		{
 		}
 		
@@ -46,6 +46,13 @@ namespace Soomla.Levelup
 			JSONObject obj = base.toJSONObject();
 
 			return obj;
+		}
+
+		protected override void registerEvents() {
+		}
+		
+		protected override void unregisterEvents() {
+
 		}
 	}
 }

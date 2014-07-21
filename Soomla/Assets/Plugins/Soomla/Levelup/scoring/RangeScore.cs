@@ -20,14 +20,14 @@ namespace Soomla.Levelup
 	{
 		public SRange Range;
 
-		public RangeScore(string scoreId, SRange range)
-			: base(scoreId)
+		public RangeScore(string id, SRange range)
+			: base(id)
 		{
 			Range = range;
 		}
 
-		public RangeScore(string scoreId, string name, bool higherBetter, SRange range)
-			: base(scoreId, name, higherBetter)
+		public RangeScore(string id, string name, bool higherBetter, SRange range)
+			: base(id, name, higherBetter)
 		{
 			Range = range;
 			// descending score should start at the high bound

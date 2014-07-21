@@ -90,7 +90,7 @@ namespace Soomla.Levelup
 
 		protected virtual void _setSlowestDuration(Level level, double duration) {
 #if UNITY_EDITOR
-			string key = keySlowestDuration (level.WorldId);
+			string key = keySlowestDuration (level.ID);
 			string val = duration.ToString ();
 			PlayerPrefs.SetString (key, val);
 #endif
@@ -98,7 +98,7 @@ namespace Soomla.Levelup
 		
 		protected virtual double _getSlowestDuration(Level level) {
 #if UNITY_EDITOR
-			string key = keySlowestDuration (level.WorldId);
+			string key = keySlowestDuration (level.ID);
 			string val = PlayerPrefs.GetString (key);
 			return (string.IsNullOrEmpty(val)) ? 0 : double.Parse (val);
 #else
@@ -108,7 +108,7 @@ namespace Soomla.Levelup
 		
 		protected virtual void _setFastestDuration(Level level, double duration) {
 #if UNITY_EDITOR
-			string key = keyFastestDuration (level.WorldId);
+			string key = keyFastestDuration (level.ID);
 			string val = duration.ToString ();
 			PlayerPrefs.SetString (key, val);
 #endif
@@ -116,7 +116,7 @@ namespace Soomla.Levelup
 		
 		protected virtual double _getFastestDuration(Level level) {
 #if UNITY_EDITOR
-			string key = keyFastestDuration (level.WorldId);
+			string key = keyFastestDuration (level.ID);
 			string val = PlayerPrefs.GetString (key);
 			return (string.IsNullOrEmpty(val)) ? 0 : double.Parse (val);
 #else
@@ -135,7 +135,7 @@ namespace Soomla.Levelup
 				started = 0;
 			}
 			string startedStr = (started + 1).ToString();
-			string key = keyTimesStarted(level.WorldId);
+			string key = keyTimesStarted(level.ID);
 			PlayerPrefs.SetString (key, startedStr);
 
 			// Notify level has started
@@ -154,7 +154,7 @@ namespace Soomla.Levelup
 				return 0;
 			}
 			string startedStr = (started - 1).ToString();
-			string key = keyTimesStarted(level.WorldId);
+			string key = keyTimesStarted(level.ID);
 			PlayerPrefs.SetString (key, startedStr);
 
 			return started - 1;
@@ -165,7 +165,7 @@ namespace Soomla.Levelup
 		
 		protected virtual int _getTimesStarted(Level level) {
 #if UNITY_EDITOR
-			string key = keyTimesStarted(level.WorldId);
+			string key = keyTimesStarted(level.ID);
 			string val = PlayerPrefs.GetString (key);
 			
 			int started = 0;
@@ -189,7 +189,7 @@ namespace Soomla.Levelup
 				played = 0;
 			}
 			string playedStr = (played + 1).ToString();
-			string key = keyTimesPlayed(level.WorldId);
+			string key = keyTimesPlayed(level.ID);
 			PlayerPrefs.SetString (key, playedStr);
 			
 			// Notify level has ended
@@ -208,7 +208,7 @@ namespace Soomla.Levelup
 				return 0;
 			}
 			string playedStr = (played - 1).ToString();
-			string key = keyTimesPlayed(level.WorldId);
+			string key = keyTimesPlayed(level.ID);
 			PlayerPrefs.SetString (key, playedStr);
 			
 			return played - 1;
@@ -219,7 +219,7 @@ namespace Soomla.Levelup
 		
 		protected virtual int _getTimesPlayed(Level level) {
 #if UNITY_EDITOR
-			string key = keyTimesPlayed(level.WorldId);
+			string key = keyTimesPlayed(level.ID);
 			string val = PlayerPrefs.GetString (key);
 			
 			int played = 0;

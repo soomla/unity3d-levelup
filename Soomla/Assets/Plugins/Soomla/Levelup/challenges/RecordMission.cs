@@ -23,15 +23,15 @@ namespace Soomla.Levelup
 		public string AssociatedScoreId;
 		public double DesiredRecord;
 
-		public RecordMission(string name, string missionId, string associatedScoreId, double desiredRecord)
-			: base(missionId, name)
+		public RecordMission(string id, string name, string associatedScoreId, double desiredRecord)
+			: base(id, name)
 		{
 			AssociatedScoreId = associatedScoreId;
 			DesiredRecord = desiredRecord;
 		}
 
-		public RecordMission(string missionId, string name, List<Reward> rewards, string associatedScoreId, double desiredRecord)
-			: base(missionId, name, rewards)
+		public RecordMission(string id, string name, List<Reward> rewards, string associatedScoreId, double desiredRecord)
+			: base(id, name, rewards)
 		{
 			AssociatedScoreId = associatedScoreId;
 			DesiredRecord = desiredRecord;
@@ -65,7 +65,7 @@ namespace Soomla.Levelup
 		/// <param name="score">Score.</param>
 		/// @Subscribe
 		public void onScoreRecordChanged(Score score) {
-			if (score.ScoreId.Equals(AssociatedScoreId) &&
+			if (score.ID == AssociatedScoreId &&
 			    score.HasRecordReached(DesiredRecord)) {
 					SetCompleted(true);
 			}
@@ -75,6 +75,10 @@ namespace Soomla.Levelup
 			if (!IsCompleted ()) {
 				LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			}
+		}
+
+		protected override void unregisterEvents() {
+			LevelUpEvents.OnScoreRecordChanged -= onScoreRecordChanged;
 		}
 	}
 }

@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup {
 	
-	public abstract class Mission {
+	public abstract class Mission : SoomlaEntity {
 
 //#if UNITY_IOS && !UNITY_EDITOR
 //		[DllImport ("__Internal")]
@@ -27,45 +27,25 @@ namespace Soomla.Levelup {
 //#endif
 
 		private const string TAG = "SOOMLA Mission";
-		
-		public string Name;
-		public string MissionId;
+
 		public List<Reward> Rewards;
 
-		protected Mission (String missionId, String name)
+		protected Mission (String id, String name)
+			: this(id, name, new List<Reward>())
 		{
-			this.Name = name;
-			this.MissionId = missionId;
-			this.Rewards = new List<Reward>();
-
-			registerEvents();
 		}
 
-		protected Mission (String missionId, String name, List<Reward> rewards)
+		protected Mission (String id, String name, List<Reward> rewards)
+			: base(id, name, "")
 		{
-			this.Name = name;
-			this.MissionId = missionId;
 			this.Rewards = rewards;
 			
 			registerEvents();
 		}
-		
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//		protected Mission(AndroidJavaObject jniVirtualItem) {
-//			this.Name = jniVirtualItem.Call<string>("getName");
-//			this.Description = jniVirtualItem.Call<string>("getDescription");
-//			this.ItemId = jniVirtualItem.Call<string>("getItemId");
-//		}
-//#endif
 
-		public Mission(JSONObject jsonObj) {
-			this.MissionId = jsonObj[LUJSONConsts.LU_MISSION_MISSIONID].str;
-			if (jsonObj[JSONConsts.SOOM_NAME]) {
-				this.Name = jsonObj[JSONConsts.SOOM_NAME].str;
-			} else {
-				this.Name = "";
-			}
-
+		public Mission(JSONObject jsonObj)
+			: base(jsonObj)
+		{
 			this.Rewards = new List<Reward>();
 			List<JSONObject> jsonRewardList = jsonObj [JSONConsts.SOOM_REWARDS].list;
 			foreach (JSONObject jsonRewardObj in jsonRewardList) {
@@ -73,10 +53,8 @@ namespace Soomla.Levelup {
 			}
 		}
 
-		public virtual JSONObject toJSONObject() {
-			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
-			obj.AddField(JSONConsts.SOOM_NAME, this.Name);
-			obj.AddField(LUJSONConsts.LU_MISSION_MISSIONID, this.MissionId);
+		public override JSONObject toJSONObject() {
+			JSONObject obj = base.toJSONObject();
 			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 
 			JSONObject rewardsArr = new JSONObject(JSONObject.Type.ARRAY);
@@ -96,67 +74,6 @@ namespace Soomla.Levelup {
 			return mission;
 		}
 
-		// Equality
-		
-		public override bool Equals(System.Object obj)
-		{
-			// If parameter is null return false.
-			if (obj == null)
-			{
-				return false;
-			}
-			
-			// If parameter cannot be cast to Point return false.
-			Mission m = obj as Mission;
-			if ((System.Object)m == null)
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return (MissionId == m.MissionId);
-		}
-		
-		public bool Equals(Mission m)
-		{
-			// If parameter is null return false:
-			if ((object)m == null)
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return (MissionId == m.MissionId);
-		}
-		
-		public override int GetHashCode()
-		{
-			return MissionId.GetHashCode();
-		}
-
-		public static bool operator ==(Mission a, Mission b)
-		{
-			// If both are null, or both are same instance, return true.
-			if (System.Object.ReferenceEquals(a, b))
-			{
-				return true;
-			}
-			
-			// If one is null, but not both, return false.
-			if (((object)a == null) || ((object)b == null))
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return a.MissionId == b.MissionId;
-		}
-		
-		public static bool operator !=(Mission a, Mission b)
-		{
-			return !(a == b);
-		}
-
 #if UNITY_ANDROID 
 		//&& !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {
@@ -168,13 +85,9 @@ namespace Soomla.Levelup {
 		}
 #endif
 
-		protected virtual void registerEvents() {
+		protected abstract void registerEvents();
 
-		}
-
-		protected virtual void unregisterEvents() {
-
-		}
+		protected abstract void unregisterEvents();
 
 		public virtual bool IsCompleted() {
 			// check if completed in Mission Storage

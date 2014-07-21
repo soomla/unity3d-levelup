@@ -21,19 +21,19 @@ namespace Soomla.Levelup
 	public class GatesListOR : GatesList
 	{
 
-		public GatesListOR(string gateId)
-			: base(gateId)
+		public GatesListOR(string id)
+			: base(id)
 		{
 			Gates = new List<Gate>();
 		}
 
-		public GatesListOR(string gateId, Gate singleGate)
-			: base(gateId, singleGate)
+		public GatesListOR(string id, Gate singleGate)
+			: base(id, singleGate)
 		{
 		}
 
-		public GatesListOR(string gateId, List<Gate> gates)
-			: base(gateId, gates)
+		public GatesListOR(string id, List<Gate> gates)
+			: base(id, gates)
 		{
 		}
 		

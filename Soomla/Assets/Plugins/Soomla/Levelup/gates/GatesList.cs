@@ -22,21 +22,21 @@ namespace Soomla.Levelup
 	{
 		protected List<Gate> Gates = new List<Gate>();
 
-		public GatesList(string gateId)
-			: base(gateId)
+		public GatesList(string id)
+			: base(id)
 		{
 			Gates = new List<Gate>();
 		}
 
-		public GatesList(string gateId, Gate singleGate)
-			: base(gateId)
+		public GatesList(string id, Gate singleGate)
+			: base(id)
 		{
 			Gates = new List<Gate>();
 			Gates.Add(singleGate);
 		}
 
-		public GatesList(string gateId, List<Gate> gates)
-			: base(gateId)
+		public GatesList(string id, List<Gate> gates)
+			: base(id)
 		{
 			Gates = gates;
 		}
@@ -98,10 +98,10 @@ namespace Soomla.Levelup
 			Gates.Remove(gate);
 		}
 
-		public Gate this[string gateId] {
+		public Gate this[string id] {
 			get { 
 				foreach(Gate g in Gates) {
-					if (g.GateId == gateId) {
+					if (g.ID == id) {
 						return g;
 					}
 				}

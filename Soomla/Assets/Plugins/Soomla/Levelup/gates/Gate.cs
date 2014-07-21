@@ -18,36 +18,29 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup {
 	
-	public abstract class Gate {
+	public abstract class Gate : SoomlaEntity {
 
 		private const string TAG = "SOOMLA Gate";
 
-		public string GateId;
-
-		protected Gate (string gateId)
+		protected Gate (string id)
+			: this(id, "")
 		{
-			this.GateId = gateId;
-
-			registerEvents();
 		}
-		
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//		protected Mission(AndroidJavaObject jniVirtualItem) {
-//			this.Name = jniVirtualItem.Call<string>("getName");
-//			this.Description = jniVirtualItem.Call<string>("getDescription");
-//			this.ItemId = jniVirtualItem.Call<string>("getItemId");
-//		}
-//#endif
 
-		public Gate(JSONObject jsonObj) {
-			this.GateId = jsonObj[LUJSONConsts.LU_GATE_GATEID].str;
-
+		protected Gate (string id, string name)
+			: base(id, name, "")
+		{
 			registerEvents();
 		}
 
-		public virtual JSONObject toJSONObject() {
-			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
-			obj.AddField(LUJSONConsts.LU_GATE_GATEID, this.GateId);
+		public Gate(JSONObject jsonObj) 
+			: base(jsonObj)
+		{
+			registerEvents();
+		}
+
+		public override JSONObject toJSONObject() {
+			JSONObject obj = base.toJSONObject();
 			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 			
 			return obj;
@@ -59,67 +52,6 @@ namespace Soomla.Levelup {
 			Gate gate = (Gate) Activator.CreateInstance(Type.GetType("Soomla.Levelup." + className), new object[] { gateObj });
 			
 			return gate;
-		}
-
-		// Equality
-		
-		public override bool Equals(System.Object obj)
-		{
-			// If parameter is null return false.
-			if (obj == null)
-			{
-				return false;
-			}
-			
-			// If parameter cannot be cast to Point return false.
-			Gate g = obj as Gate;
-			if ((System.Object)g == null)
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return (GateId == g.GateId);
-		}
-		
-		public bool Equals(Gate g)
-		{
-			// If parameter is null return false:
-			if ((object)g == null)
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return (GateId == g.GateId);
-		}
-		
-		public override int GetHashCode()
-		{
-			return GateId.GetHashCode();
-		}
-
-		public static bool operator ==(Gate a, Gate b)
-		{
-			// If both are null, or both are same instance, return true.
-			if (System.Object.ReferenceEquals(a, b))
-			{
-				return true;
-			}
-			
-			// If one is null, but not both, return false.
-			if (((object)a == null) || ((object)b == null))
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return a.GateId == b.GateId;
-		}
-		
-		public static bool operator !=(Gate a, Gate b)
-		{
-			return !(a == b);
 		}
 
 #if UNITY_ANDROID && !UNITY_EDITOR

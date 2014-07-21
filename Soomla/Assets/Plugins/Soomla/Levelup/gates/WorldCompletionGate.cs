@@ -21,8 +21,8 @@ namespace Soomla.Levelup
 	{
 		public string AssociatedWorldId;
 
-		public WorldCompletionGate(string gateId, string associatedWorldId)
-			: base(gateId)
+		public WorldCompletionGate(string id, string associatedWorldId)
+			: base(id)
 		{
 			AssociatedWorldId = associatedWorldId;
 		}
@@ -33,7 +33,6 @@ namespace Soomla.Levelup
 		public WorldCompletionGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			this.AssociatedWorldId = jsonGate[LUJSONConsts.LU_GATE_ASSOCWORLDID].str;
 		}
 		
 		/// <summary>
@@ -42,7 +41,6 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(LUJSONConsts.LU_GATE_ASSOCWORLDID, this.AssociatedWorldId);
 
 			return obj;
 		}
@@ -73,7 +71,7 @@ namespace Soomla.Levelup
 		}
 
 		public void onWorldCompleted(World world) {
-			if (world.WorldId == AssociatedWorldId) {
+			if (world.ID == AssociatedWorldId) {
 				ForceOpen(true);
 			}
 		}

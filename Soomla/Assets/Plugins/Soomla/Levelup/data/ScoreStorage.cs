@@ -59,7 +59,7 @@ namespace Soomla.Levelup
 
 		protected virtual void _setLatestScore(Score score, double latest) {
 #if UNITY_EDITOR
-			string key = keyLatestScore (score.ScoreId);
+			string key = keyLatestScore (score.ID);
 			string val = latest.ToString ();
 			PlayerPrefs.SetString (key, val);
 #endif
@@ -67,7 +67,7 @@ namespace Soomla.Levelup
 		
 		protected virtual double _getLatestScore(Score score) {
 #if UNITY_EDITOR
-			string key = keyLatestScore (score.ScoreId);
+			string key = keyLatestScore (score.ID);
 			string val = PlayerPrefs.GetString (key);
 			return (string.IsNullOrEmpty(val)) ? score.StartValue : double.Parse (val);
 #else
@@ -77,7 +77,7 @@ namespace Soomla.Levelup
 		
 		protected virtual void _setRecordScore(Score score, double record) {
 #if UNITY_EDITOR
-			string key = keyRecordScore (score.ScoreId);
+			string key = keyRecordScore (score.ID);
 			string val = record.ToString ();
 			PlayerPrefs.SetString (key, val);
 
@@ -87,7 +87,7 @@ namespace Soomla.Levelup
 		
 		protected virtual double _getRecordScore(Score score) {
 #if UNITY_EDITOR
-			string key = keyRecordScore (score.ScoreId);
+			string key = keyRecordScore (score.ID);
 			string val = PlayerPrefs.GetString (key);
 			return (string.IsNullOrEmpty(val)) ? score.StartValue : double.Parse (val);
 #else

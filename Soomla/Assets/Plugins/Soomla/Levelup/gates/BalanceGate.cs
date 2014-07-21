@@ -24,8 +24,8 @@ namespace Soomla.Levelup
 		public string AssociatedItemId;
 		public int DesiredBalance;
 
-		public BalanceGate(string gateId, string associatedItemId, int desiredBalance)
-			: base(gateId)
+		public BalanceGate(string id, string associatedItemId, int desiredBalance)
+			: base(id)
 		{
 			AssociatedItemId = associatedItemId;
 			DesiredBalance = desiredBalance;

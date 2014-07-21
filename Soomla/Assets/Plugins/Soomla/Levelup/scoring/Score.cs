@@ -15,10 +15,11 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Soomla;
 
 namespace Soomla.Levelup {
 	
-	public class Score {
+	public class Score : SoomlaEntity {
 
 //#if UNITY_IOS && !UNITY_EDITOR
 //		[DllImport ("__Internal")]
@@ -26,26 +27,19 @@ namespace Soomla.Levelup {
 //#endif
 
 		private const string TAG = "SOOMLA Score";
-		
-		public string Name;
-		public string ScoreId;
-		public double StartValue;
+
+		public double StartValue = 0;
 		public bool HigherBetter;
 		protected double _tempScore;
 
-		public Score (string scoreId)
+		public Score (string id)
+			: this(id, "", true)
 		{
-			this.ScoreId = scoreId;
-			this.Name = "temp_score_name";
-			this.StartValue = 0;
-			this.HigherBetter = true;
 		}
 
-		public Score (string scoreId, string name, bool higherBetter)
+		public Score (string id, string name, bool higherBetter)
+			: base(id, name, "")
 		{
-			this.ScoreId = scoreId;
-			this.Name = name;
-			this.StartValue = 0;
 			this.HigherBetter = higherBetter;
 		}
 		
@@ -57,25 +51,17 @@ namespace Soomla.Levelup {
 //		}
 //#endif
 
-		public Score(JSONObject jsonObj) {
-			this.ScoreId = jsonObj[LUJSONConsts.LU_SCORE_SCOREID].str;
-			if (jsonObj[JSONConsts.SOOM_NAME]) {
-				this.Name = jsonObj[JSONConsts.SOOM_NAME].str;
-			} else {
-				this.Name = "";
-			}
-
+		public Score(JSONObject jsonObj) 
+			: base(jsonObj)
+		{
 			this.StartValue = jsonObj[LUJSONConsts.LU_SCORE_STARTVAL].n;
 			this.HigherBetter = jsonObj[LUJSONConsts.LU_SCORE_HIGHBETTER].b;
 		}
 
-		public virtual JSONObject toJSONObject() {
-			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
-			obj.AddField(JSONConsts.SOOM_NAME, this.Name);
-			obj.AddField(LUJSONConsts.LU_SCORE_SCOREID, this.ScoreId);
+		public override JSONObject toJSONObject() {
+			JSONObject obj = base.toJSONObject();
 			obj.AddField(LUJSONConsts.LU_SCORE_STARTVAL, Convert.ToInt32(this.StartValue));
 			obj.AddField(LUJSONConsts.LU_SCORE_HIGHBETTER, this.HigherBetter);
-			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 			
 			return obj;
 		}
@@ -170,70 +156,6 @@ namespace Soomla.Levelup {
 				return ScoreStorage.GetLatestScore(this);
 			}
 		}
-
-
-
-		// Equality
-		
-		public override bool Equals(System.Object obj)
-		{
-			// If parameter is null return false.
-			if (obj == null)
-			{
-				return false;
-			}
-			
-			// If parameter cannot be cast to Point return false.
-			Score g = obj as Score;
-			if ((System.Object)g == null)
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return (ScoreId == g.ScoreId);
-		}
-		
-		public bool Equals(Score g)
-		{
-			// If parameter is null return false:
-			if ((object)g == null)
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return (ScoreId == g.ScoreId);
-		}
-		
-		public override int GetHashCode()
-		{
-			return ScoreId.GetHashCode();
-		}
-		
-		public static bool operator ==(Score a, Score b)
-		{
-			// If both are null, or both are same instance, return true.
-			if (System.Object.ReferenceEquals(a, b))
-			{
-				return true;
-			}
-			
-			// If one is null, but not both, return false.
-			if (((object)a == null) || ((object)b == null))
-			{
-				return false;
-			}
-			
-			// Return true if the fields match:
-			return a.ScoreId == b.ScoreId;
-		}
-		
-		public static bool operator !=(Score a, Score b)
-		{
-			return !(a == b);
-		}
-
 	}
 }
 

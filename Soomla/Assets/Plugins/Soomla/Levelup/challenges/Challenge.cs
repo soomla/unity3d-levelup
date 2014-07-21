@@ -23,14 +23,14 @@ namespace Soomla.Levelup
 
 		public List<Mission> Missions = new List<Mission>();
 
-		public Challenge(string missionId, string name, List<Mission> missions)
-			: base(missionId, name)
+		public Challenge(string id, string name, List<Mission> missions)
+			: base(id, name)
 		{
 			Missions = missions;
 		}
 
-		public Challenge(string missionId, string name, List<Mission> missions, List<Reward> rewards)
-			: base(missionId, name, rewards)
+		public Challenge(string id, string name, List<Mission> missions, List<Reward> rewards)
+			: base(id, name, rewards)
 		{
 			Missions = missions;
 		}
@@ -89,18 +89,18 @@ namespace Soomla.Levelup
 		public void onMissionCompleted(Mission completedMission) {
 			SoomlaUtils.LogDebug (TAG, "onMissionCompleted");
 			if (Missions.Contains(completedMission)) {
-				SoomlaUtils.LogDebug (TAG, string.Format ("Mission {0} is part of challenge {1} ({2}) total", completedMission.MissionId, MissionId, Missions.Count));
+				SoomlaUtils.LogDebug (TAG, string.Format ("Mission {0} is part of challenge {1} ({2}) total", completedMission.ID, ID, Missions.Count));
 				bool completed = true;
 				foreach (Mission mission in Missions) {
 					if (!mission.IsCompleted()) {
-						SoomlaUtils.LogDebug (TAG, "challenge mission not completed?=" + mission.MissionId);
+						SoomlaUtils.LogDebug (TAG, "challenge mission not completed?=" + mission.ID);
 						completed = false;
 						break;
 					}
 				}
 				
 				if(completed) {
-					SoomlaUtils.LogDebug (TAG, string.Format ("Challenge {0} completed!", MissionId));
+					SoomlaUtils.LogDebug (TAG, string.Format ("Challenge {0} completed!", ID));
 					SetCompleted(true);
 				}
 			}

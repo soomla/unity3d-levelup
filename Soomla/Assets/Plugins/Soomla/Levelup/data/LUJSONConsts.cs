@@ -26,7 +26,6 @@ namespace Soomla.Levelup {
 
 		/** Score **/
 		public const string LU_SCORES            = "scores";
-		public const string LU_SCORE_SCOREID     = "scoreId";
 		public const string LU_SCORE_STARTVAL    = "startValue";
 		public const string LU_SCORE_HIGHBETTER  = "higherBetter";
 		public const string LU_SCORE_RANGE       = "range";
@@ -35,17 +34,13 @@ namespace Soomla.Levelup {
 
 		/** Gate **/
 		public const string LU_GATES             = "gates";
-		public const string LU_GATE_GATEID       = "gateId";
-		public const string LU_GATE_ASSOCWORLDID = "associatedWorldId";
 
 		/** Challenge **/
 		public const string LU_CHALLENGES        = "challenges";
 		public const string LU_MISSIONS          = "missions";
-		public const string LU_MISSION_MISSIONID = "missionId";
 
 		/** World **/
 		public const string LU_WORLDS            = "worlds";
-		public const string LU_WORLD_WORLDID     = "worldId";
 
 	}
 }
