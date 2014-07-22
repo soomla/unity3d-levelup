@@ -115,7 +115,7 @@ namespace Soomla.Levelup {
 			State = LevelState.Running;
 		}
 		
-		public double GetPlayDuration() {
+		public double GetPlayDurationMillis() {
 			
 			long now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			long duration = Elapsed;
@@ -123,7 +123,7 @@ namespace Soomla.Levelup {
 				duration += now - StartTime;
 			}
 			
-			return duration / 1000.0;
+			return duration;
 		}
 
 
@@ -138,7 +138,7 @@ namespace Soomla.Levelup {
 			State = LevelState.Ended;
 
 			if (completed) {
-				double duration = GetPlayDuration();
+				double duration = GetPlayDurationMillis();
 				
 				// Calculate the slowest \ fastest durations of level play
 				

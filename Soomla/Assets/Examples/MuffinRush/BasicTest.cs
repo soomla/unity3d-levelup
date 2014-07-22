@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -429,7 +429,7 @@ namespace Soomla.Test {
 			// this both waits for the events and tests the level timing
 			yield return new WaitForSeconds(1);
 			// check level time measure
-			double playDuration = lvl1.GetPlayDuration();
+			double playDuration = lvl1.GetPlayDurationMillis();
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
 			sTestLog += "playDuration = " + playDuration + "\n";
 			Assert.assertTrue(playDuration >= 1);
@@ -438,7 +438,7 @@ namespace Soomla.Test {
 			lvl1.Pause();
 			yield return new WaitForSeconds(1);
 			// make sure no changes after pause
-			playDuration = lvl1.GetPlayDuration();
+			playDuration = lvl1.GetPlayDurationMillis();
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
 			sTestLog += "playDuration = " + playDuration + "\n";;
 			Assert.assertTrue(playDuration >= 1);
@@ -448,7 +448,7 @@ namespace Soomla.Test {
 			lvl1.Resume();
 			yield return new WaitForSeconds(1);
 			// make sure working after resume
-			playDuration = lvl1.GetPlayDuration();
+			playDuration = lvl1.GetPlayDurationMillis();
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
 			sTestLog += "playDuration = " + playDuration + "\n";;
 			Assert.assertTrue(playDuration >= 2);
