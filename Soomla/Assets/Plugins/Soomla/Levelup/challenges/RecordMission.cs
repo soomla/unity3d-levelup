@@ -20,65 +20,19 @@ namespace Soomla.Levelup
 {
 	public class RecordMission : Mission
 	{
-		public string AssociatedScoreId;
-		public double DesiredRecord;
-
 		public RecordMission(string id, string name, string associatedScoreId, double desiredRecord)
-			: base(id, name)
+			: base(id, name, typeof(RecordGate), new object[] { associatedScoreId, desiredRecord })
 		{
-			AssociatedScoreId = associatedScoreId;
-			DesiredRecord = desiredRecord;
 		}
 
 		public RecordMission(string id, string name, List<Reward> rewards, string associatedScoreId, double desiredRecord)
-			: base(id, name, rewards)
+			: base(id, name, rewards, typeof(RecordGate), new object[] { associatedScoreId, desiredRecord })
 		{
-			AssociatedScoreId = associatedScoreId;
-			DesiredRecord = desiredRecord;
 		}
-		
-		/// <summary>
-		/// see parent.
-		/// </summary>
+
 		public RecordMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
-			this.AssociatedScoreId = jsonMission[JSONConsts.SOOM_ASSOCSCOREID].str;
-			this.DesiredRecord = jsonMission[JSONConsts.SOOM_DESIRED_RECORD].n;
-		}
-		
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <returns>see parent</returns>
-		public override JSONObject toJSONObject() {
-			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCSCOREID, this.AssociatedScoreId);
-			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, Convert.ToInt32(this.DesiredRecord));
-
-			return obj;
-		}
-
-		/// <summary>
-		/// Ons the score record changed.
-		/// </summary>
-		/// <param name="score">Score.</param>
-		/// @Subscribe
-		public void onScoreRecordChanged(Score score) {
-			if (score.ID == AssociatedScoreId &&
-			    score.HasRecordReached(DesiredRecord)) {
-					SetCompleted(true);
-			}
-		}
-
-		protected override void registerEvents() {
-			if (!IsCompleted ()) {
-				LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
-			}
-		}
-
-		protected override void unregisterEvents() {
-			LevelUpEvents.OnScoreRecordChanged -= onScoreRecordChanged;
 		}
 	}
 }

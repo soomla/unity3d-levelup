@@ -12,47 +12,27 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.using System;
 
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
-	public class ActionMission : Mission
+	public class WorldCompletionMission : Mission
 	{
-		public ActionMission(string id, string name)
-			: base(id, name)
+		public WorldCompletionMission(string id, string name, string associatedWorldId)
+			: base(id, name, typeof(WorldCompletionGate), new object[] { associatedWorldId })
 		{
 		}
 
-		public ActionMission(string id, string name, List<Reward> rewards)
-			: base(id, name, rewards)
+		public WorldCompletionMission(string id, string name, List<Reward> rewards, string associatedWorldId)
+			: base(id, name, rewards, typeof(WorldCompletionGate), new object[] { associatedWorldId })
 		{
 		}
-		
-		/// <summary>
-		/// see parent.
-		/// </summary>
-		public ActionMission(JSONObject jsonMission)
+
+		public WorldCompletionMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
-		}
-		
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <returns>see parent</returns>
-		public override JSONObject toJSONObject() {
-			JSONObject obj = base.toJSONObject();
-
-			return obj;
-		}
-
-		protected override void registerEvents() {
-		}
-		
-		protected override void unregisterEvents() {
-
 		}
 	}
 }

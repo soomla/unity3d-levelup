@@ -16,6 +16,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Soomla.Levelup {
 	
@@ -29,16 +30,34 @@ namespace Soomla.Levelup {
 		private const string TAG = "SOOMLA Mission";
 
 		public List<Reward> Rewards;
+		protected Gate Gate;
 
-		protected Mission (String id, String name)
-			: this(id, name, new List<Reward>())
+		public string AutoGateId {
+			get { return "gate_" + this.ID; }
+		}
+
+		protected Mission (String id, String name) 
+			: this(id, name, null, null)
 		{
 		}
 
-		protected Mission (String id, String name, List<Reward> rewards)
+		protected Mission (String id, String name, List<Reward> rewards) 
+			: this(id, name, rewards, null, null)
+		{
+		}
+
+		protected Mission (String id, String name, Type gateType, object[] gateInitParams)
+			: this(id, name, new List<Reward>(), gateType, gateInitParams)
+		{
+		}
+
+		protected Mission (String id, String name, List<Reward> rewards, Type gateType, object[] gateInitParams)
 			: base(id, name, "")
 		{
 			this.Rewards = rewards;
+			if (gateType != null) {
+				this.Gate = (Soomla.Levelup.Gate) Activator.CreateInstance(gateType, new object[] { AutoGateId }.Concat(gateInitParams).ToArray());
+			}
 			
 			registerEvents();
 		}
@@ -51,6 +70,8 @@ namespace Soomla.Levelup {
 			foreach (JSONObject jsonRewardObj in jsonRewardList) {
 				this.Rewards.Add(Reward.fromJSONObject(jsonRewardObj));
 			}
+
+			this.Gate = Gate.fromJSONObject(jsonObj[LUJSONConsts.LU_GATE]);
 		}
 
 		public override JSONObject toJSONObject() {
@@ -62,7 +83,9 @@ namespace Soomla.Levelup {
 				rewardsArr.Add(reward.toJSONObject());
 			}
 			obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
-			
+
+			obj.AddField(LUJSONConsts.LU_GATE, Gate.toJSONObject());
+
 			return obj;
 		}
 
@@ -85,9 +108,21 @@ namespace Soomla.Levelup {
 		}
 #endif
 
-		protected abstract void registerEvents();
-
-		protected abstract void unregisterEvents();
+		protected virtual void registerEvents() {
+			if (!IsCompleted() && this.Gate != null) {
+				LevelUpEvents.OnGateOpened += onGateOpened;
+			}
+		}
+		
+		protected virtual void unregisterEvents() {
+			LevelUpEvents.OnGateOpened -= onGateOpened;
+		}
+		
+		private void onGateOpened(Gate gate) {
+			if(this.Gate == gate) {
+				SetCompleted(true);
+			}
+		}
 
 		public virtual bool IsCompleted() {
 			// check if completed in Mission Storage
@@ -95,27 +130,41 @@ namespace Soomla.Levelup {
 		}
 
 		public void SetCompleted(bool completed) {
+			SetCompleted(completed, true);
+		}
+
+		public void SetCompleted(bool completed, bool withRewards) {
+			bool savedCompleted = MissionStorage.IsCompleted(this);
+			if (savedCompleted == completed) {
+				// if it's already completed why complete it again?
+				return;
+			}
+
 			// set completed in Mission Storage
 			MissionStorage.SetCompleted (this, completed);
 
 			if (completed) {
 				// events not interesting until revoked
 				unregisterEvents();
-				giveRewards();
+				if (withRewards) {
+					giveRewards();
+				}
 			} else {
-				takeRewards();
+				if (withRewards) {
+					takeRewards();
+				}
 				// listen again for chance to be completed
 				registerEvents();
 			}
 		}
 
-		protected void takeRewards() {
+		private void takeRewards() {
 			foreach (Reward reward in Rewards) {
 				reward.Take();
 			}
 		}
 		
-		protected void giveRewards() {
+		private void giveRewards() {
 			// The mission is completed, giving the rewards.
 			foreach (Reward reward in Rewards) {
 				reward.Give();

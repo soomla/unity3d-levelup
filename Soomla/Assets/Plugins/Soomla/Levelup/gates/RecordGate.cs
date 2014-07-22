@@ -65,7 +65,8 @@ namespace Soomla.Levelup
 		}
 
 		public void onScoreRecordChanged(Score score) {
-			if (score.ID == AssociatedScoreId) {
+			if (score.ID == AssociatedScoreId &&
+			    score.HasRecordReached(DesiredRecord)) {
 				// We were thinking what will happen if the score's record will be broken over and over again.
 				// It might have made this function being called over and over again.
 				// It won't be called b/c ForceOpen(true) calls 'unregisterEvents' inside.

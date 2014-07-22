@@ -13,30 +13,27 @@
 /// limitations under the License.using System;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-
-using Soomla.Store;
 
 namespace Soomla.Levelup
 {
-	public class BalanceMission : Mission
+	public class PurchasingMission : Mission
 	{
+		public PurchasingMission(string id, string name, string associatedItemId)
+			: base(id, name, typeof(PurchasableGate), new object[] { associatedItemId })
+		{
+		}
 
-		public BalanceMission(string id, string name, string associatedItemId, int desiredBalance)
-			: base(id, name, typeof(BalanceGate), new object[] { associatedItemId, desiredBalance })
+		public PurchasingMission(string id, string name, List<Reward> rewards, string associatedItemId)
+			: base(id, name, rewards, typeof(PurchasableGate), new object[] { associatedItemId })
 		{
 		}
-		
-		public BalanceMission(string id, string name, List<Reward> rewards, string associatedItemId, int desiredBalance)
-			: base(id, name, rewards, typeof(BalanceGate), new object[] { associatedItemId, desiredBalance })
-		{
-		}
-		
-		public BalanceMission(JSONObject jsonMission)
+
+		public PurchasingMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
 		}
-
 	}
 }
 
