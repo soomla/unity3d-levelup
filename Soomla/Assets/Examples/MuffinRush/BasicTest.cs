@@ -727,7 +727,7 @@ namespace Soomla.Test {
 			Level lvl1 = new Level ("lvl_testRecordMission", null);
 			Challenge challenge = new Challenge("challenge_record_mission", "ChlgRecordMission", new List<Mission> {recordMission});
 			LevelUp.GetInstance ().Initialize (lvl1, null);
-			LevelUp.GetInstance().InitialWorld.Challenges.Add(challenge);
+			LevelUp.GetInstance().InitialWorld.Missions.Add(challenge);
 
 			_eventQueue.Clear ();
 			//mExpectedScoreEventId = scoreId;
@@ -808,7 +808,7 @@ namespace Soomla.Test {
 			Level lvl1 = new Level ("lvl_testBalanceMission", null);
 			Challenge challenge = new Challenge("challenge_balance_mission", "ChlgBalanceMission", new List<Mission> {balanceMission});
 			LevelUp.GetInstance ().Initialize (lvl1, null);
-			LevelUp.GetInstance().InitialWorld.Challenges.Add(challenge);
+			LevelUp.GetInstance().InitialWorld.Missions.Add(challenge);
 
 			_eventQueue.Clear ();
 
@@ -1057,7 +1057,7 @@ namespace Soomla.Test {
 			Level lvl1 = new Level(lvl1Id, null);
 			Level lvl2 = new Level(lvl2Id, recordGate, 
 			                       new Dictionary<string, Score>(),
-			                       new List<Challenge>());
+			                       new List<Mission>());
 			lvl1.Scores.Add(scoreId, rangeScore);
 
 

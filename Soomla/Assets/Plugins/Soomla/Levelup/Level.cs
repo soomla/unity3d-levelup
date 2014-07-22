@@ -39,13 +39,13 @@ namespace Soomla.Levelup {
 		{
 		}
 		
-		public Level(string id, Gate gate, Dictionary<string, Score> scores, List<Challenge> challenges)
-			: base(id, gate, new Dictionary<string, World>(), scores, challenges)
+		public Level(string id, Gate gate, Dictionary<string, Score> scores, List<Mission> missions)
+			: base(id, gate, new Dictionary<string, World>(), scores, missions)
 		{
 		}
 
-		public Level(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Challenge> challenges)
-			: base(id, gate, innerWorlds, scores, challenges)
+		public Level(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Mission> missions)
+			: base(id, gate, innerWorlds, scores, missions)
 		{
 		}
 
