@@ -18,39 +18,40 @@ using System;
 namespace Soomla.Levelup
 {
 	public class LevelStorageAndroid : LevelStorage {
-	#if UNITY_ANDROID && !UNITY_EDITOR
+	#if UNITY_ANDROID 
+		//&& !UNITY_EDITOR
 
-	protected override void _setSlowestDuration(Level level, double duration) {
+	protected override void _setSlowestDurationMillis(Level level, long duration) {
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			jniLevelStorage.CallStatic("setSlowestDuration", level.toJNIObject(), duration);
+			jniLevelStorage.CallStatic("setSlowestDurationMillis", level.toJNIObject(), duration);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 	}
 	
-	protected override double _getSlowestDuration(Level level) {
-		double duration = 0;
+	protected override long _getSlowestDurationMillis(Level level) {
+		long duration = 0;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			duration = jniLevelStorage.CallStatic<double>("getSlowestDuration", level.toJNIObject());
+			duration = jniLevelStorage.CallStatic<long>("getSlowestDurationMillis", level.toJNIObject());
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		return duration;
 	}
 	
-	protected override void _setFastestDuration(Level level, double duration) {
+	protected override void _setFastestDurationMillis(Level level, long duration) {
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			jniLevelStorage.CallStatic("setFastestDuration", level.toJNIObject(), duration);
+			jniLevelStorage.CallStatic("setFastestDurationMillis", level.toJNIObject(), duration);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 	}
 	
-	protected override double _getFastestDuration(Level level) {
-		double duration = 0;
+	protected override long _getFastestDurationMillis(Level level) {
+		long duration = 0;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			duration = jniLevelStorage.CallStatic<double>("getSlowestDuration", level.toJNIObject());
+			duration = jniLevelStorage.CallStatic<long>("getSlowestDurationMillis", level.toJNIObject());
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		return duration;
@@ -124,7 +125,7 @@ namespace Soomla.Levelup
 	}
 
 	//TODO: what's this? error?
-//	override protected void _setLatestLevel(Level level, double latest) {
+//	override protected void _setLatestLevel(Level level, long latest) {
 //		AndroidJNI.PushLocalFrame(100);
 //		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
 //			jniLevelStorage.CallStatic("setLatestLevel", level.toJNIObject(), latest);

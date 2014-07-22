@@ -19,16 +19,17 @@ using System.Runtime.InteropServices;
 namespace Soomla.Levelup
 {
 	public class LevelStorageIOS : LevelStorage {
-#if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS 
+		//&& !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
-	private static extern void levelStorage_SetSlowestDuration(string levelJson, double duration);
+	private static extern void levelStorage_SetSlowestDurationMillis(string levelJson, long duration);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_GetSlowestDuration(string levelJson);
+	private static extern long levelStorage_GetSlowestDurationMillis(string levelJson);
 	[DllImport ("__Internal")]
-	private static extern void levelStorage_SetFastestDuration(string levelJson, double duration);
+	private static extern void levelStorage_SetFastestDurationMillis(string levelJson, long duration);
 	[DllImport ("__Internal")]
-	private static extern int levelStorage_GetFastestDuration(string levelJson);
+	private static extern long levelStorage_GetFastestDurationMillis(string levelJson);
 	[DllImport ("__Internal")]
 	private static extern int levelStorage_IncTimesStarted(string levelJson);
 	[DllImport ("__Internal")]
@@ -43,24 +44,24 @@ namespace Soomla.Levelup
 	private static extern int levelStorage_GetTimesPlayed(string levelJson);
 
 
-	protected override void _setSlowestDuration(Level level, double duration) {
+	protected override void _setSlowestDurationMillis(Level level, long duration) {
 		string levelJson = level.toJSONObject().ToString();
-		levelStorage_SetSlowestDuration(levelJson, duration);
+		levelStorage_SetSlowestDurationMillis(levelJson, duration);
 	}
 	
-	protected override double _getSlowestDuration(Level level) {
+	protected override long _getSlowestDurationMillis(Level level) {
 		string levelJson = level.toJSONObject().ToString();
-		return levelStorage_GetSlowestDuration(levelJson);
+		return levelStorage_GetSlowestDurationMillis(levelJson);
 	}
 	
-	protected override void _setFastestDuration(Level level, double duration) {
+	protected override void _setFastestDurationMillis(Level level, long duration) {
 		string levelJson = level.toJSONObject().ToString();
-		levelStorage_SetFastestDuration(levelJson, duration);
+		levelStorage_SetFastestDurationMillis(levelJson, duration);
 	}
 	
-	protected override double _getFastestDuration(Level level) {
+	protected override long _getFastestDurationMillis(Level level) {
 		string levelJson = level.toJSONObject().ToString();
-		return levelStorage_GetFastestDuration(levelJson);
+		return levelStorage_GetFastestDurationMillis(levelJson);
 	}
 	
 		

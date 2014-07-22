@@ -39,20 +39,20 @@ namespace Soomla.Levelup
 		}
 			
 
-		public static void SetSlowestDuration(Level level, double duration) {
-			instance._setSlowestDuration (level, duration);	
+		public static void SetSlowestDurationMillis(Level level, long duration) {
+			instance._setSlowestDurationMillis(level, duration);	
 		}
 		
-		public static double GetSlowestDuration(Level level) {
-			return instance._getSlowestDuration (level);
+		public static long GetSlowestDurationMillis(Level level) {
+			return instance._getSlowestDurationMillis(level);
 		}
 		
-		public static void SetFastestDuration(Level level, double duration) {
-			instance._setFastestDuration (level, duration);
+		public static void SetFastestDurationMillis(Level level, long duration) {
+			instance._setFastestDurationMillis(level, duration);
 		}
 		
-		public static double GetFastestDuration(Level level) {
-			return instance._getFastestDuration (level);
+		public static long GetFastestDurationMillis(Level level) {
+			return instance._getFastestDurationMillis(level);
 		}
 		
 		
@@ -88,7 +88,7 @@ namespace Soomla.Levelup
 
 
 
-		protected virtual void _setSlowestDuration(Level level, double duration) {
+		protected virtual void _setSlowestDurationMillis(Level level, long duration) {
 #if UNITY_EDITOR
 			string key = keySlowestDuration (level.ID);
 			string val = duration.ToString ();
@@ -96,17 +96,17 @@ namespace Soomla.Levelup
 #endif
 		}
 		
-		protected virtual double _getSlowestDuration(Level level) {
+		protected virtual long _getSlowestDurationMillis(Level level) {
 #if UNITY_EDITOR
 			string key = keySlowestDuration (level.ID);
 			string val = PlayerPrefs.GetString (key);
-			return (string.IsNullOrEmpty(val)) ? 0 : double.Parse (val);
+			return (string.IsNullOrEmpty(val)) ? 0 : long.Parse (val);
 #else
 			return 0;
 #endif
 		}
 		
-		protected virtual void _setFastestDuration(Level level, double duration) {
+		protected virtual void _setFastestDurationMillis(Level level, long duration) {
 #if UNITY_EDITOR
 			string key = keyFastestDuration (level.ID);
 			string val = duration.ToString ();
@@ -114,11 +114,11 @@ namespace Soomla.Levelup
 #endif
 		}
 		
-		protected virtual double _getFastestDuration(Level level) {
+		protected virtual long _getFastestDurationMillis(Level level) {
 #if UNITY_EDITOR
 			string key = keyFastestDuration (level.ID);
 			string val = PlayerPrefs.GetString (key);
-			return (string.IsNullOrEmpty(val)) ? 0 : double.Parse (val);
+			return (string.IsNullOrEmpty(val)) ? 0 : long.Parse (val);
 #else
 			return 0;
 #endif

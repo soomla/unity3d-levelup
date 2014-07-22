@@ -30,7 +30,7 @@ extern "C" {
         NSString* gateJson = [NSString stringWithUTF8String:sGateJson];
         NSDictionary* gateDict = [SoomlaUtils jsonStringToDict:gateJson];
         Gate* gate = [Gate fromDictionary:gateDict];
-        return [GateStorage setOpen:open forGate:gate andEvent:notify];
+        [GateStorage setOpen:open forGate:gate andEvent:notify];
     }
 
     bool gateStorage_IsOpen(const char* sGateJson) {
@@ -41,32 +41,32 @@ extern "C" {
     }
     
     
-	void levelStorage_SetSlowestDuration(const char* sLevelJson, double duration) {
+	void levelStorage_SetSlowestDurationMillis(const char* sLevelJson, long long duration) {
         NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
         NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
         Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage setSlowestDuration:duration forLevel:level];
+        [LevelStorage setSlowestDurationMillis:duration forLevel:level];
     }
 	
-	int levelStorage_GetSlowestDuration(const char* sLevelJson) {
+	long long levelStorage_GetSlowestDurationMillis(const char* sLevelJson) {
         NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
         NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
         Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage getSlowestDurationForLevel:level];
+        return [LevelStorage getSlowestDurationMillisForLevel:level];
     }
 
-	void levelStorage_SetFastestDuration(const char* sLevelJson, double duration) {
+	void levelStorage_SetFastestDurationMillis(const char* sLevelJson, double duration) {
         NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
         NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
         Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage setFastestDuration:duration forLevel:level];
+        [LevelStorage setFastestDurationMillis:duration forLevel:level];
     }
 	
-	int levelStorage_GetFastestDuration(const char* sLevelJson) {
+	long long levelStorage_GetFastestDurationMillis(const char* sLevelJson) {
         NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
         NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
         Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage getFastestDurationforLevel:level];
+        return [LevelStorage getFastestDurationMillisforLevel:level];
     }
 	
 	int levelStorage_IncTimesStarted(const char* sLevelJson) {
@@ -119,7 +119,7 @@ extern "C" {
         NSString* missionJson = [NSString stringWithUTF8String:sMissionJson];
         NSDictionary* missionDict = [SoomlaUtils jsonStringToDict:missionJson];
         Mission* mission = [Mission fromDictionary:missionDict];
-        return [MissionStorage setCompleted:completed forMission:mission andNotify:notify];
+        [MissionStorage setCompleted:completed forMission:mission andNotify:notify];
     }
     
     bool missionStorage_IsCompleted(const char* sMissionJson) {
@@ -134,7 +134,7 @@ extern "C" {
         NSString* scoreJson = [NSString stringWithUTF8String:sScoreJson];
         NSDictionary* scoreDict = [SoomlaUtils jsonStringToDict:scoreJson];
         Score* score = [Score fromDictionary:scoreDict];
-        return [ScoreStorage setLatest:latest toScore:score];
+        [ScoreStorage setLatest:latest toScore:score];
 
     }
 	
@@ -149,7 +149,7 @@ extern "C" {
         NSString* scoreJson = [NSString stringWithUTF8String:sScoreJson];
         NSDictionary* scoreDict = [SoomlaUtils jsonStringToDict:scoreJson];
         Score* score = [Score fromDictionary:scoreDict];
-        return [ScoreStorage setRecord:record toScore:score];
+        [ScoreStorage setRecord:record toScore:score];
 
     }
 
@@ -165,7 +165,7 @@ extern "C" {
         NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
         NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
         World* world = [World fromDictionary:worldDict];
-        return [WorldStorage setCompleted:completed forWorld:world andNotify:notify];
+        [WorldStorage setCompleted:completed forWorld:world andNotify:notify];
     }
     
     bool worldStorage_IsCompleted(const char* sWorldJson) {

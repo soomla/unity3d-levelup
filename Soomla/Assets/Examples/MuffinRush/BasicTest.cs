@@ -463,8 +463,8 @@ namespace Soomla.Test {
 			Assert.assertTrue(lvl1.IsCompleted());
 
 			// it seems there is a delay of ~0.5-1.0 seconds of saving to storage
-			Assert.assertEquals(playDuration, lvl1.GetSlowestDuration(), 0.9);
-			Assert.assertEquals(playDuration, lvl1.GetFastestDuration(), 0.9);
+			Assert.assertEquals(playDuration, lvl1.GetSlowestDurationMillis(), 0.9);
+			Assert.assertEquals(playDuration, lvl1.GetFastestDurationMillis(), 0.9);
 			Assert.assertEquals(1, lvl1.GetTimesPlayed());
 			Assert.assertEquals(1, lvl1.GetTimesStarted());		
 

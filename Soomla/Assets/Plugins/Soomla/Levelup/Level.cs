@@ -70,12 +70,12 @@ namespace Soomla.Levelup {
 			return LevelStorage.GetTimesPlayed(this);
 		}
 		
-		public double GetSlowestDuration() {
-			return LevelStorage.GetSlowestDuration(this);
+		public long GetSlowestDurationMillis() {
+			return LevelStorage.GetSlowestDurationMillis(this);
 		}
 		
-		public double GetFastestDuration() {
-			return LevelStorage.GetFastestDuration(this);
+		public long GetFastestDurationMillis() {
+			return LevelStorage.GetFastestDurationMillis(this);
 		}
 
 
@@ -115,7 +115,7 @@ namespace Soomla.Levelup {
 			State = LevelState.Running;
 		}
 		
-		public double GetPlayDurationMillis() {
+		public long GetPlayDurationMillis() {
 			
 			long now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			long duration = Elapsed;
@@ -138,16 +138,16 @@ namespace Soomla.Levelup {
 			State = LevelState.Ended;
 
 			if (completed) {
-				double duration = GetPlayDurationMillis();
+				long duration = GetPlayDurationMillis();
 				
 				// Calculate the slowest \ fastest durations of level play
 				
-				if (duration > GetSlowestDuration()) {
-					LevelStorage.SetSlowestDuration(this, duration);
+				if (duration > GetSlowestDurationMillis()) {
+					LevelStorage.SetSlowestDurationMillis(this, duration);
 				}
 				
-				if (duration < GetFastestDuration()) {
-					LevelStorage.SetFastestDuration(this, duration);
+				if (duration < GetFastestDurationMillis()) {
+					LevelStorage.SetFastestDurationMillis(this, duration);
 				}
 				
 				foreach (Score score in Scores.Values) {
