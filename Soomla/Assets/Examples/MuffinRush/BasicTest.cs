@@ -445,7 +445,7 @@ namespace Soomla.Test {
 			Assert.assertFalse(playDuration > 2);
 			Assert.assertTrue(lvl1.State == Level.LevelState.Paused);
 			
-			lvl1.Resume();
+			lvl1.Start();
 			yield return new WaitForSeconds(1);
 			// make sure working after resume
 			playDuration = lvl1.GetPlayDurationMillis();
@@ -515,7 +515,7 @@ namespace Soomla.Test {
 				{ "id", scoreId }, 
 				{ "val", 10.0 }
 			});
-			scoreAsc.SaveAndReset();
+			scoreAsc.Reset(true);
 			Assert.assertEquals(10, scoreAsc.Latest, 0.01);
 			Assert.assertEquals(0, scoreAsc.GetTempScore(), 0.01);
 			scoreAsc.SetTempScore(20);
@@ -525,7 +525,7 @@ namespace Soomla.Test {
 //				{ "id", scoreId }, 
 //				{ "val", 0.0 }
 //			});
-			scoreAsc.Reset();
+			scoreAsc.Reset(false);
 			Assert.assertEquals(0, scoreAsc.Latest, 0.01);
 			Assert.assertEquals(0, scoreAsc.GetTempScore(), 0.01);
 			scoreAsc.SetTempScore(30);
@@ -538,7 +538,7 @@ namespace Soomla.Test {
 				{ "id", scoreId }, 
 				{ "val", 30.0 }
 			});
-			scoreAsc.SaveAndReset();
+			scoreAsc.Reset(true);
 			Assert.assertEquals(30, scoreAsc.Latest, 0.01);
 			Assert.assertEquals(30, scoreAsc.Record, 0.01);
 			scoreAsc.SetTempScore(15);
@@ -549,7 +549,7 @@ namespace Soomla.Test {
 				{ "id", scoreId }, 
 				{ "val", 30.0 }
 			});		
-			scoreAsc.SaveAndReset();
+			scoreAsc.Reset(true);
 			Assert.assertEquals(15, scoreAsc.Latest, 0.01);
 			Assert.assertEquals(30, scoreAsc.Record, 0.01);
 			Assert.assertTrue(scoreAsc.HasRecordReached(30));
@@ -592,7 +592,7 @@ namespace Soomla.Test {
 				{ "val", 100.0 }
 			});
 
-			scoreDsc.Reset();
+			scoreDsc.Reset(false);
 			Assert.assertEquals(100, scoreDsc.GetTempScore(), 0.01);
 			
 			scoreDsc.Dec(50);
@@ -603,7 +603,7 @@ namespace Soomla.Test {
 				{ "id", scoreId }, 
 				{ "val", 50.0 }
 			});
-			scoreDsc.SaveAndReset(); // start value is 100
+			scoreDsc.Reset(true); // start value is 100
 			Assert.assertEquals(50, scoreDsc.Latest, 0.01);
 			Assert.assertEquals(100, scoreDsc.GetTempScore(), 0.01);
 			scoreDsc.SetTempScore(20);
@@ -614,7 +614,7 @@ namespace Soomla.Test {
 				{ "val", 20.0 }
 			});
 
-			scoreDsc.SaveAndReset();
+			scoreDsc.Reset(true);
 			Assert.assertEquals(20, scoreDsc.Latest, 0.01);
 			Assert.assertEquals(20, scoreDsc.Record, 0.01);
 			scoreDsc.SetTempScore(30);
@@ -624,7 +624,7 @@ namespace Soomla.Test {
 				{ "id", scoreId }, 
 				{ "val", 20.0 }
 			});
-			scoreDsc.SaveAndReset();
+			scoreDsc.Reset(true);
 			Assert.assertEquals(30, scoreDsc.Latest, 0.01);
 			Assert.assertEquals(20, scoreDsc.Record, 0.01);
 			Assert.assertTrue(scoreDsc.HasRecordReached(20));
@@ -671,7 +671,7 @@ namespace Soomla.Test {
 		
 			rangeScoreUp.Inc(101);
 			Assert.assertEquals(100, rangeScoreUp.GetTempScore(), 0.01);
-			rangeScoreUp.Reset();
+			rangeScoreUp.Reset(false);
 			rangeScoreUp.Inc(5);
 			rangeScoreUp.Dec(10);
 			Assert.assertEquals(0, rangeScoreUp.GetTempScore(), 0.01);
@@ -686,7 +686,7 @@ namespace Soomla.Test {
 			
 			rangeScoreDown.Dec(101);
 			Assert.assertEquals(0, rangeScoreDown.GetTempScore(), 0.01);
-			rangeScoreDown.Reset();
+			rangeScoreDown.Reset(false);
 			rangeScoreDown.Dec(5);
 			rangeScoreDown.Inc(10);
 			Assert.assertEquals(100, rangeScoreDown.GetTempScore(), 0.01);
@@ -752,7 +752,7 @@ namespace Soomla.Test {
 			Assert.assertFalse(badgeReward.Owned);
 			
 			score.SetTempScore(desiredScore);
-			score.SaveAndReset();
+			score.Reset(true);
 
 			// wait for events
 			yield return new WaitForSeconds (2);

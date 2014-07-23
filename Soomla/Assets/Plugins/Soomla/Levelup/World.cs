@@ -201,14 +201,14 @@ namespace Soomla.Levelup {
 
 		/** For more than one Score **/
 
-		public void ResetScores() {
+		public void ResetScores(bool save) {
 			if (Scores == null || Scores.Count == 0) {
 				SoomlaUtils.LogError(TAG, "(ResetScores) You don't have any scores defined in this world. World id: " + ID);
 				return;
 			}
 			
 			foreach (Score score in Scores.Values) {
-				score.Reset();
+				score.Reset(save);
 			}
 		}
 

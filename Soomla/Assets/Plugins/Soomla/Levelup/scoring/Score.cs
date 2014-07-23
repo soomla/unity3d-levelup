@@ -31,6 +31,7 @@ namespace Soomla.Levelup {
 		public double StartValue = 0;
 		public bool HigherBetter;
 		protected double _tempScore;
+		private bool _scoreRecordReachedSent = false;
 
 		public Score (string id)
 			: this(id, "", true)
@@ -91,28 +92,22 @@ namespace Soomla.Levelup {
 			SetTempScore(_tempScore - amount);
 		}
 
-		public void SaveAndReset() {
-			double record = ScoreStorage.GetRecordScore(this);
-			if (HasTempReached(record)) {
-				ScoreStorage.SetRecordScore(this, _tempScore);
+		public void Reset(bool save) {
+			if (save) {
+				double record = ScoreStorage.GetRecordScore(this);
+				if (HasTempReached(record)) {
+					ScoreStorage.SetRecordScore(this, _tempScore);
+					_scoreRecordReachedSent = false;
+				}
+				
+				performSaveActions();
+				
+				ScoreStorage.SetLatestScore(this, _tempScore);
 			}
-			
-			performSaveActions();
-			
-			ScoreStorage.SetLatestScore(this, _tempScore);
+
 			SetTempScore(StartValue);
 		}
-
-		public void Reset() {
-			SetTempScore(StartValue);
-			// 0 doesn't work well (confusing) for descending score
-			// if someone set higherBetter(false) and a start value of 100
-			// I think they expect reset to go back to 100, otherwise
-			// 0 is the best and current record and can't be beat
-			ScoreStorage.GetRecordScore(this);
-			ScoreStorage.SetLatestScore(this, /*0*/StartValue);
-		}
-
+	
 		public bool HasTempReached(double scoreVal) {
 			return HasScoreReached(_tempScore, scoreVal);
 		}
@@ -137,6 +132,10 @@ namespace Soomla.Levelup {
 		public virtual void SetTempScore(double score, bool onlyIfBetter) {
 			if (onlyIfBetter && !HasScoreReached(score, _tempScore)) {
 				return;
+			}
+			if (!_scoreRecordReachedSent && HasScoreReached(score, _tempScore)) {
+				LevelUpEvents.OnScoreRecordReached(this);
+				_scoreRecordReachedSent = true;
 			}
 			_tempScore = score;
 		}

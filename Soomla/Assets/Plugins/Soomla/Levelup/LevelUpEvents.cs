@@ -165,5 +165,7 @@ namespace Soomla.Levelup {
 
 		public static Action<World> OnWorldAssignedReward = delegate {};
 
+		public static Action<Score> OnScoreRecordReached = delegate {}; 
+
 	}
 }

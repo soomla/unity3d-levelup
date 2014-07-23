@@ -81,7 +81,7 @@ namespace Soomla.Levelup {
 
 		public bool Start() {
 			if (State == LevelState.Running) {
-				return;
+				return false;
 			}
 
 			SoomlaUtils.LogDebug(TAG, "Starting level with world id: " + ID);
@@ -148,7 +148,7 @@ namespace Soomla.Levelup {
 				}
 				
 				foreach (Score score in Scores.Values) {
-					score.SaveAndReset(); // resetting scores
+					score.Reset(true); // resetting scores
 				}
 
 				// Count number of times this level was played
