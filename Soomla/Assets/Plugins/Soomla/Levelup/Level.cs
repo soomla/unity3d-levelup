@@ -80,17 +80,23 @@ namespace Soomla.Levelup {
 
 
 		public bool Start() {
+			if (State == LevelState.Running) {
+				return;
+			}
+
 			SoomlaUtils.LogDebug(TAG, "Starting level with world id: " + ID);
-			
+
 			if (!CanStart()) {
 				return false;
 			}
 
+			if (State != LevelState.Paused) {
+				Elapsed = 0;
+				LevelStorage.IncTimesStarted(this);
+			}
+
 			StartTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			Elapsed = 0;
 			State = LevelState.Running;
-			LevelStorage.IncTimesStarted(this);
-			
 			return true;
 		}
 
@@ -104,15 +110,6 @@ namespace Soomla.Levelup {
 			StartTime = 0;
 			
 			State = LevelState.Paused;
-		}
-
-		public void Resume() {
-			if (State != LevelState.Paused) {
-				return;
-			}
-			
-			StartTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			State = LevelState.Running;
 		}
 		
 		public long GetPlayDurationMillis() {
