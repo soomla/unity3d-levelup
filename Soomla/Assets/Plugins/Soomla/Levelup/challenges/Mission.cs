@@ -123,6 +123,10 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		public virtual bool IsAvailable() {
+			return Gate.CanOpen();
+		}
+
 		public virtual bool IsCompleted() {
 			// check if completed in Mission Storage
 			return MissionStorage.IsCompleted (this);
