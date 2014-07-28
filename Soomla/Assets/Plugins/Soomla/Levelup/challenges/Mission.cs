@@ -20,7 +20,7 @@ using System.Linq;
 
 namespace Soomla.Levelup {
 	
-	public abstract class Mission : SoomlaEntity {
+	public abstract class Mission : SoomlaEntity<Mission> {
 
 //#if UNITY_IOS && !UNITY_EDITOR
 //		[DllImport ("__Internal")]
@@ -33,7 +33,7 @@ namespace Soomla.Levelup {
 		protected Gate Gate;
 
 		public string AutoGateId {
-			get { return "gate_" + this.ID; }
+			get { return "gate_" + this._id; }
 		}
 
 		protected Mission (String id, String name) 
@@ -76,7 +76,6 @@ namespace Soomla.Levelup {
 
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 
 			JSONObject rewardsArr = new JSONObject(JSONObject.Type.ARRAY);
 			foreach(Reward reward in this.Rewards) {
@@ -169,6 +168,10 @@ namespace Soomla.Levelup {
 			foreach (Reward reward in Rewards) {
 				reward.Give();
 			}
+		}
+
+		public override Mission Clone(string newMissionId) {
+			return (Mission) base.Clone(newMissionId);
 		}
 	}
 }

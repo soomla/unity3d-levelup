@@ -19,7 +19,7 @@ using Soomla;
 
 namespace Soomla.Levelup {
 	
-	public class Score : SoomlaEntity {
+	public class Score : SoomlaEntity<Score> {
 
 //#if UNITY_IOS && !UNITY_EDITOR
 //		[DllImport ("__Internal")]
@@ -43,14 +43,6 @@ namespace Soomla.Levelup {
 		{
 			this.HigherBetter = higherBetter;
 		}
-		
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//		protected Mission(AndroidJavaObject jniVirtualItem) {
-//			this.Name = jniVirtualItem.Call<string>("getName");
-//			this.Description = jniVirtualItem.Call<string>("getDescription");
-//			this.ItemId = jniVirtualItem.Call<string>("getItemId");
-//		}
-//#endif
 
 		public Score(JSONObject jsonObj) 
 			: base(jsonObj)
@@ -154,6 +146,10 @@ namespace Soomla.Levelup {
 			get {
 				return ScoreStorage.GetLatestScore(this);
 			}
+		}
+
+		public override Score Clone(string newScoreId) {
+			return (Score) base.Clone(newScoreId);
 		}
 	}
 }

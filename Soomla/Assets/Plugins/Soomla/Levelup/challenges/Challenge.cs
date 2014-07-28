@@ -89,7 +89,7 @@ namespace Soomla.Levelup
 		public void onMissionCompleted(Mission completedMission) {
 			SoomlaUtils.LogDebug (TAG, "onMissionCompleted");
 			if (Missions.Contains(completedMission)) {
-				SoomlaUtils.LogDebug (TAG, string.Format ("Mission {0} is part of challenge {1} ({2}) total", completedMission.ID, ID, Missions.Count));
+				SoomlaUtils.LogDebug (TAG, string.Format ("Mission {0} is part of challenge {1} ({2}) total", completedMission.ID, _id, Missions.Count));
 				bool completed = true;
 				foreach (Mission mission in Missions) {
 					if (!mission.IsCompleted()) {
@@ -100,7 +100,7 @@ namespace Soomla.Levelup
 				}
 				
 				if(completed) {
-					SoomlaUtils.LogDebug (TAG, string.Format ("Challenge {0} completed!", ID));
+					SoomlaUtils.LogDebug (TAG, string.Format ("Challenge {0} completed!", _id));
 					SetCompleted(true);
 				}
 			}

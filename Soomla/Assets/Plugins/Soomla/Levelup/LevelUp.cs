@@ -48,7 +48,7 @@ namespace Soomla.Levelup {
 			Score retScore = null;
 			InitialWorld.Scores.TryGetValue(scoreId, out retScore);
 			if (retScore == null) {
-				retScore = fetchScoreFromWorlds(scoreId, InitialWorld.InnerWorlds);
+				retScore = fetchScoreFromWorlds(scoreId, InitialWorld.InnerWorldsMap);
 			}
 			
 			return retScore;
@@ -59,7 +59,7 @@ namespace Soomla.Levelup {
 				return InitialWorld;
 			}
 
-			return fetchWorld(worldId, InitialWorld.InnerWorlds);
+			return fetchWorld(worldId, InitialWorld.InnerWorldsMap);
 		}
 
 		/// <summary>
@@ -77,7 +77,7 @@ namespace Soomla.Levelup {
 		/// <returns>The number of levels in the given world and its inner worlds</returns>
 		public int GetLevelCountInWorld(World world) {
 			int count = 0;
-			foreach (World initialWorld in world.InnerWorlds.Values) {
+			foreach (World initialWorld in world.InnerWorldsMap.Values) {
 				count += getRecursiveCount(initialWorld, (World innerWorld) => {
 					return innerWorld.GetType() == typeof(Level);
 				});
@@ -157,7 +157,7 @@ namespace Soomla.Levelup {
 			foreach (World world in worlds.Values) {
 				world.Scores.TryGetValue(scoreId, out retScore);
 				if (retScore == null) {
-					retScore = fetchScoreFromWorlds(scoreId, world.InnerWorlds);
+					retScore = fetchScoreFromWorlds(scoreId, world.InnerWorldsMap);
 				}
 				if (retScore != null) {
 					break;
@@ -172,7 +172,7 @@ namespace Soomla.Levelup {
 			worlds.TryGetValue(worldId, out retWorld);
 			if (retWorld == null) {
 				foreach (World world in worlds.Values) {
-					retWorld = fetchWorld(worldId, world.InnerWorlds);
+					retWorld = fetchWorld(worldId, world.InnerWorldsMap);
 				}
 			}
 			
@@ -187,7 +187,7 @@ namespace Soomla.Levelup {
 				count++;
 			}
 			
-			foreach (World innerWorld in world.InnerWorlds.Values) {
+			foreach (World innerWorld in world.InnerWorldsMap.Values) {
 				
 				// Recursively count for inner world
 				count += getRecursiveCount(innerWorld, isAccepted);

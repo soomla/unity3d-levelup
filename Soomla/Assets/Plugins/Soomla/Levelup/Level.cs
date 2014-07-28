@@ -34,8 +34,8 @@ namespace Soomla.Levelup {
 		
 		public LevelState State = LevelState.Idle;
 
-		public Level(String id, Score score)
-			: base(id, score) 
+		public Level(String id)
+			: base(id) 
 		{
 		}
 		
@@ -84,7 +84,7 @@ namespace Soomla.Levelup {
 				return false;
 			}
 
-			SoomlaUtils.LogDebug(TAG, "Starting level with world id: " + ID);
+			SoomlaUtils.LogDebug(TAG, "Starting level with world id: " + _id);
 
 			if (!CanStart()) {
 				return false;

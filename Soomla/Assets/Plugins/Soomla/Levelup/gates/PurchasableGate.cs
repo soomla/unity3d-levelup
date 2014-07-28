@@ -67,7 +67,7 @@ namespace Soomla.Levelup
 		/// <param name="pvi">Purchasable virtual item.</param>
 		/// @Subscribe
 		public void onItemPurchased(PurchasableVirtualItem pvi, string payload) {
-			if (pvi.ItemId == AssociatedItemId && payload == this.ID) {
+			if (pvi.ItemId == AssociatedItemId && payload == this._id) {
 				ForceOpen(true);
 			}
 		}
@@ -78,7 +78,7 @@ namespace Soomla.Levelup
 
 		protected override bool openInner() {
 			try {
-				StoreInventory.BuyItem(AssociatedItemId, this.ID);
+				StoreInventory.BuyItem(AssociatedItemId, this._id);
 				return true;
 			} catch (VirtualItemNotFoundException e) {
 				SoomlaUtils.LogError(TAG, "The item needed for purchase doesn't exist. itemId: " +

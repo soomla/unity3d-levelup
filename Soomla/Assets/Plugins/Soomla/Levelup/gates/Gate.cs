@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup {
 	
-	public abstract class Gate : SoomlaEntity {
+	public abstract class Gate : SoomlaEntity<Gate> {
 
 		private const string TAG = "SOOMLA Gate";
 
@@ -41,7 +41,6 @@ namespace Soomla.Levelup {
 
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 			
 			return obj;
 		}
@@ -104,6 +103,10 @@ namespace Soomla.Levelup {
 
 		protected abstract bool canOpenInner();
 		protected abstract bool openInner();
+
+		public override Gate Clone(string newGateId) {
+			return (Gate) base.Clone(newGateId);
+		}
 	}
 }
 
