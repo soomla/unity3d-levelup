@@ -321,10 +321,10 @@ namespace Soomla.Levelup {
 				}
 			}
 
-			// We have to make sure it's a repeatable reward even if no one told us it is.
-			// There's no real reason why it won't be a repeeatable.
-			if (!reward.Repeatable) {
-				reward.Repeatable = true;
+			// We have to make sure the assigned reward can be assigned unlimited times.
+			// There's no real reason why it won't be.
+			if (reward.Schedule.ActivationLimit > 0) {
+				reward.Schedule.ActivationLimit = 0;
 			}
 
 			reward.Give();

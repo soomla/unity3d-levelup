@@ -781,7 +781,7 @@ namespace Soomla.Test {
 				{ "id", rewardId }, 
 			});
 
-			recordMission.SetCompleted(false);
+			recordMission.Complete();
 
 			// wait for events
 			yield return new WaitForSeconds (2);

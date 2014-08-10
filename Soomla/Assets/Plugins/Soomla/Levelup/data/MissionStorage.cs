@@ -40,44 +40,50 @@ namespace Soomla.Levelup
 			
 
 		public static void SetCompleted(Mission mission, bool completed) {
-			instance._setCompleted (mission, completed, true);
+			SetCompleted (mission, completed, true);
 		}
 
 		public static void SetCompleted(Mission mission, bool completed, bool notify) {
-			instance._setCompleted(mission, completed, notify);
+			instance._setTimesCompleted(mission, completed, notify);
 		}
 
 		public static bool IsCompleted(Mission mission) {
-			return instance._isCompleted(mission);
+			return GetTimesCompleted(mission) > 0;
+		}
+
+		public static int GetTimesCompleted(Mission mission) {
+			return instance._getTimesCompleted(mission);
 		}
 
 
-		protected virtual void _setCompleted(Mission mission, bool completed, bool notify) {
+		protected virtual void _setTimesCompleted(Mission mission, bool up, bool notify) {
 #if UNITY_EDITOR
-			string key = keyMissionCompleted (mission.ID);
-			if (completed) {
-				PlayerPrefs.SetString(key, "yes");
+			int total = _getTimesCompleted(mission) + (up ? 1 : -1);
+			if(total<0) total = 0;
 
-				if (notify) {
+			string key = keyMissionTimesCompleted(mission.ID);
+			PlayerPrefs.SetString(key, total.ToString());
+			
+			if (notify) {
+				if (up) {
 					LevelUpEvents.OnMissionCompleted(mission);
-				}
-			} else {
-				PlayerPrefs.DeleteKey(key);
-
-				if (notify) {
+				} else {
 					LevelUpEvents.OnMissionCompletionRevoked(mission);
 				}
 			}
 #endif
 		}
 
-		protected virtual bool _isCompleted(Mission mission) {
+		protected virtual int _getTimesCompleted(Mission mission) {
 #if UNITY_EDITOR
-			string key = keyMissionCompleted (mission.ID);
+			string key = keyMissionTimesCompleted(mission.ID);
 			string val = PlayerPrefs.GetString (key);
-			return !string.IsNullOrEmpty(val);
+			if (string.IsNullOrEmpty(val)) {
+				return 0;
+			}
+			return int.Parse(val);
 #else
-			return false;
+			return 0;
 #endif
 		}
 
@@ -89,8 +95,8 @@ namespace Soomla.Levelup
 			return LevelUp.DB_KEY_PREFIX + "missions." + missionId + "." + postfix;
 		}
 		
-		private static string keyMissionCompleted(string missionId) {
-			return keyMissions(missionId, "completed");
+		private static string keyMissionTimesCompleted(string missionId) {
+			return keyMissions(missionId, "timesCompleted");
 		}
 #endif
 

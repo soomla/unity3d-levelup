@@ -15,6 +15,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Soomla;
 
 namespace Soomla.Levelup {
 	

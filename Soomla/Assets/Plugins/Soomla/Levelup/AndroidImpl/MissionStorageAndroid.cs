@@ -20,22 +20,22 @@ namespace Soomla.Levelup
 	public class MissionStorageAndroid : MissionStorage {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	
-	override protected void _setCompleted(Mission mission, bool completed, bool notify) {
+	override protected void _setTimesCompleted(Mission mission, bool up, bool notify) {
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniMissionStorage = new AndroidJavaClass("com.soomla.levelup.data.MissionStorage")) {
-			jniMissionStorage.CallStatic("setCompleted", mission.toJNIObject(), completed, notify);
+			jniMissionStorage.CallStatic("setTimesCompleted", mission.toJNIObject(), up, notify);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 	}
 	
-	override protected bool _isCompleted(Mission mission) {
-		bool completed = false;
+	override protected bool _getTimesCompleted(Mission mission) {
+		int times = 0;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniMissionStorage = new AndroidJavaClass("com.soomla.levelup.data.MissionStorage")) {
-			completed = jniMissionStorage.CallStatic<bool>("isCompleted", mission.toJNIObject());
+			times = jniMissionStorage.CallStatic<int>("getTimesCompleted", mission.toJNIObject());
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return completed;
+		return times;
 	}
 	
 #endif

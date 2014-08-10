@@ -22,14 +22,10 @@ namespace Soomla.Levelup {
 	
 	public abstract class Mission : SoomlaEntity<Mission> {
 
-//#if UNITY_IOS && !UNITY_EDITOR
-//		[DllImport ("__Internal")]
-//		private static extern int storeAssets_Save(string type, string viJSON);
-//#endif
-
 		private const string TAG = "SOOMLA Mission";
 
 		public List<Reward> Rewards;
+		public Schedule Schedule;
 		protected Gate Gate;
 
 		public string AutoGateId {
@@ -58,7 +54,9 @@ namespace Soomla.Levelup {
 			if (gateType != null) {
 				this.Gate = (Soomla.Levelup.Gate) Activator.CreateInstance(gateType, new object[] { AutoGateId }.Concat(gateInitParams).ToArray());
 			}
-			
+
+			Schedule = Schedule.AnyTimeOnce();
+
 			registerEvents();
 		}
 
@@ -72,6 +70,9 @@ namespace Soomla.Levelup {
 			}
 
 			this.Gate = Gate.fromJSONObject(jsonObj[LUJSONConsts.LU_GATE]);
+			if (jsonObj[JSONConsts.SOOM_SCHEDULE]) {
+				this.Schedule = new Schedule(jsonObj[JSONConsts.SOOM_SCHEDULE]);
+			}
 		}
 
 		public override JSONObject toJSONObject() {
@@ -84,6 +85,7 @@ namespace Soomla.Levelup {
 			obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
 
 			obj.AddField(LUJSONConsts.LU_GATE, Gate.toJSONObject());
+			obj.AddField(JSONConsts.SOOM_SCHEDULE, Schedule.toJSONObject());
 
 			return obj;
 		}
@@ -96,8 +98,7 @@ namespace Soomla.Levelup {
 			return mission;
 		}
 
-#if UNITY_ANDROID 
-		//&& !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {
 			using(AndroidJavaClass jniClass = new AndroidJavaClass("com.soomla.levelup.challenges.Mission")) {
 				string json = toJSONObject().print();
@@ -113,51 +114,47 @@ namespace Soomla.Levelup {
 			}
 		}
 		
-		protected virtual void unregisterEvents() {
-			LevelUpEvents.OnGateOpened -= onGateOpened;
-		}
-		
 		private void onGateOpened(Gate gate) {
 			if(this.Gate == gate) {
-				SetCompleted(true);
+				Gate.ForceOpen(false);
+				setCompletedInner(true);
 			}
 		}
 
 		public virtual bool IsAvailable() {
-			return Gate.CanOpen();
+			return Gate.CanOpen() && Schedule.Approve(MissionStorage.GetTimesCompleted(this));
 		}
 
 		public virtual bool IsCompleted() {
 			// check if completed in Mission Storage
+			// this checks if the mission was ever completed... no matter how many times.
 			return MissionStorage.IsCompleted (this);
 		}
 
-		public void SetCompleted(bool completed) {
-			SetCompleted(completed, true);
+		public bool Complete() {
+			if (!Schedule.Approve(MissionStorage.GetTimesCompleted(this))) {
+				SoomlaUtils.LogDebug(TAG, "missions cannot be completed b/c Schedule doesn't approve.");
+				return false;
+			}
+			SoomlaUtils.LogDebug(TAG, "trying opening gate to complete mission: " + ID);
+			return Gate.Open();
 		}
 
-		public void SetCompleted(bool completed, bool withRewards) {
-			bool savedCompleted = MissionStorage.IsCompleted(this);
-			if (savedCompleted == completed) {
-				// if it's already completed why complete it again?
-				return;
-			}
+		// this function ignores Schedule, it's not supposed to be used in standard scenarios.
+		public void ForceComplete() {
+			Gate.ForceOpen(true);
+		}
 
+		// NOTE: We are allowing missions to be completed multiple times.
+		protected void setCompletedInner(bool completed) {
 			// set completed in Mission Storage
 			MissionStorage.SetCompleted (this, completed);
 
 			if (completed) {
-				// events not interesting until revoked
-				unregisterEvents();
-				if (withRewards) {
-					giveRewards();
-				}
+
+				giveRewards();
 			} else {
-				if (withRewards) {
-					takeRewards();
-				}
-				// listen again for chance to be completed
-				registerEvents();
+				takeRewards();
 			}
 		}
 

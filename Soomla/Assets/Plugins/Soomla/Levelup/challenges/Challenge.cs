@@ -101,7 +101,7 @@ namespace Soomla.Levelup
 				
 				if(completed) {
 					SoomlaUtils.LogDebug (TAG, string.Format ("Challenge {0} completed!", _id));
-					SetCompleted(true);
+					setCompletedInner(true);
 				}
 			}
 		}
@@ -116,7 +116,7 @@ namespace Soomla.Levelup
 				// if the challenge was completed before, but now one of its child missions
 				// was uncompleted - the challenge is revoked as well
 				if (MissionStorage.IsCompleted(this)) {
-					SetCompleted(false);
+					setCompletedInner(false);
 				}
 			}
 		}
@@ -131,9 +131,10 @@ namespace Soomla.Levelup
 			}
 		}
 
-		protected override void unregisterEvents() {
-			SoomlaUtils.LogDebug(TAG, "ignore unregisterEvents() since challenge can be revoked by child missions revoked");
-		}
+		// this is irrelevant for now
+//		protected override void unregisterEvents() {
+//			SoomlaUtils.LogDebug(TAG, "ignore unregisterEvents() since challenge can be revoked by child missions revoked");
+//		}
 	}
 }
 

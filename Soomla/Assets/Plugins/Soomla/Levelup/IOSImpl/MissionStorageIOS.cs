@@ -23,23 +23,22 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 	
 	[DllImport ("__Internal")]
-	private static extern void missionStorage_SetCompleted(string missionJson,
-	                                               [MarshalAs(UnmanagedType.Bool)] bool completed,
+	private static extern void missionStorage_SetTimesCompleted(string missionJson,
+	                                               [MarshalAs(UnmanagedType.Bool)] bool up,
 	                                               [MarshalAs(UnmanagedType.Bool)] bool notify);
 	[DllImport ("__Internal")]
-	[return:MarshalAs(UnmanagedType.I1)]
-	private static extern bool missionStorage_IsCompleted(string missionJson);
+	private static extern int missionStorage_GetTimesCompleted(string missionJson);
 
 	
-	override protected void _setCompleted(Mission mission, bool completed, bool notify) {
+	override protected void _setTimesCompleted(Mission mission, bool up, bool notify) {
 		string missionJson = mission.toJSONObject().ToString();
-		missionStorage_SetCompleted(missionJson, completed, notify);
+		missionStorage_SetCompleted(missionJson, up, notify);
 	}
 	
-	override protected bool _isCompleted(Mission mission) {
+	override protected bool _getTimesCompleted(Mission mission) {
 		string missionJson = mission.toJSONObject().ToString();
-		bool completed = missionStorage_IsCompleted(missionJson);
-		SoomlaUtils.LogDebug("SOOMLA/UNITY MissionStorageIOS", string.Format("mission {0} completed={1}", mission.MissionId, completed));
+		int times = missionStorage_IsCompleted(missionJson);
+		SoomlaUtils.LogDebug("SOOMLA/UNITY MissionStorageIOS", string.Format("mission {0} completed={1}", mission.ID, times));
 		return completed;
 	}
 	
