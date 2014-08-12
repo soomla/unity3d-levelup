@@ -21,11 +21,6 @@ namespace Soomla.Levelup {
 	
 	public class Score : SoomlaEntity<Score> {
 
-//#if UNITY_IOS && !UNITY_EDITOR
-//		[DllImport ("__Internal")]
-//		private static extern int storeAssets_Save(string type, string viJSON);
-//#endif
-
 		private const string TAG = "SOOMLA Score";
 
 		public double StartValue = 0;

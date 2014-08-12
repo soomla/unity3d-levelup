@@ -373,7 +373,7 @@ namespace Soomla.Test {
 			VirtualItemReward perfectMedal = new VirtualItemReward("item_perfectMedal", "Perfect Medal", "perfect_medal", 1);
 
 			LevelUp.GetInstance().Initialize(mainWorld, new List<Reward>() { bronzeMedal, silverMedal, goldMedal, perfectMedal });
-
+//			((Level)LevelUp.GetInstance().GetWorld("machine_a_level_1")).Start();
 			/** Testing **/
 
 			Level lvl1 = (Level)machineA.InnerWorldsList[0];
