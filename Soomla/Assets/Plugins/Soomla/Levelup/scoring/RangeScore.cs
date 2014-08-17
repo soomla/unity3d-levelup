@@ -16,16 +16,34 @@ using System;
 
 namespace Soomla.Levelup
 {
+
+	/// <summary>
+	/// A specific type of <c>Score</c> that has an associated range. The score's 
+	/// value can be only inside the range of values. For example, a shooting score
+	/// can on a scale of 10 to 100 according to the user's performance in the game.
+	/// </summary>
 	public class RangeScore : Score
 	{
 		public SRange Range;
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Score ID.</param>
+		/// <param name="range">Range that the score value must reside in.</param>
 		public RangeScore(string id, SRange range)
 			: base(id)
 		{
 			Range = range;
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Score ID.</param>
+		/// <param name="name">Score name.</param>
+		/// <param name="higherBetter">If set to <c>true</c> then higher is better.</param>
+		/// <param name="range">Range that the score value must reside in.</param>
 		public RangeScore(string id, string name, bool higherBetter, SRange range)
 			: base(id, name, higherBetter)
 		{
@@ -37,8 +55,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
 		/// </summary>
+		/// <param name="jsonScore">JSON score.</param>
 		public RangeScore(JSONObject jsonScore)
 			: base(jsonScore)
 		{
@@ -50,9 +69,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this score to JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(LUJSONConsts.LU_SCORE_RANGE, Range.toJSONObject());
@@ -60,6 +79,11 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Increases this score by the given amount after checking that 
+		/// the score will stay within the range.
+		/// </summary>
+		/// <param name="amount">Amount to increase by.</param>
 		public override void Inc(double amount) {
 			
 			// Don't increment if we've hit the range's highest value
@@ -74,6 +98,11 @@ namespace Soomla.Levelup
 			base.Inc(amount);
 		}
 
+		/// <summary>
+		/// Decreases this score by the given amount after checking that 
+		/// the score will stay within the range.
+		/// </summary>
+		/// <param name="amount">Amount to decrease by.</param>
 		public override void Dec(double amount) {
 			
 			// Don't dencrement if we've hit the range's lowest value
@@ -88,6 +117,11 @@ namespace Soomla.Levelup
 			base.Dec(amount);
 		}
 
+		/// <summary>
+		/// Sets the temp score after checking that the score will stay within the range.
+		/// </summary>
+		/// <param name="score">Score.</param>
+		/// <param name="onlyIfBetter">If set to <c>true</c> only if better.</param>
 		public override void SetTempScore(double score, bool onlyIfBetter) {
 			if (score > Range.High) {
 				score = Range.High;
@@ -99,22 +133,38 @@ namespace Soomla.Levelup
 			base.SetTempScore(score, onlyIfBetter);
 		}
 
+		/// <summary>
+		/// Each <c>RangeScore</c> has a range (<c>SRange</c>).
+		/// </summary>
 		public class SRange {
 
 			public double Low;
 			public double High;
 
+			/// <summary>
+			/// Constructor.
+			/// </summary>
+			/// <param name="low">Lowest value of the range.</param>
+			/// <param name="high">Highest value of the range.</param>
 			public SRange(double low, double high) {
 				Low = low;
 				High = high;
 				// TODO: throw exception if low >= high
 			}
 
+			/// <summary>
+			/// Contructor.
+			/// </summary>
+			/// <param name="jsonObject">JSON object.</param>
 			public SRange(JSONObject jsonObject) {
 				Low = jsonObject[LUJSONConsts.LU_SCORE_RANGE_LOW].n;
 				High = jsonObject[LUJSONConsts.LU_SCORE_RANGE_HIGH].n;
 			}
 
+			/// <summary>
+			/// Converts the range to a JSON object.
+			/// </summary>
+			/// <returns>The JSON object.</returns>
 			public JSONObject toJSONObject(){
 				JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
 				jsonObject.AddField(LUJSONConsts.LU_SCORE_RANGE_LOW, Convert.ToInt32(Low));

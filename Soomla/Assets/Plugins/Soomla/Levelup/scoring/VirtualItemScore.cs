@@ -15,17 +15,34 @@ using Soomla.Store;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Score</c that has an associated virtual item. 
+	/// The score is related to the specific item ID. For example: a game that  
+	/// has an "energy" virtual item can have energy points.
+	/// </summary>
 	public class VirtualItemScore : Score
 	{
 		private static string TAG = "SOOMLA VirtualItemScore";
 		public string AssociatedItemId;
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Score ID.</param>
+		/// <param name="associatedItemId">Associated virtual item ID.</param>
 		public VirtualItemScore(string id, string associatedItemId)
 			: base(id)
 		{
 			AssociatedItemId = associatedItemId;
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Score ID.</param>
+		/// <param name="name">Score Name.</param>
+		/// <param name="higherBetter">If set to <c>true</c> higher is better.</param>
+		/// <param name="associatedItemId">Associated virtual item ID.</param>
 		public VirtualItemScore(string id, string name, bool higherBetter, string associatedItemId)
 			: base(id, name, higherBetter)
 		{
@@ -33,8 +50,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
 		/// </summary>
+		/// <param name="jsonScore">JSON score.</param>
 		public VirtualItemScore(JSONObject jsonScore)
 			: base(jsonScore)
 		{
@@ -42,7 +60,7 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this score to JSONObject.
 		/// </summary>
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
@@ -52,6 +70,9 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Gives your user the temp-score amount of the associated item.
+		/// </summary>
 		protected override void performSaveActions() {
 			base.performSaveActions();
 			try {
@@ -63,7 +84,6 @@ namespace Soomla.Levelup
 				SoomlaUtils.LogError(TAG, e.Message);
 			}
 		}
-
 	}
 }
 

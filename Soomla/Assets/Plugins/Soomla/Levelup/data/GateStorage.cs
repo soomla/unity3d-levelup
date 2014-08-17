@@ -17,6 +17,10 @@ using System;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A utility class for persisting and querying the state of gates.
+	/// Use this class to check if a certain gate is open, or to open it.
+	/// </summary>
 	public class GateStorage
 	{
 
@@ -38,20 +42,37 @@ namespace Soomla.Levelup
 			}
 		}
 			
-
+		/// <summary>
+		/// Sets the given gate as open if <c>open</c> is <c>true.</c>
+		/// Otherwise sets the gate as closed. 
+		/// </summary>
+		/// <param name="gate">Gate to open/close.</param>
+		/// <param name="open">If set to <c>true</c> set the gate to open; 
+		/// otherwise set the gate to closed.</param>
 		public static void SetOpen(Gate gate, bool open) {
 			instance._setOpen(gate, open, true);
 		}
-
 		public static void SetOpen(Gate gate, bool open, bool notify) {
 			instance._setOpen(gate, open, notify);
 		}
 
+		/// <summary>
+		/// Determines if the given gate is open.
+		/// </summary>
+		/// <returns>If the given gate is open returns <c>true</c>; 
+		/// otherwise, <c>false</c>.</returns>
+		/// <param name="gate">Gate to check if is open.</param>
 		public static bool IsOpen(Gate gate) {
 			return instance._isOpen(gate);
 		}
 
-
+		/// <summary>
+		/// Sets the given gate as open if <c>open</c> is <c>true.</c>
+		/// Otherwise sets the gate as closed. 
+		/// </summary>
+		/// <param name="gate">Gate to open/close.</param>
+		/// <param name="open">If set to <c>true</c> set the gate to open; 
+		/// <param name="notify">If set to <c>true</c> trigger event.</param>
 		protected virtual void _setOpen(Gate gate, bool open, bool notify) {
 #if UNITY_EDITOR
 			string key = keyGateOpen(gate.ID);
@@ -68,6 +89,12 @@ namespace Soomla.Levelup
 #endif
 		}
 
+		/// <summary>
+		/// Determines if the given gate is open.
+		/// </summary>
+		/// <returns>If the given gate is open returns <c>true</c>; 
+		/// otherwise, <c>false</c>.</returns>
+		/// <param name="gate">Gate to check if is open.</param>
 		protected virtual bool _isOpen(Gate gate) {
 #if UNITY_EDITOR
 			string key = keyGateOpen(gate.ID);
@@ -80,6 +107,10 @@ namespace Soomla.Levelup
 
 
 		/** keys **/
+
+		/// <summary>
+		/// Private helper functions if Unity Editor is being used. 
+		/// </summary>
 #if UNITY_EDITOR
 		private static string keyGateOpen(string gateId) {
 			return keyGates(gateId, "open");

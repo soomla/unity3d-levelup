@@ -18,7 +18,14 @@ using System.Collections.Generic;
 using Soomla;
 
 namespace Soomla.Levelup {
-	
+
+	/// <summary>
+	/// Represents a score in the game. A simple game usually has one generic numeric score
+	/// which grows as the user progresses in the game. A game can also have multiple
+	/// <c>Score</c>s for different aspects such as time, speed, points etc.
+	/// A score can be ascending in nature such as regular points (higher is better) or can
+	/// be descending such as time-to-complete level (lower is better).
+	/// </summary>
 	public class Score : SoomlaEntity<Score> {
 
 //#if UNITY_IOS && !UNITY_EDITOR
@@ -29,28 +36,56 @@ namespace Soomla.Levelup {
 		private const string TAG = "SOOMLA Score";
 
 		public double StartValue = 0;
+
+		/// <summary>
+		/// In many games a high score is better than a low score, but in some games it's
+		/// the opposite - for example if a point represents a monster that attacked your 
+		/// character then you want to have as least points as possible (lower is better!)
+		/// If this value is set to <c>true</c> then higher is better. 
+		/// </summary>
 		public bool HigherBetter;
+
 		protected double _tempScore;
+
 		private bool _scoreRecordReachedSent = false;
 
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Score ID.</param>
 		public Score (string id)
 			: this(id, "", true)
 		{
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Score ID.</param>
+		/// <param name="name">Score name.</param>
+		/// <param name="higherBetter">If <c>true</c> the higher the score the better.</param>
 		public Score (string id, string name, bool higherBetter)
 			: base(id, name, "")
 		{
 			this.HigherBetter = higherBetter;
 		}
 
-		public Score(JSONObject jsonObj) 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="jsonObj">Json object.</param>
+		public Score(JSONObjectnonCon jsonObj) 
 			: base(jsonObj)
 		{
 			this.StartValue = jsonObj[LUJSONConsts.LU_SCORE_STARTVAL].n;
 			this.HigherBetter = jsonObj[LUJSONConsts.LU_SCORE_HIGHBETTER].b;
 		}
 
+		/// <summary>
+		/// Converts this score into a JSONObject
+		/// </summary>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(LUJSONConsts.LU_SCORE_STARTVAL, Convert.ToInt32(this.StartValue));
@@ -59,6 +94,11 @@ namespace Soomla.Levelup {
 			return obj;
 		}
 
+		/// <summary>
+		/// Converts the given JSONObject into a score. 
+		/// </summary>
+		/// <returns>The JSON object.</returns>
+		/// <param name="scoreObj">Score object.</param>
 		public static Score fromJSONObject(JSONObject scoreObj) {
 			string className = scoreObj[JSONConsts.SOOM_CLASSNAME].str;
 			
@@ -76,14 +116,28 @@ namespace Soomla.Levelup {
 		}
 #endif
 
+		/// <summary>
+		/// Increases this score by the given amount. 
+		/// </summary>
+		/// <param name="amount">Amount to increase by.</param>
 		public virtual void Inc(double amount) {
 			SetTempScore(_tempScore + amount);
 		}
 
+		/// <summary>
+		/// Decreases this score by the given amount. 
+		/// </summary>
+		/// <param name="amount">Amount to decrease by.</param>
 		public virtual void Dec(double amount) {
 			SetTempScore(_tempScore - amount);
 		}
 
+		/// <summary>
+		/// Saves the current score (and record if reached) and resets the score to 
+		/// its initial value.  Use this method for example when a user restarts a
+		/// level with a fresh score of 0.
+		/// </summary>
+		/// <param name="save">If set to <c>true</c> save.</param>
 		public void Reset(bool save) {
 			if (save) {
 				double record = ScoreStorage.GetRecordScore(this);
@@ -100,27 +154,51 @@ namespace Soomla.Levelup {
 			SetTempScore(StartValue);
 		}
 	
+		/// <summary>
+		/// Checks if the score in the current game session has reached the given value.
+		/// </summary>
+		/// <returns><c>true</c> if this score has reached the given scoreVal; otherwise, 
+		/// <c>false</c>.</returns>
+		/// <param name="scoreVal">Score value.</param>
 		public bool HasTempReached(double scoreVal) {
 			return HasScoreReached(_tempScore, scoreVal);
 		}
 
+		/// <summary>
+		/// Determines if this score has reached a record value of the given scoreVal.
+		/// </summary>
+		/// <returns><c>true</c> if this score has reached the given record; otherwise, 
+		/// <c>false</c>.</returns>
+		/// <param name="scoreVal">Score value.</param>
 		public bool HasRecordReached(double scoreVal) {
 			double record = ScoreStorage.GetRecordScore(this); 
 			return HasScoreReached(record, scoreVal);
 		}
 
+		/// <summary>
+		/// Score can sometimes have additional actions associated with reaching/saving it.
+		/// Override this method to add specific score behavior.
+		/// </summary>
 		protected virtual void performSaveActions() {}
 
+		/// <summary>
+		/// Determines which of the two given scores is better (based on this score's definition
+		/// of better - higher or lower).
+		/// </summary>
+		/// <returns>If score1 is higher than score2 returns <c>true</c>; otherwise <c>false</c>.
+		/// <c>false</c>.</returns>
+		/// <param name="score1">Score1 to compare.</param>
+		/// <param name="score2">Score2 to compare.</param>
 		private bool HasScoreReached(double score1, double score2) {
 			return this.HigherBetter ?
 				(score1 >= score2) :
 					(score1 <= score2);
 		}
 
+
 		public virtual void SetTempScore(double score) {
 			SetTempScore(score, false);
 		}
-
 		public virtual void SetTempScore(double score, bool onlyIfBetter) {
 			if (onlyIfBetter && !HasScoreReached(score, _tempScore)) {
 				return;
@@ -136,18 +214,30 @@ namespace Soomla.Levelup {
 			return _tempScore;
 		}
 
+		/// <summary>
+		/// Retrieves the record of this score.
+		/// </summary>
+		/// <returns>The record.</returns>
 		public double Record {
 			get {
 				return ScoreStorage.GetRecordScore(this);
 			}
 		}
 
+		/// <summary>
+		/// Retrieves the most recently saved value of this score.
+		/// </summary>
+		/// <returns>The latest score.</returns>
 		public double Latest {
 			get {
 				return ScoreStorage.GetLatestScore(this);
 			}
 		}
 
+		/// /// <summary>
+		/// Clones this score and gives it the given ID.
+		/// </summary>
+		/// <param name="newScoreId">Cloned score ID.</param>
 		public override Score Clone(string newScoreId) {
 			return (Score) base.Clone(newScoreId);
 		}

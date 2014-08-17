@@ -45,6 +45,9 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		/// <summary>
+		/// Initializes this instance.
+		/// </summary>
 		public static void Initialize() {
 			SoomlaUtils.LogDebug (TAG, "Initialize");
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -58,6 +61,7 @@ namespace Soomla.Levelup {
 #endif
 		}
 
+
 		public void onGateOpened(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onGateOpened with message: " + message);
 
@@ -67,6 +71,7 @@ namespace Soomla.Levelup {
 
 			LevelUpEvents.OnGateOpened(gate);
 		}
+
 
 		public void onLevelEnded(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelEnded with message: " + message);

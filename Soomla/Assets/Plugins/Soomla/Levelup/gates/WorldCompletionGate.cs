@@ -17,10 +17,19 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Gate</c> that has an associated world. The gate opens 
+	/// once the world has been completed.
+	/// </summary>
 	public class WorldCompletionGate : Gate
 	{
 		public string AssociatedWorldId;
 
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id">Gate ID.</param>
+		/// <param name="associatedWorldId">Associated world ID.</param>
 		public WorldCompletionGate(string id, string associatedWorldId)
 			: base(id)
 		{
@@ -28,30 +37,39 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Contructor.
 		/// </summary>
+		/// <param name="jsonGate">JSON gate.</param>
 		public WorldCompletionGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this gate to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
 			return obj;
 		}
 
+		/// <summary>
+		/// Checks if this gate meets its criteria for opening, by checking that the 
+		/// associated world is not null and has been completed. 
+		/// </summary>
+		/// <returns><c>true</c>, if open inner was caned, <c>false</c> otherwise.</returns>
 		protected override bool canOpenInner() {
 			World world = LevelUp.GetInstance().GetWorld(AssociatedWorldId);
 			return world != null && world.IsCompleted();
 		}
 
+		/// <summary>
+		/// Opens this game if it can be opened (its criteria has been met).
+		/// </summary>
+		/// <returns>If the gate has been opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
-
 			if (CanOpen()) {
 				ForceOpen(true);
 				return true;
@@ -60,16 +78,27 @@ namespace Soomla.Levelup
 			return false;
 		}
 
+		/// <summary>
+		/// Registers relevant events: world-completed event. 
+		/// </summary>
 		protected override void registerEvents() {
 			if (!IsOpen ()) {
 				LevelUpEvents.OnWorldCompleted += onWorldCompleted;
 			}
 		}
-		
+
+		/// <summary>
+		/// Unregisters relevant events: world-completed event. 
+		/// </summary>
 		protected override void unregisterEvents() {
 			LevelUpEvents.OnWorldCompleted -= onWorldCompleted;
 		}
 
+		/// <summary>
+		/// Opens this gate if the world-completed event causes the gate's criteria to be met.
+		/// </summary>
+		/// <param name="world">World to be compared to the associated world.</param>
+		/// @subscribe
 		public void onWorldCompleted(World world) {
 			if (world.ID == AssociatedWorldId) {
 				ForceOpen(true);
