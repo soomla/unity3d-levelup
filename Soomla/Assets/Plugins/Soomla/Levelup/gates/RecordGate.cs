@@ -38,8 +38,8 @@ namespace Soomla.Levelup
 		public RecordGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			this.AssociatedScoreId = jsonGate[JSONConsts.SOOM_ASSOCSCOREID].str;
-			this.DesiredRecord = jsonGate[JSONConsts.SOOM_DESIRED_RECORD].n;
+			this.AssociatedScoreId = jsonGate[LUJSONConsts.LU_ASSOCSCOREID].str;
+			this.DesiredRecord = jsonGate[LUJSONConsts.LU_DESIRED_RECORD].n;
 		}
 		
 		/// <summary>
@@ -48,8 +48,8 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCSCOREID, this.AssociatedScoreId);
-			obj.AddField(JSONConsts.SOOM_DESIRED_RECORD, Convert.ToInt32(this.DesiredRecord));
+			obj.AddField(LUJSONConsts.LU_ASSOCSCOREID, this.AssociatedScoreId);
+			obj.AddField(LUJSONConsts.LU_DESIRED_RECORD, Convert.ToInt32(this.DesiredRecord));
 
 			return obj;
 		}

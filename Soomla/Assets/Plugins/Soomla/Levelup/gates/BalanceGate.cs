@@ -37,8 +37,8 @@ namespace Soomla.Levelup
 		public BalanceGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
-			this.DesiredBalance = Convert.ToInt32(jsonGate[JSONConsts.SOOM_DESIRED_BALANCE].n);
+			this.AssociatedItemId = jsonGate[LUJSONConsts.LU_ASSOCITEMID].str;
+			this.DesiredBalance = Convert.ToInt32(jsonGate[LUJSONConsts.LU_DESIRED_BALANCE].n);
 		}
 		
 		/// <summary>
@@ -47,8 +47,8 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedItemId);
-			obj.AddField(JSONConsts.SOOM_DESIRED_BALANCE, this.DesiredBalance);
+			obj.AddField(LUJSONConsts.LU_ASSOCITEMID, this.AssociatedItemId);
+			obj.AddField(LUJSONConsts.LU_DESIRED_BALANCE, this.DesiredBalance);
 
 			return obj;
 		}

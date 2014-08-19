@@ -14,15 +14,6 @@
 #import "World.h"
 #import "WorldStorage.h"
 
-char* AutonomousStringCopy (const char* string)
-{
-    if (string == NULL)
-        return NULL;
-    
-    char* res = (char*)malloc(strlen(string) + 1);
-    strcpy(res, string);
-    return res;
-}
 
 extern "C" {
 
@@ -55,7 +46,7 @@ extern "C" {
         return [LevelStorage getSlowestDurationMillisForLevel:level];
     }
 
-	void levelStorage_SetFastestDurationMillis(const char* sLevelJson, double duration) {
+	void levelStorage_SetFastestDurationMillis(const char* sLevelJson, long long duration) {
         NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
         NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
         Level* level = (Level*)[Level fromDictionary:levelDict];
@@ -138,7 +129,7 @@ extern "C" {
 
     }
 	
-	int scoreStorage_GetLatestScore(const char* sScoreJson) {
+	double scoreStorage_GetLatestScore(const char* sScoreJson) {
         NSString* scoreJson = [NSString stringWithUTF8String:sScoreJson];
         NSDictionary* scoreDict = [SoomlaUtils jsonStringToDict:scoreJson];
         Score* score = [Score fromDictionary:scoreDict];
@@ -153,7 +144,7 @@ extern "C" {
 
     }
 
-	int scoreStorage_GetRecordScore(const char* sScoreJson) {
+	double scoreStorage_GetRecordScore(const char* sScoreJson) {
         NSString* scoreJson = [NSString stringWithUTF8String:sScoreJson];
         NSDictionary* scoreDict = [SoomlaUtils jsonStringToDict:scoreJson];
         Score* score = [Score fromDictionary:scoreDict];
@@ -184,7 +175,7 @@ extern "C" {
             rewardId = @"";
         }
         
-        *json = AutonomousStringCopy([rewardId UTF8String]);
+        *json = Soom_AutonomousStringCopy([rewardId UTF8String]);
     }
     
     void worldStorage_SetReward(const char* sWorldJson, const char* sRewardId) {

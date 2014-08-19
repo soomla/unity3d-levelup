@@ -64,6 +64,11 @@ extern "C" {
         NSString* scoreJson = [SoomlaUtils dictToJsonString:[score toDictionary]];
         UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", [scoreJson UTF8String]);
     }
+	else if ([notification.name isEqualToString:EVENT_SCORE_RECORD_REACHED]) {
+        Score* score = [[notification userInfo] objectForKey:DICT_ELEMENT_SCORE];
+        NSString* scoreJson = [SoomlaUtils dictToJsonString:[score toDictionary]];
+        UnitySendMessage("LevelUpEvents", "onScoreRecordReached", [scoreJson UTF8String]);
+    }
 	else if ([notification.name isEqualToString:EVENT_WORLD_COMPLETED]) {
         World* world = [[notification userInfo] objectForKey:DICT_ELEMENT_WORLD];
         NSString* worldJson = [SoomlaUtils dictToJsonString:[world toDictionary]];

@@ -24,11 +24,11 @@ namespace Soomla.Levelup
 	[DllImport ("__Internal")]
 	private static extern void scoreStorage_SetLatestScore(string scoreJson, double latest);
 	[DllImport ("__Internal")]
-	private static extern int scoreStorage_GetLatestScore(string scoreJson);
+	private static extern double scoreStorage_GetLatestScore(string scoreJson);
 	[DllImport ("__Internal")]
 	private static extern void scoreStorage_SetRecordScore(string scoreJson, double record);
 	[DllImport ("__Internal")]
-	private static extern int scoreStorage_GetRecordScore(string scoreJson);
+	private static extern double scoreStorage_GetRecordScore(string scoreJson);
 
 
 	override protected void _setLatestScore(Score score, double latest) {
