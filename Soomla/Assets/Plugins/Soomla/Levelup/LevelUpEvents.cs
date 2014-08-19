@@ -61,7 +61,10 @@ namespace Soomla.Levelup {
 #endif
 		}
 
-
+		/// <summary>
+		/// Ons the gate opened.
+		/// </summary>
+		/// <param name="message">Message.</param>
 		public void onGateOpened(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onGateOpened with message: " + message);
 

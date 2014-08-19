@@ -18,12 +18,22 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Gate</c> that has a schedule that defines when
+	/// the gate can be opened. The gate opens once the player tries to open 
+	/// the gate in the time frame of the defined schedule.
+	/// </summary>
 	public class ScheduleGate : Gate
 	{
 		private const string TAG = "SOOMLA ScheduleGate";
 
 		public Schedule Schedule;
 
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id">Gate ID.</param>
+		/// <param name="schedule">Schedule.</param>
 		public ScheduleGate(string id, Schedule schedule)
 			: base(id)
 		{
@@ -31,8 +41,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
 		/// </summary>
+		/// <param name="jsonGate">JSON gate.</param>
 		public ScheduleGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -40,9 +51,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this gate to a JSON object.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(JSONConsts.SOOM_SCHEDULE, Schedule.toJSONObject());
@@ -50,29 +61,41 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Registers relevant events: In this case there are none.
+		/// </summary>
 		protected override void registerEvents() {
 			// Not listening to any events
 		}
 
+		/// <summary>
+		/// Unregisters relevant events: In this case there are none.
+		/// </summary>
 		protected override void unregisterEvents() {
 			// Not listening to any events
 		}
 
+		/// <summary>
+		/// Checks if this gate meets its criteria for opening.
+		/// </summary>
+		/// <returns><c>true</c>, if open inner was caned, <c>false</c> otherwise.</returns>
 		protected override bool canOpenInner() {
-			// gates don't have activation times. they can only be activated once. 
-			// We kind of ignoring the activation limit of Schedule here.
+			// Gates don't have activation times, they can only be activated once. 
+			// We are kind of ignoring the activation limit of Schedule here.
 			return Schedule.Approve(GateStorage.IsOpen(this) ? 1 : 0);
 		}
 
+		/// <summary>
+		/// Opens this gate if it can be opened (its criteria has been met).
+		/// </summary>
+		/// <returns>If the gate has been opened returns <c>true</c>; 
+		/// otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
-
-				// There's nothing to do here... If the DesiredRecord was reached then the gate is just open.
-
+				// There's nothing to do here... If the criteria was met then the gate is just open.
 				ForceOpen(true);
 				return true;
 			}
-			
 			return false;
 		}
 

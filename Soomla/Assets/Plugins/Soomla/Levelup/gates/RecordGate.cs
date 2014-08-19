@@ -18,6 +18,10 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Gate</c> that has an associated score and a desired record. 
+	/// The gate opens once the player achieves the desired record for the given score.
+	/// </summary>
 	public class RecordGate : Gate
 	{
 		private const string TAG = "SOOMLA RecordGate";
@@ -25,6 +29,12 @@ namespace Soomla.Levelup
 		public string AssociatedScoreId;
 		public double DesiredRecord;
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Gate ID.</param>
+		/// <param name="associatedScoreId">Associated score ID.</param>
+		/// <param name="desiredRecord">Desired record.</param>
 		public RecordGate(string id, string associatedScoreId, double desiredRecord)
 			: base(id)
 		{
@@ -33,8 +43,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
 		/// </summary>
+		/// <param name="jsonGate">JSON gate.</param>
 		public RecordGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -43,9 +54,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this gate to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(JSONConsts.SOOM_ASSOCSCOREID, this.AssociatedScoreId);
@@ -54,26 +65,42 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Registers relevant events: score-record changed event.
+		/// </summary>
 		protected override void registerEvents() {
 			if (!IsOpen ()) {
 				LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			}
 		}
 
+		/// <summary>
+		/// Unregisters relevant events: score-record changed event.
+		/// </summary>
 		protected override void unregisterEvents() {
 			LevelUpEvents.OnScoreRecordChanged -= onScoreRecordChanged;
 		}
 
+		/// <summary>
+		/// Opens this gate if the score-record-changed event causes the gate's criteria to be met.
+		/// </summary>
+		/// <param name="score">The score whose record has changed.</param>
+		/// @subscribe
 		public void onScoreRecordChanged(Score score) {
 			if (score.ID == AssociatedScoreId &&
 			    score.HasRecordReached(DesiredRecord)) {
-				// We were thinking what will happen if the score's record will be broken over and over again.
-				// It might have made this function being called over and over again.
-				// It won't be called b/c ForceOpen(true) calls 'unregisterEvents' inside.
+				// If the score's record is reached mutiple times, don't worry about this function 
+				// being called over and over again - that won't happen because `ForceOpen(true)` 
+				// calls`unregisterEvents` inside.
 				ForceOpen(true);
 			}
 		}
 
+		/// <summary>
+		/// Checks if this gate meets its criteria for opening, by checking if this gate's
+		/// associated score has reached the desired record. 
+		/// </summary>
+		/// <returns>If the gate can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			Score score = LevelUp.GetInstance().GetScore(AssociatedScoreId);
 			if (score == null) {
@@ -84,6 +111,10 @@ namespace Soomla.Levelup
 			return score.HasRecordReached(DesiredRecord);
 		}
 
+		/// <summary>
+		/// Opens this gate if it can be opened (its criteria has been met).
+		/// </summary>
+		/// <returns>If the gate has been opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
 

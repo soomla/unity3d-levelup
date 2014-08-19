@@ -18,18 +18,40 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Mission</c> that has an associated world. The mission 
+	/// is completed once the world has been completed.
+	/// </summary>
 	public class WorldCompletionMission : Mission
 	{
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
+		/// <param name="associatedWorldId">World that needs to be completed.</param>
 		public WorldCompletionMission(string id, string name, string associatedWorldId)
 			: base(id, name, typeof(WorldCompletionGate), new object[] { associatedWorldId })
 		{
 		}
 
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
+		/// <param name="rewards">Rewards for this mission.</param>
+		/// <param name="associatedWorldId">World that needs to be completed.</param>
 		public WorldCompletionMission(string id, string name, List<Reward> rewards, string associatedWorldId)
 			: base(id, name, rewards, typeof(WorldCompletionGate), new object[] { associatedWorldId })
 		{
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// Generates a <c>WorldCompletionMission</c> from the given JSONObject.
+		/// </summary>
+		/// <param name="jsonMission">JSON mission.</param>
 		public WorldCompletionMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{

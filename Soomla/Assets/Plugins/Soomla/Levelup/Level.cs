@@ -21,6 +21,7 @@ namespace Soomla.Levelup {
 	/// <summary>
 	/// A level is a type of world, while a world contains a set of levels. Each level always has a 
 	/// state that is one of: idle, running, paused, ended, or completed. 
+	/// 
 	/// Real Game Examples: "Candy Crush" and "Angry Birds" use levels.
 	/// </summary>
 	public class Level : World {

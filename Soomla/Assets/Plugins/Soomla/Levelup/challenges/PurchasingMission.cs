@@ -18,18 +18,42 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Mission</c> that has an associated market item.   
+	/// The mission is completed once the item has been purchased.
+	/// Real Game Example: "Clumsy Ninja"
+	/// </summary>
 	public class PurchasingMission : Mission
 	{
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
+		/// <param name="associatedItemId">ID of the item that is to be purchased.</param>
 		public PurchasingMission(string id, string name, string associatedItemId)
 			: base(id, name, typeof(PurchasableGate), new object[] { associatedItemId })
 		{
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
+		/// <param name="rewards">Rewards for this mission.</param>
+		/// <param name="associatedItemId">ID of the item that is to be purchased.</param>
 		public PurchasingMission(string id, string name, List<Reward> rewards, string associatedItemId)
 			: base(id, name, rewards, typeof(PurchasableGate), new object[] { associatedItemId })
 		{
 		}
 
+		/// <summary>
+		/// Constructor. 
+		/// Generates an instance of <c>PurchasingMission</c> from the given JSONObject. 
+		/// </summary>
+		/// <param name="jsonMission">JSON mission.</param>
 		public PurchasingMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{

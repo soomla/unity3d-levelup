@@ -19,7 +19,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Soomla.Levelup {
-	
+
+	/// <summary>
+	/// A mission is a task your users need to complete in your game. Missions are usually 
+	/// associated with rewards meaning that you can give your users something for completing 
+	/// missions. Create missions and use them as single, independent, entities OR you can  
+	/// create a <c>Challenge</c> to handle several missions and monitor their completion.
+	/// NOTE: We are allowing missions to be completed multiple times.
+	/// </summary>
 	public abstract class Mission : SoomlaEntity<Mission> {
 
 		private const string TAG = "SOOMLA Mission";
@@ -28,25 +35,55 @@ namespace Soomla.Levelup {
 		public Schedule Schedule;
 		protected Gate Gate;
 
+		/// <summary>
+		/// Generates a gate ID for this mission.
+		/// </summary>
+		/// <value>"gate_" followed by this mission's ID.</value>
 		public string AutoGateId {
 			get { return "gate_" + this._id; }
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
 		protected Mission (String id, String name) 
 			: this(id, name, null, null)
 		{
 		}
 
+		/// <summary>
+		/// Constructor for mission with rewards.
+		/// </summary>
+		/// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
+		/// <param name="rewards">Rewards for completing this mission.</param>
 		protected Mission (String id, String name, List<Reward> rewards) 
 			: this(id, name, rewards, null, null)
 		{
 		}
 
+		/// <summary>
+		/// Constructor for mission with a gate. 
+		/// </summary>
+		//// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
+		/// <param name="gateType">Gate type.</param>
+		/// <param name="gateInitParams">Parameters to initialize gate.</param>
 		protected Mission (String id, String name, Type gateType, object[] gateInitParams)
 			: this(id, name, new List<Reward>(), gateType, gateInitParams)
 		{
 		}
 
+		/// <summary>
+		/// Constructor for mission with a gate and rewards. 
+		/// </summary>
+		/// <param name="id">Identifier.</param>
+		/// <param name="name">Name.</param>
+		/// <param name="rewards">Rewards.</param>
+		/// <param name="gateType">Gate type.</param>
+		/// <param name="gateInitParams">Gate init parameters.</param>
 		protected Mission (String id, String name, List<Reward> rewards, Type gateType, object[] gateInitParams)
 			: base(id, name, "")
 		{
@@ -60,6 +97,11 @@ namespace Soomla.Levelup {
 			registerEvents();
 		}
 
+		/// <summary>
+		/// Constructor. 
+		/// Generates an instance of <c>Mission</c> from the given JSONObject.
+		/// </summary>
+		/// <param name="jsonObj">JSON object.</param>
 		public Mission(JSONObject jsonObj)
 			: base(jsonObj)
 		{
@@ -75,6 +117,10 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		/// <summary>
+		/// Converts this mission into a JSONObject.
+		/// </summary>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
@@ -90,6 +136,11 @@ namespace Soomla.Levelup {
 			return obj;
 		}
 
+		/// <summary>
+		/// Converts the given JSONObject into a Mission. 
+		/// </summary>
+		/// <returns>The JSON object.</returns>
+		/// <param name="missionObj">Mission object.</param>
 		public static Mission fromJSONObject(JSONObject missionObj) {
 			string className = missionObj[JSONConsts.SOOM_CLASSNAME].str;
 			
@@ -108,12 +159,20 @@ namespace Soomla.Levelup {
 		}
 #endif
 
+		/// <summary>
+		/// Registers relevant events. Each specific type of Mission must implement this method. 
+		/// </summary>
 		protected virtual void registerEvents() {
 			if (!IsCompleted() && this.Gate != null) {
 				LevelUpEvents.OnGateOpened += onGateOpened;
 			}
 		}
-		
+
+		/// <summary>
+		/// Sets this mission as completed if the gate that was opened in the gate-opened
+		/// event is this mission's gate.
+		/// </summary>
+		/// <param name="gate">The gate that was opened.</param>
 		private void onGateOpened(Gate gate) {
 			if(this.Gate == gate) {
 				Gate.ForceOpen(false);
@@ -121,16 +180,28 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		/// <summary>
+		/// Determines whether this mission is available by checking that its gate can be 
+		/// opened and also that its schedule is approved.
+		/// </summary>
+		/// <returns>If this instance is available returns <c>true</c>; otherwise <c>false</c>.</returns>
 		public virtual bool IsAvailable() {
 			return Gate.CanOpen() && Schedule.Approve(MissionStorage.GetTimesCompleted(this));
 		}
 
+		/// <summary>
+		/// Checks if this mission has ever been completed - no matter how many times. 
+		/// </summary>
+		/// <returns>If this instance is completed returns <c>true</c>; otherwise <c>false</c>.</returns>
 		public virtual bool IsCompleted() {
-			// check if completed in Mission Storage
-			// this checks if the mission was ever completed... no matter how many times.
 			return MissionStorage.IsCompleted (this);
 		}
 
+		/// <summary>
+		/// Completes this mission be opening its gate. 
+		/// </summary>
+		/// <returns>If the schedule doesn't approve the mission cannot be completed
+		/// and thus returns <c>false</c>; otherwise <c>true</c>.</returns>
 		public bool Complete() {
 			if (!Schedule.Approve(MissionStorage.GetTimesCompleted(this))) {
 				SoomlaUtils.LogDebug(TAG, "missions cannot be completed b/c Schedule doesn't approve.");
@@ -140,37 +211,52 @@ namespace Soomla.Levelup {
 			return Gate.Open();
 		}
 
-		// this function ignores Schedule, it's not supposed to be used in standard scenarios.
+		/// <summary>
+		/// Forces completion of this mission without checking the schedule.
+		/// This function should not be used in standard scenarios.
+		/// </summary>
 		public void ForceComplete() {
 			Gate.ForceOpen(true);
 		}
 
-		// NOTE: We are allowing missions to be completed multiple times.
+		/// <summary>
+		/// Sets this mission as completed and gives or takes rewards according
+		/// to the given <c>completed</c> value.
+		/// </summary>
+		/// <param name="completed">If set to <c>true</c> gives rewards.</param>
 		protected void setCompletedInner(bool completed) {
 			// set completed in Mission Storage
 			MissionStorage.SetCompleted (this, completed);
 
 			if (completed) {
-
 				giveRewards();
 			} else {
 				takeRewards();
 			}
 		}
 
+		/// <summary>
+		/// Takes this mission's rewards.
+		/// </summary>
 		private void takeRewards() {
 			foreach (Reward reward in Rewards) {
 				reward.Take();
 			}
 		}
-		
+
+		/// <summary>
+		/// Gives this mission's rewards.
+		/// </summary>
 		private void giveRewards() {
-			// The mission is completed, giving the rewards.
 			foreach (Reward reward in Rewards) {
 				reward.Give();
 			}
 		}
 
+		/// <summary>
+		/// Clones this mission and gives it the given ID.
+		/// </summary>
+		/// <param name="newMissionId">Cloned mission ID.</param>
 		public override Mission Clone(string newMissionId) {
 			return (Mission) base.Clone(newMissionId);
 		}

@@ -17,6 +17,10 @@ using System;
 
 namespace Soomla.Levelup
 {
+
+	/// <summary>
+	/// World storage.
+	/// </summary>
 	public class WorldStorage
 	{
 
@@ -39,6 +43,14 @@ namespace Soomla.Levelup
 		}
 			
 
+		/** World Completion **/ 
+
+		/// <summary>
+		/// Sets the given world as completed if <c>completed</c> is <c>true</c>.
+		/// </summary>
+		/// <param name="world">World to set as completed.</param>
+		/// <param name="completed">If set to <c>true</c> the world will be set 
+		/// as completed.</param>
 		public static void SetCompleted(World world, bool completed) {
 			SetCompleted(world, completed, true);
 		}
@@ -46,26 +58,45 @@ namespace Soomla.Levelup
 			bool currentStatus = IsCompleted(world);
 			if (currentStatus == completed) {
 				// we don't need to set the status of a world to the same status over and over again.
-				// couldn't only cause trouble.
 				return;
 			}
 
 			instance._setCompleted(world, completed, notify);
 		}
 
+		/// <summary>
+		/// Determines if the given world is completed.
+		/// </summary>
+		/// <returns>If the given world is completed returns <c>true</c>; 
+		/// otherwise <c>false</c>.</returns>
+		/// <param name="world">World to determine if completed.</param>
 		public static bool IsCompleted(World world) {
 			return instance._isCompleted(world);
 		}
 
+
+		/** World Rewards **/
+
+		/// <summary>
+		/// Assigns the reward with the given reward ID to the given world. 
+		/// </summary>
+		/// <param name="world">World to assign a reward to.</param>
+		/// <param name="rewardId">ID of reward to assign.</param>
 		public static void SetReward(World world, string rewardId) {
 			instance._setReward(world, rewardId);
 		}
 
+		/// <summary>
+		/// Retrieves the given world's assigned reward.
+		/// </summary>
+		/// <returns>The assigned reward to retrieve.</returns>
+		/// <param name="world">World whose reward is to be retrieved.</param>
 		public static string GetAssignedReward(World world) {
 			return instance._getAssignedReward(world);
 		}
 
 
+		/** World Completion Helpers **/
 
 		protected virtual void _setCompleted(World world, bool completed, bool notify) {
 #if UNITY_EDITOR
@@ -94,7 +125,7 @@ namespace Soomla.Levelup
 		}
 
 
-		/** World Reward **/
+		/** World Rewards Helpers **/
 
 		protected virtual void _setReward(World world, string rewardId) {
 #if UNITY_EDITOR
@@ -120,8 +151,8 @@ namespace Soomla.Levelup
 		}
 
 
+		/** Keys **/
 
-		/** keys **/
 #if UNITY_EDITOR
 		private static string keyWorlds(string worldId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "worlds." + worldId + "." + postfix;

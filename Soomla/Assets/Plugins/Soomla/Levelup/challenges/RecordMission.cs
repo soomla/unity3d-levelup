@@ -18,18 +18,44 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Mission</c> that has an associated score and a desired
+	/// record. The mission is complete once the player achieves the desired record 
+	/// for the given score.
+	/// </summary>
 	public class RecordMission : Mission
 	{
+
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
+		/// <param name="associatedScoreId">ID of the score examined.</param>
+		/// <param name="desiredRecord">Desired record.</param>
 		public RecordMission(string id, string name, string associatedScoreId, double desiredRecord)
 			: base(id, name, typeof(RecordGate), new object[] { associatedScoreId, desiredRecord })
 		{
 		}
 
+		/// <summary>
+		/// Constructor for mission with rewards. 
+		/// </summary>
+		/// <param name="id">Mission ID.</param>
+		/// <param name="name">Mission name.</param>
+		/// <param name="rewards">Rewards.</param>
+		/// <param name="associatedScoreId">ID of the score examined.</param>
+		/// <param name="desiredRecord">Desired record.</param>
 		public RecordMission(string id, string name, List<Reward> rewards, string associatedScoreId, double desiredRecord)
 			: base(id, name, rewards, typeof(RecordGate), new object[] { associatedScoreId, desiredRecord })
 		{
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// Generates an instance of <c>RecordMission</c> from JSONObject. 
+		/// </summary>
+		/// <param name="jsonMission">JSON mission.</param>
 		public RecordMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{

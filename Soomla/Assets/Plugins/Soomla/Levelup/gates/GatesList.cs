@@ -18,16 +18,30 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A representation of one or more <c>Gate</c>s which together define a 
+	/// composite criteria for progressing between the game's <c>World</c>s 
+	/// or <code>Level</code>s.
+	/// </summary>
 	public abstract class GatesList : Gate
 	{
 		protected List<Gate> Gates = new List<Gate>();
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">GatesList ID.</param>
 		public GatesList(string id)
 			: base(id)
 		{
 			Gates = new List<Gate>();
 		}
 
+		/// <summary>
+		/// Constructor for GatesList with one gate.
+		/// </summary>
+		/// <param name="id">GatesList ID.</param>
+		/// <param name="singleGate">Single gate in this gateslist.</param>
 		public GatesList(string id, Gate singleGate)
 			: base(id)
 		{
@@ -35,6 +49,11 @@ namespace Soomla.Levelup
 			Gates.Add(singleGate);
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">GatesList ID.</param>
+		/// <param name="gates">List of gates.</param>
 		public GatesList(string id, List<Gate> gates)
 			: base(id)
 		{
@@ -42,8 +61,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor. 
 		/// </summary>
+		/// <param name="jsonGate">JSON gate.</param>
 		public GatesList(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -61,9 +81,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this gateslist into a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
@@ -76,6 +96,11 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Converts the given JSONObject into a gateslist.
+		/// </summary>
+		/// <returns>GatesList.</returns>
+		/// <param name="gateObj">The JSON object to convert.</param>
 		public new static GatesList fromJSONObject(JSONObject gateObj) {
 			string className = gateObj[JSONConsts.SOOM_CLASSNAME].str;
 			
@@ -84,20 +109,36 @@ namespace Soomla.Levelup
 			return gatesList;
 		}
 
+		/// <summary>
+		/// Counts the number of gates in this gateslist.
+		/// </summary>
+		/// <value>The number of gates.</value>
 		public int Count {
 			get {
 				return Gates.Count;
 			}
 		}	
 
+		/// <summary>
+		/// Adds the given gate to this gateslist. 
+		/// </summary>
+		/// <param name="gate">Gate to add.</param>
 		public void Add(Gate gate) {
 			Gates.Add(gate);
 		}
 
+		/// <summary>
+		/// Removes the given gate from this gateslist.
+		/// </summary>
+		/// <param name="gate">Gate to remove.</param>
 		public void Remove(Gate gate) {
 			Gates.Remove(gate);
 		}
 
+		/// <summary>
+		/// Retrieves from this gateslist the gate with the given ID.
+		/// </summary>
+		/// <param name="id">ID of gate to be retrieved.</param>
 		public Gate this[string id] {
 			get { 
 				foreach(Gate g in Gates) {
@@ -110,21 +151,37 @@ namespace Soomla.Levelup
 			}
 		}
 
+		/// <summary>
+		/// get: Retrieves from this gateslist the gate at the given index.
+		/// set: Sets this gateslist at the given index to be `value`.
+		/// </summary>
+		/// <param name="idx">Index.</param>
 		public Gate this[int idx] {
 			get { return Gates[idx]; }
 			set {  Gates[idx] = value; }
 		}
 
+		/// <summary>
+		/// Registers relevant events: gate-opened event.
+		/// </summary>
 		protected override void registerEvents() {
 			if (!IsOpen ()) {
 				LevelUpEvents.OnGateOpened += onGateOpened;
 			}
 		}
-		
+
+		/// <summary>
+		/// Unregisters relevant events: gate-opened event.
+		/// </summary>
 		protected override void unregisterEvents() {
 			LevelUpEvents.OnGateOpened -= onGateOpened;
 		}
 
+		/// <summary>
+		/// Opens this gateslist if the gate-opened event causes the GatesList composite criteria to be met.
+		/// </summary>
+		/// <param name="gate">Gate that was opened.</param>
+		/// @subscribe
 		private void onGateOpened(Gate gate) {
 			if(Gates.Contains(gate)) {
 				if (CanOpen()) {
@@ -133,11 +190,15 @@ namespace Soomla.Levelup
 			}
 		}
 
+		/// <summary>
+		/// Opens this gateslist if it can be opened (its criteria has been met).
+		/// </summary>
+		/// <returns>If the gate has been opened returns <c>true</c>; otherwise 
+		/// <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
-
-				// There's nothing to do here... If CanOpen returns true it means that the gates list meets the condition for being opened.
-
+				// There's nothing to do here... If CanOpen returns true it means that the 
+				// gates list meets the condition for being opened.
 				ForceOpen(true);
 				return true;
 			}

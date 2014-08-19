@@ -26,6 +26,7 @@ namespace Soomla.Levelup {
 	/// worlds in them. A world can contain a set of levels, or multiple sets of levels. 
 	/// A world can also have a gate that defines the criteria to enter it. Games that don’t 
 	/// have the concept of worlds can be modeled as single world games. 
+	/// 
 	/// Real Game Example: "Candy Crush" uses worlds.
 	/// </summary>
 	public class World : SoomlaEntity<World> {

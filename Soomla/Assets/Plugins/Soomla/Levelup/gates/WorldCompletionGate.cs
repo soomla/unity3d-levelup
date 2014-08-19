@@ -59,14 +59,14 @@ namespace Soomla.Levelup
 		/// Checks if this gate meets its criteria for opening, by checking that the 
 		/// associated world is not null and has been completed. 
 		/// </summary>
-		/// <returns><c>true</c>, if open inner was caned, <c>false</c> otherwise.</returns>
+		/// <returns>If this world can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			World world = LevelUp.GetInstance().GetWorld(AssociatedWorldId);
 			return world != null && world.IsCompleted();
 		}
 
 		/// <summary>
-		/// Opens this game if it can be opened (its criteria has been met).
+		/// Opens this gate if it can be opened (its criteria has been met).
 		/// </summary>
 		/// <returns>If the gate has been opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {

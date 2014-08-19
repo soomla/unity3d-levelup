@@ -17,6 +17,11 @@ using System;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A utility class for persisting and querying the state of missions.
+	/// Use this class to check if a certain mission is complete, or to
+	/// set its completion status.
+	/// </summary>
 	public class MissionStorage
 	{
 
@@ -39,22 +44,42 @@ namespace Soomla.Levelup
 		}
 			
 
+		/** Mission Completion **/
+
+		/// <summary>
+		/// Sets the given mission as completed if <c>completed</c> is <c>true</c>.
+		/// </summary>
+		/// <param name="mission">Mission to set as completed.</param>
+		/// <param name="completed">If set to <c>true</c> mission will be set 
+		/// as completed.</param>
 		public static void SetCompleted(Mission mission, bool completed) {
 			SetCompleted (mission, completed, true);
 		}
-
 		public static void SetCompleted(Mission mission, bool completed, bool notify) {
 			instance._setTimesCompleted(mission, completed, notify);
 		}
 
+		/// <summary>
+		/// Determines if the given mission is complete.
+		/// </summary>
+		/// <returns>If the given mission is completed returns <c>true</c>;
+		/// otherwise <c>false</c>.</returns>
+		/// <param name="mission">Mission to determine if complete.</param>
 		public static bool IsCompleted(Mission mission) {
 			return GetTimesCompleted(mission) > 0;
 		}
 
+		/// <summary>
+		/// Retrieves the number of times the given mission has been completed.
+		/// </summary>
+		/// <returns>The number of times the given mission has been completed.</returns>
+		/// <param name="mission">Mission.</param>
 		public static int GetTimesCompleted(Mission mission) {
 			return instance._getTimesCompleted(mission);
 		}
 
+
+		/** Mission Completion Helpers **/
 
 		protected virtual void _setTimesCompleted(Mission mission, bool up, bool notify) {
 #if UNITY_EDITOR
@@ -74,6 +99,7 @@ namespace Soomla.Levelup
 #endif
 		}
 
+
 		protected virtual int _getTimesCompleted(Mission mission) {
 #if UNITY_EDITOR
 			string key = keyMissionTimesCompleted(mission.ID);
@@ -89,7 +115,8 @@ namespace Soomla.Levelup
 
 
 
-		/** keys **/
+		/** Keys **/
+
 #if UNITY_EDITOR
 		private static string keyMissions(string missionId, string postfix) {
 			return LevelUp.DB_KEY_PREFIX + "missions." + missionId + "." + postfix;

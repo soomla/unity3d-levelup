@@ -27,6 +27,10 @@ namespace Soomla.Levelup {
 	/// achieved, missions completed, etc. The gate is opened once the logical 
 	/// conditions are met. In some games, gates can be opened with a payment 
 	/// or social task.
+	/// 
+	/// Example: In "Cut the Rope" the gate to the next world consists of 
+	/// finishing all the levels of the previous world and accumulating 40
+	/// stars in all levels combined.
 	/// </summary>
 	public abstract class Gate : SoomlaEntity<Gate> {
 
