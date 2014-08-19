@@ -44,7 +44,7 @@ namespace Soomla.Levelup
 		}
 
 		public static void SetCompleted(Mission mission, bool completed, bool notify) {
-			instance._setTimesCompleted(mission, completed, notify);
+			instance._setCompleted(mission, completed, notify);
 		}
 
 		public static bool IsCompleted(Mission mission) {
@@ -56,7 +56,7 @@ namespace Soomla.Levelup
 		}
 
 
-		protected virtual void _setTimesCompleted(Mission mission, bool up, bool notify) {
+		protected virtual void _setCompleted(Mission mission, bool up, bool notify) {
 #if UNITY_EDITOR
 			int total = _getTimesCompleted(mission) + (up ? 1 : -1);
 			if(total<0) total = 0;

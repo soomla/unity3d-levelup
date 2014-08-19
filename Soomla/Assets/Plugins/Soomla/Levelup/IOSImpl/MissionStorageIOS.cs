@@ -23,14 +23,14 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 	
 	[DllImport ("__Internal")]
-	private static extern void missionStorage_SetTimesCompleted(string missionJson,
+	private static extern void missionStorage_SetCompleted(string missionJson,
 	                                               [MarshalAs(UnmanagedType.Bool)] bool up,
 	                                               [MarshalAs(UnmanagedType.Bool)] bool notify);
 	[DllImport ("__Internal")]
 	private static extern int missionStorage_GetTimesCompleted(string missionJson);
 
 	
-	override protected void _setTimesCompleted(Mission mission, bool up, bool notify) {
+	override protected void _setCompleted(Mission mission, bool up, bool notify) {
 		string missionJson = mission.toJSONObject().ToString();
 		missionStorage_SetCompleted(missionJson, up, notify);
 	}

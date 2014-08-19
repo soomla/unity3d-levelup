@@ -73,6 +73,7 @@ namespace Soomla.Levelup {
 			if (jsonObj[JSONConsts.SOOM_SCHEDULE]) {
 				this.Schedule = new Schedule(jsonObj[JSONConsts.SOOM_SCHEDULE]);
 			}
+			registerEvents();
 		}
 
 		public override JSONObject toJSONObject() {
