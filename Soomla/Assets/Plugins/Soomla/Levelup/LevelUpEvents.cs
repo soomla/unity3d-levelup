@@ -24,12 +24,20 @@ namespace Soomla.Levelup {
 	/// This class provides functions for event handling.
 	/// </summary>
 	public class LevelUpEvents : MonoBehaviour {
+
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private const string TAG = "SOOMLA LevelUpEvents";
 
 #if UNITY_IOS && !UNITY_EDITOR
 		[DllImport ("__Internal")]
 		private static extern void soomlaLevelup_Init();
 #endif
+
+		/// <summary>
+		/// The instance of <c>LevelUpEvents</c> for this game.
+		/// </summary>
 		private static LevelUpEvents instance = null;
 
 		/// <summary>
@@ -61,10 +69,8 @@ namespace Soomla.Levelup {
 #endif
 		}
 
-		/// <summary>
-		/// Ons the gate opened.
-		/// </summary>
-		/// <param name="message">Message.</param>
+		/** Functions that handle various events that are fired throughout the code. **/
+
 		public void onGateOpened(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onGateOpened with message: " + message);
 
@@ -74,7 +80,6 @@ namespace Soomla.Levelup {
 
 			LevelUpEvents.OnGateOpened(gate);
 		}
-
 
 		public void onLevelEnded(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelEnded with message: " + message);
@@ -154,6 +159,7 @@ namespace Soomla.Levelup {
 		}
 
 
+		/** To handle various events, just add your specific behavior to the following delegates. **/
 
 		public delegate void Action();
 

@@ -25,13 +25,33 @@ namespace Soomla.Levelup {
 	/// </summary>
 	public class LevelUp {
 
+		/// <summary>
+		/// Used in log messages.
+		/// </summary>
 		public static readonly string DB_KEY_PREFIX = "soomla.levelup.";
 
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
+		private const string TAG = "SOOMLA LevelUp";
+
+		/// <summary>
+		/// The instance of <c>LevelUp</c> for this game.
+		/// </summary>
+		private static LevelUp instance = null;
+
+		/// <summary>
+		/// Initial <c>World</c> to begin the game.
+		/// </summary>
 		public World InitialWorld;
+
+		/// <summary>
+		/// Potential rewards of the <c>InitialWorld</c>.
+		/// </summary>
 		public Dictionary<string, Reward> Rewards;
 
 		/// <summary>
-		/// Initializes the specified initialWorld and rewards.
+		/// Initializes the specified <c>InitialWorld</c> and rewards.
 		/// </summary>
 		/// <param name="initialWorld">Initial world.</param>
 		/// <param name="rewards">Rewards.</param>
@@ -49,7 +69,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the reward with the given ID.
+		/// Retrieves the reward with the given ID.
 		/// </summary>
 		/// <returns>The reward that was fetched.</returns>
 		/// <param name="rewardId">Reward identifier.</param>
@@ -60,10 +80,10 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the score with the given score ID.
+		/// Retrieves the <c>Score</c> with the given score ID.
 		/// </summary>
 		/// <returns>The score.</returns>
-		/// <param name="scoreId">Score ID of the score to be fetched.</param>
+		/// <param name="scoreId">ID of the <c>Score</c> to be fetched.</param>
 		public Score GetScore(string scoreId) {
 			Score retScore = null;
 			InitialWorld.Scores.TryGetValue(scoreId, out retScore);
@@ -75,10 +95,10 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the world with the given world ID.
+		/// Retrieves the <c>World</c> with the given world ID.
 		/// </summary>
 		/// <returns>The world.</returns>
-		/// <param name="worldId">World ID of the score to be fetched.</param>
+		/// <param name="worldId">World ID of the <c>Score</c> to be fetched.</param>
 		public World GetWorld(string worldId) {
 			if (InitialWorld.ID == worldId) {
 				return InitialWorld;
@@ -88,7 +108,8 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Counts all the levels in all worlds and inner worlds.
+		/// Counts all the <c>Level</c>s in all <c>World</c>s and inner <c>World</c>s 
+		/// starting from the <c>InitialWorld</c>.
 		/// </summary>
 		/// <returns>The number of levels in all worlds and their inner worlds.</returns>
 		public int GetLevelCount() {
@@ -96,7 +117,8 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Counts all levels in the given world and its inner worlds.
+		/// Counts all the <c>Level</c>s in all <c>World</c>s and inner <c>World</c>s 
+		/// starting from the given <c>World</c>.
 		/// </summary>
 		/// <param name="world">The world to examine.</param>
 		/// <returns>The number of levels in the given world and its inner worlds.</returns>
@@ -111,10 +133,11 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Counts all worlds and their inner worlds with or without their levels.
+		/// Counts all <c>World</c>s and their inner <c>World</c>s with or without their  
+		/// <c>Level</c>s according to the given <c>withLevels</c>.
 		/// </summary>
-		/// <param name="withLevels">Indicates whether to count levels also.</param>
-		/// <returns>The number of worlds and their inner worlds, and optionally their inner levels.</returns>
+		/// <param name="withLevels">Indicates whether to count <c>Level</c>s also.</param>
+		/// <returns>The number of <c>World</c>s, and optionally their inner <c>Level</c>s.</returns>
 		public int GetWorldCount(bool withLevels) {
 			return getRecursiveCount(InitialWorld, (World innerWorld) => {
 				return withLevels ?
@@ -124,9 +147,10 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Counts all completed levels.
+		/// Counts all completed <c>Level</c>s.
 		/// </summary>
-		/// <returns>The number of completed levels and their inner completed levels.</returns>
+		/// <returns>The number of completed <c>Level</c>s and their inner completed 
+		/// <c>Level</c>s.</returns>
 		public int GetCompletedLevelCount() {
 			return getRecursiveCount(InitialWorld, (World innerWorld) => {
 				return innerWorld.GetType() == typeof(Level) && innerWorld.IsCompleted();
@@ -134,23 +158,20 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Counts the number of completed worlds.
+		/// Counts the number of completed <c>World</c>s.
 		/// </summary>
-		/// <returns>The number of completed worlds and their inner completed worlds.</returns>
+		/// <returns>The number of completed <c>World</c>s and their inner completed 
+		/// <c>World</c>s.</returns>
 		public int GetCompletedWorldCount() {
 			return getRecursiveCount(InitialWorld, (World innerWorld) => {
 				return innerWorld.GetType() == typeof(World) && innerWorld.IsCompleted();
 			});
 		}
 
-
-		private static LevelUp instance = null;
-
 		/// <summary>
-		/// Gets this instance of LevelUp.
-		/// Use this function when initializing LevelUp.
+		/// Retrieves this instance of <c>LevelUp</c>. Used when initializing LevelUp.
 		/// </summary>
-		/// <returns>This instance of LevelUp.</returns>
+		/// <returns>This instance of <c>LevelUp</c>.</returns>
 		public static LevelUp GetInstance() {
 			if (instance == null) {
 				instance = new LevelUp();
@@ -159,8 +180,6 @@ namespace Soomla.Levelup {
 		}
 
 		private LevelUp() {}
-
-
 
 		// NOTE: Not sure we need a save function.
 
@@ -174,7 +193,7 @@ namespace Soomla.Levelup {
 //		}
 
 		/// <summary>
-		/// Converts this instance of LevelUp to JSONobject
+		/// Converts this instance of <c>LevelUp</c> to JSONobject
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		private JSONObject toJSONObject() {
@@ -185,14 +204,12 @@ namespace Soomla.Levelup {
 			return jsonObject;
 		}
 
-		private const string TAG = "SOOMLA LevelUp";
-
 		/// <summary>
-		/// Looks for and returns the score with the given scoreID from the given worlds. 
+		/// Fetches the <c>Score</c> with the given scoreID from the given <c>World</c>s. 
 		/// </summary>
-		/// <returns>The score with the given score ID.</returns>
-		/// <param name="scoreId">Score identifier.</param>
-		/// <param name="worlds">Worlds.</param>
+		/// <returns>The <c>Score</c> with the given score ID.</returns>
+		/// <param name="scoreId">ID of the <c>Score</c> to fetch.</param>
+		/// <param name="worlds">Worlds to search through.</param>
 		private Score fetchScoreFromWorlds(string scoreId, Dictionary<string, World> worlds) {
 			Score retScore = null;
 			foreach (World world in worlds.Values) {
@@ -209,11 +226,11 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Fetches the world with the given world ID from the given dictionary of worlds.
+		/// Fetches the <c>World</c> with the given ID from the given dictionary of <c>World</c>s.
 		/// </summary>
-		/// <returns>The world with the given ID.</returns>
-		/// <param name="worldId">World ID.</param>
-		/// <param name="worlds">Dictionary of Worlds.</param>
+		/// <returns>The <c>World</c> with the given ID.</returns>
+		/// <param name="worldId">ID of <c>World</c> to fetch.</param>
+		/// <param name="worlds">Worlds to search through.</param>
 		private World fetchWorld(string worldId, Dictionary<string, World> worlds) {
 			World retWorld;
 			worlds.TryGetValue(worldId, out retWorld);
@@ -227,12 +244,12 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Counts the number of worlds starting from the given world and according to the given function
-		/// that determines which worlds to count in the sum.
+		/// Counts the number of worlds starting from the given <c>World</c> and according to the 
+		/// given function that determines which <c>World</c>s to count in the sum.
 		/// </summary>
 		/// <returns>The recursive count.</returns>
-		/// <param name="world">World to begin counting from.</param>
-		/// <param name="isAccepted">Function that determines if the world accepted.</param>
+		/// <param name="world"><c>World</c> to begin counting from.</param>
+		/// <param name="isAccepted">Function that determines if the <c>World</c> accepted.</param>
 		private int getRecursiveCount(World world, Func<World, bool> isAccepted) {
 			int count = 0;
 			

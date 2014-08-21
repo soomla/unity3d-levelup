@@ -19,8 +19,8 @@ using System.Collections.Generic;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A specific type of <c>GatesList</c> that can be opened if 
-	/// <b>AT LEAST ONE</b> gate in its list is open.
+	/// A specific type of <c>GatesList</c> that can be opened if <b>AT LEAST ONE</b>
+	/// <c>Gate</c> in its list is open.
 	/// </summary>
 	public class GatesListOR : GatesList
 	{
@@ -28,7 +28,7 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">GatesList ID.</param>
+		/// <param name="id">ID.</param>
 		public GatesListOR(string id)
 			: base(id)
 		{
@@ -36,10 +36,10 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Constructor for GatesList with one gate.
+		/// Constructor for <c>GatesList</c> with one <c>Gate</c>.
 		/// </summary>
-		/// <param name="id">GatesList ID.</param>
-		/// <param name="singleGate">Single gate in this gateslist.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="singleGate">Single <c>Gate</c> in this <c>GatesList</c>.</param>
 		public GatesListOR(string id, Gate singleGate)
 			: base(id, singleGate)
 		{
@@ -48,8 +48,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">GatesList ID.</param>
-		/// <param name="gates">List of gates.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="gates">List of <c>Gate</c>s.</param>
 		public GatesListOR(string id, List<Gate> gates)
 			: base(id, gates)
 		{
@@ -65,10 +65,10 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this gatelist meets its criteria for opening, by checking that 
-		/// AT LEAST ONE gate in the list are open. 
+		/// Checks if this <c>GatesList</c> meets its criteria for opening, by checking that 
+		/// AT LEAST ONE <c>Gate</c> in the list are open. 
 		/// </summary>
-		/// <returns>If AT LEAST ONE gate in this gateslist is open returns <c>true</c>; 
+		/// <returns>If AT LEAST ONE <c>Gate</c> in this <c>GatesList</c> is open returns <c>true</c>; 
 		/// otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			foreach (Gate gate in Gates) {

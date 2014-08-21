@@ -18,15 +18,26 @@ using System;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A utility class for persisting and querying scores and records.
-	/// Use this class to get or set the values of scores and records.
+	/// A utility class for persisting and querying <c>Score</c>s and records.
+	/// Use this class to get or set the values of <c>Score</c>s and records.
 	/// </summary>
 	public class ScoreStorage
 	{
-
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		protected const string TAG = "SOOMLA ScoreStorage"; // used for Log error messages
 
+		/// <summary>
+		/// Holds an instance of <c>ScoreStorage</c> or <c>ScoreStorageAndroid</c> or <c>ScoreStorageIOS</c>.
+		/// </summary>
 		static ScoreStorage _instance = null;
+
+		/// <summary>
+		/// Determines which <c>ScoreStorage</c> to use according to the platform in use
+		/// and if the Unity Editor is being used. 
+		/// </summary>
+		/// <value>The instance to use.</value>
 		static ScoreStorage instance {
 			get {
 				if(_instance == null) {
@@ -41,48 +52,34 @@ namespace Soomla.Levelup
 				return _instance;
 			}
 		}
+
+
+		/** The following functions call the relevant instance-specific functions. **/
 			
-		/// <summary>
-		/// Sets the given value for the given score. 
-		/// </summary>
-		/// <param name="score">Score whose value is to be set.</param>
-		/// <param name="latest">New value.</param>
 		public static void SetLatestScore(Score score, double latest) {
 			instance._setLatestScore (score, latest);
 		}
 
-		/// <summary>
-		/// Retrieves the most recently saved value of the given score.
-		/// </summary>
-		/// <returns>The latest score.</returns>
-		/// <param name="score">Score whose most recent value it to be retrieved.</param>
 		public static double GetLatestScore(Score score) {
 			return instance._getLatestScore (score);
 		}
 
-		/// <summary>
-		/// Sets the given record for the given score.
-		/// </summary>
-		/// <param name="score">Score whose record is to change.</param>
-		/// <param name="record">The new record.</param>
 		public static void SetRecordScore(Score score, double record) {
 			instance._setRecordScore (score, record);
 		}
 
-		/// <summary>
-		/// Retrieves the record of the given score.
-		/// </summary>
-		/// <returns>The record value of the given score.</returns>
-		/// <param name="score">Score whose record is to be retrieved.</param>
 		public static double GetRecordScore(Score score) {
 			return instance._getRecordScore (score);
 		}
 
+
+		/** Unity-Editor Functions **/
+
 		/// <summary>
-		/// Sets the given value for the given score.
+		/// Sets the given <c>Score</c> to the given value.
 		/// </summary>
-		/// <param name="score">Score.</param>
-		/// <param name="latest">Latest.</param>
+		/// <param name="score"><c>Score</c> to set.</param>
+		/// <param name="latest">The value to set for the <c>Score</c>.</param>
 		protected virtual void _setLatestScore(Score score, double latest) {
 #if UNITY_EDITOR
 			string key = keyLatestScore (score.ID);
@@ -92,9 +89,9 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Retrieves the most recently saved value of the given score.
+		/// Retrieves the most recently saved value of the given <c>Score</c>.
 		/// </summary>
-		/// <returns>The latest score.</returns>
+		/// <returns>The latest <c>Score</c>.</returns>
 		/// <param name="score">Score whose most recent value it to be retrieved.</param>
 		protected virtual double _getLatestScore(Score score) {
 #if UNITY_EDITOR
@@ -107,9 +104,9 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Sets the given record for the given score.
+		/// Sets the given record for the given <c>Score</c>.
 		/// </summary>
-		/// <param name="score">Score whose record is to change.</param>
+		/// <param name="score"><c>Score</c> whose record is to change.</param>
 		/// <param name="record">The new record.</param>
 		protected virtual void _setRecordScore(Score score, double record) {
 #if UNITY_EDITOR
@@ -122,10 +119,10 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Retrieves the record of the given score.
+		/// Retrieves the record of the given <c>Score</c>.
 		/// </summary>
-		/// <returns>The record value of the given score.</returns>
-		/// <param name="score">Score whose record is to be retrieved.</param>
+		/// <returns>The record value of the given <c>Score</c>.</returns>
+		/// <param name="score"><c>Score</c> whose record is to be retrieved.</param>
 		protected virtual double _getRecordScore(Score score) {
 #if UNITY_EDITOR
 			string key = keyRecordScore (score.ID);
@@ -137,7 +134,7 @@ namespace Soomla.Levelup
 		}
 
 
-		/** keys **/
+		/** Keys (private helper functions if Unity Editor is being used.) **/
 
 		/// <summary>
 		/// Private helper functions if Unity Editor is being used. 

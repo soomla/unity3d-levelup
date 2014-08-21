@@ -19,14 +19,26 @@ namespace Soomla.Levelup
 {
 
 	/// <summary>
-	/// World storage.
+	/// A utility class for persisting and querying <c>World</c>s.
+	/// Use this class to get or set the completion of <c>World</c>s and assign rewards.
 	/// </summary>
 	public class WorldStorage
 	{
-
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		protected const string TAG = "SOOMLA WorldStorage"; // used for Log error messages
 
+		/// <summary>
+		/// Holds an instance of <c>WorldStorage</c> or <c>WorldStorageAndroid</c> or <c>WorldStorageIOS</c>.
+		/// </summary>
 		static WorldStorage _instance = null;
+
+		/// <summary>
+		/// Determines which <c>Worldtorage</c> to use according to the platform in use
+		/// and if the Unity Editor is being used. 
+		/// </summary>
+		/// <value>The instance to use.</value>
 		static WorldStorage instance {
 			get {
 				if(_instance == null) {
@@ -43,14 +55,10 @@ namespace Soomla.Levelup
 		}
 			
 
-		/** World Completion **/ 
+		/** The following functions call the relevant instance-specific functions. **/
 
-		/// <summary>
-		/// Sets the given world as completed if <c>completed</c> is <c>true</c>.
-		/// </summary>
-		/// <param name="world">World to set as completed.</param>
-		/// <param name="completed">If set to <c>true</c> the world will be set 
-		/// as completed.</param>
+		/** WORLD COMPLETION **/ 
+
 		public static void SetCompleted(World world, bool completed) {
 			SetCompleted(world, completed, true);
 		}
@@ -64,40 +72,30 @@ namespace Soomla.Levelup
 			instance._setCompleted(world, completed, notify);
 		}
 
-		/// <summary>
-		/// Determines if the given world is completed.
-		/// </summary>
-		/// <returns>If the given world is completed returns <c>true</c>; 
-		/// otherwise <c>false</c>.</returns>
-		/// <param name="world">World to determine if completed.</param>
 		public static bool IsCompleted(World world) {
 			return instance._isCompleted(world);
 		}
 
+		/** WORLD REWARDS **/
 
-		/** World Rewards **/
-
-		/// <summary>
-		/// Assigns the reward with the given reward ID to the given world. 
-		/// </summary>
-		/// <param name="world">World to assign a reward to.</param>
-		/// <param name="rewardId">ID of reward to assign.</param>
 		public static void SetReward(World world, string rewardId) {
 			instance._setReward(world, rewardId);
 		}
 
-		/// <summary>
-		/// Retrieves the given world's assigned reward.
-		/// </summary>
-		/// <returns>The assigned reward to retrieve.</returns>
-		/// <param name="world">World whose reward is to be retrieved.</param>
 		public static string GetAssignedReward(World world) {
 			return instance._getAssignedReward(world);
 		}
 
 
-		/** World Completion Helpers **/
-
+		/** Unity-Editor Functions **/
+	
+		/// <summary>
+		/// Sets the given <c>World</c> as completed if <c>completed</c> is <c>true</c>.
+		/// </summary>
+		/// <param name="world"><c>World</c> to set as completed.</param>
+		/// <param name="completed">If set to <c>true</c> the <c>World</c> will be set 
+		/// as completed.</param>
+		/// <param name="notify">If set to <c>true</c> trigger events.</param>
 		protected virtual void _setCompleted(World world, bool completed, bool notify) {
 #if UNITY_EDITOR
 			string key = keyWorldCompleted(world.ID);
@@ -113,7 +111,13 @@ namespace Soomla.Levelup
 			}
 #endif
 		}
-
+		
+		/// <summary>
+		/// Determines if the given <c>World</c> is completed.
+		/// </summary>
+		/// <returns>If the given <c>World</c> is completed returns <c>true</c>; 
+		/// otherwise <c>false</c>.</returns>
+		/// <param name="world"><c>World</c> to determine if completed.</param>
 		protected virtual bool _isCompleted(World world) {
 #if UNITY_EDITOR
 			string key = keyWorldCompleted(world.ID);
@@ -124,9 +128,12 @@ namespace Soomla.Levelup
 #endif
 		}
 
-
-		/** World Rewards Helpers **/
-
+		
+		/// <summary>
+		/// Assigns the reward with the given reward ID to the given <c>World</c>. 
+		/// </summary>
+		/// <param name="world"><c>World</c> to assign a reward to.</param>
+		/// <param name="rewardId">ID of reward to assign.</param>
 		protected virtual void _setReward(World world, string rewardId) {
 #if UNITY_EDITOR
 			string key = keyReward (world.ID);
@@ -140,7 +147,12 @@ namespace Soomla.Levelup
 			LevelUpEvents.OnWorldAssignedReward(world);
 #endif
 		}
-
+		
+		/// <summary>
+		/// Retrieves the given <c>World</c>'s assigned reward.
+		/// </summary>
+		/// <returns>The assigned reward to retrieve.</returns>
+		/// <param name="world"><c>World</c> whose reward is to be retrieved.</param>
 		protected virtual string _getAssignedReward(World world) {
 #if UNITY_EDITOR
 			string key = keyReward (world.ID);
@@ -151,7 +163,7 @@ namespace Soomla.Levelup
 		}
 
 
-		/** Keys **/
+		/** Keys (private helper functions if Unity Editor is being used.) **/
 
 #if UNITY_EDITOR
 		private static string keyWorlds(string worldId, string postfix) {

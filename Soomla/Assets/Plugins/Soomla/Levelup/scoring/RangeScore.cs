@@ -18,9 +18,9 @@ namespace Soomla.Levelup
 {
 
 	/// <summary>
-	/// A specific type of <c>Score</c> that has an associated range. The score's 
-	/// value can be only inside the range of values. For example, a shooting score
-	/// can on a scale of 10 to 100 according to the user's performance in the game.
+	/// A specific type of <c>Score</c> that has an associated range. The <c>Score</c>'s 
+	/// value can be only inside the range of values. For example, a shooting <c>Score</c>
+	/// can be on a scale of 10 to 100 according to the user's performance in the game.
 	/// </summary>
 	public class RangeScore : Score
 	{
@@ -29,8 +29,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Score ID.</param>
-		/// <param name="range">Range that the score value must reside in.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="range">Range that the <c>Score</c> value must reside in.</param>
 		public RangeScore(string id, SRange range)
 			: base(id)
 		{
@@ -40,10 +40,10 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Score ID.</param>
-		/// <param name="name">Score name.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
 		/// <param name="higherBetter">If set to <c>true</c> then higher is better.</param>
-		/// <param name="range">Range that the score value must reside in.</param>
+		/// <param name="range">Range that the <c>Score</c> value must reside in.</param>
 		public RangeScore(string id, string name, bool higherBetter, SRange range)
 			: base(id, name, higherBetter)
 		{
@@ -69,7 +69,7 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Converts this score to JSONObject.
+		/// Converts this <c>Score</c> to JSONObject.
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
@@ -80,8 +80,8 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Increases this score by the given amount after checking that 
-		/// the score will stay within the range.
+		/// Increases this <c>Score</c> by the given amount after checking that it will stay 
+		/// within the range.
 		/// </summary>
 		/// <param name="amount">Amount to increase by.</param>
 		public override void Inc(double amount) {
@@ -99,8 +99,8 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Decreases this score by the given amount after checking that 
-		/// the score will stay within the range.
+		/// Decreases this <c>Score</c> by the given amount after checking that the <c>Score</c>
+		/// will stay within the range.
 		/// </summary>
 		/// <param name="amount">Amount to decrease by.</param>
 		public override void Dec(double amount) {
@@ -118,10 +118,12 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Sets the temp score after checking that the score will stay within the range.
+		/// Sets the temp score to be the given <c>score</c>, after making sure that the 
+		/// it will stay within the range.
 		/// </summary>
 		/// <param name="score">Score.</param>
-		/// <param name="onlyIfBetter">If set to <c>true</c> only if better.</param>
+		/// <param name="onlyIfBetter">If <c>Score</c> is better than the given <c>score</c>  
+		/// then this value should be <c>true</c>.</param>
 		public override void SetTempScore(double score, bool onlyIfBetter) {
 			if (score > Range.High) {
 				score = Range.High;

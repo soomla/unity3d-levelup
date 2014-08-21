@@ -18,17 +18,20 @@ using System.Collections.Generic;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A specific type of <c>Gate</c> that has an associated world. The gate opens 
-	/// once the world has been completed.
+	/// A specific type of <c>Gate</c> that has an associated world. The <c>Gate</c> opens 
+	/// once the <c>World</c> has been completed.
 	/// </summary>
 	public class WorldCompletionGate : Gate
 	{
+		/// <summary>
+		/// ID of the <c>World</c> that needs to be completed. 
+		/// </summary>
 		public string AssociatedWorldId;
 
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
-		/// <param name="id">Gate ID.</param>
+		/// <param name="id">ID.</param>
 		/// <param name="associatedWorldId">Associated world ID.</param>
 		public WorldCompletionGate(string id, string associatedWorldId)
 			: base(id)
@@ -46,7 +49,7 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Converts this gate to a JSONObject.
+		/// Converts this <c>Gate</c> to a JSONObject.
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
@@ -56,19 +59,19 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this gate meets its criteria for opening, by checking that the 
+		/// Checks if this <c>Gate</c> meets its criteria for opening, by checking that the 
 		/// associated world is not null and has been completed. 
 		/// </summary>
-		/// <returns>If this world can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
+		/// <returns>If this <c>World</c> can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			World world = LevelUp.GetInstance().GetWorld(AssociatedWorldId);
 			return world != null && world.IsCompleted();
 		}
 
 		/// <summary>
-		/// Opens this gate if it can be opened (its criteria has been met).
+		/// Opens this <c>Gate</c> if it can be opened (its criteria has been met).
 		/// </summary>
-		/// <returns>If the gate has been opened returns <c>true</c>; otherwise <c>false</c>.</returns>
+		/// <returns>Upon success of opening returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
 				ForceOpen(true);
@@ -95,9 +98,9 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Opens this gate if the world-completed event causes the gate's criteria to be met.
+		/// Opens this <c>Gate</c> if the world-completed event causes the <c>Gate</c>'s criteria to be met.
 		/// </summary>
-		/// <param name="world">World to be compared to the associated world.</param>
+		/// <param name="world"><c>World</c> to be compared to the associated <c>World</c>.</param>
 		/// @subscribe
 		public void onWorldCompleted(World world) {
 			if (world.ID == AssociatedWorldId) {

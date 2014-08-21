@@ -29,8 +29,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Mission ID.</param>
-		/// <param name="name">Mission name.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
 		/// <param name="associatedItemId">ID of the item that is to be purchased.</param>
 		public PurchasingMission(string id, string name, string associatedItemId)
 			: base(id, name, typeof(PurchasableGate), new object[] { associatedItemId })
@@ -40,9 +40,9 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Mission ID.</param>
-		/// <param name="name">Mission name.</param>
-		/// <param name="rewards">Rewards for this mission.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
+		/// <param name="rewards"><c>Reward</c>s for this <c>Mission</c>.</param>
 		/// <param name="associatedItemId">ID of the item that is to be purchased.</param>
 		public PurchasingMission(string id, string name, List<Reward> rewards, string associatedItemId)
 			: base(id, name, rewards, typeof(PurchasableGate), new object[] { associatedItemId })

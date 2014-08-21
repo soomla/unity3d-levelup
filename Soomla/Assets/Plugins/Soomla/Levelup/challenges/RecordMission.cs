@@ -29,8 +29,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
-		/// <param name="id">Mission ID.</param>
-		/// <param name="name">Mission name.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
 		/// <param name="associatedScoreId">ID of the score examined.</param>
 		/// <param name="desiredRecord">Desired record.</param>
 		public RecordMission(string id, string name, string associatedScoreId, double desiredRecord)
@@ -41,8 +41,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor for mission with rewards. 
 		/// </summary>
-		/// <param name="id">Mission ID.</param>
-		/// <param name="name">Mission name.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
 		/// <param name="rewards">Rewards.</param>
 		/// <param name="associatedScoreId">ID of the score examined.</param>
 		/// <param name="desiredRecord">Desired record.</param>

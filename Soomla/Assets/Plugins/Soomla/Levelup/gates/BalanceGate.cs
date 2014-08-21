@@ -19,19 +19,29 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// A specific type of <c>Gate</c> that has an associated virtual item and a desired
-	/// balance. The gate opens once the item's balance reaches the desired balance.
+	/// balance. The <c>Gate</c> opens once the item's balance reaches the desired balance.
 	/// </summary>
 	public class BalanceGate : Gate
 	{
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private const string TAG = "SOOMLA BalanceGate";
 
+		/// <summary>
+		/// ID of the item whose balance is examined.
+		/// </summary>
 		public string AssociatedItemId;
+
+		/// <summary>
+		/// The desired balance of the associated item.
+		/// </summary>
 		public int DesiredBalance;
 
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
-		/// <param name="id">Gate ID.</param>
+		/// <param name="id">ID.</param>
 		/// <param name="associatedItemId">Associated item ID.</param>
 		/// <param name="desiredBalance">Desired balance.</param>
 		public BalanceGate(string id, string associatedItemId, int desiredBalance)
@@ -65,10 +75,10 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this gate meets its criteria for opening, by checking if the
+		/// Checks if this <c>Gate</c> meets its criteria for opening, by checking if the
 		/// item's balance has reached the desired balance.
 		/// </summary>
-		/// <returns>If the gate meets the criteria to be opened returns <c>true</c>; 
+		/// <returns>If the <c>Gate</c> meets the criteria to be opened returns <c>true</c>; 
 		/// otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			try {
@@ -81,10 +91,9 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Opens the gate if the criteria has been met. 
+		/// Opens the <c>Gate</c> if the criteria has been met. 
 		/// </summary>
-		/// <returns>If the gate is opened returns <c>true</c>; otherwise <c>false</c>.</returns>
-		/// <c>false</c>
+		/// <returns>If the <c>Gate</c> is opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
 
@@ -98,7 +107,7 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Opens this gate if the currency-balance changed event causes the gate's 
+		/// Opens this <c>Gate</c> if the currency-balance changed event causes the <c>Gate</c>'s 
 		/// criteria to be met. 
 		/// </summary>
 		/// <param name="virtualCurrency">Virtual currency whose balance changed.</param>
@@ -110,8 +119,8 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Opens this gate if the good-balance changed event causes the gate's criteria 
-		/// to be met. 
+		/// Opens this <c>Gate</c> if the good-balance changed event causes the <c>Gate</c>'s  
+		/// criteria to be met. 
 		/// </summary>
 		/// <param name="good">Virtual good whose balance has changed.</param>
 		/// <param name="balance">New balance.</param>
@@ -140,8 +149,8 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Opens this gate if the given item ID is the same as the ID of the associated item 
-		/// of this gate AND if the given balance is greater or equal to the desired balance.
+		/// Opens this <c>Gate</c> if the given item ID is the same as the ID of the associated item 
+		/// of this <c>Gate</c> AND if the given balance is greater or equal to the desired balance.
 		/// </summary>
 		/// <param name="itemId">Item ID to compare with associated ID.</param>
 		/// <param name="balance">Balance to compare with the desired balance.</param>

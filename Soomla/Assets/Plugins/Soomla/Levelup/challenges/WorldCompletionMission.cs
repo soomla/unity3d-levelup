@@ -27,8 +27,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
-		/// <param name="id">Mission ID.</param>
-		/// <param name="name">Mission name.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
 		/// <param name="associatedWorldId">World that needs to be completed.</param>
 		public WorldCompletionMission(string id, string name, string associatedWorldId)
 			: base(id, name, typeof(WorldCompletionGate), new object[] { associatedWorldId })
@@ -38,8 +38,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
-		/// <param name="id">Mission ID.</param>
-		/// <param name="name">Mission name.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
 		/// <param name="rewards">Rewards for this mission.</param>
 		/// <param name="associatedWorldId">World that needs to be completed.</param>
 		public WorldCompletionMission(string id, string name, List<Reward> rewards, string associatedWorldId)

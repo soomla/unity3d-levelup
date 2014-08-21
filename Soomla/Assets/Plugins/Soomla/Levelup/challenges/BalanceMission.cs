@@ -21,7 +21,7 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// A specific type of <c>Mission</c> that has an associated virtual item and a desired  
-	/// balance. The mission is completed once the item's balance reaches the desired balance.
+	/// balance. The <c>Mission</c> is complete once the item's balance reaches the desired balance.
 	/// </summary>
 	public class BalanceMission : Mission
 	{
@@ -29,8 +29,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Mission ID.</param>
-		/// <param name="name">Mission name.</param>
+		/// <param name="id"><c>Mission</c> ID.</param>
+		/// <param name="name"><c>Mission</c> name.</param>
 		/// <param name="associatedItemId">ID of the item who's balance is examined.</param>
 		/// <param name="desiredBalance">Desired balance.</param>
 		public BalanceMission(string id, string name, string associatedItemId, int desiredBalance)
@@ -39,11 +39,11 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Constructor for mission with rewards.
+		/// Constructor for <c>Mission</c> with rewards.
 		/// </summary>
-		/// <param name="id">Mission ID.</param>
-		/// <param name="name">Mission name.</param>
-		/// <param name="rewards">Rewards.</param>
+		/// <param name="id"><c>Mission</c> ID.</param>
+		/// <param name="name"><c>Mission</c> name.</param>
+		/// <param name="rewards"><c>Reward</c>s for this <c>Mission</c>.</param>
 		/// <param name="associatedItemId">ID of the item who's balance is examined.</param>
 		/// <param name="desiredBalance">Desired balance.</param>
 		public BalanceMission(string id, string name, List<Reward> rewards, string associatedItemId, int desiredBalance)
@@ -55,7 +55,7 @@ namespace Soomla.Levelup
 		/// Constructor.
 		/// Generates an instance of <c>BalanceMission</c> from the given JSONObject.
 		/// </summary>
-		/// <param name="jsonMission">JSON mission.</param>
+		/// <param name="jsonMission">JSON <c>Mission</c>.</param>
 		public BalanceMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{

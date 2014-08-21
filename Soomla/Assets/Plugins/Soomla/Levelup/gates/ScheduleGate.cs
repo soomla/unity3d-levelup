@@ -19,20 +19,26 @@ using System.Collections.Generic;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A specific type of <c>Gate</c> that has a schedule that defines when
-	/// the gate can be opened. The gate opens once the player tries to open 
-	/// the gate in the time frame of the defined schedule.
+	/// A specific type of <c>Gate</c> that has a schedule that defines when the <c>Gate</c>
+	/// can be opened. The <c>Gate</c> opens once the player tries to open it in the time 
+	/// frame of the defined schedule.
 	/// </summary>
 	public class ScheduleGate : Gate
 	{
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private const string TAG = "SOOMLA ScheduleGate";
 
+		/// <summary>
+		/// The <c>Schedule</c> that defines when this <c>Gate</c> can be opened. 
+		/// </summary>
 		public Schedule Schedule;
 
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
-		/// <param name="id">Gate ID.</param>
+		/// <param name="id">ID.</param>
 		/// <param name="schedule">Schedule.</param>
 		public ScheduleGate(string id, Schedule schedule)
 			: base(id)
@@ -51,7 +57,7 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Converts this gate to a JSON object.
+		/// Converts this <c>Gate</c> to a JSON object.
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
@@ -76,9 +82,9 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this gate meets its criteria for opening.
+		/// Checks if this <c>Gate</c> meets its criteria for opening.
 		/// </summary>
-		/// <returns><c>true</c>, if open inner was caned, <c>false</c> otherwise.</returns>
+		/// <returns>If this <c>Gate</c> can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			// Gates don't have activation times, they can only be activated once. 
 			// We are kind of ignoring the activation limit of Schedule here.
@@ -86,10 +92,9 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Opens this gate if it can be opened (its criteria has been met).
+		/// Opens this <c>Gate</c> if it can be opened (its criteria has been met).
 		/// </summary>
-		/// <returns>If the gate has been opened returns <c>true</c>; 
-		/// otherwise <c>false</c>.</returns>
+		/// <returns>Upon success of opening returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
 				// There's nothing to do here... If the criteria was met then the gate is just open.

@@ -25,6 +25,9 @@ namespace Soomla.Levelup
 	/// </summary>
 	public abstract class GatesList : Gate
 	{
+		/// <summary>
+		/// The list of <c>Gate</c>s.
+		/// </summary>
 		protected List<Gate> Gates = new List<Gate>();
 
 		/// <summary>
@@ -40,7 +43,7 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor for GatesList with one gate.
 		/// </summary>
-		/// <param name="id">GatesList ID.</param>
+		/// <param name="id">ID.</param>
 		/// <param name="singleGate">Single gate in this gateslist.</param>
 		public GatesList(string id, Gate singleGate)
 			: base(id)
@@ -52,7 +55,7 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">GatesList ID.</param>
+		/// <param name="id">ID.</param>
 		/// <param name="gates">List of gates.</param>
 		public GatesList(string id, List<Gate> gates)
 			: base(id)

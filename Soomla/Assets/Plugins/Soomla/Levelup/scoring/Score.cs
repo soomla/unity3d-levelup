@@ -22,9 +22,9 @@ namespace Soomla.Levelup {
 	/// <summary>
 	/// Represents a score in the game. A simple game usually has one generic numeric score
 	/// which grows as the user progresses in the game. A game can also have multiple
-	/// <c>Score</c>s for different aspects such as time, speed, points etc.
-	/// A score can be ascending in nature such as regular points (higher is better) or can
-	/// be descending such as time-to-complete level (lower is better).
+	/// scores for different aspects such as time, speed, points etc.
+	/// A <c>Score</c> can be ascending in nature such as regular points (higher is better) 
+	/// or can be descending such as time-to-complete level (lower is better).
 	/// </summary>
 	public class Score : SoomlaEntity<Score> {
 
@@ -33,8 +33,14 @@ namespace Soomla.Levelup {
 //		private static extern int storeAssets_Save(string type, string viJSON);
 //#endif
 
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private const string TAG = "SOOMLA Score";
 
+		/// <summary>
+		/// Initial value of this <c>Score</c>.
+		/// </summary>
 		public double StartValue = 0;
 
 		/// <summary>
@@ -45,15 +51,22 @@ namespace Soomla.Levelup {
 		/// </summary>
 		public bool HigherBetter;
 
+		/// <summary>
+		/// At the end of <c>Level</c>s and <c>World</c>s the <c>Score</c> is updated and saved. 
+		/// We keep a temp copy of the score at all times. 
+		/// </summary>
 		protected double _tempScore;
 
+		/// <summary>
+		/// Kept for reference of if this <c>Score</c> has reached its record. 
+		/// </summary>
 		private bool _scoreRecordReachedSent = false;
 
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Score ID.</param>
+		/// <param name="id">ID.</param>
 		public Score (string id)
 			: this(id, "", true)
 		{
@@ -62,9 +75,9 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Score ID.</param>
-		/// <param name="name">Score name.</param>
-		/// <param name="higherBetter">If <c>true</c> the higher the score the better.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
+		/// <param name="higherBetter">If <c>true</c> then the higher the score the better.</param>
 		public Score (string id, string name, bool higherBetter)
 			: base(id, name, "")
 		{
@@ -74,8 +87,8 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="jsonObj">Json object.</param>
-		public Score(JSONObjectnonCon jsonObj) 
+		/// <param name="jsonObj">JSON object.</param>
+		public Score(JSONObject jsonObj) 
 			: base(jsonObj)
 		{
 			this.StartValue = jsonObj[LUJSONConsts.LU_SCORE_STARTVAL].n;
@@ -95,7 +108,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Converts the given JSONObject into a score. 
+		/// Converts the given JSONObject into a <c>Score</c>. 
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		/// <param name="scoreObj">Score object.</param>
@@ -117,7 +130,7 @@ namespace Soomla.Levelup {
 #endif
 
 		/// <summary>
-		/// Increases this score by the given amount. 
+		/// Increases this <c>Score</c> by the given amount. 
 		/// </summary>
 		/// <param name="amount">Amount to increase by.</param>
 		public virtual void Inc(double amount) {
@@ -125,7 +138,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Decreases this score by the given amount. 
+		/// Decreases this <c>Score</c> by the given amount. 
 		/// </summary>
 		/// <param name="amount">Amount to decrease by.</param>
 		public virtual void Dec(double amount) {
@@ -133,8 +146,8 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Saves the current score (and record if reached) and resets the score to 
-		/// its initial value.  Use this method for example when a user restarts a
+		/// Saves the current <c>Score</c> (and record if reached) and resets the score  
+		/// to its initial value. Use this method for example when a user restarts a
 		/// level with a fresh score of 0.
 		/// </summary>
 		/// <param name="save">If set to <c>true</c> save.</param>
@@ -155,38 +168,37 @@ namespace Soomla.Levelup {
 		}
 	
 		/// <summary>
-		/// Checks if the score in the current game session has reached the given value.
+		/// Checks if the <c>Score</c> in the current game session has reached the given value.
 		/// </summary>
-		/// <returns><c>true</c> if this score has reached the given scoreVal; otherwise, 
-		/// <c>false</c>.</returns>
-		/// <param name="scoreVal">Score value.</param>
+		/// <returns>If this <c>Score</c> has reached the given scoreVal returns <c>true</c>; 
+		/// otherwise <c>false</c>.</returns>
+		/// <param name="scoreVal">numeric score value.</param>
 		public bool HasTempReached(double scoreVal) {
 			return HasScoreReached(_tempScore, scoreVal);
 		}
 
 		/// <summary>
-		/// Determines if this score has reached a record value of the given scoreVal.
+		/// Determines if this <c>Score</c> has reached a record value of the given <c>scoreVal</c>.
 		/// </summary>
-		/// <returns><c>true</c> if this score has reached the given record; otherwise, 
-		/// <c>false</c>.</returns>
-		/// <param name="scoreVal">Score value.</param>
+		/// <returns>If this score has reached the given record returns <c>true</c>; 
+		/// otherwise <c>false</c>.</returns>
+		/// <param name="scoreVal">numeric score value.</param>
 		public bool HasRecordReached(double scoreVal) {
 			double record = ScoreStorage.GetRecordScore(this); 
 			return HasScoreReached(record, scoreVal);
 		}
 
 		/// <summary>
-		/// Score can sometimes have additional actions associated with reaching/saving it.
-		/// Override this method to add specific score behavior.
+		/// <c>Score</c> can sometimes have additional actions associated with reaching/saving it.
+		/// Override this method to add specific <c>Score</c> behavior.
 		/// </summary>
 		protected virtual void performSaveActions() {}
 
 		/// <summary>
-		/// Determines which of the two given scores is better (based on this score's definition
-		/// of better - higher or lower).
+		/// Determines which of the two given <c>Score</c>s is better (based on this <c>Score</c>'s 
+		/// definition of better - higher or lower).
 		/// </summary>
-		/// <returns>If score1 is higher than score2 returns <c>true</c>; otherwise <c>false</c>.
-		/// <c>false</c>.</returns>
+		/// <returns>If score1 is higher than score2 returns <c>true</c>; otherwise <c>false</c>.</returns>
 		/// <param name="score1">Score1 to compare.</param>
 		/// <param name="score2">Score2 to compare.</param>
 		private bool HasScoreReached(double score1, double score2) {
@@ -195,7 +207,11 @@ namespace Soomla.Levelup {
 					(score1 <= score2);
 		}
 
-
+		/// <summary>
+		/// Sets the temp score to be the given <c>score</c>, and checks if the given <c>score</c> 
+		/// breaks a record - if so, triggers the score-record-reached event.
+		/// </summary>
+		/// <param name="score">Score to compare to temp score.</param>
 		public virtual void SetTempScore(double score) {
 			SetTempScore(score, false);
 		}
@@ -210,12 +226,16 @@ namespace Soomla.Levelup {
 			_tempScore = score;
 		}
 
+		/// <summary>
+		/// Retrieves the temp <c>Score</c>.
+		/// </summary>
+		/// <returns>The temp <c>Score</c>.</returns>
 		public virtual double GetTempScore() {
 			return _tempScore;
 		}
 
 		/// <summary>
-		/// Retrieves the record of this score.
+		/// Retrieves the record of this <c>Score</c>.
 		/// </summary>
 		/// <returns>The record.</returns>
 		public double Record {
@@ -225,7 +245,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Retrieves the most recently saved value of this score.
+		/// Retrieves the most recently saved value of this <c>Score</c>.
 		/// </summary>
 		/// <returns>The latest score.</returns>
 		public double Latest {
@@ -235,7 +255,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// /// <summary>
-		/// Clones this score and gives it the given ID.
+		/// Clones this <c>Score</c> and gives it the given ID.
 		/// </summary>
 		/// <param name="newScoreId">Cloned score ID.</param>
 		public override Score Clone(string newScoreId) {

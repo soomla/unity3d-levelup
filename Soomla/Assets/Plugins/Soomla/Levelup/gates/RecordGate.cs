@@ -20,19 +20,29 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// A specific type of <c>Gate</c> that has an associated score and a desired record. 
-	/// The gate opens once the player achieves the desired record for the given score.
+	/// The <c>Gate</c> opens once the player achieves the desired record for the given score.
 	/// </summary>
 	public class RecordGate : Gate
 	{
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private const string TAG = "SOOMLA RecordGate";
 
+		/// <summary>
+		/// ID of the <c>Score</c> whose record is examined.
+		/// </summary>
 		public string AssociatedScoreId;
+
+		/// <summary>
+		/// The desired record of the associated <c>Score</c>.
+		/// </summary>
 		public double DesiredRecord;
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Gate ID.</param>
+		/// <param name="id">ID.</param>
 		/// <param name="associatedScoreId">Associated score ID.</param>
 		/// <param name="desiredRecord">Desired record.</param>
 		public RecordGate(string id, string associatedScoreId, double desiredRecord)
@@ -54,7 +64,7 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Converts this gate to a JSONObject.
+		/// Converts this <c>Gate</c> to a JSONObject.
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
@@ -82,9 +92,9 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Opens this gate if the score-record-changed event causes the gate's criteria to be met.
+		/// Opens this <c>Gate</c> if the score-record-changed event causes the <c>Gate</c>'s criteria to be met.
 		/// </summary>
-		/// <param name="score">The score whose record has changed.</param>
+		/// <param name="score">The <c>Score</c> whose record has changed.</param>
 		/// @subscribe
 		public void onScoreRecordChanged(Score score) {
 			if (score.ID == AssociatedScoreId &&
@@ -97,33 +107,29 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this gate meets its criteria for opening, by checking if this gate's
-		/// associated score has reached the desired record. 
+		/// Checks if this <c>Gate</c> meets its criteria for opening, by checking if this <c>Gate</c>'s
+		/// associated <c>Score</c> has reached the desired record. 
 		/// </summary>
-		/// <returns>If the gate can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
+		/// <returns>If the <c>Gate</c> can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			Score score = LevelUp.GetInstance().GetScore(AssociatedScoreId);
 			if (score == null) {
 				SoomlaUtils.LogError(TAG, "(canOpenInner) couldn't find score with scoreId: " + AssociatedScoreId);
 				return false;
 			}
-
 			return score.HasRecordReached(DesiredRecord);
 		}
 
 		/// <summary>
-		/// Opens this gate if it can be opened (its criteria has been met).
+		/// Opens this <c>Gate</c> if it can be opened (its criteria has been met).
 		/// </summary>
-		/// <returns>If the gate has been opened returns <c>true</c>; otherwise <c>false</c>.</returns>
+		/// <returns>Upon success of opening returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
-
 				// There's nothing to do here... If the DesiredRecord was reached then the gate is just open.
-
 				ForceOpen(true);
 				return true;
 			}
-			
 			return false;
 		}
 

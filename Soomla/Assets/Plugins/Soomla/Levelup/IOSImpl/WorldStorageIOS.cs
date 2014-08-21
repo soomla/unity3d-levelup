@@ -18,6 +18,11 @@ using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// <c>WorldStorage</c> for iOS.
+	/// A utility class for persisting and querying <c>World</c>s.
+	/// Use this class to get or set the completion of <c>World</c>s and assign rewards.
+	/// </summary>
 	public class WorldStorageIOS : WorldStorage {
 #if UNITY_IOS && !UNITY_EDITOR
 	

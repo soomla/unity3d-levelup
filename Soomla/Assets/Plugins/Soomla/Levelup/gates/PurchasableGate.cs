@@ -20,20 +20,26 @@ using Soomla.Store;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A specific type of <c>Gate</c> that has an associated market item. The gate 
-	/// opens once the item has been purchased. This gate is useful when you want to 
-	/// allow unlocking of certain levels or worlds only if they are purchased.
+	/// A specific type of <c>Gate</c> that has an associated market item. The <c>Gate</c> 
+	/// opens once the item has been purchased. This <c>Gate</c> is useful when you want to 
+	/// allow unlocking of certain <c>Level</c>s or <c>World</c>s only if they are purchased.
 	/// </summary>
 	public class PurchasableGate : Gate
 	{
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private const string TAG = "SOOMLA PurchasableGate";
 
+		/// <summary>
+		/// ID of the item who needs to be purchased.
+		/// </summary>
 		public string AssociatedItemId;
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Gate ID.</param>
+		/// <param name="id">ID.</param>
 		/// <param name="associatedItemId">Associated item ID.</param>
 		public PurchasableGate(string id, string associatedItemId)
 			: base(id)
@@ -52,7 +58,7 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Converts this gate to JSONObject.
+		/// Converts this <c>Gate</c> to JSONObject.
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
@@ -63,7 +69,7 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Registers relevant events: item purchased event.
+		/// Registers relevant events: item-purchased event.
 		/// </summary>
 		protected override void registerEvents() {
 			if (!IsOpen()) {
@@ -72,14 +78,14 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Unregisters relevant events: item purchased event.
+		/// Unregisters relevant events: item-purchased event.
 		/// </summary>
 		protected override void unregisterEvents() {
 			StoreEvents.OnItemPurchased -= onItemPurchased;
 		}
 
 		/// <summary>
-		/// Opens this gate if the item-purchased event causes the gate's criteria to be met.
+		/// Opens this <c>Gate</c> if the item-purchased event causes the <c>Gate</c>'s criteria to be met.
 		/// </summary>
 		/// <param name="pvi">The item that was purchased.</param>
 		/// <param name="payload">Payment ID of the item purchased.</param>
@@ -91,8 +97,8 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this gate meets its criteria for opening. For this type of gate, it is
-		/// always true because at any time the user may purchase the item associated with the
+		/// Checks if this <c>Gate</c> meets its criteria for opening. For this type of <c>Gate</c>, 
+		/// it is always true because at any time the user may purchase the item associated with the
 		/// opening of this gate. 
 		/// </summary>
 		/// <returns>Always <c>true</c>.</returns>
@@ -101,7 +107,7 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Opens this gate by buying its associated item.
+		/// Opens this <c>Gate</c> by buying its associated item.
 		/// </summary>
 		/// <returns>If purchase was successfully made returns <c>true</c>; otherwise 
 		/// <c>false</c>.</returns>

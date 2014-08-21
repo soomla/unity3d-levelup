@@ -22,28 +22,52 @@ using Soomla;
 namespace Soomla.Levelup {
 
 	/// <summary>
-	/// A game can have multiple worlds or a single one, and worlds can also contain other 
-	/// worlds in them. A world can contain a set of levels, or multiple sets of levels. 
-	/// A world can also have a gate that defines the criteria to enter it. Games that don’t 
-	/// have the concept of worlds can be modeled as single world games. 
+	/// A game can have multiple <c>World</c>s or a single one, and <c>World</c>s can also contain other 
+	/// <c>World</c>s in them. A <c>World</c> can contain a set of <c>Level</c>s, or multiple sets of  
+	/// <c>Level</c>s. A <c>World</c> can also have a <c>Gate</c> that defines the criteria to enter it. 
+	/// Games that don’t have the concept of <c>World</c>s can be modeled as single <c>World</c> games. 
 	/// 
-	/// Real Game Example: "Candy Crush" uses worlds.
+	/// Real Game Example: "Candy Crush" uses <c>World</c>s.
 	/// </summary>
 	public class World : SoomlaEntity<World> {
 
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private static string TAG = "SOOMLA World";
+
+		/// <summary>
+		/// <c>Gate</c> that defines the criteria to enter this <c>World</c>.
+		/// </summary>
 		public Gate Gate;
+
+		/// <summary>
+		/// A map of the <c>World</c>s included in this <c>World</c>.
+		/// </summary>
 		public Dictionary<string, World> InnerWorldsMap = new Dictionary<string, World>();
+
+		/// <summary>
+		/// The <c>Score</c>s associated with this <c>World</c>.
+		/// </summary>
+		public Dictionary<string, Score> Scores = new Dictionary<string, Score>();
+
+		/// <summary>
+		/// <c>Missions</c> in this <c>World</c>.
+		/// </summary>
+		public List<Mission> Missions = new List<Mission>();
+
+		/// <summary>
+		/// Gets the inner <c>World</c>s list.
+		/// </summary>
+		/// <value>The inner worlds list.</value>
 		public List<World> InnerWorldsList {
 			get { return InnerWorldsMap.Values.ToList(); }
-		}
-		public Dictionary<string, Score> Scores = new Dictionary<string, Score>();
-		public List<Mission> Missions = new List<Mission>();
+		}  
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">ID of this world.</param>
+		/// <param name="id">ID.</param>
 		public World(String id)
 			: base(id)
 		{
@@ -52,11 +76,12 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">ID of this World.</param>
-		/// <param name="gate">Gate that needs to be unlocked in order to enter this World.</param>
-		/// <param name="innerWorlds">A list of worlds contained within this one.</param>
-		/// <param name="scores">Scores of this World.</param>
-		/// <param name="missions">Missions that are available in this World.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="gate">A <c>Gate</c> that needs to be unlocked in order to enter this 
+		/// <c>World</c>.</param>
+		/// <param name="innerWorlds">A list of <c>World</c>s contained within this one.</param>
+		/// <param name="scores">Scores of this <c>World</c>.</param>
+		/// <param name="missions"><c>Missions</c>s that are available in this <c>World</c>.</param>
 		public World(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Mission> missions)
 			: base(id)
 		{
@@ -67,7 +92,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Constructs a World from a JSON object. 
+		/// Constructs a <c>World</c> from a JSON object. 
 		/// </summary>
 		/// <param name="jsonWorld">Json World.</param>
 		public World(JSONObject jsonWorld)
@@ -112,7 +137,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Converts this World into a JSON object. 
+		/// Converts this <c>World</c> into a JSON object. 
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
@@ -142,7 +167,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Converts the given JSON object into a World.
+		/// Converts the given JSON object into a <c>World</c>.
 		/// </summary>
 		/// <returns>The JSON object to be converted.</returns>
 		/// <param name="worldObj">World object.</param>
@@ -163,11 +188,10 @@ namespace Soomla.Levelup {
 		}
 #endif
 
-
 		/** Add elements to world. **/
 
 		/// <summary>
-		/// Adds the given inner world to this World.
+		/// Adds the given inner <c>World</c> to this <c>World</c>.
 		/// </summary>
 		/// <param name="world">World to be added.</param>
 		public void AddInnerWorld(World world) {
@@ -175,7 +199,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Adds the given mission to this World.
+		/// Adds the given <c>Mission</c> to this <c>World</c>.
 		/// </summary>
 		/// <param name="mission">Mission to be added.</param>
 		public void AddMission(Mission mission) {
@@ -183,7 +207,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Adds the given score to this World.
+		/// Adds the given <c>Score</c> to this <c>World</c>.
 		/// </summary>
 		/// <param name="score">Score to be added.</param>
 		public void AddScore(Score score) {
@@ -194,9 +218,9 @@ namespace Soomla.Levelup {
 		/** Automatic generation of levels. **/
 
 		/// <summary>
-		/// Auto-generates an ID for a level, according to the given world ID and level index.
+		/// Auto-generates an ID for a <c>Level</c>, according to the given ID and index.
 		/// </summary>
-		/// <returns>The auto-generated ID for the level.</returns>
+		/// <returns>The auto-generated ID for the <c>Level</c>.</returns>
 		/// <param name="id">World ID.</param>
 		/// <param name="idx">Level index.</param>
 		private string IdForAutoGeneratedLevel(string id, int idx) {
@@ -204,9 +228,9 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Auto-generates an ID for a score, according to the given world ID and score index.
+		/// Auto-generates an ID for a <c>Score</c>, according to the given ID and index.
 		/// </summary>
-		/// <returns>The auto-generated ID for the score.</returns>
+		/// <returns>The auto-generated ID for the <c>Score</c>.</returns>
 		/// <param name="id">World ID.</param>
 		/// <param name="idx">Score index.</param>
 		private string IdForAutoGeneratedScore(string id, int idx) {
@@ -214,18 +238,18 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Auto-generates an ID for a gate, according to the given level ID.
+		/// Auto-generates an ID for a <c>Gate</c>, according to the given ID.
 		/// </summary>
-		/// <returns>The auto-generated ID for the gate.</returns>
+		/// <returns>The auto-generated ID for the <c>Gate</c>.</returns>
 		/// <param name="id">Level ID.</param>
 		private string IdForAutoGeneratedGate(string id) {
 			return id + "_gate";
 		}
 
 		/// <summary>
-		/// Auto-generates an ID for a mission, according to the given world ID and mission index.
+		/// Auto-generates an ID for a <c>Mission</c>, according to the given ID and index.
 		/// </summary>
-		/// <returns>The auto-generated ID for the mission.</returns>
+		/// <returns>The auto-generated ID for the <c>Mission</c>.</returns>
 		/// <param name="id">World ID.</param>
 		/// <param name="idx">Mission index.</param>
 		private string IdForAutoGeneratedMission(string id, int idx) {
@@ -233,13 +257,13 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Creates a batch of levels and adds them to this world. This function will save you a lot of time - 
-		/// instead of creating many levels one by one, you can create them all at once.
+		/// Creates a batch of <c>Level</c>s and adds them to this <c>World</c>. This function will save you 
+		/// a lot of time - instead of creating many levels one by one, you can create them all at once.
 		/// </summary>
-		/// <param name="numLevels">The number of levels to be added to this world.</param>
-		/// <param name="gateTemplate">The gate for the levels.</param>
-		/// <param name="scoreTemplate">Score template for the levels.</param>
-		/// <param name="missionTemplate">Mission template for the levels.</param>
+		/// <param name="numLevels">The number of <c>Level</c>s to be added to this <c>World</c>.</param>
+		/// <param name="gateTemplate">The <c>Gate</c> for the levels.</param>
+		/// <param name="scoreTemplate"><c>Score</c> template for the <c>Level</c>s.</param>
+		/// <param name="missionTemplate"><c>Mission</c> template for the <c>Level</c>s.</param>
 		public void BatchAddLevelsWithTemplates(int numLevels, Gate gateTemplate, Score scoreTemplate, Mission missionTemplate) {
 			List<Score> scoreTemplates = new List<Score>();
 			if (scoreTemplate != null) {
@@ -279,7 +303,7 @@ namespace Soomla.Levelup {
 		/** For Single Score **/
 
 		/// <summary>
-		/// Sets the single score value to the given amount.
+		/// Sets the single <c>Score</c> value to the given amount.
 		/// </summary>
 		/// <param name="amount">Amount to set.</param>
 		public void SetSingleScoreValue(double amount) {
@@ -290,7 +314,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Decreases the single score value by the given amount.
+		/// Decreases the single <c>Score</c> value by the given amount.
 		/// </summary>
 		/// <param name="amount">Amount to decrease by.</param>
 		public void DecSingleScore(double amount) {
@@ -301,7 +325,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Increases the single score value by the given amount.
+		/// Increases the single <c>Score</c> value by the given amount.
 		/// </summary>
 		/// <param name="amount">Amount to increase by.</param>
 		public void IncSingleScore(double amount) {
@@ -312,7 +336,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Returns the single score value.
+		/// Retrieves the single <c>Score</c> value.
 		/// </summary>
 		/// <returns>The single score.</returns>
 		public Score GetSingleScore() {
@@ -323,9 +347,9 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Sums the inner world records.
+		/// Sums the inner <c>World</c> records.
 		/// </summary>
-		/// <returns>The sum of inner world records.</returns>
+		/// <returns>The sum of inner <c>World</c> records.</returns>
 		public double SumInnerWorldsRecords() {
 			double ret = 0;
 			foreach(World world in InnerWorldsList) {
@@ -338,7 +362,7 @@ namespace Soomla.Levelup {
 		/** For more than one Score **/
 
 		/// <summary>
-		/// Resets the scores for this world.
+		/// Resets the <c>Score</c>s for this <c>World</c>.
 		/// </summary>
 		/// <param name="save">If set to <c>true</c> save.</param>
 		public void ResetScores(bool save) {
@@ -353,27 +377,27 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Decreases the score with the given ID by the given amount.
+		/// Decreases the <c>Score</c> with the given ID by the given amount.
 		/// </summary>
-		/// <param name="scoreId">ID of the score to be decreased.</param>
+		/// <param name="scoreId">ID of the <c>Score</c> to be decreased.</param>
 		/// <param name="amount">Amount to decrease by.</param>
 		public void DecScore(string scoreId, double amount) {
 			Scores[scoreId].Dec(amount);
 		}
 
 		/// <summary>
-		/// Increases the score with the given ID by the given amount.
+		/// Increases the <c>Score</c> with the given ID by the given amount.
 		/// </summary>
-		/// <param name="scoreId">ID of the score to be increased.</param>
+		/// <param name="scoreId">ID of the <c>Score</c> to be increased.</param>
 		/// <param name="amount">Amount.</param>
 		public void IncScore(string scoreId, double amount) {
 			Scores[scoreId].Inc(amount);
 		}
 
 		/// <summary>
-		/// Gets the record scores.
+		/// Retrieves the record <c>Score</c>s.
 		/// </summary>
-		/// <returns>A dictionary of the record scores - each score ID with its record.</returns>
+		/// <returns>The record <c>Score</c>s - each <c>Score</c> ID with its record.</returns>
 		public Dictionary<string, double> GetRecordScores() {
 			Dictionary<string, double> records = new Dictionary<string, double>();
 			foreach(Score score in Scores.Values) {
@@ -384,9 +408,9 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the latest scores.
+		/// Retrieves the latest <c>Score</c>s.
 		/// </summary>
-		/// <returns>A dictionary of the latest scores - each ID with its record..</returns>
+		/// <returns>The latest <c>Score</c>s - each <c>Score</c> ID with its record.</returns>
 		public Dictionary<string, double> GetLatestScores() {
 			Dictionary<string, double> latest = new Dictionary<string, double>();
 			foreach (Score score in Scores.Values) {
@@ -397,9 +421,9 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Sets the score with the given ID to have the given value.
+		/// Sets the <c>Score</c> with the given ID to have the given value.
 		/// </summary>
-		/// <param name="id">Score whose value is to be set.</param>
+		/// <param name="id"><c>Score</c> whose value is to be set.</param>
 		/// <param name="scoreVal">Value to set.</param>
 		public void SetScoreValue(string id, double scoreVal) {
 			SetScoreValue(id, scoreVal, false);
@@ -417,7 +441,7 @@ namespace Soomla.Levelup {
 		/** Completion **/
 
 		/// <summary>
-		/// Determines whether this world is completed.
+		/// Determines whether this <c>World</c> is completed.
 		/// </summary>
 		/// <returns><c>true</c> if this instance is completed; otherwise, <c>false</c>.</returns>
 		public bool IsCompleted() {
@@ -425,7 +449,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Sets this world as completed.
+		/// Sets this <c>World</c> as completed.
 		/// </summary>
 		/// <param name="completed">If set to <c>true</c> completed.</param>
 		public virtual void SetCompleted(bool completed) {
@@ -444,7 +468,7 @@ namespace Soomla.Levelup {
 		/** Reward Association **/
 
 		/// <summary>
-		/// Assigns the given reward to this world.
+		/// Assigns the given reward to this <c>World</c>.
 		/// </summary>
 		/// <param name="reward">Reward to assign.</param>
 		public void AssignReward(Reward reward) {
@@ -467,7 +491,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the assigned reward ID.
+		/// Retrieves the assigned reward ID.
 		/// </summary>
 		/// <returns>The assigned reward ID.</returns>
 		public String GetAssignedRewardId() {
@@ -475,8 +499,8 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Returns true if this world is available for starting, based on  
-		/// either if there is no gate for this world, or if the gate is open.
+		/// Determines if this world is available for starting, based on either if there 
+		/// is no <c>Gate</c> for this <c>World</c>, or if the <c>Gate</c> is open.
 		/// </summary>
 		/// <returns><c>true</c> if this instance can start; otherwise, <c>false</c>.</returns>
 		public bool CanStart() {

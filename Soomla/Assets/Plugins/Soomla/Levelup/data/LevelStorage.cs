@@ -18,15 +18,26 @@ using System;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A utility class for persisting and querying the state of levels. 
-	/// Use this class to check if a certain gate is open, or to open it.
+	/// A utility class for persisting and querying the state of <c>Level</c>s. 
+	/// Use this class to check if a certain <c>Gate</c> is open, or to open it.
 	/// </summary>
 	public class LevelStorage
 	{
-
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		protected const string TAG = "SOOMLA LevelStorage"; // used for Log error messages
 
+		/// <summary>
+		/// Holds an instance of <c>LevelStorage</c> or <c>LevelStorageAndroid</c> or <c>LevelStorageIOS</c>.
+		/// </summary>
 		static LevelStorage _instance = null;
+
+		/// <summary>
+		/// Determines which <c>LevelStorage</c> to use according to the platform in use
+		/// and if the Unity Editor is being used. 
+		/// </summary>
+		/// <value>The instance to use.</value>
 		static LevelStorage instance {
 			get {
 				if(_instance == null) {
@@ -41,108 +52,64 @@ namespace Soomla.Levelup
 				return _instance;
 			}
 		}
-			
-		/** Level Durations **/
 
-		/// <summary>
-		/// Sets the slowest (given) duration for the given level.
-		/// </summary>
-		/// <param name="level">Level to set slowest duration.</param>
-		/// <param name="duration">Duration to set.</param>
+
+		/** The following functions call the relevant instance-specific functions. **/
+			
+		/** LEVEL DURATIONS **/
+	
 		public static void SetSlowestDurationMillis(Level level, long duration) {
 			instance._setSlowestDurationMillis(level, duration);	
 		}
 
-		/// <summary>
-		/// Retrieves the slowest duration for the given level.
-		/// </summary>
-		/// <returns>The slowest duration of the given level.</returns>
-		/// <param name="level">Level to get slowest duration.</param>
 		public static long GetSlowestDurationMillis(Level level) {
 			return instance._getSlowestDurationMillis(level);
 		}
 
-		/// <summary>
-		/// Sets the fastest (given) duration for the given level.
-		/// </summary>
-		/// <param name="level">Level to set fastest duration.</param>
-		/// <param name="duration">Duration to set.</param>
 		public static void SetFastestDurationMillis(Level level, long duration) {
 			instance._setFastestDurationMillis(level, duration);
 		}
 
-		/// <summary>
-		/// Gets the fastest duration for the given level.
-		/// </summary>
-		/// <returns>The fastest duration of the given level.</returns>
-		/// <param name="level">Level to get fastest duration.</param>
 		public static long GetFastestDurationMillis(Level level) {
 			return instance._getFastestDurationMillis(level);
 		}
-		
 
-		/** Level Times Started **/
+		/** LEVEL TIMES STARTED **/
 
-		/// <summary>
-		/// Increases by 1 the number of times the given level has been started. 
-		/// </summary>
-		/// <returns>The number of times started after increasing.</returns>
-		/// <param name="level">Level to increase its times started.</param>
 		public static int IncTimesStarted(Level level) {
 			return instance._incTimesStarted (level);
 		}
 
-		/// <summary>
-		/// Decreases by 1 the number of times the given level has been started. 
-		/// </summary>
-		/// <returns>The number of times started after decreasing.</returns>
-		/// <param name="level">Level to decrease its times started.</param>
 		public static int DecTimesStarted(Level level) {
 			return instance._decTimesStarted (level);
 		}
 
-		/// <summary>
-		/// Retrieves the number of times this level has been started. 
-		/// </summary>
-		/// <returns>The number of times started.</returns>
-		/// <param name="level">Level whose times started is to be retrieved.</param>
 		public static int GetTimesStarted(Level level) {
 			return instance._getTimesStarted (level);
 		}
-		
-		
-		/** Level Times Played **/
 
-		/// <summary>
-		/// Increases by 1 the number of times the given level has been played. 
-		/// </summary>
-		/// <returns>The number of times played after increasing.</returns>
-		/// <param name="level">Level to increase its times played.</param>
+		/** LEVEL TIMES PLAYED **/
+
 		public static int IncTimesPlayed(Level level) {
 			return instance._incTimesPlayed (level);
 		}
 
-		/// <summary>
-		/// Decreases by 1 the number of times the given level has been played. 
-		/// </summary>
-		/// <returns>The number of times played after decreasing.</returns>
-		/// <param name="level">Level to decrease its times played.</param>
 		public static int DecTimesPlayed(Level level){
 			return instance._decTimesPlayed (level);
 		} 
 
-		/// <summary>
-		/// Retrieves the number of times this level has been played. 
-		/// </summary>
-		/// <returns>The number of times played.</returns>
-		/// <param name="level">Level whose times played is to be retrieved.</param>
 		public static int GetTimesPlayed(Level level) {
 			return instance._getTimesPlayed (level);
 		}
 
 
-		/** Level Durations Helpers **/
+		/** Unity-Editor Functions **/
 
+		/// <summary>
+		/// Sets the slowest (given) duration for the given level.
+		/// </summary>
+		/// <param name="level"><c>Level</c> to set slowest duration.</param>
+		/// <param name="duration">Duration to set.</param>
 		protected virtual void _setSlowestDurationMillis(Level level, long duration) {
 #if UNITY_EDITOR
 			string key = keySlowestDuration (level.ID);
@@ -150,7 +117,12 @@ namespace Soomla.Levelup
 			PlayerPrefs.SetString (key, val);
 #endif
 		}
-		
+
+		/// <summary>
+		/// Retrieves the slowest duration for the given level.
+		/// </summary>
+		/// <returns>The slowest duration of the given <c>Level</c>.</returns>
+		/// <param name="level"><c>Level</c> to get slowest duration.</param>
 		protected virtual long _getSlowestDurationMillis(Level level) {
 #if UNITY_EDITOR
 			string key = keySlowestDuration (level.ID);
@@ -160,7 +132,12 @@ namespace Soomla.Levelup
 			return 0;
 #endif
 		}
-		
+
+		/// <summary>
+		/// Sets the fastest (given) duration for the given <c>Level</c>.
+		/// </summary>
+		/// <param name="level"><c>Level</c> to set fastest duration.</param>
+		/// <param name="duration">Duration to set.</param>
 		protected virtual void _setFastestDurationMillis(Level level, long duration) {
 #if UNITY_EDITOR
 			string key = keyFastestDuration (level.ID);
@@ -169,6 +146,11 @@ namespace Soomla.Levelup
 #endif
 		}
 		
+		/// <summary>
+		/// Gets the fastest duration for the given <c>Level</c>.
+		/// </summary>
+		/// <returns>The fastest duration of the given <c>Level</c>.</returns>
+		/// <param name="level"><c>Level</c> to get fastest duration.</param>
 		protected virtual long _getFastestDurationMillis(Level level) {
 #if UNITY_EDITOR
 			string key = keyFastestDuration (level.ID);
@@ -179,9 +161,11 @@ namespace Soomla.Levelup
 #endif
 		}
 		
-
-		/** Level Times Started Helpers **/
-		
+		/// <summary>
+		/// Increases by 1 the number of times the given <c>Level</c> has been started. 
+		/// </summary>
+		/// <returns>The number of times started after increasing.</returns>
+		/// <param name="level"><c>Level</c> to increase its times started.</param>
 		protected virtual int _incTimesStarted(Level level) {
 #if UNITY_EDITOR
 			int started = _getTimesStarted(level);
@@ -201,6 +185,11 @@ namespace Soomla.Levelup
 #endif
 		}
 		
+		/// <summary>
+		/// Decreases by 1 the number of times the given <c>Level</c> has been started. 
+		/// </summary>
+		/// <returns>The number of times started after decreasing.</returns>
+		/// <param name="level"><c>Level</c> to decrease its times started.</param>
 		protected virtual int _decTimesStarted(Level level) {
 #if UNITY_EDITOR
 			int started = _getTimesStarted(level);
@@ -217,6 +206,11 @@ namespace Soomla.Levelup
 #endif
 		}
 		
+		/// <summary>
+		/// Retrieves the number of times this <c>Level</c> has been started. 
+		/// </summary>
+		/// <returns>The number of times started.</returns>
+		/// <param name="level"><c>Level</c> whose times started is to be retrieved.</param>
 		protected virtual int _getTimesStarted(Level level) {
 #if UNITY_EDITOR
 			string key = keyTimesStarted(level.ID);
@@ -232,10 +226,12 @@ namespace Soomla.Levelup
 			return 0;
 #endif
 		}
-		
 
-		/** Level Times Played Helpers **/
-		
+		/// <summary>
+		/// Increases by 1 the number of times the given <c>Level</c> has been played. 
+		/// </summary>
+		/// <returns>The number of times played after increasing.</returns>
+		/// <param name="level"><c>Level</c> to increase its times played.</param>
 		protected virtual int _incTimesPlayed(Level level) {
 #if UNITY_EDITOR
 			int played = _getTimesPlayed(level);
@@ -255,6 +251,11 @@ namespace Soomla.Levelup
 #endif
 		}
 		
+		/// <summary>
+		/// Decreases by 1 the number of times the given <c>Level</c> has been played. 
+		/// </summary>
+		/// <returns>The number of times played after decreasing.</returns>
+		/// <param name="level"><c>Level</c> to decrease its times played.</param>
 		protected virtual int _decTimesPlayed(Level level){
 #if UNITY_EDITOR
 			int played = _getTimesPlayed(level);
@@ -271,6 +272,11 @@ namespace Soomla.Levelup
 #endif
 		} 
 		
+		/// <summary>
+		/// Retrieves the number of times this <c>Level</c> has been played. 
+		/// </summary>
+		/// <returns>The number of times played.</returns>
+		/// <param name="level"><c>Level</c> whose times played is to be retrieved.</param>
 		protected virtual int _getTimesPlayed(Level level) {
 #if UNITY_EDITOR
 			string key = keyTimesPlayed(level.ID);
@@ -288,7 +294,7 @@ namespace Soomla.Levelup
 		}
 
 
-		/** Keys **/
+		/** Keys (private helper functions if Unity Editor is being used.) **/
 
 #if UNITY_EDITOR
 		private static string keyLevels(string levelId, string postfix) {

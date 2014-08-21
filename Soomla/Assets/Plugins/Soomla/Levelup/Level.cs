@@ -19,10 +19,10 @@ using System.Collections.Generic;
 namespace Soomla.Levelup {
 
 	/// <summary>
-	/// A level is a type of world, while a world contains a set of levels. Each level always has a 
-	/// state that is one of: idle, running, paused, ended, or completed. 
+	/// A <c>Level</c> is a type of <c>World</c>, while a <c>World</c> contains a set of <c>Level</c>s. 
+	/// Each <c>Level</c> always has a state that is one of: idle, running, paused, ended, or completed. 
 	/// 
-	/// Real Game Examples: "Candy Crush" and "Angry Birds" use levels.
+	/// Real Game Examples: "Candy Crush" and "Angry Birds" use <c>Level</c>s.
 	/// </summary>
 	public class Level : World {
 
@@ -34,16 +34,30 @@ namespace Soomla.Levelup {
 			Completed
 		}
 
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private const string TAG = "SOOMLA Level";
+
+		/// <summary>
+		/// The start time of this <c>Level</c>.
+		/// </summary>
 		private long StartTime;
+
+		/// <summary>
+		/// The elapsed time this <c>Level</c> is being played. 
+		/// </summary>
 		private long Elapsed;
-		
+
+		/// <summary>
+		/// Initial state. 
+		/// </summary>
 		public LevelState State = LevelState.Idle;
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">ID of this level.</param>
+		/// <param name="id">ID.</param>
 		public Level(String id)
 			: base(id) 
 		{
@@ -52,10 +66,10 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">ID of this world.</param>
-		/// <param name="gate">Gate of this level.</param>
-		/// <param name="scores">Scores of this level.</param>
-		/// <param name="missions">Missions of this level.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="gate">Gate to unlock this <c>Level</c>.</param>
+		/// <param name="scores">Scores of this <c>Level</c>.</param>
+		/// <param name="missions">Missions of this <c>Level</c>.</param>
 		public Level(string id, Gate gate, Dictionary<string, Score> scores, List<Mission> missions)
 			: base(id, gate, new Dictionary<string, World>(), scores, missions)
 		{
@@ -64,11 +78,11 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">ID of this world.</param>
-		/// <param name="gate">Gate of this level.</param>
-		/// <param name="innerWorlds">Inner worlds of this level.</param>
-		/// <param name="scores">Scores of this level.</param>
-		/// <param name="missions">Missions of this level.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="gate">Gate to unlock this <c>Level</c>.</param>
+		/// <param name="innerWorlds">Inner <c>Level</c>s of this <c>Level</c>.</param>
+		/// <param name="scores">Scores of this <c>Level</c>.</param>
+		/// <param name="missions">Missions of this <c>Level</c>.</param>
 		public Level(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Mission> missions)
 			: base(id, gate, innerWorlds, scores, missions)
 		{
@@ -84,7 +98,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Converts the given JSON object into a Level.
+		/// Converts the given JSON object into a <c>Level</c>.
 		/// </summary>
 		/// <returns>Level constructed.</returns>
 		/// <param name="levelObj">The JSON object to be converted.</param>
@@ -97,7 +111,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the number of times this level was started.
+		/// Gets the number of times this <c>Level</c> was started.
 		/// </summary>
 		/// <returns>The number of times started.</returns>
 		public int GetTimesStarted() {
@@ -105,7 +119,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the number of times this level was played. 
+		/// Gets the number of times this <c>Level</c> was played. 
 		/// </summary>
 		/// <returns>The number of times played.</returns>
 		public int GetTimesPlayed() {
@@ -113,7 +127,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the slowest duration in millis that this level was played.
+		/// Gets the slowest duration in millis that this <c>Level</c> was played.
 		/// </summary>
 		/// <returns>The slowest duration in millis.</returns>
 		public long GetSlowestDurationMillis() {
@@ -121,16 +135,30 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the fastest duration in millis that this level was played.
+		/// Gets the fastest duration in millis that this <c>Level</c> was played.
 		/// </summary>
 		/// <returns>The fastest duration in millis.</returns>
 		public long GetFastestDurationMillis() {
 			return LevelStorage.GetFastestDurationMillis(this);
 		}
 
+		/// <summary>
+		/// Gets the play duration of this <c>Level</c> in millis.
+		/// </summary>
+		/// <returns>The play duration in millis.</returns>
+		public long GetPlayDurationMillis() {
+			
+			long now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+			long duration = Elapsed;
+			if (StartTime != 0) {
+				duration += now - StartTime;
+			}
+			
+			return duration;
+		}
 
 		/// <summary>
-		/// Starts this level.
+		/// Starts this <c>Level</c>.
 		/// </summary>
 		public bool Start() {
 			if (State == LevelState.Running) {
@@ -154,7 +182,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Pauses this level.
+		/// Pauses this <c>Level</c>.
 		/// </summary>
 		public void Pause() {
 			if (State != LevelState.Running) {
@@ -169,22 +197,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Gets the play duration of this level in millis.
-		/// </summary>
-		/// <returns>The play duration in millis.</returns>
-		public long GetPlayDurationMillis() {
-			
-			long now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-			long duration = Elapsed;
-			if (StartTime != 0) {
-				duration += now - StartTime;
-			}
-			
-			return duration;
-		}
-
-		/// <summary>
-		/// Ends this level.
+		/// Ends this <c>Level</c>.
 		/// </summary>
 		/// <param name="completed">If set to <c>true</c> completed.</param>
 		public void End(bool completed) {
@@ -226,7 +239,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Restarts this level. 
+		/// Restarts this <c>Level</c>.
 		/// </summary>
 		/// <param name="completed">If set to <c>true</c> completed.</param>
 		public void Restart(bool completed) {
@@ -237,7 +250,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Sets this level as completed. 
+		/// Sets this <c>Level</c> as completed. 
 		/// </summary>
 		/// <param name="completed">If set to <c>true</c> completed.</param>
 		public override void SetCompleted(bool completed) {

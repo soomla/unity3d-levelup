@@ -18,6 +18,11 @@ using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// <c>GateStorage</c> for iOS.
+	/// A utility class for persisting and querying the state of <c>Gate</c>s.
+	/// Use this class to check if a certain <c>Gate</c> is open, or to open it.
+	/// </summary>
 	public class GateStorageIOS : GateStorage {
 		
 #if UNITY_IOS && !UNITY_EDITOR

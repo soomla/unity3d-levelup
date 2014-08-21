@@ -28,7 +28,7 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Score ID.</param>
+		/// <param name="id">ID.</param>
 		/// <param name="associatedItemId">Associated virtual item ID.</param>
 		public VirtualItemScore(string id, string associatedItemId)
 			: base(id)
@@ -39,8 +39,8 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Score ID.</param>
-		/// <param name="name">Score Name.</param>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
 		/// <param name="higherBetter">If set to <c>true</c> higher is better.</param>
 		/// <param name="associatedItemId">Associated virtual item ID.</param>
 		public VirtualItemScore(string id, string name, bool higherBetter, string associatedItemId)
@@ -60,7 +60,7 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Converts this score to JSONObject.
+		/// Converts this <c>Score</c> to JSONObject.
 		/// </summary>
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {

@@ -24,16 +24,24 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class Challenge : Mission
 	{
+
+		/// <summary>
+		/// Used in log error messages.
+		/// </summary>
 		private const string TAG = "SOOMLA Challenge";
 
+		/// <summary>
+		/// The missions that belong to this <c>Challenge</c>.
+		/// </summary>
 		public List<Mission> Missions = new List<Mission>();
+
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Challenge ID.</param>
-		/// <param name="name">Challenge name.</param>
-		/// <param name="missions">Missions that belong to this Challenge.</param>
+		/// <param name="id"><c>Challenge</c> ID.</param>
+		/// <param name="name"><c>Challenge</c> name.</param>
+		/// <param name="missions"><c>Mission</c>s that belong to this <c>Challenge</c>.</param>
 		public Challenge(string id, string name, List<Mission> missions)
 			: base(id, name)
 		{
@@ -43,10 +51,10 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="id">Challenge ID.</param>
-		/// <param name="name">Challenge name.</param>
-		/// <param name="missions">Missions that belong to this Challenge.</param>
-		/// <param name="rewards">Rewards associated with this Challenge.</param>
+		/// <param name="id"><c>Challenge</c> ID.</param>
+		/// <param name="name"><c>Challenge</c> name.</param>
+		/// <param name="missions"><c>Mission</c>s that belong to this <c>Challenge</c>.</param>
+		/// <param name="rewards"><c>Rewards</c> associated with this <c>Challenge</c>.</param>
 		public Challenge(string id, string name, List<Mission> missions, List<Reward> rewards)
 			: base(id, name, rewards)
 		{
@@ -69,7 +77,7 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Converts this challenge to a JSONObject.
+		/// Converts this <c>Challenge</c> to a JSONObject.
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
@@ -85,7 +93,7 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this mission has ever been completed - no matter how many times.
+		/// Checks if this <c>Mission</c> has ever been completed - no matter how many times.
 		/// </summary>
 		/// <returns>If this instance is completed returns <c>true</c>; 
 		/// otherwise <c>false</c>.</returns>
@@ -106,10 +114,10 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Handles mission completion events. Checks if all missions included
-		/// in the challenge are completed, and if so, sets the challenge as completed.
+		/// Handles mission-completion events. Checks if all <c>Mission</c>s included in this 
+		/// <c>Challenge</c> are completed, and if so, sets the <c>Challenge</c> as completed.
 		/// </summary>
-		/// <param name="completedMission">Completed mission.</param>
+		/// <param name="completedMission">The <c>Mission</c> that triggered the event.</param>
 		/// @Subscribe
 		public void onMissionCompleted(Mission completedMission) {
 			SoomlaUtils.LogDebug (TAG, "onMissionCompleted");
@@ -132,10 +140,10 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Handles mission revoked events. If the challenge was completed before, but
-		/// now one of its child missions is incomplete, the challenge is revoked as well.
+		/// Handles mission-revoked events. If the <c>Challenge</c> was completed before, but now 
+		/// one of its child <c>Mission</c>s is incomplete, the <c>Challenge</c> is revoked as well.
 		/// </summary>
-		/// <param name="mission">Mission.</param>
+		/// <param name="mission">The <c>Mission</c> that triggered the event.</param>
 		/// @Subscribe
 		public void onMissionCompletionRevoked(Mission mission) {
 			if (Missions.Contains(mission)) {
@@ -146,7 +154,7 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Registers relevant events: onMissionCompleted and onMissionCompletionRevoked.
+		/// Registers relevant events: <c>OnMissionCompleted</c> and <c>OnMissionCompletionRevoked</c>.
 		/// </summary>
 		protected override void registerEvents() {
 			SoomlaUtils.LogDebug (TAG, "registerEvents called");
