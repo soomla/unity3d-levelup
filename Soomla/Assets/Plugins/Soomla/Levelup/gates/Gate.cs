@@ -20,13 +20,12 @@ using Soomla;
 namespace Soomla.Levelup {
 
 	/// <summary>
-	/// A gate is an object which defines certain criteria for progressing
-	/// between the game's <c>World</c>s or <c>Level</c>s. The gate is a 
-	/// criteria or a list of rules which which must be met to pass. The 
-	/// rules are based on components of the previous world or level: scores 
-	/// achieved, missions completed, etc. The gate is opened once the logical 
-	/// conditions are met. In some games, gates can be opened with a payment 
-	/// or social task.
+	/// A gate is an object that defines certain criteria for progressing between the game's
+	/// <c>World</c>s or <c>Level</c>s. The gate is a criteria or a list of rules which which 
+	/// must be met in order to enter the <c>World</c> or <c>Level</c> . The rules are based 
+	/// on components of the previous world or level: scores achieved, missions completed, 
+	/// etc. The gate is opened once the logical conditions are met. In some games, gates 
+	/// can be opened with a payment or social task.
 	/// 
 	/// Example: In "Cut the Rope" the gate to the next world consists of 
 	/// finishing all the levels of the previous world and accumulating 40

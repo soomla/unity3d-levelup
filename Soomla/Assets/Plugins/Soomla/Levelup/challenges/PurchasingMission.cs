@@ -20,7 +20,8 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// A specific type of <c>Mission</c> that has an associated market item.   
-	/// The mission is completed once the item has been purchased.
+	/// The <c>Mission</c> is complete once the item has been purchased.
+	/// 
 	/// Real Game Example: "Clumsy Ninja"
 	/// </summary>
 	public class PurchasingMission : Mission

@@ -19,9 +19,9 @@ using System.Collections.Generic;
 namespace Soomla.Levelup {
 
 	/// <summary>
-	/// The top level container for the unity-levelup model and definitions.
-	/// It stores the configurations of all the game's worlds hierarchy and
-	/// provides lookup for levelup model elements.
+	/// This is the top level container for the unity-levelup model and definitions.
+	/// It stores the configurations of the game's world-hierarchy and provides
+	/// lookup functions for levelup model elements.
 	/// </summary>
 	public class LevelUp {
 

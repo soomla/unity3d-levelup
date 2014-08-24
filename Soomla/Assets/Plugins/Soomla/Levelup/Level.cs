@@ -50,7 +50,8 @@ namespace Soomla.Levelup {
 		private long Elapsed;
 
 		/// <summary>
-		/// Initial state. 
+		/// The state of this level. The initial state is idle, later in the game can be any of:
+		/// running, paused, ended, or completed.
 		/// </summary>
 		public LevelState State = LevelState.Idle;
 

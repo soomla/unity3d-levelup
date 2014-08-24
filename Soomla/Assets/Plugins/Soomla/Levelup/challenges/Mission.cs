@@ -184,8 +184,8 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Sets this <c>Mission</c> as completed if the <c>Gate</c> that was opened in the gate-opened
-		/// event is this <c>Mission</c>'s gate.
+		/// Sets this <c>Mission</c> as completed if the <c>Gate</c> that was opened is 
+		/// this <c>Mission</c>'s gate.
 		/// </summary>
 		/// <param name="gate">The <c>Gate</c> that was opened.</param>
 		private void onGateOpened(Gate gate) {

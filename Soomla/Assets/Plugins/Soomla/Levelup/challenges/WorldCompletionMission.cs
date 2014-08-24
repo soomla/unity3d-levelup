@@ -19,8 +19,8 @@ using System.Collections.Generic;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A specific type of <c>Mission</c> that has an associated world. The mission 
-	/// is completed once the world has been completed.
+	/// A specific type of <c>Mission</c> that has an associated <c>World</c>. The <c>Mission</c> 
+	/// is complete once the <c>World</c> has been completed.
 	/// </summary>
 	public class WorldCompletionMission : Mission
 	{

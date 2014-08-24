@@ -16,7 +16,7 @@ using Soomla.Store;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A specific type of <c>Score</c that has an associated virtual item. 
+	/// A specific type of <c>Score</c> that has an associated virtual item. 
 	/// The score is related to the specific item ID. For example: a game that  
 	/// has an "energy" virtual item can have energy points.
 	/// </summary>

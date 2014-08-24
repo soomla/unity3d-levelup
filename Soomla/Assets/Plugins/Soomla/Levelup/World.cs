@@ -42,7 +42,7 @@ namespace Soomla.Levelup {
 		public Gate Gate;
 
 		/// <summary>
-		/// A map of the <c>World</c>s included in this <c>World</c>.
+		/// The <c>World</c>s included in this <c>World</c>.
 		/// </summary>
 		public Dictionary<string, World> InnerWorldsMap = new Dictionary<string, World>();
 
@@ -55,6 +55,7 @@ namespace Soomla.Levelup {
 		/// <c>Missions</c> in this <c>World</c>.
 		/// </summary>
 		public List<Mission> Missions = new List<Mission>();
+
 
 		/// <summary>
 		/// Gets the inner <c>World</c>s list.

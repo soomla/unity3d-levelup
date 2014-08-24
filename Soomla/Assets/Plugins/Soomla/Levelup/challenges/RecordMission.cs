@@ -20,7 +20,7 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// A specific type of <c>Mission</c> that has an associated score and a desired
-	/// record. The mission is complete once the player achieves the desired record 
+	/// record. The <c>Mission</c> is complete once the player achieves the desired record 
 	/// for the given score.
 	/// </summary>
 	public class RecordMission : Mission
