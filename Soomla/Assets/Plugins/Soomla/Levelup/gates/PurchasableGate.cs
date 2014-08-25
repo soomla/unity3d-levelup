@@ -37,7 +37,7 @@ namespace Soomla.Levelup
 		public PurchasableGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			this.AssociatedItemId = jsonGate[JSONConsts.SOOM_ASSOCITEMID].str;
+			this.AssociatedItemId = jsonGate[LUJSONConsts.LU_ASSOCITEMID].str;
 		}
 		
 		/// <summary>
@@ -46,7 +46,7 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, this.AssociatedItemId);
+			obj.AddField(LUJSONConsts.LU_ASSOCITEMID, this.AssociatedItemId);
 
 			return obj;
 		}

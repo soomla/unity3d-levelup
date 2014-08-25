@@ -233,6 +233,7 @@
 					"${UNITY_HEADERS43}/**",
 					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
 					"../../../submodules/ios-store/submodules/soomla-ios-core/SoomlaiOSCore/**",
+					"../../../submodules/soomla-unity3d-core/soomla-native/projects/unity-soomla-ios-core/SoomlaUnity/**",
 				);
 				LIBRARY_SEARCH_PATHS = ../../../Soomla/Assets/Plugins/iOS/;
 				OTHER_LDFLAGS = "-ObjC";
@@ -261,6 +262,7 @@
 					"${UNITY_HEADERS43}/**",
 					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
 					"../../../submodules/ios-store/submodules/soomla-ios-core/SoomlaiOSCore/**",
+					"../../../submodules/soomla-unity3d-core/soomla-native/projects/unity-soomla-ios-core/SoomlaUnity/**",
 				);
 				LIBRARY_SEARCH_PATHS = ../../../Soomla/Assets/Plugins/iOS/;
 				ONLY_ACTIVE_ARCH = NO;
