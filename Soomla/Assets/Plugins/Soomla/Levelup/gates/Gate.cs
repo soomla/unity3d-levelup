@@ -90,10 +90,12 @@ namespace Soomla.Levelup {
 			return GateStorage.IsOpen(this);
 		}
 
+		// answers the question: can i open this gate ?!
 		public bool CanOpen() {
-			// check in gate storage if the gate is open
+			// check in gate storage if the gate is open.
+			// gates are only opened once
 			if (GateStorage.IsOpen(this)) {
-				return true;
+				return false;
 			}
 
 			return canOpenInner();
@@ -104,6 +106,8 @@ namespace Soomla.Levelup {
 
 		protected abstract bool canOpenInner();
 		protected abstract bool openInner();
+
+//		public abstract void OnInitialize();
 
 		public override Gate Clone(string newGateId) {
 			return (Gate) base.Clone(newGateId);

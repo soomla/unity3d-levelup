@@ -173,6 +173,9 @@ namespace Soomla.Levelup {
 			if (retWorld == null) {
 				foreach (World world in worlds.Values) {
 					retWorld = fetchWorld(worldId, world.InnerWorldsMap);
+					if (retWorld != null) {
+						break;
+					}
 				}
 			}
 			
