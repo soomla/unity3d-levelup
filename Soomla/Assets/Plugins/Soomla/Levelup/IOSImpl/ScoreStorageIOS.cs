@@ -22,33 +22,29 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
-	private static extern void scoreStorage_SetLatestScore(string scoreJson, double latest);
+	private static extern void scoreStorage_SetLatestScore(string scoreId, double latest);
 	[DllImport ("__Internal")]
-	private static extern double scoreStorage_GetLatestScore(string scoreJson);
+	private static extern double scoreStorage_GetLatestScore(string scoreId);
 	[DllImport ("__Internal")]
-	private static extern void scoreStorage_SetRecordScore(string scoreJson, double record);
+	private static extern void scoreStorage_SetRecordScore(string scoreId, double record);
 	[DllImport ("__Internal")]
-	private static extern double scoreStorage_GetRecordScore(string scoreJson);
+	private static extern double scoreStorage_GetRecordScore(string scoreId);
 
 
 	override protected void _setLatestScore(Score score, double latest) {
-		string scoreJson = score.toJSONObject().ToString();
-		scoreStorage_SetLatestScore(scoreJson, latest);
+		scoreStorage_SetLatestScore(score.ID, latest);
 	}
 	
 	override protected double _getLatestScore(Score score) {
-		string scoreJson = score.toJSONObject().ToString();
-		return scoreStorage_GetLatestScore(scoreJson);
+		return scoreStorage_GetLatestScore(score.ID);
 	}
 	
 	override protected void _setRecordScore(Score score, double record) {
-		string scoreJson = score.toJSONObject().ToString();
-		scoreStorage_SetRecordScore(scoreJson, record);
+		scoreStorage_SetRecordScore(score.ID, record);
 	}
 	
 	override protected double _getRecordScore(Score score) {
-		string scoreJson = score.toJSONObject().ToString();
-		return scoreStorage_GetRecordScore(scoreJson);
+		return scoreStorage_GetRecordScore(score.ID);
 	}
 
 #endif

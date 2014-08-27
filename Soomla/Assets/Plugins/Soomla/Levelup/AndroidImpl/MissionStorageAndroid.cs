@@ -23,7 +23,7 @@ namespace Soomla.Levelup
 	override protected void _setCompleted(Mission mission, bool up, bool notify) {
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniMissionStorage = new AndroidJavaClass("com.soomla.levelup.data.MissionStorage")) {
-			jniMissionStorage.CallStatic("setCompleted", mission.toJNIObject(), up, notify);
+			jniMissionStorage.CallStatic("setCompleted", mission.ID, up, notify);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 	}
@@ -32,7 +32,7 @@ namespace Soomla.Levelup
 		int times = 0;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniMissionStorage = new AndroidJavaClass("com.soomla.levelup.data.MissionStorage")) {
-			times = jniMissionStorage.CallStatic<int>("getTimesCompleted", mission.toJNIObject());
+			times = jniMissionStorage.CallStatic<int>("getTimesCompleted", mission.ID);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		return times;

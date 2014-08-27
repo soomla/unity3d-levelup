@@ -26,7 +26,7 @@ namespace Soomla.Levelup {
 
 		public List<Reward> Rewards;
 		public Schedule Schedule;
-		protected Gate Gate;
+		public Gate Gate;
 
 		public string AutoGateId {
 			get { return "gate_" + this._id; }

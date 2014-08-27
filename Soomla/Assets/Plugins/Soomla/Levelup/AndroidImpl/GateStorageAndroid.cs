@@ -24,7 +24,7 @@ namespace Soomla.Levelup
 		override protected void _setOpen(Gate gate, bool open, bool notify) {
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniGateStorage = new AndroidJavaClass("com.soomla.levelup.data.GateStorage")) {
-				jniGateStorage.CallStatic("setOpen", gate.toJNIObject(), open, notify);
+				jniGateStorage.CallStatic("setOpen", gate.ID, open, notify);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
@@ -33,7 +33,7 @@ namespace Soomla.Levelup
 			bool open = false;
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniGateStorage = new AndroidJavaClass("com.soomla.levelup.data.GateStorage")) {
-				open = jniGateStorage.CallStatic<bool>("isOpen", gate.toJNIObject());
+				open = jniGateStorage.CallStatic<bool>("isOpen", gate.ID);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 			return open;

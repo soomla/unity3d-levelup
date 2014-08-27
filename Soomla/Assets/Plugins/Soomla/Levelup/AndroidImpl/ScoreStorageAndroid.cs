@@ -23,7 +23,7 @@ namespace Soomla.Levelup
 	override protected void _setLatestScore(Score score, double latest) {
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniScoreStorage = new AndroidJavaClass("com.soomla.levelup.data.ScoreStorage")) {
-			jniScoreStorage.CallStatic("setLatestScore", score.toJNIObject(), latest);
+			jniScoreStorage.CallStatic("setLatestScore", score.ID, latest);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 	}
@@ -32,7 +32,7 @@ namespace Soomla.Levelup
 		double latestScore = 0;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniScoreStorage = new AndroidJavaClass("com.soomla.levelup.data.ScoreStorage")) {
-			latestScore = jniScoreStorage.CallStatic<double>("getLatestScore", score.toJNIObject());
+			latestScore = jniScoreStorage.CallStatic<double>("getLatestScore", score.ID);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		return latestScore;
@@ -41,7 +41,7 @@ namespace Soomla.Levelup
 	override protected void _setRecordScore(Score score, double record) {
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniScoreStorage = new AndroidJavaClass("com.soomla.levelup.data.ScoreStorage")) {
-			jniScoreStorage.CallStatic("setRecordScore", score.toJNIObject(), record);
+			jniScoreStorage.CallStatic("setRecordScore", score.ID, record);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 	}
@@ -50,7 +50,7 @@ namespace Soomla.Levelup
 		double recordScore = 0;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniScoreStorage = new AndroidJavaClass("com.soomla.levelup.data.ScoreStorage")) {
-			recordScore = jniScoreStorage.CallStatic<double>("getRecordScore", score.toJNIObject());
+			recordScore = jniScoreStorage.CallStatic<double>("getRecordScore", score.ID);
 		}
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		return recordScore;

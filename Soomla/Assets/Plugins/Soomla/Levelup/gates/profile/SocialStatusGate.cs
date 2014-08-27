@@ -20,27 +20,28 @@ using UnityEngine;
 
 namespace Soomla.Levelup
 {
-	public class SocialActionGate : Gate
+	public class SocialStatusGate : Gate
 	{
-		private const string TAG = "SOOMLA SocialGate";
+		private const string TAG = "SOOMLA SocialStatusGate";
 
-		public SocialActionType RequiredSocialActionType;
-		Dictionary<string, object> SocialActionParams;
+		public Provider Provider;
+		public string Status;
 
-		public SocialActionGate(string id, SocialActionType socialActionType, Dictionary<string, object> socialActionParams)
+		public SocialStatusGate(string id, Provider provider, string status)
 			: base(id)
 		{
-			RequiredSocialActionType = socialActionType;
-			SocialActionParams = socialActionParams;
+			Status = status;
+			Provider = provider;
 		}
 		
 		/// <summary>
 		/// see parent.
 		/// </summary>
-		public SocialActionGate(JSONObject jsonGate)
+		public SocialStatusGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
 			RequiredSocialActionType = SocialActionType.fromString(jsonGate[LUJSONConsts.LU_SOCIAL_ACTION_TYPE].str);
+//			Status = 
 		}
 		
 		/// <summary>

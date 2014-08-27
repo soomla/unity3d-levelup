@@ -27,47 +27,47 @@ public class LevelUpEventHandler {
 
     @Subscribe
     public void onLevelStartedEvent(LevelStartedEvent levelStartedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelStarted", levelStartedEvent.Level.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelStarted", levelStartedEvent.LevelId);
     }
 
     @Subscribe
     public void onLevelEndedEvent(LevelEndedEvent levelEndedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelEnded", levelEndedEvent.Level.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelEnded", levelEndedEvent.LevelId);
     }
 
     @Subscribe
     public void onWorldCompletedEvent(WorldCompletedEvent worldCompletedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onWorldCompleted", worldCompletedEvent.World.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onWorldCompleted", worldCompletedEvent.WorldId);
     }
 
     @Subscribe
     public void onGateOpenedEvent(GateOpenedEvent gateOpenedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onGateOpened", gateOpenedEvent.Gate.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onGateOpened", gateOpenedEvent.GateId);
     }
 
     @Subscribe
     public void onMissionCompletedEvent(MissionCompletedEvent missionCompletedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onMissionCompleted", missionCompletedEvent.Mission.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onMissionCompleted", missionCompletedEvent.MissionId);
     }
 
     @Subscribe
     public void onMissionCompletionRevokedEvent(MissionCompletionRevokedEvent missionCompletionRevokedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onMissionCompletionRevoked", missionCompletionRevokedEvent.Mission.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onMissionCompletionRevoked", missionCompletionRevokedEvent.MissionId);
     }
 
     @Subscribe
     public void onScoreRecordChangedEvent(ScoreRecordChangedEvent scoreRecordChangedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", scoreRecordChangedEvent.Score.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", scoreRecordChangedEvent.ScoreId);
     }
 
     @Subscribe
     public void onScoreRecordReachedEvent(ScoreRecordReachedEvent scoreRecordReachedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onScoreRecordReached", scoreRecordReachedEvent.Score.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onScoreRecordReached", scoreRecordReachedEvent.ScoreId);
     }
 
     @Subscribe
     public void onWorldAssignedRewardEvent(WorldAssignedRewardEvent worldAssignedRewardEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onWorldAssignedReward", worldAssignedRewardEvent.World.toJSONObject().toString());
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onWorldAssignedReward", worldAssignedRewardEvent.WorldId);
     }
 
 }
