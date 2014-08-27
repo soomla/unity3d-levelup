@@ -57,7 +57,7 @@ extern "C" {
         NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
         NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
         Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage getFastestDurationMillisforLevel:level];
+        return [LevelStorage getFastestDurationMillisForLevel:level];
     }
 	
 	int levelStorage_IncTimesStarted(const char* sLevelJson) {
