@@ -62,15 +62,6 @@ namespace Soomla.Levelup {
 			return score;
 		}
 
-#if UNITY_ANDROID 
-		//&& !UNITY_EDITOR
-		public AndroidJavaObject toJNIObject() {
-			using(AndroidJavaClass jniScoreClass = new AndroidJavaClass("com.soomla.levelup.scoring.Score")) {
-				return jniScoreClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
-			}
-		}
-#endif
-
 		public virtual void Inc(double amount) {
 			SetTempScore(_tempScore + amount);
 		}

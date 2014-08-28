@@ -13,24 +13,28 @@
 /// limitations under the License.using System;
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
+
+using Soomla.Store;
+using Soomla.Profile;
+using UnityEngine;
 
 namespace Soomla.Levelup
 {
-	public class WorldCompletionMission : Mission
+	public class SocialUploadMission : Mission
 	{
-		public WorldCompletionMission(string id, string name, string associatedWorldId)
-			: base(id, name, typeof(WorldCompletionGate), new object[] { associatedWorldId })
+
+		public SocialUploadMission(string id, string name, Provider provider, string fileName, string message, Texture2D texture)
+			: base(id, name, typeof(SocialStatusGate), new object[] { provider, fileName, message, texture })
 		{
 		}
-
-		public WorldCompletionMission(string id, string name, List<Reward> rewards, string associatedWorldId)
-			: base(id, name, rewards, typeof(WorldCompletionGate), new object[] { associatedWorldId })
+		
+		public SocialUploadMission(string id, string name, List<Reward> rewards, Provider provider, string fileName, string message, Texture2D texture)
+			: base(id, name, rewards, typeof(SocialStatusGate), new object[] { provider, fileName, message, texture })
 		{
 		}
-
-		public WorldCompletionMission(JSONObject jsonMission)
+		
+		public SocialUploadMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
 			// TODO: implement this when needed. It's irrelevant now.
@@ -38,11 +42,12 @@ namespace Soomla.Levelup
 
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			
+
 			// TODO: implement this when needed. It's irrelevant now.
-			
+
 			return obj;
 		}
+
 	}
 }
 

@@ -54,14 +54,6 @@ namespace Soomla.Levelup {
 			return gate;
 		}
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-		public AndroidJavaObject toJNIObject() {
-			using(AndroidJavaClass jniGateClass = new AndroidJavaClass("com.soomla.levelup.gates.Gate")) {
-				return jniGateClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
-			}
-		}
-#endif
-
 		public bool Open() {
 			//  check in gate storage if it's already open
 			if (GateStorage.IsOpen(this)) {

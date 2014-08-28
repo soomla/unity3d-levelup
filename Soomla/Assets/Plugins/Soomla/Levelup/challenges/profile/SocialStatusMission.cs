@@ -13,27 +13,40 @@
 /// limitations under the License.using System;
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
+
+using Soomla.Store;
+using Soomla.Profile;
 
 namespace Soomla.Levelup
 {
-	public class PurchasingMission : Mission
+	public class SocialStatusMission : Mission
 	{
-		public PurchasingMission(string id, string name, string associatedItemId)
-			: base(id, name, typeof(PurchasableGate), new object[] { associatedItemId })
+
+		public SocialStatusMission(string id, string name, Provider provider, string status)
+			: base(id, name, typeof(SocialStatusGate), new object[] { provider, status })
 		{
 		}
-
-		public PurchasingMission(string id, string name, List<Reward> rewards, string associatedItemId)
-			: base(id, name, rewards, typeof(PurchasableGate), new object[] { associatedItemId })
+		
+		public SocialStatusMission(string id, string name, List<Reward> rewards, Provider provider, string status)
+			: base(id, name, rewards, typeof(SocialStatusGate), new object[] { provider, status })
 		{
 		}
-
-		public PurchasingMission(JSONObject jsonMission)
+		
+		public SocialStatusMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
+			// TODO: implement this when needed. It's irrelevant now.
 		}
+
+		public override JSONObject toJSONObject() {
+			JSONObject obj = base.toJSONObject();
+
+			// TODO: implement this when needed. It's irrelevant now.
+
+			return obj;
+		}
+
 	}
 }
 

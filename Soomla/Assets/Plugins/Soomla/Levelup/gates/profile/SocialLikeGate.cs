@@ -13,35 +13,53 @@
 /// limitations under the License.using System;
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Soomla.Store;
+using Soomla.Profile;
 
 namespace Soomla.Levelup
 {
-	public class WorldCompletionMission : Mission
+	public class SocialLikeGate : SocialActionGate
 	{
-		public WorldCompletionMission(string id, string name, string associatedWorldId)
-			: base(id, name, typeof(WorldCompletionGate), new object[] { associatedWorldId })
-		{
-		}
+		private const string TAG = "SOOMLA SocialLikeGate";
 
-		public WorldCompletionMission(string id, string name, List<Reward> rewards, string associatedWorldId)
-			: base(id, name, rewards, typeof(WorldCompletionGate), new object[] { associatedWorldId })
-		{
-		}
+		public string PageName;
 
-		public WorldCompletionMission(JSONObject jsonMission)
-			: base(jsonMission)
+		public SocialLikeGate(string id, Provider provider, string pageName)
+			: base(id, provider)
+		{
+			PageName = pageName;
+		}
+		
+		/// <summary>
+		/// see parent.
+		/// </summary>
+		public SocialLikeGate(JSONObject jsonGate)
+			: base(jsonGate)
 		{
 			// TODO: implement this when needed. It's irrelevant now.
 		}
-
+		
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			
+
 			// TODO: implement this when needed. It's irrelevant now.
-			
+
 			return obj;
+		}
+
+		protected override bool openInner() {
+			if (CanOpen()) {
+
+				SoomlaProfile.Like(Provider, PageName);
+
+				return true;
+			}
+			
+			return false;
 		}
 	}
 }

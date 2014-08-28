@@ -99,16 +99,6 @@ namespace Soomla.Levelup {
 			return mission;
 		}
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-		public AndroidJavaObject toJNIObject() {
-			using(AndroidJavaClass jniClass = new AndroidJavaClass("com.soomla.levelup.challenges.Mission")) {
-				string json = toJSONObject().print();
-				SoomlaUtils.LogError(TAG, "json:"+json);
-				return jniClass.CallStatic<AndroidJavaObject>("fromJSONString", json);
-			}
-		}
-#endif
-
 		protected virtual void registerEvents() {
 			if (!IsCompleted() && this.Gate != null) {
 				LevelUpEvents.OnGateOpened += onGateOpened;

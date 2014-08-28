@@ -18,19 +18,19 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
-	public class WorldCompletionMission : Mission
+	public class PurchasingMission : Mission
 	{
-		public WorldCompletionMission(string id, string name, string associatedWorldId)
-			: base(id, name, typeof(WorldCompletionGate), new object[] { associatedWorldId })
+		public PurchasingMission(string id, string name, string associatedItemId)
+			: base(id, name, typeof(PurchasableGate), new object[] { associatedItemId })
 		{
 		}
 
-		public WorldCompletionMission(string id, string name, List<Reward> rewards, string associatedWorldId)
-			: base(id, name, rewards, typeof(WorldCompletionGate), new object[] { associatedWorldId })
+		public PurchasingMission(string id, string name, List<Reward> rewards, string associatedItemId)
+			: base(id, name, rewards, typeof(PurchasableGate), new object[] { associatedItemId })
 		{
 		}
 
-		public WorldCompletionMission(JSONObject jsonMission)
+		public PurchasingMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
 			// TODO: implement this when needed. It's irrelevant now.
@@ -43,6 +43,7 @@ namespace Soomla.Levelup
 			
 			return obj;
 		}
+
 	}
 }
 
