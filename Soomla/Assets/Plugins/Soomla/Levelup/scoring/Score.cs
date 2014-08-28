@@ -28,14 +28,6 @@ namespace Soomla.Levelup {
 	/// </summary>
 	public class Score : SoomlaEntity<Score> {
 
-//#if UNITY_IOS && !UNITY_EDITOR
-//		[DllImport ("__Internal")]
-//		private static extern int storeAssets_Save(string type, string viJSON);
-//#endif
-
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
 		private const string TAG = "SOOMLA Score";
 
 		/// <summary>
@@ -120,19 +112,6 @@ namespace Soomla.Levelup {
 			return score;
 		}
 
-#if UNITY_ANDROID 
-		//&& !UNITY_EDITOR
-		public AndroidJavaObject toJNIObject() {
-			using(AndroidJavaClass jniScoreClass = new AndroidJavaClass("com.soomla.levelup.scoring.Score")) {
-				return jniScoreClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
-			}
-		}
-#endif
-
-		/// <summary>
-		/// Increases this <c>Score</c> by the given amount. 
-		/// </summary>
-		/// <param name="amount">Amount to increase by.</param>
 		public virtual void Inc(double amount) {
 			SetTempScore(_tempScore + amount);
 		}

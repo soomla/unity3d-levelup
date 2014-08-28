@@ -19,3 +19,6 @@
 [submodule "submodules/soomla-android-core"]
 	path = submodules/soomla-android-core
 	url = git@github.com:soomla/soomla-android-core.git
+[submodule "submodules/unity3d-profile"]
+	path = submodules/unity3d-profile
+	url = git@github.com:soomla/unity3d-profile.git

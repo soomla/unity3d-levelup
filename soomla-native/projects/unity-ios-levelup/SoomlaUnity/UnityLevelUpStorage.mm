@@ -14,184 +14,130 @@
 #import "World.h"
 #import "WorldStorage.h"
 
-char* AutonomousStringCopy (const char* string)
-{
-    if (string == NULL)
-        return NULL;
-    
-    char* res = (char*)malloc(strlen(string) + 1);
-    strcpy(res, string);
-    return res;
-}
 
 extern "C" {
 
-    void gateStorage_SetOpen(const char* sGateJson, bool open, bool notify) {
-        NSString* gateJson = [NSString stringWithUTF8String:sGateJson];
-        NSDictionary* gateDict = [SoomlaUtils jsonStringToDict:gateJson];
-        Gate* gate = [Gate fromDictionary:gateDict];
-        [GateStorage setOpen:open forGate:gate andEvent:notify];
+    void gateStorage_SetOpen(const char* gateId, bool open, bool notify) {
+        NSString* gateIdS = [NSString stringWithUTF8String:gateId];
+        [GateStorage setOpen:open forGate:gateIdS andEvent:notify];
     }
 
-    bool gateStorage_IsOpen(const char* sGateJson) {
-        NSString* gateJson = [NSString stringWithUTF8String:sGateJson];
-        NSDictionary* gateDict = [SoomlaUtils jsonStringToDict:gateJson];
-        Gate* gate = [Gate fromDictionary:gateDict];
-        return [GateStorage isOpen:gate];
+    bool gateStorage_IsOpen(const char* gateId) {
+        NSString* gateIdS = [NSString stringWithUTF8String:gateId];
+        return [GateStorage isOpen:gateIdS];
     }
     
     
-	void levelStorage_SetSlowestDurationMillis(const char* sLevelJson, long long duration) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        [LevelStorage setSlowestDurationMillis:duration forLevel:level];
+	void levelStorage_SetSlowestDurationMillis(const char* levelId, long long duration) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        [LevelStorage setSlowestDurationMillis:duration forLevel:levelIdS];
     }
 	
-	long long levelStorage_GetSlowestDurationMillis(const char* sLevelJson) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage getSlowestDurationMillisForLevel:level];
+	long long levelStorage_GetSlowestDurationMillis(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage getSlowestDurationMillisForLevel:levelIdS];
     }
 
-	void levelStorage_SetFastestDurationMillis(const char* sLevelJson, double duration) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        [LevelStorage setFastestDurationMillis:duration forLevel:level];
+	void levelStorage_SetFastestDurationMillis(const char* levelId, long long duration) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        [LevelStorage setFastestDurationMillis:duration forLevel:levelIdS];
     }
 	
-	long long levelStorage_GetFastestDurationMillis(const char* sLevelJson) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage getFastestDurationMillisforLevel:level];
+	long long levelStorage_GetFastestDurationMillis(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage getFastestDurationMillisForLevel:levelIdS];
     }
 	
-	int levelStorage_IncTimesStarted(const char* sLevelJson) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage incTimesStartedForLevel:level];
+	int levelStorage_IncTimesStarted(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage incTimesStartedForLevel:levelIdS];
     }
 	
-	int levelStorage_DecTimesStarted(const char* sLevelJson) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage decTimesStartedForLevel:level];
+	int levelStorage_DecTimesStarted(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage decTimesStartedForLevel:levelIdS];
 
     }
 	
-	int levelStorage_GetTimesStarted(const char* sLevelJson) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage getTimesStartedForLevel:level];
+	int levelStorage_GetTimesStarted(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage getTimesStartedForLevel:levelIdS];
 
     }
 	
-	int levelStorage_IncTimesPlayed(const char* sLevelJson) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage incTimesPlayedForLevel:level];
+	int levelStorage_IncTimesPlayed(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage incTimesPlayedForLevel:levelIdS];
 
     }
 	
-	int levelStorage_DecTimesPlayed(const char* sLevelJson) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage decTimesPlayedForLevel:level];
+	int levelStorage_DecTimesPlayed(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage decTimesPlayedForLevel:levelIdS];
 
     }
 	
-	int levelStorage_GetTimesPlayed(const char* sLevelJson) {
-        NSString* levelJson = [NSString stringWithUTF8String:sLevelJson];
-        NSDictionary* levelDict = [SoomlaUtils jsonStringToDict:levelJson];
-        Level* level = (Level*)[Level fromDictionary:levelDict];
-        return [LevelStorage getTimesPlayedForLevel:level];
+	int levelStorage_GetTimesPlayed(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage getTimesPlayedForLevel:levelIdS];
     }
     
-    void missionStorage_SetCompleted(const char* sMissionJson, bool completed, bool notify) {
-        NSString* missionJson = [NSString stringWithUTF8String:sMissionJson];
-        NSDictionary* missionDict = [SoomlaUtils jsonStringToDict:missionJson];
-        Mission* mission = [Mission fromDictionary:missionDict];
-        [MissionStorage setCompleted:completed forMission:mission andNotify:notify];
+    void missionStorage_SetCompleted(const char* missionId, bool completed, bool notify) {
+        NSString* missionIdS = [NSString stringWithUTF8String:missionId];
+        [MissionStorage setCompleted:completed forMission:missionIdS andNotify:notify];
     }
     
-    bool missionStorage_IsCompleted(const char* sMissionJson) {
-        NSString* missionJson = [NSString stringWithUTF8String:sMissionJson];
-        NSDictionary* missionDict = [SoomlaUtils jsonStringToDict:missionJson];
-        Mission* mission = [Mission fromDictionary:missionDict];
-        return [MissionStorage isMissionCompleted:mission];
+    bool missionStorage_IsCompleted(const char* missionId) {
+        NSString* missionIdS = [NSString stringWithUTF8String:missionId];
+        return [MissionStorage isMissionCompleted:missionIdS];
     }
     
     
-	void scoreStorage_SetLatestScore(const char* sScoreJson, double latest) {
-        NSString* scoreJson = [NSString stringWithUTF8String:sScoreJson];
-        NSDictionary* scoreDict = [SoomlaUtils jsonStringToDict:scoreJson];
-        Score* score = [Score fromDictionary:scoreDict];
-        [ScoreStorage setLatest:latest toScore:score];
-
+	void scoreStorage_SetLatestScore(const char* scoreId, double latest) {
+        NSString* scoreIdS = [NSString stringWithUTF8String:scoreId];
+        [ScoreStorage setLatest:latest toScore:scoreIdS];
     }
 	
-	int scoreStorage_GetLatestScore(const char* sScoreJson) {
-        NSString* scoreJson = [NSString stringWithUTF8String:sScoreJson];
-        NSDictionary* scoreDict = [SoomlaUtils jsonStringToDict:scoreJson];
-        Score* score = [Score fromDictionary:scoreDict];
-        return [ScoreStorage getLatestScore:score];
+	double scoreStorage_GetLatestScore(const char* scoreId) {
+        NSString* scoreIdS = [NSString stringWithUTF8String:scoreId];
+        return [ScoreStorage getLatestScore:scoreIdS];
     }
 
-	void scoreStorage_SetRecordScore(const char* sScoreJson, double record) {
-        NSString* scoreJson = [NSString stringWithUTF8String:sScoreJson];
-        NSDictionary* scoreDict = [SoomlaUtils jsonStringToDict:scoreJson];
-        Score* score = [Score fromDictionary:scoreDict];
-        [ScoreStorage setRecord:record toScore:score];
+	void scoreStorage_SetRecordScore(const char* scoreId, double record) {
+        NSString* scoreIdS = [NSString stringWithUTF8String:scoreId];
+        [ScoreStorage setRecord:record toScore:scoreIdS];
 
     }
 
-	int scoreStorage_GetRecordScore(const char* sScoreJson) {
-        NSString* scoreJson = [NSString stringWithUTF8String:sScoreJson];
-        NSDictionary* scoreDict = [SoomlaUtils jsonStringToDict:scoreJson];
-        Score* score = [Score fromDictionary:scoreDict];
-        return [ScoreStorage getRecordScore:score];
+	double scoreStorage_GetRecordScore(const char* scoreId) {
+        NSString* scoreIdS = [NSString stringWithUTF8String:scoreId];
+        return [ScoreStorage getRecordScore:scoreIdS];
 
     }
     
-    void worldStorage_SetCompleted(const char* sWorldJson, bool completed, bool notify) {
-        NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
-        NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
-        World* world = [World fromDictionary:worldDict];
-        [WorldStorage setCompleted:completed forWorld:world andNotify:notify];
+    void worldStorage_SetCompleted(const char* worldId, bool completed, bool notify) {
+        NSString* worldIdS = [NSString stringWithUTF8String:worldId];
+        [WorldStorage setCompleted:completed forWorld:worldIdS andNotify:notify];
     }
     
-    bool worldStorage_IsCompleted(const char* sWorldJson) {
-        NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
-        NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
-        World* world = [World fromDictionary:worldDict];
-        return [WorldStorage isWorldCompleted:world];
+    bool worldStorage_IsCompleted(const char* worldId) {
+        NSString* worldIdS = [NSString stringWithUTF8String:worldId];
+        return [WorldStorage isWorldCompleted:worldIdS];
     }
     
-    void worldStorage_GetAssignedReward(const char* sWorldJson, char** json) {
-        NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
-        NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
-        World* world = [World fromDictionary:worldDict];
-        NSString* rewardId = [WorldStorage getAssignedReward:world];
+    void worldStorage_GetAssignedReward(const char* worldId, char** json) {
+        NSString* worldIdS = [NSString stringWithUTF8String:worldId];
+        NSString* rewardId = [WorldStorage getAssignedReward:worldIdS];
         if (!rewardId) {
             rewardId = @"";
         }
         
-        *json = AutonomousStringCopy([rewardId UTF8String]);
+        *json = Soom_AutonomousStringCopy([rewardId UTF8String]);
     }
     
-    void worldStorage_SetReward(const char* sWorldJson, const char* sRewardId) {
-        NSString* worldJson = [NSString stringWithUTF8String:sWorldJson];
-        NSString* rewardId = [NSString stringWithUTF8String:sRewardId];
-        NSDictionary* worldDict = [SoomlaUtils jsonStringToDict:worldJson];
-        World* world = [World fromDictionary:worldDict];
-        [WorldStorage setReward:rewardId forWorld:world];
+    void worldStorage_SetReward(const char* worldId, const char* rewardId) {
+        NSString* worldIdS = [NSString stringWithUTF8String:worldId];
+        NSString* rewardIdS = [NSString stringWithUTF8String:rewardId];
+        [WorldStorage setReward:rewardIdS forWorld:worldIdS];
     }
 }

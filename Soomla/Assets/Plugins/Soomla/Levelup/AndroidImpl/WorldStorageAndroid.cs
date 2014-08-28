@@ -28,7 +28,7 @@ namespace Soomla.Levelup
 		override protected void _setCompleted(World world, bool completed, bool notify) {
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-				jniWorldStorage.CallStatic("setCompleted", world.toJNIObject(), completed, notify);
+				jniWorldStorage.CallStatic("setCompleted", world.ID, completed, notify);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
@@ -37,7 +37,7 @@ namespace Soomla.Levelup
 			bool completed = false;
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-				completed = jniWorldStorage.CallStatic<bool>("isCompleted", world.toJNIObject());
+				completed = jniWorldStorage.CallStatic<bool>("isCompleted", world.ID);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 			return completed;
@@ -46,7 +46,7 @@ namespace Soomla.Levelup
 		override protected void _setReward(World world, string rewardId) {
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-				jniWorldStorage.CallStatic("setReward", world.toJNIObject(), rewardId);
+				jniWorldStorage.CallStatic("setReward", world.ID, rewardId);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
@@ -55,7 +55,7 @@ namespace Soomla.Levelup
 			string rewardId;
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
-				rewardId = jniWorldStorage.CallStatic<string>("getAssignedReward", world.toJNIObject());
+				rewardId = jniWorldStorage.CallStatic<string>("getAssignedReward", world.ID);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 			return rewardId;

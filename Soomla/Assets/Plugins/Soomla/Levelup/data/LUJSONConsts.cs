@@ -24,6 +24,8 @@ namespace Soomla.Levelup {
 	{
 		/** LevelUp **/
 		public const string LU_MAIN_WORLD        = "mainWorld";
+		public const string LU_ASSOCITEMID 		 = "associatedItemId";
+		public const string LU_DESIRED_BALANCE 	 = "desiredBalance";
 
 		/** Score **/
 		public const string LU_SCORES            = "scores";
@@ -36,6 +38,11 @@ namespace Soomla.Levelup {
 		/** Gate **/
 		public const string LU_GATE              = "gate";
 		public const string LU_GATES             = "gates";
+		public const string LU_ASSOCSCOREID 	 = "associatedScoreId";
+		public const string LU_DESIRED_RECORD 	 = "desiredBalance";
+		public const string LU_SOCIAL_ACTION_TYPE= "socialActionType";
+
+		public const string LU_SOCIAL_PROVIDER   = "provider";
 
 		/** Challenge **/
 		public const string LU_CHALLENGES        = "challenges";
@@ -43,6 +50,7 @@ namespace Soomla.Levelup {
 
 		/** World **/
 		public const string LU_WORLDS            = "worlds";
+		public const string LU_ASSOCWORLDID 	 = "associatedWorldId";
 
 	}
 }

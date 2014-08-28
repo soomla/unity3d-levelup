@@ -56,7 +56,7 @@ namespace Soomla.Levelup
 		public VirtualItemScore(JSONObject jsonScore)
 			: base(jsonScore)
 		{
-			AssociatedItemId = jsonScore[JSONConsts.SOOM_ASSOCITEMID].str;
+			AssociatedItemId = jsonScore[LUJSONConsts.LU_ASSOCITEMID].str;
 		}
 		
 		/// <summary>
@@ -65,7 +65,7 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ASSOCITEMID, AssociatedItemId);
+			obj.AddField(LUJSONConsts.LU_ASSOCITEMID, AssociatedItemId);
 
 			return obj;
 		}

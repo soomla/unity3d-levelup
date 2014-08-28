@@ -34,45 +34,41 @@ extern "C" {
 - (void)handleEvent:(NSNotification*)notification{
 
 	if ([notification.name isEqualToString:EVENT_GATE_OPENED]) {
-        Gate* gate = [[notification userInfo] objectForKey:DICT_ELEMENT_GATE];
-        NSString* gateJson = [SoomlaUtils dictToJsonString:[gate toDictionary]];
-        UnitySendMessage("LevelUpEvents", "onGateOpended", [gateJson UTF8String]);
+        NSString* gateId = [[notification userInfo] objectForKey:DICT_ELEMENT_GATE];
+        UnitySendMessage("LevelUpEvents", "onGateOpended", [gateId UTF8String]);
 	}
 	else if ([notification.name isEqualToString:EVENT_LEVEL_ENDED]) {
-        Level* level = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
-        NSString* levelJson = [SoomlaUtils dictToJsonString:[level toDictionary]];
-        UnitySendMessage("LevelUpEvents", "onLevelEnded", [levelJson UTF8String]);
+        NSString* levelId = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
+        UnitySendMessage("LevelUpEvents", "onLevelEnded", [levelId UTF8String]);
 	}
 	else if ([notification.name isEqualToString:EVENT_LEVEL_STARTED]) {
-	    Level* level = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
-        NSString* levelJson = [SoomlaUtils dictToJsonString:[level toDictionary]];
-        UnitySendMessage("LevelUpEvents", "onLevelStarted", [levelJson UTF8String]);
+	    NSString* levelId = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
+        UnitySendMessage("LevelUpEvents", "onLevelStarted", [levelId UTF8String]);
 	}
 	else if ([notification.name isEqualToString:EVENT_MISSION_COMPLETED]) {
-	    Mission* mission = [[notification userInfo] objectForKey:DICT_ELEMENT_MISSION];
-        NSString* missionJson = [SoomlaUtils dictToJsonString:[mission toDictionary]];
-        UnitySendMessage("LevelUpEvents", "onMissionCompleted", [missionJson UTF8String]);
+	    NSString* missionId = [[notification userInfo] objectForKey:DICT_ELEMENT_MISSION];
+        UnitySendMessage("LevelUpEvents", "onMissionCompleted", [missionId UTF8String]);
     }
 	else if ([notification.name isEqualToString:EVENT_MISSION_COMPLETION_REVOKED]) {
-        Mission* mission = [[notification userInfo] objectForKey:DICT_ELEMENT_MISSION];
-        NSString* missionJson = [SoomlaUtils dictToJsonString:[mission toDictionary]];
-        UnitySendMessage("LevelUpEvents", "onMissionCompletionRevoked", [missionJson UTF8String]);
+        NSString* missionId = [[notification userInfo] objectForKey:DICT_ELEMENT_MISSION];
+        UnitySendMessage("LevelUpEvents", "onMissionCompletionRevoked", [missionId UTF8String]);
 
     }
 	else if ([notification.name isEqualToString:EVENT_SCORE_RECORD_CHANGED]) {
-        Score* score = [[notification userInfo] objectForKey:DICT_ELEMENT_SCORE];
-        NSString* scoreJson = [SoomlaUtils dictToJsonString:[score toDictionary]];
-        UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", [scoreJson UTF8String]);
+        NSString* scoreId = [[notification userInfo] objectForKey:DICT_ELEMENT_SCORE];
+        UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", [scoreId UTF8String]);
+    }
+	else if ([notification.name isEqualToString:EVENT_SCORE_RECORD_REACHED]) {
+        NSString* scoreId = [[notification userInfo] objectForKey:DICT_ELEMENT_SCORE];
+        UnitySendMessage("LevelUpEvents", "onScoreRecordReached", [scoreId UTF8String]);
     }
 	else if ([notification.name isEqualToString:EVENT_WORLD_COMPLETED]) {
-        World* world = [[notification userInfo] objectForKey:DICT_ELEMENT_WORLD];
-        NSString* worldJson = [SoomlaUtils dictToJsonString:[world toDictionary]];
-        UnitySendMessage("LevelUpEvents", "onWorldCompleted", [worldJson UTF8String]);
+        NSString* worldId = [[notification userInfo] objectForKey:DICT_ELEMENT_WORLD];
+        UnitySendMessage("LevelUpEvents", "onWorldCompleted", [worldId UTF8String]);
     }
     else if ([notification.name isEqualToString:EVENT_WORLD_REWARD_ASSIGNED]) {
-        World* world = [[notification userInfo] objectForKey:DICT_ELEMENT_WORLD];
-        NSString* worldJson = [SoomlaUtils dictToJsonString:[world toDictionary]];
-        UnitySendMessage("LevelUpEvents", "onWorldAssignedReward", [worldJson UTF8String]);
+        NSString* worldId = [[notification userInfo] objectForKey:DICT_ELEMENT_WORLD];
+        UnitySendMessage("LevelUpEvents", "onWorldAssignedReward", [worldId UTF8String]);
     }
 }
 

@@ -15,6 +15,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Soomla.Levelup {
 
@@ -105,6 +106,27 @@ namespace Soomla.Levelup {
 			}
 
 			return fetchWorld(worldId, InitialWorld.InnerWorldsMap);
+		}
+
+		public Gate GetGate(string gateId) {
+			if (InitialWorld.Gate != null &&
+			    InitialWorld.Gate.ID == gateId) {
+				return InitialWorld.Gate;
+			}
+
+			return fetchGate(gateId, InitialWorld.InnerWorldsList);
+		}
+
+		public Mission GetMission(string missionId) {
+			Mission mission = (from m in InitialWorld.Missions
+			 where m.ID == missionId
+			 select m).SingleOrDefault();
+
+			if (mission == null) {
+				return fetchMission(missionId, InitialWorld.InnerWorldsList);
+			}
+
+			return mission;
 		}
 
 		/// <summary>
@@ -237,6 +259,9 @@ namespace Soomla.Levelup {
 			if (retWorld == null) {
 				foreach (World world in worlds.Values) {
 					retWorld = fetchWorld(worldId, world.InnerWorldsMap);
+					if (retWorld != null) {
+						break;
+					}
 				}
 			}
 			
@@ -250,6 +275,67 @@ namespace Soomla.Levelup {
 		/// <returns>The recursive count.</returns>
 		/// <param name="world"><c>World</c> to begin counting from.</param>
 		/// <param name="isAccepted">Function that determines if the <c>World</c> accepted.</param>
+		private Mission fetchMission(string missionId, List<World> worlds) {
+			foreach (World world in worlds) {
+				Mission mission = (from m in world.Missions
+				                   where m.ID == missionId
+				                   select m).SingleOrDefault();
+				if (mission != null) {
+					return mission;
+				}
+				mission = fetchMission(missionId, world.InnerWorldsList);
+				if (mission != null) {
+					return mission;
+				}
+			}
+
+			return null;
+		}
+
+		private Gate fetchGate(string gateId, List<World> worlds) {
+			if (worlds == null) {
+				return null;
+			}
+
+			Gate retGate = (from world in worlds
+			                where (world.Gate!= null && world.Gate.ID==gateId)
+			                select world.Gate).SingleOrDefault();
+			if (retGate == null) {
+				foreach (World world in worlds) {
+					retGate = fetchGate(gateId, world.Missions);
+					if (retGate != null) {
+						break;
+					}
+
+					retGate = fetchGate(gateId, world.InnerWorldsList);
+					if (retGate != null) {
+						break;
+					}
+				}
+			}
+
+			
+			return retGate;
+		}
+
+		private Gate fetchGate(string gateId, List<Mission> missions) {
+			Gate retGate = (from m in missions
+			                where (m.Gate!= null && m.Gate.ID==gateId)
+			                select m.Gate).SingleOrDefault();
+			if (retGate == null) {
+				foreach (Mission mission in missions) {
+					if (mission is Challenge) {
+						retGate = fetchGate(gateId, ((Challenge)mission).Missions);
+						if (retGate != null) {
+							break;
+						}
+					}
+				}
+			}
+
+			return retGate;
+		}
+
 		private int getRecursiveCount(World world, Func<World, bool> isAccepted) {
 			int count = 0;
 			

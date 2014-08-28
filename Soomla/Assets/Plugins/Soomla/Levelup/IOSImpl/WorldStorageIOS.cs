@@ -27,40 +27,36 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 	
 		[DllImport ("__Internal")]
-		private static extern void worldStorage_SetCompleted(string worldJson,
+		private static extern void worldStorage_SetCompleted(string worldId,
 		                                                       [MarshalAs(UnmanagedType.Bool)] bool completed,
 		                                                       [MarshalAs(UnmanagedType.Bool)] bool notify);
 		[DllImport ("__Internal")]
-		private static extern void worldStorage_SetReward(string worldJson, string rewardId);
+		private static extern void worldStorage_SetReward(string worldId, string rewardId);
 
 		[DllImport ("__Internal")]
 		[return:MarshalAs(UnmanagedType.I1)]
-		private static extern bool worldStorage_IsCompleted(string worldJson);
+		private static extern bool worldStorage_IsCompleted(string worldId);
 
 		[DllImport ("__Internal")]
-		private static extern void worldStorage_GetAssignedReward(string worldJson, out IntPtr json);
+		private static extern void worldStorage_GetAssignedReward(string worldId, out IntPtr json);
 		
 		
 		override protected void _setCompleted(World world, bool completed, bool notify) {
-			string worldJson = world.toJSONObject().ToString();
-			worldStorage_SetCompleted(worldJson, completed, notify);
+			worldStorage_SetCompleted(world.ID, completed, notify);
 		}
 		
 		override protected bool _isCompleted(World world) {
-			string worldJson = world.toJSONObject().ToString();
-			return worldStorage_IsCompleted(worldJson);
+			return worldStorage_IsCompleted(world.ID);
 		}
 
 		override protected void _setReward(World world, string rewardId) {
-			string worldJson = world.toJSONObject().ToString();
-			worldStorage_SetReward(worldJson, rewardId);
+			worldStorage_SetReward(world.ID, rewardId);
 		}
 		
 		override protected string _getAssignedReward(World world) {
-			string worldJson = world.toJSONObject().ToString();
 
 			IntPtr p = IntPtr.Zero;
-			worldStorage_GetAssignedReward(worldJson, out p);
+			worldStorage_GetAssignedReward(world.ID, out p);
 //			IOS_ErrorCodes.CheckAndThrowException(err);
 			
 			string rewardId = Marshal.PtrToStringAnsi(p);

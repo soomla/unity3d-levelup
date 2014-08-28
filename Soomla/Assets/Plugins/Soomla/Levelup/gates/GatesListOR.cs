@@ -72,7 +72,7 @@ namespace Soomla.Levelup
 		/// otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			foreach (Gate gate in Gates) {
-				if (!gate.IsOpen()) {
+				if (gate.IsOpen()) {
 					return true;
 				}
 			}

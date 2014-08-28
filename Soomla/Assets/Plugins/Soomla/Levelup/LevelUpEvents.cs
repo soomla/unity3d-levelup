@@ -74,9 +74,7 @@ namespace Soomla.Levelup {
 		public void onGateOpened(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onGateOpened with message: " + message);
 
-			// message is Gate as JSON
-			JSONObject json = new JSONObject (message);
-			Gate gate = Gate.fromJSONObject (json);
+			Gate gate = LevelUp.GetInstance().GetGate(message);
 
 			LevelUpEvents.OnGateOpened(gate);
 		}
@@ -84,32 +82,23 @@ namespace Soomla.Levelup {
 		public void onLevelEnded(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelEnded with message: " + message);
 			
-			// message is Level as Level
-
-			JSONObject json = new JSONObject (message);
-			Level level = Level.fromJSONObject(json);
+			Level level = (Level) LevelUp.GetInstance().GetWorld(message);
 
 			LevelUpEvents.OnLevelEnded(level);
 		}
 
 		public void onLevelStarted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelStarted with message: " + message);
-			
-			// message is Level as Level
 
-			JSONObject json = new JSONObject (message);
-			Level level = Level.fromJSONObject(json);
+			Level level = (Level) LevelUp.GetInstance().GetWorld(message);
 			
 			LevelUpEvents.OnLevelStarted(level);
 		}
 
 		public void onMissionCompleted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onMissionCompleted with message: " + message);
-			
-			// message is Mission AND isChallenge as JSON
 
-			JSONObject json = new JSONObject (message);
-			Mission mission = Mission.fromJSONObject (json);
+			Mission mission = LevelUp.GetInstance().GetMission(message);
 
 			LevelUpEvents.OnMissionCompleted(mission);
 		}
@@ -117,10 +106,7 @@ namespace Soomla.Levelup {
 		public void onMissionCompletionRevoked(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onMissionCompletionRevoked with message: " + message);
 			
-			// message is Mission AND isChallenge as JSON
-
-			JSONObject json = new JSONObject (message);
-			Mission mission = Mission.fromJSONObject (json);
+			Mission mission = LevelUp.GetInstance().GetMission(message);
 
 			LevelUpEvents.OnMissionCompletionRevoked(mission);
 		}
@@ -128,10 +114,7 @@ namespace Soomla.Levelup {
 		public void onScoreRecordChanged(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onScoreRecordChanged with message: " + message);
 			
-			// message is Score as JSON
-
-			JSONObject json = new JSONObject (message);
-			Score score = Score.fromJSONObject (json);
+			Score score = LevelUp.GetInstance().GetScore(message);
 
 			LevelUpEvents.OnScoreRecordChanged(score);
 		}
@@ -139,10 +122,7 @@ namespace Soomla.Levelup {
 		public void onWorldCompleted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onWorldCompleted with message: " + message);
 			
-			// message is World as JSON
-
-			JSONObject json = new JSONObject (message);
-			World world = World.fromJSONObject (json);
+			World world = LevelUp.GetInstance().GetWorld(message);
 
 			LevelUpEvents.OnWorldCompleted(world);
 		}
@@ -150,10 +130,7 @@ namespace Soomla.Levelup {
 		public void onWorldAssignedReward(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onWorldAssignedReward with message: " + message);
 			
-			// message is World as JSON
-			
-			JSONObject json = new JSONObject (message);
-			World world = World.fromJSONObject (json);
+			World world = LevelUp.GetInstance().GetWorld(message);
 			
 			LevelUpEvents.OnWorldAssignedReward(world);
 		}

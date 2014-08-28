@@ -1,0 +1,44 @@
+
+echo "creating unitypackage for SOOMLA All-In-One Baby !"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -logFile create_unity.log \
+  -projectPath $PWD/Soomla/ \
+  -exportPackage \
+    Assets/Plugins/Android/SoomlaAndroidCore.jar \
+    Assets/Plugins/Android/square-otto-1.3.2.jar \
+    Assets/Plugins/Android/UnitySoomlaAndroidCore.jar \
+    Assets/Plugins/iOS/libSoomlaIOSCore.a \
+    Assets/Plugins/iOS/libUnitySoomlaiOSCore.a \
+    Assets/Plugins/Soomla/Core \
+    Assets/Soomla/Editor/SoomlaPostBuild.cs \
+    Assets/Soomla/Editor/SoomlaSettingsEditor.cs \
+    Assets/Soomla/Editor/build-tools/mod_pbxproj.pyc \
+    Assets/Soomla/Prefabs/CoreEvents.prefab \
+    Assets/Soomla/Resources/SoomlaEditorScript.asset \
+    Assets/Soomla/Resources/soom_logo.png \
+    Assets/Plugins/Android/AndroidStore.jar \
+    Assets/Plugins/Android/UnityAndroidStore.jar \
+    Assets/Plugins/iOS/libSoomlaiOSStore.a \
+    Assets/Plugins/iOS/libUnityiOSStore.a \
+    Assets/Plugins/Soomla/Store \
+    Assets/Soomla/Editor/build-tools/Soomla_StoreRunner.py \
+    Assets/Soomla/Prefabs/StoreEvents.prefab \
+    Assets/Soomla/compilations \
+    Assets/Plugins/Android/AndroidProfile.jar \
+    Assets/Plugins/Android/UnityAndroidProfile.jar \
+    Assets/Plugins/iOS/libSoomlaiOSProfile.a \
+    Assets/Plugins/iOS/libUnityiOSProfile.a \
+    Assets/Plugins/Soomla/Profile \
+    Assets/Soomla/Editor/build-tools/Soomla_ProfileRunner.py \
+    Assets/Soomla/Prefabs/ProfileEvents.prefab \
+    Assets/Plugins/Android/AndroidLevelUp.jar \
+    Assets/Plugins/Android/UnityAndroidLevelup.jar \
+    Assets/Plugins/iOS/libSoomlaiOSLevelUp.a \
+    Assets/Plugins/iOS/libUnityiOSLevelUp.a \
+    Assets/Plugins/Soomla/Levelup \
+    Assets/Soomla/Editor/build-tools/Soomla_LevelupRunner.py \
+    Assets/Soomla/Prefabs/LevelUpEvents.prefab \
+  $PWD/soomla-unity3d-all-in-one.unitypackage \
+  -quit

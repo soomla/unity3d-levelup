@@ -41,6 +41,22 @@ echo "creating unitypackage for SOOMLA Store"
   $PWD/soomla-unity3d-store.unitypackage \
   -quit
 
+echo "creating unitypackage for SOOMLA Profile"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -logFile create_unity.log \
+  -projectPath $PWD/Soomla/ \
+  -exportPackage \
+    Assets/Plugins/Android/AndroidProfile.jar \
+    Assets/Plugins/Android/UnityAndroidProfile.jar \
+    Assets/Plugins/iOS/libSoomlaiOSProfile.a \
+    Assets/Plugins/iOS/libUnityiOSProfile.a \
+    Assets/Plugins/Soomla/Profile \
+    Assets/Soomla/Editor/build-tools/Soomla_ProfileRunner.py \
+    Assets/Soomla/Prefabs/ProfileEvents.prefab \
+  $PWD/soomla-unity3d-profile.unitypackage \
+  -quit
 
 echo "creating unitypackage for SOOMLA LevelUp"
 

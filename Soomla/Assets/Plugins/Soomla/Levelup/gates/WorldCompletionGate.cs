@@ -46,6 +46,7 @@ namespace Soomla.Levelup
 		public WorldCompletionGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
+			this.AssociatedWorldId = jsonGate[LUJSONConsts.LU_ASSOCWORLDID].str;
 		}
 		
 		/// <summary>
@@ -54,7 +55,7 @@ namespace Soomla.Levelup
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-
+			obj.AddField(LUJSONConsts.LU_ASSOCWORLDID, this.AssociatedWorldId);
 			return obj;
 		}
 

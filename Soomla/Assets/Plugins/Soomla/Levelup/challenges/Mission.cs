@@ -47,7 +47,7 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// A <c>Gate</c> that needs to be unlocked in order to attempt this <c>Mission</c>.
 		/// </summary>
-		protected Gate Gate;
+		public Gate Gate;
 
 
 		/// <summary>
@@ -130,6 +130,7 @@ namespace Soomla.Levelup {
 			if (jsonObj[JSONConsts.SOOM_SCHEDULE]) {
 				this.Schedule = new Schedule(jsonObj[JSONConsts.SOOM_SCHEDULE]);
 			}
+			registerEvents();
 		}
 
 		/// <summary>
@@ -164,19 +165,6 @@ namespace Soomla.Levelup {
 			return mission;
 		}
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-		public AndroidJavaObject toJNIObject() {
-			using(AndroidJavaClass jniClass = new AndroidJavaClass("com.soomla.levelup.challenges.Mission")) {
-				string json = toJSONObject().print();
-				SoomlaUtils.LogError(TAG, "json:"+json);
-				return jniClass.CallStatic<AndroidJavaObject>("fromJSONString", json);
-			}
-		}
-#endif
-
-		/// <summary>
-		/// Registers relevant events. Each specific type of <c>Mission</c> must implement this method. 
-		/// </summary>
 		protected virtual void registerEvents() {
 			if (!IsCompleted() && this.Gate != null) {
 				LevelUpEvents.OnGateOpened += onGateOpened;

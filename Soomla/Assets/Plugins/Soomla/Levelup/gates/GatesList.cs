@@ -37,7 +37,6 @@ namespace Soomla.Levelup
 		public GatesList(string id)
 			: base(id)
 		{
-			Gates = new List<Gate>();
 		}
 
 		/// <summary>
@@ -48,7 +47,6 @@ namespace Soomla.Levelup
 		public GatesList(string id, Gate singleGate)
 			: base(id)
 		{
-			Gates = new List<Gate>();
 			Gates.Add(singleGate);
 		}
 
@@ -70,7 +68,6 @@ namespace Soomla.Levelup
 		public GatesList(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			Gates = new List<Gate>();
 			List<JSONObject> gatesJSON = jsonGate[LUJSONConsts.LU_GATES].list;
 
 			// Iterate over all gates in the JSON array and for each one create

@@ -58,7 +58,17 @@ namespace Soomla.Levelup
 		public PurchasingMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
+			// TODO: implement this when needed. It's irrelevant now.
 		}
+
+		public override JSONObject toJSONObject() {
+			JSONObject obj = base.toJSONObject();
+			
+			// TODO: implement this when needed. It's irrelevant now.
+			
+			return obj;
+		}
+
 	}
 }
 

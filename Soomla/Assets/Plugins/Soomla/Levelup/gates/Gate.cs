@@ -91,17 +91,6 @@ namespace Soomla.Levelup {
 			return gate;
 		}
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-		public AndroidJavaObject toJNIObject() {
-			using(AndroidJavaClass jniGateClass = new AndroidJavaClass("com.soomla.levelup.gates.Gate")) {
-				return jniGateClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
-			}
-		}
-#endif
-
-		/// <summary>
-		/// Attempts to open this <c>Gate</c>. 
-		/// </summary>
 		public bool Open() {
 			//  check in gate storage if it's already open.
 			if (GateStorage.IsOpen(this)) {
@@ -142,9 +131,10 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>If this <c>Gate</c> can be opened returns <c>true</c>; otherwise, <c>false</c>.</returns>
 		public bool CanOpen() {
-			// check in gate storage if the gate is open
+			// check in gate storage if the gate is open.
+			// gates are only opened once
 			if (GateStorage.IsOpen(this)) {
-				return true;
+				return false;
 			}
 
 			return canOpenInner();
@@ -174,6 +164,8 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>If this <c>Gate</c> was opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected abstract bool openInner();
+
+		//	public abstract void OnInitialize();
 
 		/// <summary>
 		/// Clones this <c>Gate</c> and gives it the given ID.

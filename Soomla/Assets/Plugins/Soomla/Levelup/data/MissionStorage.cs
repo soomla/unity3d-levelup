@@ -62,7 +62,7 @@ namespace Soomla.Levelup
 			SetCompleted (mission, completed, true);
 		}
 		public static void SetCompleted(Mission mission, bool completed, bool notify) {
-			instance._setTimesCompleted(mission, completed, notify);
+			instance._setCompleted(mission, completed, notify);
 		}
 
 		public static int GetTimesCompleted(Mission mission) {
@@ -92,7 +92,9 @@ namespace Soomla.Levelup
 		/// completed, otherwise subtract 1.</param>
 		/// <param name="notify">If set to <c>true</c> trigger the relevant
 		/// event according to the value of <c>up</c>.</param>
-		protected virtual void _setTimesCompleted(Mission mission, bool up, bool notify) {
+		
+
+		protected virtual void _setCompleted(Mission mission, bool up, bool notify) {
 #if UNITY_EDITOR
 			int total = _getTimesCompleted(mission) + (up ? 1 : -1);
 			if(total<0) total = 0;
