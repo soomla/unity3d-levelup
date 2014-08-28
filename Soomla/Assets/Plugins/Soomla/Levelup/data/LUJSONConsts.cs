@@ -41,6 +41,8 @@ namespace Soomla.Levelup {
 		public const string LU_DESIRED_RECORD 	 = "desiredBalance";
 		public const string LU_SOCIAL_ACTION_TYPE= "socialActionType";
 
+		public const string LU_SOCIAL_PROVIDER   = "provider";
+
 		/** Challenge **/
 		public const string LU_CHALLENGES        = "challenges";
 		public const string LU_MISSIONS          = "missions";

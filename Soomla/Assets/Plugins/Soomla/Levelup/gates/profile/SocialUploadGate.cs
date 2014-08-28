@@ -15,28 +15,33 @@
 using System;
 using Soomla.Store;
 using Soomla.Profile;
+using UnityEngine;
 
 namespace Soomla.Levelup
 {
-	public abstract class SocialActionGate : Gate
+	public class SocialUploadGate : SocialActionGate
 	{
-		private const string TAG = "SOOMLA SocialActionGate";
+		private const string TAG = "SOOMLA SocialUploadGate";
 
-		public Provider Provider;
+		public string FileName;
+		public string Message;
+		public Texture2D ImgTexture;
 
-		public SocialActionGate(string id, Provider provider)
-			: base(id)
+		public SocialUploadGate(string id, Provider provider, string fileName, string message, Texture2D texture)
+			: base(id, provider)
 		{
-			Provider = provider;
+			FileName = fileName;
+			Message = message;
+			ImgTexture = texture;
 		}
 		
 		/// <summary>
 		/// see parent.
 		/// </summary>
-		public SocialActionGate(JSONObject jsonGate)
+		public SocialUploadGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			Provider = Provider.fromString(jsonGate[LUJSONConsts.LU_SOCIAL_PROVIDER].str);
+			// TODO: implement this when needed. It's irrelevant now.
 		}
 		
 		/// <summary>
@@ -45,31 +50,26 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(LUJSONConsts.LU_SOCIAL_PROVIDER, Provider.ToString());
+
+			// TODO: implement this when needed. It's irrelevant now.
 
 			return obj;
 		}
 
-		protected override bool canOpenInner() {
-			return true;
-		}
+		protected override bool openInner() {
+			if (CanOpen()) {
 
-		protected void onSocialActionFinished(Provider provider, SocialActionType socialActionType, string payload) {
-			if (payload == this.ID) {
-				ForceOpen(true);
+				SoomlaProfile.UploadImage(Provider.FACEBOOK,
+				                          ImgTexture,
+				                          FileName,
+				                          Message,
+				                          this.ID);
+
+				return true;
 			}
+			
+			return false;
 		}
-
-		protected override void registerEvents() {
-			if (!IsOpen()) {
-				ProfileEvents.OnSocialActionFinished += onSocialActionFinished;
-			}
-		}
-
-		protected override void unregisterEvents() {
-			ProfileEvents.OnSocialActionFinished -= onSocialActionFinished;
-		}
-
 	}
 }
 

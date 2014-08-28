@@ -15,23 +15,19 @@
 using System;
 using Soomla.Store;
 using Soomla.Profile;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Soomla.Levelup
 {
-	public class SocialStatusGate : Gate
+	public class SocialStatusGate : SocialActionGate
 	{
 		private const string TAG = "SOOMLA SocialStatusGate";
 
-		public Provider Provider;
 		public string Status;
 
 		public SocialStatusGate(string id, Provider provider, string status)
-			: base(id)
+			: base(id, provider)
 		{
 			Status = status;
-			Provider = provider;
 		}
 		
 		/// <summary>
@@ -40,8 +36,7 @@ namespace Soomla.Levelup
 		public SocialStatusGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			RequiredSocialActionType = SocialActionType.fromString(jsonGate[LUJSONConsts.LU_SOCIAL_ACTION_TYPE].str);
-//			Status = 
+			// TODO: implement this when needed. It's irrelevant now.
 		}
 		
 		/// <summary>
@@ -50,60 +45,38 @@ namespace Soomla.Levelup
 		/// <returns>see parent</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(LUJSONConsts.LU_SOCIAL_ACTION_TYPE, RequiredSocialActionType.ToString());
+
+			// TODO: implement this when needed. It's irrelevant now.
 
 			return obj;
-		}
-
-		protected override bool canOpenInner() {
-			return true;
 		}
 
 		protected override bool openInner() {
 			if (CanOpen()) {
 
-				if (RequiredSocialActionType == SocialActionType.UPLOAD_IMAGE) {
-					SoomlaProfile.UploadImage(Provider.FACEBOOK,
-					                          (Texture2D)SocialActionParams["texture"],
-					                          SocialActionParams["fileName"].ToString(),
-					                          SocialActionParams["message"].ToString(),
-					                          this.ID);
-				} else if (RequiredSocialActionType == SocialActionType.UPDATE_STATUS) {
-					SoomlaProfile.UpdateStatus(Provider.FACEBOOK,
-					                           SocialActionParams["status"].ToString(),
-					                           this.ID);
-				} else if (RequiredSocialActionType == SocialActionType.UPDATE_STORY) {
-					SoomlaProfile.UpdateStory(Provider.FACEBOOK,
-					                          SocialActionParams["message"].ToString(),
-					                          SocialActionParams["name"].ToString(),
-					                          SocialActionParams["caption"].ToString(),
-					                          SocialActionParams["link"].ToString(),
-					                          SocialActionParams["picture"].ToString(),
-					                          this.ID);
-				}
+//				if (RequiredSocialActionType == SocialActionType.UPLOAD_IMAGE) {
+//					SoomlaProfile.UploadImage(Provider.FACEBOOK,
+//					                          (Texture2D)SocialActionParams["texture"],
+//					                          SocialActionParams["fileName"].ToString(),
+//					                          SocialActionParams["message"].ToString(),
+//					                          this.ID);
+//				} else if (RequiredSocialActionType == SocialActionType.UPDATE_STATUS) {
+				SoomlaProfile.UpdateStatus(Provider, Status, this.ID);
+//				} else if (RequiredSocialActionType == SocialActionType.UPDATE_STORY) {
+//					SoomlaProfile.UpdateStory(Provider.FACEBOOK,
+//					                          SocialActionParams["message"].ToString(),
+//					                          SocialActionParams["name"].ToString(),
+//					                          SocialActionParams["caption"].ToString(),
+//					                          SocialActionParams["link"].ToString(),
+//					                          SocialActionParams["picture"].ToString(),
+//					                          this.ID);
+//				}
 
 				return true;
 			}
 			
 			return false;
 		}
-
-		public void onSocialActionFinished(Provider provider, SocialActionType socialActionType, string payload) {
-			if (payload == this.ID) {
-				ForceOpen(true);
-			}
-		}
-
-		protected override void registerEvents() {
-			if (!IsOpen()) {
-				ProfileEvents.OnSocialActionFinished += onSocialActionFinished;
-			}
-		}
-
-		protected override void unregisterEvents() {
-			ProfileEvents.OnSocialActionFinished -= onSocialActionFinished;
-		}
-
 	}
 }
 
