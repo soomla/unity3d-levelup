@@ -45,7 +45,7 @@ namespace Soomla.Levelup {
 		public Schedule Schedule;
 
 		/// <summary>
-		/// A <c>Gate</c> that needs to be unlocked in order to attempt this <c>Mission</c>.
+		/// A <c>Gate</c> that needs to be unlocked in order to complete this <c>Mission</c>.
 		/// </summary>
 		public Gate Gate;
 
@@ -69,7 +69,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Constructor for <c>Mission</c> with rewards.
+		/// Constructor.
 		/// </summary>
 		/// <param name="id">ID.</param>
 		/// <param name="name">Name.</param>
@@ -80,11 +80,11 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Constructor for mission with a gate. 
+		/// Constructor. 
 		/// </summary>
 		//// <param name="id">ID.</param>
 		/// <param name="name">Name.</param>
-		/// <param name="gateType"><c>Gate</c> type.</param>
+		/// <param name="gateType"><c>Gate</c> to unlock to complete this <c>Mission</c></param>
 		/// <param name="gateInitParams">Parameters to initialize <c>Gate</c>.</param>
 		protected Mission (String id, String name, Type gateType, object[] gateInitParams)
 			: this(id, name, new List<Reward>(), gateType, gateInitParams)
@@ -92,12 +92,12 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Constructor for mission with a gate and rewards. 
+		/// Constructor. 
 		/// </summary>
 		/// <param name="id">ID.</param>
 		/// <param name="name">Name.</param>
 		/// <param name="rewards"><c>Reward</c>s.</param>
-		/// <param name="gateType">Gate type.</param>
+		/// <param name="gateType"><c>Gate</c> to unlock to complete this <c>Mission</c></param>
 		/// <param name="gateInitParams">Gate init parameters.</param>
 		protected Mission (String id, String name, List<Reward> rewards, Type gateType, object[] gateInitParams)
 			: base(id, name, "")
@@ -165,24 +165,6 @@ namespace Soomla.Levelup {
 			return mission;
 		}
 
-		protected virtual void registerEvents() {
-			if (!IsCompleted() && this.Gate != null) {
-				LevelUpEvents.OnGateOpened += onGateOpened;
-			}
-		}
-
-		/// <summary>
-		/// Sets this <c>Mission</c> as completed if the <c>Gate</c> that was opened is 
-		/// this <c>Mission</c>'s gate.
-		/// </summary>
-		/// <param name="gate">The <c>Gate</c> that was opened.</param>
-		private void onGateOpened(Gate gate) {
-			if(this.Gate == gate) {
-				Gate.ForceOpen(false);
-				setCompletedInner(true);
-			}
-		}
-
 		/// <summary>
 		/// Determines whether this <c>Mission</c> is available by checking that its <c>Gate</c>  
 		/// can be opened, and also that its <c>Schedule</c> is approved.
@@ -203,8 +185,8 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// Checks this <c>Mission</c>'s <c>Schedule</c> - if approved, attempts to open <c>Gate</c>.
 		/// </summary>
-		/// <returns>If the <c>Schedule</c> doesn't approve the mission cannot be completed
-		/// and thus returns <c>false</c>; otherwise attempts to open this <c>Mission</c>'s
+		/// <returns>If <c>Schedule</c> doesn't approve, the mission cannot be completed
+		/// and thus returns <c>false</c>; otherwise opens this <c>Mission</c>'s
 		/// <c>Gate</c> and returns <c>true</c> if successful.</returns>
 		public bool Complete() {
 			if (!Schedule.Approve(MissionStorage.GetTimesCompleted(this))) {
@@ -224,6 +206,14 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
+		/// Clones this <c>Mission</c> and gives it the given ID.
+		/// </summary>
+		/// <param name="newMissionId">Cloned mission ID.</param>
+		public override Mission Clone(string newMissionId) {
+			return (Mission) base.Clone(newMissionId);
+		}
+
+		/// <summary>
 		/// Sets this <c>Mission</c> as completed and gives or takes <c>Reward</c>s according
 		/// to the given <c>completed</c> value.
 		/// </summary>
@@ -236,6 +226,24 @@ namespace Soomla.Levelup {
 				giveRewards();
 			} else {
 				takeRewards();
+			}
+		}
+
+		protected virtual void registerEvents() {
+			if (!IsCompleted() && this.Gate != null) {
+				LevelUpEvents.OnGateOpened += onGateOpened;
+			}
+		}
+		
+		/// <summary>
+		/// Sets this <c>Mission</c> as completed if the <c>Gate</c> that was opened is 
+		/// this <c>Mission</c>'s gate.
+		/// </summary>
+		/// <param name="gate">The <c>Gate</c> that was opened.</param>
+		private void onGateOpened(Gate gate) {
+			if(this.Gate == gate) {
+				Gate.ForceOpen(false);
+				setCompletedInner(true);
 			}
 		}
 
@@ -257,13 +265,6 @@ namespace Soomla.Levelup {
 			}
 		}
 
-		/// <summary>
-		/// Clones this <c>Mission</c> and gives it the given ID.
-		/// </summary>
-		/// <param name="newMissionId">Cloned mission ID.</param>
-		public override Mission Clone(string newMissionId) {
-			return (Mission) base.Clone(newMissionId);
-		}
 	}
 }
 

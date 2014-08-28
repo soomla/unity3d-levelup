@@ -178,19 +178,6 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Opens this gateslist if the gate-opened event causes the GatesList composite criteria to be met.
-		/// </summary>
-		/// <param name="gate">Gate that was opened.</param>
-		/// @subscribe
-		private void onGateOpened(Gate gate) {
-			if(Gates.Contains(gate)) {
-				if (CanOpen()) {
-					ForceOpen(true);
-				}
-			}
-		}
-
-		/// <summary>
 		/// Opens this gateslist if it can be opened (its criteria has been met).
 		/// </summary>
 		/// <returns>If the gate has been opened returns <c>true</c>; otherwise 
@@ -205,6 +192,17 @@ namespace Soomla.Levelup
 			return false;
 		}
 
+		/// <summary>
+		/// Opens this gateslist if the gate-opened event causes the GatesList composite criteria to be met.
+		/// </summary>
+		/// <param name="gate">Gate that was opened.</param>
+		private void onGateOpened(Gate gate) {
+			if(Gates.Contains(gate)) {
+				if (CanOpen()) {
+					ForceOpen(true);
+				}
+			}
+		}
 	}
 }
 

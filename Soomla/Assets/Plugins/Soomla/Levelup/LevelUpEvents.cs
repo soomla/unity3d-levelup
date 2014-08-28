@@ -25,10 +25,7 @@ namespace Soomla.Levelup {
 	/// </summary>
 	public class LevelUpEvents : MonoBehaviour {
 
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
-		private const string TAG = "SOOMLA LevelUpEvents";
+		private const string TAG = "SOOMLA LevelUpEvents"; // used for Log error messages
 
 #if UNITY_IOS && !UNITY_EDITOR
 		[DllImport ("__Internal")]

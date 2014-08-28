@@ -69,6 +69,17 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
+		/// Opens this <c>Gate</c> if the item-purchased event causes the <c>Gate</c>'s criteria to be met.
+		/// </summary>
+		/// <param name="pvi">The item that was purchased.</param>
+		/// <param name="payload">Payment ID of the item purchased.</param>
+		public void onItemPurchased(PurchasableVirtualItem pvi, string payload) {
+			if (pvi.ItemId == AssociatedItemId && payload == this._id) {
+				ForceOpen(true);
+			}
+		}
+
+		/// <summary>
 		/// Registers relevant events: item-purchased event.
 		/// </summary>
 		protected override void registerEvents() {
@@ -76,24 +87,12 @@ namespace Soomla.Levelup
 				StoreEvents.OnItemPurchased += onItemPurchased;
 			}
 		}
-
+		
 		/// <summary>
 		/// Unregisters relevant events: item-purchased event.
 		/// </summary>
 		protected override void unregisterEvents() {
 			StoreEvents.OnItemPurchased -= onItemPurchased;
-		}
-
-		/// <summary>
-		/// Opens this <c>Gate</c> if the item-purchased event causes the <c>Gate</c>'s criteria to be met.
-		/// </summary>
-		/// <param name="pvi">The item that was purchased.</param>
-		/// <param name="payload">Payment ID of the item purchased.</param>
-		/// @subscribe
-		public void onItemPurchased(PurchasableVirtualItem pvi, string payload) {
-			if (pvi.ItemId == AssociatedItemId && payload == this._id) {
-				ForceOpen(true);
-			}
 		}
 
 		/// <summary>

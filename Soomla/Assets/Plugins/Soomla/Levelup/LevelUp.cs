@@ -51,6 +51,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		public Dictionary<string, Reward> Rewards;
 
+
 		/// <summary>
 		/// Initializes the specified <c>InitialWorld</c> and rewards.
 		/// </summary>
@@ -73,7 +74,7 @@ namespace Soomla.Levelup {
 		/// Retrieves the reward with the given ID.
 		/// </summary>
 		/// <returns>The reward that was fetched.</returns>
-		/// <param name="rewardId">Reward identifier.</param>
+		/// <param name="rewardId">ID of the <c>Reward</c> to be fetched.</param>
 		public Reward GetReward(string rewardId) {
 			Reward reward = null;
 			Rewards.TryGetValue(rewardId, out reward);
@@ -108,6 +109,11 @@ namespace Soomla.Levelup {
 			return fetchWorld(worldId, InitialWorld.InnerWorldsMap);
 		}
 
+		/// <summary>
+		/// Retrieves the <c>Gate</c> with the given ID.
+		/// </summary>
+		/// <returns>The gate.</returns>
+		/// <param name="gateId">ID of the <c>Gate</c> to be fetched.</param>
 		public Gate GetGate(string gateId) {
 			if (InitialWorld.Gate != null &&
 			    InitialWorld.Gate.ID == gateId) {
@@ -117,6 +123,11 @@ namespace Soomla.Levelup {
 			return fetchGate(gateId, InitialWorld.InnerWorldsList);
 		}
 
+		/// <summary>
+		/// Retrieves the <c>Mission</c> with the given ID.
+		/// </summary>
+		/// <returns>The mission.</returns>
+		/// <param name="missionId">ID of the <c>Mission</c> to be fetched.</param>
 		public Mission GetMission(string missionId) {
 			Mission mission = (from m in InitialWorld.Missions
 			 where m.ID == missionId
@@ -201,6 +212,9 @@ namespace Soomla.Levelup {
 			return instance;
 		}
 
+
+		/** PRIVATE FUNCTIONS **/
+
 		private LevelUp() {}
 
 		// NOTE: Not sure we need a save function.
@@ -214,10 +228,6 @@ namespace Soomla.Levelup {
 //			// KeyValueStorage.setValue(key, lu_json);
 //		}
 
-		/// <summary>
-		/// Converts this instance of <c>LevelUp</c> to JSONobject
-		/// </summary>
-		/// <returns>The JSON object.</returns>
 		private JSONObject toJSONObject() {
 			JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
 
@@ -226,12 +236,6 @@ namespace Soomla.Levelup {
 			return jsonObject;
 		}
 
-		/// <summary>
-		/// Fetches the <c>Score</c> with the given scoreID from the given <c>World</c>s. 
-		/// </summary>
-		/// <returns>The <c>Score</c> with the given score ID.</returns>
-		/// <param name="scoreId">ID of the <c>Score</c> to fetch.</param>
-		/// <param name="worlds">Worlds to search through.</param>
 		private Score fetchScoreFromWorlds(string scoreId, Dictionary<string, World> worlds) {
 			Score retScore = null;
 			foreach (World world in worlds.Values) {
@@ -247,12 +251,6 @@ namespace Soomla.Levelup {
 			return retScore;
 		}
 
-		/// <summary>
-		/// Fetches the <c>World</c> with the given ID from the given dictionary of <c>World</c>s.
-		/// </summary>
-		/// <returns>The <c>World</c> with the given ID.</returns>
-		/// <param name="worldId">ID of <c>World</c> to fetch.</param>
-		/// <param name="worlds">Worlds to search through.</param>
 		private World fetchWorld(string worldId, Dictionary<string, World> worlds) {
 			World retWorld;
 			worlds.TryGetValue(worldId, out retWorld);
@@ -268,13 +266,6 @@ namespace Soomla.Levelup {
 			return retWorld;
 		}
 
-		/// <summary>
-		/// Counts the number of worlds starting from the given <c>World</c> and according to the 
-		/// given function that determines which <c>World</c>s to count in the sum.
-		/// </summary>
-		/// <returns>The recursive count.</returns>
-		/// <param name="world"><c>World</c> to begin counting from.</param>
-		/// <param name="isAccepted">Function that determines if the <c>World</c> accepted.</param>
 		private Mission fetchMission(string missionId, List<World> worlds) {
 			foreach (World world in worlds) {
 				Mission mission = (from m in world.Missions

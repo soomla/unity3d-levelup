@@ -39,7 +39,7 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Constructor for mission with rewards. 
+		/// Constructor for <c>Mission</c> with rewards. 
 		/// </summary>
 		/// <param name="id">ID.</param>
 		/// <param name="name">Name.</param>
@@ -53,7 +53,7 @@ namespace Soomla.Levelup
 
 		/// <summary>
 		/// Constructor.
-		/// Generates an instance of <c>RecordMission</c> from JSONObject. 
+		/// Generates an instance of <c>RecordMission</c> from the given JSONObject. 
 		/// </summary>
 		/// <param name="jsonMission">JSON mission.</param>
 		public RecordMission(JSONObject jsonMission)
@@ -62,6 +62,10 @@ namespace Soomla.Levelup
 			// TODO: implement this when needed. It's irrelevant now.
 		}
 
+		/// <summary>
+		/// Converts this <c>RecordMission</c> to a JSONObject.
+		/// </summary>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			

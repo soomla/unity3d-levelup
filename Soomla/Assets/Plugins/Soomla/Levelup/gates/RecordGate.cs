@@ -39,6 +39,7 @@ namespace Soomla.Levelup
 		/// </summary>
 		public double DesiredRecord;
 
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -76,6 +77,20 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
+		/// Opens this <c>Gate</c> if the score-record-changed event causes the <c>Gate</c>'s criteria to be met.
+		/// </summary>
+		/// <param name="score">The <c>Score</c> whose record has changed.</param>
+		public void onScoreRecordChanged(Score score) {
+			if (score.ID == AssociatedScoreId &&
+			    score.HasRecordReached(DesiredRecord)) {
+				// If the score's record is reached mutiple times, don't worry about this function 
+				// being called over and over again - that won't happen because `ForceOpen(true)` 
+				// calls`unregisterEvents` inside.
+				ForceOpen(true);
+			}
+		}
+
+		/// <summary>
 		/// Registers relevant events: score-record changed event.
 		/// </summary>
 		protected override void registerEvents() {
@@ -89,21 +104,6 @@ namespace Soomla.Levelup
 		/// </summary>
 		protected override void unregisterEvents() {
 			LevelUpEvents.OnScoreRecordChanged -= onScoreRecordChanged;
-		}
-
-		/// <summary>
-		/// Opens this <c>Gate</c> if the score-record-changed event causes the <c>Gate</c>'s criteria to be met.
-		/// </summary>
-		/// <param name="score">The <c>Score</c> whose record has changed.</param>
-		/// @subscribe
-		public void onScoreRecordChanged(Score score) {
-			if (score.ID == AssociatedScoreId &&
-			    score.HasRecordReached(DesiredRecord)) {
-				// If the score's record is reached mutiple times, don't worry about this function 
-				// being called over and over again - that won't happen because `ForceOpen(true)` 
-				// calls`unregisterEvents` inside.
-				ForceOpen(true);
-			}
 		}
 
 		/// <summary>

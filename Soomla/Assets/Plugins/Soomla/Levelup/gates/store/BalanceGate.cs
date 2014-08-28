@@ -75,6 +75,28 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
+		/// Opens this <c>Gate</c> if the currency-balance changed event causes the <c>Gate</c>'s 
+		/// criteria to be met. 
+		/// </summary>
+		/// <param name="virtualCurrency">Virtual currency whose balance changed.</param>
+		/// <param name="balance">New balance.</param>
+		/// <param name="amountAdded">Amount added.</param>
+		public void onCurrencyBalanceChanged(VirtualCurrency virtualCurrency, int balance, int amountAdded) {
+			checkItemIdBalance (virtualCurrency.ItemId, balance);
+		}
+		
+		/// <summary>
+		/// Opens this <c>Gate</c> if the good-balance changed event causes the <c>Gate</c>'s  
+		/// criteria to be met. 
+		/// </summary>
+		/// <param name="good">Virtual good whose balance has changed.</param>
+		/// <param name="balance">New balance.</param>
+		/// <param name="amountAdded">Amount added.</param>
+		public void onGoodBalanceChanged(VirtualGood good, int balance, int amountAdded) {
+			checkItemIdBalance (good.ItemId, balance);
+		}
+
+		/// <summary>
 		/// Checks if this <c>Gate</c> meets its criteria for opening, by checking if the
 		/// item's balance has reached the desired balance.
 		/// </summary>
@@ -89,45 +111,21 @@ namespace Soomla.Levelup
 				return false;
 			}
 		}
-
+		
 		/// <summary>
 		/// Opens the <c>Gate</c> if the criteria has been met. 
 		/// </summary>
 		/// <returns>If the <c>Gate</c> is opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
-
+				
 				// There's nothing to do here... If the DesiredBalance was reached then the gate is just open.
-
+				
 				ForceOpen(true);
 				return true;
 			}
 			
 			return false;
-		}
-
-		/// <summary>
-		/// Opens this <c>Gate</c> if the currency-balance changed event causes the <c>Gate</c>'s 
-		/// criteria to be met. 
-		/// </summary>
-		/// <param name="virtualCurrency">Virtual currency whose balance changed.</param>
-		/// <param name="balance">New balance.</param>
-		/// <param name="amountAdded">Amount added.</param>
-		/// @subscribe
-		public void onCurrencyBalanceChanged(VirtualCurrency virtualCurrency, int balance, int amountAdded) {
-			checkItemIdBalance (virtualCurrency.ItemId, balance);
-		}
-		
-		/// <summary>
-		/// Opens this <c>Gate</c> if the good-balance changed event causes the <c>Gate</c>'s  
-		/// criteria to be met. 
-		/// </summary>
-		/// <param name="good">Virtual good whose balance has changed.</param>
-		/// <param name="balance">New balance.</param>
-		/// <param name="amountAdded">Amount added.</param>
-		/// @subscribe
-		public void onGoodBalanceChanged(VirtualGood good, int balance, int amountAdded) {
-			checkItemIdBalance (good.ItemId, balance);
 		}
 
 		/// <summary>

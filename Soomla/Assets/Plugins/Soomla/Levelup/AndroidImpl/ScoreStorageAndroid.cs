@@ -19,8 +19,8 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// <c>ScoreStorage</c> for Android.
-	/// A utility class for persisting and querying scores and records.
-	/// Use this class to get or set the values of scores and records.
+	/// A utility class for persisting and querying <c>Score</c>s and records.
+	/// Use this class to get or set the values of <c>Score</c>s and records.
 	/// </summary>
 	public class ScoreStorageAndroid : ScoreStorage {
 #if UNITY_ANDROID && !UNITY_EDITOR

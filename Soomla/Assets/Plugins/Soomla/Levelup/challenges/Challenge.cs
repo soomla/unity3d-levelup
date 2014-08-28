@@ -19,8 +19,8 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// A challenge is a specific type of <c>Mission</c> which holds a collection
-	/// of missions. The user is required to complete all these missions in order  
-	/// to earn the reward associated with the challenge.
+	/// of <c>Mission</c>s. The user is required to complete all these <c>Mission</c>s in order  
+	/// to earn the <c>Reward</c> associated with the <c>Challenge</c>.
 	/// </summary>
 	public class Challenge : Mission
 	{
@@ -54,7 +54,7 @@ namespace Soomla.Levelup
 		/// <param name="id"><c>Challenge</c> ID.</param>
 		/// <param name="name"><c>Challenge</c> name.</param>
 		/// <param name="missions"><c>Mission</c>s that belong to this <c>Challenge</c>.</param>
-		/// <param name="rewards"><c>Rewards</c> associated with this <c>Challenge</c>.</param>
+		/// <param name="rewards"><c>Reward</c>s associated with this <c>Challenge</c>.</param>
 		public Challenge(string id, string name, List<Mission> missions, List<Reward> rewards)
 			: base(id, name, rewards)
 		{
@@ -118,7 +118,6 @@ namespace Soomla.Levelup
 		/// <c>Challenge</c> are completed, and if so, sets the <c>Challenge</c> as completed.
 		/// </summary>
 		/// <param name="completedMission">The <c>Mission</c> that triggered the event.</param>
-		/// @Subscribe
 		public void onMissionCompleted(Mission completedMission) {
 			SoomlaUtils.LogDebug (TAG, "onMissionCompleted");
 			if (Missions.Contains(completedMission)) {
@@ -144,7 +143,6 @@ namespace Soomla.Levelup
 		/// one of its child <c>Mission</c>s is incomplete, the <c>Challenge</c> is revoked as well.
 		/// </summary>
 		/// <param name="mission">The <c>Mission</c> that triggered the event.</param>
-		/// @Subscribe
 		public void onMissionCompletionRevoked(Mission mission) {
 			if (Missions.Contains(mission)) {
 				if (MissionStorage.IsCompleted(this)) {

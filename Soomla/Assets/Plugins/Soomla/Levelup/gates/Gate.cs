@@ -38,6 +38,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		private const string TAG = "SOOMLA Gate";
 
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -141,6 +142,14 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
+		/// Clones this <c>Gate</c> and gives it the given ID.
+		/// </summary>
+		/// <param name="newGateId">Cloned gate ID.</param>
+		public override Gate Clone(string newGateId) {
+			return (Gate) base.Clone(newGateId);
+		}
+
+		/// <summary>
 		/// Registers relevant events. Each specific type of <c>Gate</c> must implement this method. 
 		/// </summary>
 		protected abstract void registerEvents();
@@ -167,13 +176,6 @@ namespace Soomla.Levelup {
 
 		//	public abstract void OnInitialize();
 
-		/// <summary>
-		/// Clones this <c>Gate</c> and gives it the given ID.
-		/// </summary>
-		/// <param name="newGateId">Cloned gate ID.</param>
-		public override Gate Clone(string newGateId) {
-			return (Gate) base.Clone(newGateId);
-		}
 	}
 }
 

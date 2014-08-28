@@ -18,12 +18,30 @@ using Soomla.Profile;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
+	/// in order to unlock the <c>Gate</c>. Currently the social provider that's available 
+	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
+	/// providers will be added.
+	/// 
+	/// A specific type of <c>Gate</c> that has an associated page name.
+	/// The <c>Gate</c> is unlocked once the player "likes" the associated page.  
+	/// </summary>
 	public class SocialLikeGate : SocialActionGate
 	{
-		private const string TAG = "SOOMLA SocialLikeGate";
+		private const string TAG = "SOOMLA SocialLikeGate"; // used in error log messages. 
 
+		/// <summary>
+		/// The name of the page that needs to be liked. 
+		/// </summary>
 		public string PageName;
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id"><c>Gate</c> name.</param>
+		/// <param name="provider">Social provider.</param>
+		/// <param name="pageName">Name of the page to "Like" in order to unlock this <c>Gate</c>.</param>
 		public SocialLikeGate(string id, Provider provider, string pageName)
 			: base(id, provider)
 		{
@@ -31,8 +49,10 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
+		/// Generates an instance of <c>SocialLikeGate</c> from the given JSONObject.
 		/// </summary>
+		/// <param name="jsonGate">Json gate.</param>
 		public SocialLikeGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -40,9 +60,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this <c>SocialLikeGate</c> to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
@@ -51,6 +71,11 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> by "liking" the associated page.
+		/// </summary>
+		/// <returns>If the page was successfully "liked" returns <c>true</c>; otherwise 
+		/// <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
 

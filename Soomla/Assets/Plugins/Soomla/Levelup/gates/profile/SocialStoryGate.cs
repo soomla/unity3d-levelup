@@ -18,16 +18,36 @@ using Soomla.Profile;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
+	/// in order to unlock the <c>Gate</c>. Currently the social provider that's available 
+	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
+	/// providers will be added.
+	/// 
+	/// A specific type of <c>Gate</c> that has an associated story. The <c>Gate</c> 
+	/// is unlocked once the player posts the story.   
+	/// </summary>
 	public class SocialStoryGate : SocialActionGate
 	{
-		private const string TAG = "SOOMLA SocialStoryGate";
+		private const string TAG = "SOOMLA SocialStoryGate"; // used for Log error messages
 
-		public string Message;
+		/** Components of a social Story: **/
+		public string Message; 
 		public string Name;
 		public string Caption;
 		public string Link;
 		public string ImgUrl;
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id"><c>Gate</c> ID.</param>
+		/// <param name="provider">Social provider.</param>
+		/// <param name="message">Message for the story.</param>
+		/// <param name="name">Story name.</param>
+		/// <param name="caption">Caption for the story image.</param>
+		/// <param name="link">Link for the story.</param>
+		/// <param name="imgUrl">Image URL for the story.</param>
 		public SocialStoryGate(string id, Provider provider, string message, string name, string caption, string link, string imgUrl)
 			: base(id, provider)
 		{
@@ -39,18 +59,20 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
+		/// Generates an instance of <c>SocialStoryGate</c> from the given JSONObject.
 		/// </summary>
+		/// <param name="jsonGate">Json gate.</param>
 		public SocialStoryGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
 			// TODO: implement this when needed. It's irrelevant now.
 		}
 		
-		/// <summary>
-		/// Constructor.
+		//// <summary>
+		/// Converts this <c>SocialStoryGate</c> to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
@@ -59,6 +81,11 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> by posting the associated story.
+		/// </summary>
+		/// <returns>If the story was successfully posted returns <c>true</c>; otherwise 
+		/// <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
 

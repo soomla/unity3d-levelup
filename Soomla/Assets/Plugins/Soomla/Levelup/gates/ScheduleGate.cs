@@ -35,6 +35,7 @@ namespace Soomla.Levelup
 		/// </summary>
 		public Schedule Schedule;
 
+
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
@@ -103,8 +104,6 @@ namespace Soomla.Levelup
 			}
 			return false;
 		}
-
-
 	}
 }
 

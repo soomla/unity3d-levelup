@@ -58,6 +58,10 @@ namespace Soomla.Levelup
 			// TODO: implement this when needed. It's irrelevant now.
 		}
 
+		/// <summary>
+		/// Converts this <c>WorldCompletion</c> to a JSONObject.
+		/// </summary>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			

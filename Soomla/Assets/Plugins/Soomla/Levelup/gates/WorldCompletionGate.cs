@@ -28,6 +28,7 @@ namespace Soomla.Levelup
 		/// </summary>
 		public string AssociatedWorldId;
 
+
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
@@ -57,6 +58,16 @@ namespace Soomla.Levelup
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(LUJSONConsts.LU_ASSOCWORLDID, this.AssociatedWorldId);
 			return obj;
+		}
+
+		/// <summary>
+		/// Opens this <c>Gate</c> if the world-completed event causes the <c>Gate</c>'s criteria to be met.
+		/// </summary>
+		/// <param name="world"><c>World</c> to be compared to the associated <c>World</c>.</param>
+		public void onWorldCompleted(World world) {
+			if (world.ID == AssociatedWorldId) {
+				ForceOpen(true);
+			}
 		}
 
 		/// <summary>
@@ -97,18 +108,6 @@ namespace Soomla.Levelup
 		protected override void unregisterEvents() {
 			LevelUpEvents.OnWorldCompleted -= onWorldCompleted;
 		}
-
-		/// <summary>
-		/// Opens this <c>Gate</c> if the world-completed event causes the <c>Gate</c>'s criteria to be met.
-		/// </summary>
-		/// <param name="world"><c>World</c> to be compared to the associated <c>World</c>.</param>
-		/// @subscribe
-		public void onWorldCompleted(World world) {
-			if (world.ID == AssociatedWorldId) {
-				ForceOpen(true);
-			}
-		}
-
 	}
 }
 
