@@ -35,9 +35,9 @@ namespace Soomla.Levelup
 	}
 	
 	override protected bool _getTimesCompleted(Mission mission) {
-		int times = missionStorage_IsCompleted(mission.ID);
+		int times = missionStorage_GetTimesCompleted(mission.ID);
 		SoomlaUtils.LogDebug("SOOMLA/UNITY MissionStorageIOS", string.Format("mission {0} completed={1}", mission.ID, times));
-		return completed;
+		return times;
 	}
 	
 #endif
