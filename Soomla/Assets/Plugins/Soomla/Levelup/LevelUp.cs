@@ -69,6 +69,11 @@ namespace Soomla.Levelup {
 				return InitialWorld.Gate;
 			}
 
+			Gate gate = fetchGate(gateId, InitialWorld.Missions);
+			if (gate != null) {
+				return gate;
+			}
+
 			return fetchGate(gateId, InitialWorld.InnerWorldsList);
 		}
 
