@@ -21,7 +21,7 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
-	/// in order to unlock the <c>Gate</c>. Currently the social provider that's available 
+	/// order to unlock the <c>Gate</c>. Currently, the social provider that's available 
 	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
 	/// providers will be added.
 	/// 

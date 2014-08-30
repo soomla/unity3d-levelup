@@ -22,7 +22,8 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class VirtualItemScore : Score
 	{
-		private static string TAG = "SOOMLA VirtualItemScore";
+		private static string TAG = "SOOMLA VirtualItemScore"; // used for Log error messages
+
 		public string AssociatedItemId;
 
 		/// <summary>

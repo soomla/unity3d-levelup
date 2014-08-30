@@ -20,12 +20,12 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
-	/// in order to unlock the <c>Gate</c>. Currently the social provider that's available 
+	/// order to unlock the <c>Gate</c>. Currently, the social provider that's available 
 	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
 	/// providers will be added.
 	/// 
 	/// A specific type of <c>Gate</c> that has an associated page name.
-	/// The <c>Gate</c> is unlocked once the player "likes" the associated page.  
+	/// The <c>Gate</c> is unlocked once the player "Likes" the associated page.  
 	/// </summary>
 	public class SocialLikeGate : SocialActionGate
 	{

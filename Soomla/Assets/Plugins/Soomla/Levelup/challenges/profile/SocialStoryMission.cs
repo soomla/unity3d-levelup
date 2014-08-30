@@ -22,7 +22,7 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// NOTE: Social <c>Mission</c>s require the user to perform a specific social action in
-	/// in order to receive a <c>Reward</c>. Currently the social provider that's available 
+	/// order to receive a <c>Reward</c>. Currently, the social provider that's available 
 	/// is Facebook, so the <c>Mission</c>s are FB-oriented. In the future, more social 
 	/// providers will be added. 
 	/// 

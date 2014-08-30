@@ -349,6 +349,7 @@ namespace Soomla.Test {
 
 		// rafa's test?
 		private void createFruitsGoblins() {
+		
 			World mainWorld = new World("main_world");
 
 			Score s = new Score("numberScore");

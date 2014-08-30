@@ -24,7 +24,7 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class RangeScore : Score
 	{
-		public SRange Range;
+		public SRange Range; 
 
 		/// <summary>
 		/// Constructor.

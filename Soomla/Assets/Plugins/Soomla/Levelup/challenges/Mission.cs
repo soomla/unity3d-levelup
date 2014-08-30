@@ -166,8 +166,8 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Determines whether this <c>Mission</c> is available by checking that its <c>Gate</c>  
-		/// can be opened, and also that its <c>Schedule</c> is approved.
+		/// Determines whether this <c>Mission</c> is available by checking the criteria 
+		/// that makes the specific <c>Mission</c> available. 
 		/// </summary>
 		/// <returns>If this instance is available returns <c>true</c>; otherwise <c>false</c>.</returns>
 		public virtual bool IsAvailable() {
