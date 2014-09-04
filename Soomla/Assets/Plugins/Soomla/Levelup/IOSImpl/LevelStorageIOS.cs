@@ -19,8 +19,7 @@ using System.Runtime.InteropServices;
 namespace Soomla.Levelup
 {
 	public class LevelStorageIOS : LevelStorage {
-#if UNITY_IOS 
-		//&& !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
 	private static extern void levelStorage_SetSlowestDurationMillis(string levelId, long duration);
