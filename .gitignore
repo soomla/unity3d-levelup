@@ -69,3 +69,7 @@ proguard/
 **/.idea/misc.xml
 **/.idea/dictionaries
 .idea/libraries
+
+
+# Result of run_tests script
+UnitTestResults.xml

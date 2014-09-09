@@ -200,7 +200,7 @@ namespace Soomla.Test
 			LevelUpEvents.OnLevelEnded += onLevelEnded;
 			
 			Dictionary<string, object> evtLvlEnded = new Dictionary<string, object> {
-				{ "handler", "onLevelEnded1" },
+				{ "handler", "onLevelEnded" },
 				{ "id", cDummyLevelID }
 			};
 			
