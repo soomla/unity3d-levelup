@@ -136,7 +136,7 @@ namespace Soomla.Levelup {
 
 		/** Get elements to world. **/
 		public World GetInnerWorldAt(int index) {
-			if (index >= InnerWorldsMap.Count) {
+			if ((index < 0) || (index >= InnerWorldsMap.Count)) {
 				return null;
 			}
 
