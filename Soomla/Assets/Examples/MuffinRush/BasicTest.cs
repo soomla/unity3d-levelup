@@ -376,7 +376,7 @@ namespace Soomla.Test {
 //			((Level)LevelUp.GetInstance().GetWorld("machine_a_level_1")).Start();
 			/** Testing **/
 
-			Level lvl1 = (Level)machineA.InnerWorldsList[0];
+			Level lvl1 = (Level)machineA.GetInnerWorldAt(0);
 			lvl1.AssignReward(goldMedal);
 		}
 			

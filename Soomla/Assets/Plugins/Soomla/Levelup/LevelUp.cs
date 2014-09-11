@@ -209,7 +209,7 @@ namespace Soomla.Levelup {
 			return retWorld;
 		}
 
-		private Mission fetchMission(string missionId, List<World> worlds) {
+		private Mission fetchMission(string missionId, IEnumerable<World> worlds) {
 			foreach (World world in worlds) {
 				Mission mission = (from m in world.Missions
 				                   where m.ID == missionId
@@ -226,7 +226,7 @@ namespace Soomla.Levelup {
 			return null;
 		}
 
-		private Gate fetchGate(string gateId, List<World> worlds) {
+		private Gate fetchGate(string gateId, IEnumerable<World> worlds) {
 			if (worlds == null) {
 				return null;
 			}
