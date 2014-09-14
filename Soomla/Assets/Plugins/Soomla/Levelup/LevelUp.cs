@@ -26,7 +26,7 @@ namespace Soomla.Levelup {
 		public World InitialWorld;
 		public Dictionary<string, Reward> Rewards;
 
-		public void Initialize(World initialWorld, List<Reward> rewards) {
+		public void Initialize(World initialWorld, List<Reward> rewards = null) {
 			InitialWorld = initialWorld;
 //			save();
 
@@ -40,6 +40,10 @@ namespace Soomla.Levelup {
 		}
 
 		public Reward GetReward(string rewardId) {
+			if (Rewards == null) {
+				return null;
+			}
+
 			Reward reward = null;
 			Rewards.TryGetValue(rewardId, out reward);
 			return reward;
