@@ -376,7 +376,7 @@ namespace Soomla.Test {
 //			((Level)LevelUp.GetInstance().GetWorld("machine_a_level_1")).Start();
 			/** Testing **/
 
-			Level lvl1 = (Level)machineA.InnerWorldsList[0];
+			Level lvl1 = (Level)machineA.GetInnerWorldAt(0);
 			lvl1.AssignReward(goldMedal);
 		}
 			
@@ -401,7 +401,7 @@ namespace Soomla.Test {
 			// setup LevelUp structure/objects
 			Level lvl1 = new Level("lvl1");
 			lvl1.AddScore(new Score("numberScore"));
-			LevelUp.GetInstance().Initialize(lvl1, null);
+			LevelUp.GetInstance().Initialize(lvl1);
 			
 			// no gates
 			Assert.assertTrue(lvl1.CanStart());
@@ -503,7 +503,7 @@ namespace Soomla.Test {
 
 			Level lvl = new Level ("lvl_testScoreAsc");
 			lvl.AddScore(scoreAsc);
-			LevelUp.GetInstance ().Initialize (lvl, null);
+			LevelUp.GetInstance ().Initialize (lvl);
 //			LevelUp.GetInstance ().InitialWorld.Scores.Add (scoreAsc);
 
 			_eventQueue.Clear ();
@@ -589,7 +589,7 @@ namespace Soomla.Test {
 
 			Level lvl = new Level ("lvl_testScoreDsc");
 			lvl.AddScore(scoreDsc);
-			LevelUp.GetInstance ().Initialize (lvl, null);
+			LevelUp.GetInstance ().Initialize (lvl);
 //			LevelUp.GetInstance ().InitialWorld.Scores.Add (scoreDsc);
 
 			_eventQueue.Clear ();
@@ -665,7 +665,7 @@ namespace Soomla.Test {
 			string scoreIdDown = "testRangeScoreOverflow_score_down_id";
 			RangeScore rangeScoreDown = new RangeScore(scoreIdDown, "RangeScore", false, new RangeScore.SRange(0, 100));
 
-			LevelUp.GetInstance ().Initialize (new Level ("testRangeScoreOverflow"), null);
+			LevelUp.GetInstance ().Initialize (new Level ("testRangeScoreOverflow"));
 			LevelUp.GetInstance ().InitialWorld.Scores.Add (scoreIdUp, rangeScoreUp);
 			LevelUp.GetInstance ().InitialWorld.Scores.Add (scoreIdDown, rangeScoreDown);
 
@@ -736,7 +736,7 @@ namespace Soomla.Test {
 
 			Level lvl1 = new Level ("lvl_testRecordMission");
 			Challenge challenge = new Challenge("challenge_record_mission", "ChlgRecordMission", new List<Mission> {recordMission});
-			LevelUp.GetInstance ().Initialize (lvl1, null);
+			LevelUp.GetInstance ().Initialize (lvl1);
 			LevelUp.GetInstance().InitialWorld.Missions.Add(challenge);
 
 			_eventQueue.Clear ();
@@ -817,7 +817,7 @@ namespace Soomla.Test {
 
 			Level lvl1 = new Level ("lvl_testBalanceMission");
 			Challenge challenge = new Challenge("challenge_balance_mission", "ChlgBalanceMission", new List<Mission> {balanceMission});
-			LevelUp.GetInstance ().Initialize (lvl1, null);
+			LevelUp.GetInstance ().Initialize (lvl1);
 			LevelUp.GetInstance().InitialWorld.Missions.Add(challenge);
 
 			_eventQueue.Clear ();
@@ -1071,7 +1071,7 @@ namespace Soomla.Test {
 			lvl1.Scores.Add(scoreId, rangeScore);
 
 
-			LevelUp.GetInstance().Initialize(world, null);
+			LevelUp.GetInstance().Initialize(world);
 			LevelUp.GetInstance ().InitialWorld.AddInnerWorld (lvl1);
 			LevelUp.GetInstance ().InitialWorld.AddInnerWorld (lvl2);
 			

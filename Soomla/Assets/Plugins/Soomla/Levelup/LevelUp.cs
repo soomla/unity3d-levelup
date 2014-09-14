@@ -26,7 +26,7 @@ namespace Soomla.Levelup {
 		public World InitialWorld;
 		public Dictionary<string, Reward> Rewards;
 
-		public void Initialize(World initialWorld, List<Reward> rewards) {
+		public void Initialize(World initialWorld, List<Reward> rewards = null) {
 			InitialWorld = initialWorld;
 //			save();
 
@@ -40,6 +40,10 @@ namespace Soomla.Levelup {
 		}
 
 		public Reward GetReward(string rewardId) {
+			if (Rewards == null) {
+				return null;
+			}
+
 			Reward reward = null;
 			Rewards.TryGetValue(rewardId, out reward);
 			return reward;
@@ -61,6 +65,10 @@ namespace Soomla.Levelup {
 			}
 
 			return fetchWorld(worldId, InitialWorld.InnerWorldsMap);
+		}
+
+		public Level GetLevel(string levelId) {
+			return GetWorld(levelId) as Level;
 		}
 
 		public Gate GetGate(string gateId) {
@@ -209,7 +217,7 @@ namespace Soomla.Levelup {
 			return retWorld;
 		}
 
-		private Mission fetchMission(string missionId, List<World> worlds) {
+		private Mission fetchMission(string missionId, IEnumerable<World> worlds) {
 			foreach (World world in worlds) {
 				Mission mission = (from m in world.Missions
 				                   where m.ID == missionId
@@ -226,7 +234,7 @@ namespace Soomla.Levelup {
 			return null;
 		}
 
-		private Gate fetchGate(string gateId, List<World> worlds) {
+		private Gate fetchGate(string gateId, IEnumerable<World> worlds) {
 			if (worlds == null) {
 				return null;
 			}
