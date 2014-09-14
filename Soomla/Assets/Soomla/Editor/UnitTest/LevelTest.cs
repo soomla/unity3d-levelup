@@ -153,6 +153,49 @@ namespace Soomla.Test
 		}
 
 		/// <summary>
+		/// Adding batch levels
+		/// Creates multiple levels, checks whether they were properly created
+		/// </summary>
+		[Test]
+		[Category ("Batch Add")]
+		public void LevelBatchAdd()
+		{
+			_level.BatchAddLevelsWithTemplates(5, null, (Score)null, null);
+
+			Assert.True(_level.InnerWorldsMap.Count == 5);
+			for (int i = 0; i < _level.InnerWorldsMap.Count; i++) {
+				Assert.True(_level.GetInnerWorldAt(i).CanStart());
+			}
+		}
+
+		/// <summary>
+		/// Adding batch dependent levels
+		/// Creates multiple levels which are dependent upon each other
+		/// Checks whether they are truly dependent
+		/// </summary>
+		[Test]
+		[Category ("Batch Add")]
+		public void LevelBatchAddDependent()
+		{
+			_level.BatchAddDependentLevelsWithTemplates(5, (Score)null, null);
+
+			for (int i = 0; i < _level.InnerWorldsMap.Count; i++) {
+				if (i == 0) {
+					Assert.True(_level.GetInnerWorldAt(i).CanStart());
+				}
+				else {
+					Assert.False(_level.GetInnerWorldAt(i).CanStart());
+				}
+			}
+
+			for (int i = 0; i < _level.InnerWorldsMap.Count - 1; i++) {
+				World innerWorld = _level.GetInnerWorldAt(i);
+				innerWorld.SetCompleted(true);
+				Assert.True(_level.GetInnerWorldAt(i + 1).CanStart());
+			}
+		}
+
+		/// <summary>
 		/// Level pause
 		/// Start level, sleep for 1 sec, check that 1 <= playing duration < 2
 		/// </summary>
