@@ -63,6 +63,10 @@ namespace Soomla.Levelup {
 			return fetchWorld(worldId, InitialWorld.InnerWorldsMap);
 		}
 
+		public Level GetLevel(string levelId) {
+			return GetWorld(levelId) as Level;
+		}
+
 		public Gate GetGate(string gateId) {
 			if (InitialWorld.Gate != null &&
 			    InitialWorld.Gate.ID == gateId) {
