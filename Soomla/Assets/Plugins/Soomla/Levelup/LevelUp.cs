@@ -239,9 +239,14 @@ namespace Soomla.Levelup {
 				return null;
 			}
 
-			Gate retGate = (from world in worlds
-			                where (world.Gate!= null && world.Gate.ID==gateId)
-			                select world.Gate).SingleOrDefault();
+			Gate retGate = null;
+			foreach (var world in worlds) {
+				retGate = fetchGate(gateId, world.Gate);
+				if (retGate != null) {
+					return retGate;
+				}
+			}
+
 			if (retGate == null) {
 				foreach (World world in worlds) {
 					retGate = fetchGate(gateId, world.Missions);
@@ -261,9 +266,15 @@ namespace Soomla.Levelup {
 		}
 
 		private Gate fetchGate(string gateId, List<Mission> missions) {
-			Gate retGate = (from m in missions
-			                where (m.Gate!= null && m.Gate.ID==gateId)
-			                select m.Gate).SingleOrDefault();
+
+			Gate retGate = null;
+			foreach (var mission in missions) {
+				retGate = fetchGate(gateId, mission.Gate);
+				if (retGate != null) {
+					return retGate;
+				}
+			}
+
 			if (retGate == null) {
 				foreach (Mission mission in missions) {
 					if (mission is Challenge) {
@@ -276,6 +287,30 @@ namespace Soomla.Levelup {
 			}
 
 			return retGate;
+		}
+
+		private Gate fetchGate(string gateId, Gate targetGate) {
+			if (targetGate == null) {
+				return null;
+			}
+
+			if ((targetGate != null) && (targetGate.ID == gateId)) {
+				return targetGate;
+			}
+
+			Gate result = null;
+			GatesList gatesList = targetGate as GatesList;
+
+			if (gatesList != null) {
+				for (int i = 0; i < gatesList.Count; i++) {
+					result = fetchGate(gateId, gatesList[i]);
+					if (result != null) {
+						return result;
+					}
+				}
+			}
+			
+			return result;
 		}
 
 		private int getRecursiveCount(World world, Func<World, bool> isAccepted) {
