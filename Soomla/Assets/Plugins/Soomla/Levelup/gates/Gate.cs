@@ -92,6 +92,9 @@ namespace Soomla.Levelup {
 			return gate;
 		}
 
+		/// <summary>
+		/// Attempts to open this <c>Gate</c>, if it has not been opened aready. 
+		/// </summary>
 		public bool Open() {
 			//  check in gate storage if it's already open.
 			if (GateStorage.IsOpen(this)) {

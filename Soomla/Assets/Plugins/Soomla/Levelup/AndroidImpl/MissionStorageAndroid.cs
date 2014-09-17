@@ -34,7 +34,7 @@ namespace Soomla.Levelup
 		AndroidJNI.PopLocalFrame(IntPtr.Zero);
 	}
 	
-	override protected bool _getTimesCompleted(Mission mission) {
+	override protected int _getTimesCompleted(Mission mission) {
 		int times = 0;
 		AndroidJNI.PushLocalFrame(100);
 		using(AndroidJavaClass jniMissionStorage = new AndroidJavaClass("com.soomla.levelup.data.MissionStorage")) {

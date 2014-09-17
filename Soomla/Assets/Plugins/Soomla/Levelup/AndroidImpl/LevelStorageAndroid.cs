@@ -20,7 +20,8 @@ namespace Soomla.Levelup
 	/// <summary>
 	/// <c>LevelStorage</c> for Android.
 	/// A utility class for persisting and querying the state of <c>Level</c>s.
-	/// Use this class to check if a certain <c>Gate</c> is open, or to open it.
+	/// Use this class to get or set information about a <c>Level</c>, such as 
+	/// the play duration, start or end time, etc.
 	/// </summary>
 	public class LevelStorageAndroid : LevelStorage {
 	#if UNITY_ANDROID && !UNITY_EDITOR

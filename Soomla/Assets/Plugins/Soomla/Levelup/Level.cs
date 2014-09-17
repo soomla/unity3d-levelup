@@ -26,6 +26,7 @@ namespace Soomla.Levelup {
 	/// </summary>
 	public class Level : World {
 
+		// The state of this Level. Every level must have one of the below states. 
 		public enum LevelState {
 			Idle,
 			Running,

@@ -229,6 +229,9 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		/// <summary>
+		/// Registers relevant events: <c>OnGateOpened</c>.
+		/// </summary>
 		protected virtual void registerEvents() {
 			if (!IsCompleted() && this.Gate != null) {
 				LevelUpEvents.OnGateOpened += onGateOpened;

@@ -87,9 +87,9 @@ extern "C" {
         [MissionStorage setCompleted:completed forMission:missionIdS andNotify:notify];
     }
     
-    bool missionStorage_IsCompleted(const char* missionId) {
+    int missionStorage_GetTimesCompleted(const char* missionId) {
         NSString* missionIdS = [NSString stringWithUTF8String:missionId];
-        return [MissionStorage isMissionCompleted:missionIdS];
+        return [MissionStorage getTimesCompleted:missionIdS];
     }
     
     
