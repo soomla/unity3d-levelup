@@ -24,9 +24,7 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class RecordGate : Gate
 	{
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
+
 		private const string TAG = "SOOMLA RecordGate";
 
 		/// <summary>

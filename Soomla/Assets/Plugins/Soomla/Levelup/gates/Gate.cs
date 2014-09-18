@@ -20,24 +20,13 @@ using Soomla;
 namespace Soomla.Levelup {
 
 	/// <summary>
-	/// A gate is an object that defines certain criteria for progressing between the game's
-	/// <c>World</c>s or <c>Level</c>s. The gate is a criteria or a list of rules which which 
-	/// must be met in order to enter the <c>World</c> or <c>Level</c> . The rules are based 
-	/// on components of the previous world or level: scores achieved, missions completed, 
-	/// etc. The gate is opened once the logical conditions are met. In some games, gates 
-	/// can be opened with a payment or social task.
-	/// 
-	/// Example: In "Cut the Rope" the gate to the next world consists of 
-	/// finishing all the levels of the previous world and accumulating 40
-	/// stars in all levels combined.
+	/// A <c>Gate</c> is an object that defines certain criteria, and is opened when this criteria is met. 
+	/// <c>Gate</c>s are usually associated with <c>Mission</c>s - each <c>Mission</c> has a <c>Gate</c>
+	/// that needs to be opened in order for the <c>Mission</c> to be complete. 
 	/// </summary>
 	public abstract class Gate : SoomlaEntity<Gate> {
 
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
 		private const string TAG = "SOOMLA Gate";
-
 
 		/// <summary>
 		/// Constructor.

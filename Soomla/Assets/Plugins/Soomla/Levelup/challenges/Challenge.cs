@@ -25,9 +25,6 @@ namespace Soomla.Levelup
 	public class Challenge : Mission
 	{
 
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
 		private const string TAG = "SOOMLA Challenge";
 
 		/// <summary>

@@ -21,17 +21,15 @@ using System.Linq;
 namespace Soomla.Levelup {
 
 	/// <summary>
-	/// A <c>Mission</c> is a task your users need to complete in your game. <c>Mission</c>s are usually 
-	/// associated with <c>Reward</c>s meaning that you can give your users something for completing 
-	/// missions. Create <c>Mission</c>s and use them as single, independent, entities OR you can  
-	/// create a <c>Challenge</c> to handle several <c>Mission</c>s and monitor their completion.
-	/// NOTE: We are allowing <c>Mission</c>s to be completed multiple times.
+	/// A <c>Mission</c> is a task your users need to complete in your game. Each <c>Mission</c>s is 
+	/// associated with a <c>Gate</c> that defines the criteria for completing the <c>Mission</c>.
+	/// You can optionally choose to give a <c>Reward</c> for users that complete your <c>Mission</c>.
+	/// Create <c>Mission</c>s and use them as single, independent, entities OR you can create a 
+	/// <c>Challenge</c> to handle several <c>Mission</c>s and monitor their completion.
+	/// NOTE: <c>Mission</c>s cab be completed multiple times.
 	/// </summary>
 	public abstract class Mission : SoomlaEntity<Mission> {
 
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
 		private const string TAG = "SOOMLA Mission";
 
 		/// <summary>
@@ -45,7 +43,7 @@ namespace Soomla.Levelup {
 		public Schedule Schedule;
 
 		/// <summary>
-		/// A <c>Gate</c> that needs to be unlocked in order to complete this <c>Mission</c>.
+		/// The <c>Gate</c> that needs to be opened in order to complete this <c>Mission</c>.
 		/// </summary>
 		public Gate Gate;
 
@@ -84,7 +82,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		//// <param name="id">ID.</param>
 		/// <param name="name">Name.</param>
-		/// <param name="gateType"><c>Gate</c> to unlock to complete this <c>Mission</c></param>
+		/// <param name="gateType"><c>Gate</c> to open to complete this <c>Mission</c></param>
 		/// <param name="gateInitParams">Parameters to initialize <c>Gate</c>.</param>
 		protected Mission (String id, String name, Type gateType, object[] gateInitParams)
 			: this(id, name, new List<Reward>(), gateType, gateInitParams)
@@ -97,7 +95,7 @@ namespace Soomla.Levelup {
 		/// <param name="id">ID.</param>
 		/// <param name="name">Name.</param>
 		/// <param name="rewards"><c>Reward</c>s.</param>
-		/// <param name="gateType"><c>Gate</c> to unlock to complete this <c>Mission</c></param>
+		/// <param name="gateType"><c>Gate</c> to open to complete this <c>Mission</c></param>
 		/// <param name="gateInitParams">Gate init parameters.</param>
 		protected Mission (String id, String name, List<Reward> rewards, Type gateType, object[] gateInitParams)
 			: base(id, name, "")
@@ -183,7 +181,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Checks this <c>Mission</c>'s <c>Schedule</c> - if approved, attempts to open <c>Gate</c>.
+		/// Completes this <c>Mission</c>'s by opening its <c>Gate</c>.
 		/// </summary>
 		/// <returns>If <c>Schedule</c> doesn't approve, the mission cannot be completed
 		/// and thus returns <c>false</c>; otherwise opens this <c>Mission</c>'s
@@ -198,7 +196,7 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Forces completion of this <c>Mission</c> without checking the <c>Schedule</c>.
+		/// Forces completion of this <c>Mission</c>.
 		/// This function should not be used in standard scenarios.
 		/// </summary>
 		public void ForceComplete() {

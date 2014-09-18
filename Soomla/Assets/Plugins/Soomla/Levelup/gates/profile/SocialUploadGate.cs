@@ -21,16 +21,16 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
-	/// order to unlock the <c>Gate</c>. Currently, the social provider that's available 
+	/// order to open the <c>Gate</c>. Currently, the social provider that's available 
 	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
 	/// providers will be added.
 	/// 
 	/// A specific type of <c>Gate</c> that has an associated image. The <c>Gate</c> 
-	/// is unlocked once the player uploads the image.   
+	/// is opened once the player uploads the image.   
 	/// </summary>
 	public class SocialUploadGate : SocialActionGate
 	{
-		private const string TAG = "SOOMLA SocialUploadGate"; // used for Log error messages
+		private const string TAG = "SOOMLA SocialUploadGate"; 
 
 		/** Components of a social Upload: **/
 		public string FileName;

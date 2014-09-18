@@ -20,15 +20,12 @@ using Soomla.Store;
 namespace Soomla.Levelup
 {
 	/// <summary>
-	/// A specific type of <c>Gate</c> that has an associated market item. The <c>Gate</c> 
-	/// opens once the item has been purchased. This <c>Gate</c> is useful when you want to 
-	/// allow unlocking of certain <c>Level</c>s or <c>World</c>s only if they are purchased.
+	/// A specific type of <c>Gate</c> that has an associated virtual item. The <c>Gate</c> 
+	/// opens once the item has been purchased. 
 	/// </summary>
 	public class PurchasableGate : Gate
 	{
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
+
 		private const string TAG = "SOOMLA PurchasableGate";
 
 		/// <summary>
@@ -96,9 +93,7 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this <c>Gate</c> meets its criteria for opening. For this type of <c>Gate</c>, 
-		/// it is always true because at any time the user may purchase the item associated with the
-		/// opening of this gate. 
+		/// Checks if this <c>Gate</c> meets its criteria for opening. 
 		/// </summary>
 		/// <returns>Always <c>true</c>.</returns>
 		protected override bool canOpenInner() {

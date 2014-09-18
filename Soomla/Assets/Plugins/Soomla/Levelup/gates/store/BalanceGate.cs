@@ -23,9 +23,7 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class BalanceGate : Gate
 	{
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
+	
 		private const string TAG = "SOOMLA BalanceGate";
 
 		/// <summary>

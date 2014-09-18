@@ -31,9 +31,6 @@ namespace Soomla.Levelup {
 		/// </summary>
 		public static readonly string DB_KEY_PREFIX = "soomla.levelup.";
 
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
 		private const string TAG = "SOOMLA LevelUp";
 
 		/// <summary>

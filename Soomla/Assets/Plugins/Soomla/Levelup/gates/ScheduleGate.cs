@@ -25,9 +25,7 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class ScheduleGate : Gate
 	{
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
+
 		private const string TAG = "SOOMLA ScheduleGate";
 
 		/// <summary>

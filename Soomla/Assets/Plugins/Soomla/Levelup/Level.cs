@@ -35,9 +35,6 @@ namespace Soomla.Levelup {
 			Completed
 		}
 
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
 		private const string TAG = "SOOMLA Level";
 
 		/// <summary>
@@ -69,7 +66,7 @@ namespace Soomla.Levelup {
 		/// Constructor.
 		/// </summary>
 		/// <param name="id">ID.</param>
-		/// <param name="gate">Gate to unlock this <c>Level</c>.</param>
+		/// <param name="gate">Gate to open this <c>Level</c>.</param>
 		/// <param name="scores">Scores of this <c>Level</c>.</param>
 		/// <param name="missions">Missions of this <c>Level</c>.</param>
 		public Level(string id, Gate gate, Dictionary<string, Score> scores, List<Mission> missions)
@@ -81,7 +78,7 @@ namespace Soomla.Levelup {
 		/// Constructor.
 		/// </summary>
 		/// <param name="id">ID.</param>
-		/// <param name="gate">Gate to unlock this <c>Level</c>.</param>
+		/// <param name="gate">Gate to open this <c>Level</c>.</param>
 		/// <param name="innerWorlds">Inner <c>Level</c>s of this <c>Level</c>.</param>
 		/// <param name="scores">Scores of this <c>Level</c>.</param>
 		/// <param name="missions">Missions of this <c>Level</c>.</param>

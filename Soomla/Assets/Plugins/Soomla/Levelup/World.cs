@@ -31,9 +31,6 @@ namespace Soomla.Levelup {
 	/// </summary>
 	public class World : SoomlaEntity<World> {
 
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
 		private static string TAG = "SOOMLA World";
 
 		/// <summary>
@@ -77,7 +74,7 @@ namespace Soomla.Levelup {
 		/// Constructor.
 		/// </summary>
 		/// <param name="id">ID.</param>
-		/// <param name="gate">A <c>Gate</c> that needs to be unlocked in order to enter this 
+		/// <param name="gate">A <c>Gate</c> that needs to be opened in order to enter this 
 		/// <c>World</c>.</param>
 		/// <param name="innerWorlds">A list of <c>World</c>s contained within this one.</param>
 		/// <param name="scores">Scores of this <c>World</c>.</param>

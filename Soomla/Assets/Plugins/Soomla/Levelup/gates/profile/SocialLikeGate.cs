@@ -20,16 +20,16 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
-	/// order to unlock the <c>Gate</c>. Currently, the social provider that's available 
+	/// order to open the <c>Gate</c>. Currently, the social provider that's available 
 	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
 	/// providers will be added.
 	/// 
 	/// A specific type of <c>Gate</c> that has an associated page name.
-	/// The <c>Gate</c> is unlocked once the player "Likes" the associated page.  
+	/// The <c>Gate</c> opens once the player "Likes" the associated page.  
 	/// </summary>
 	public class SocialLikeGate : SocialActionGate
 	{
-		private const string TAG = "SOOMLA SocialLikeGate"; // used in error log messages. 
+		private const string TAG = "SOOMLA SocialLikeGate";
 
 		/// <summary>
 		/// The name of the page that needs to be liked. 
@@ -41,7 +41,7 @@ namespace Soomla.Levelup
 		/// </summary>
 		/// <param name="id"><c>Gate</c> name.</param>
 		/// <param name="provider">Social provider.</param>
-		/// <param name="pageName">Name of the page to "Like" in order to unlock this <c>Gate</c>.</param>
+		/// <param name="pageName">Name of the page to "Like" in order to open this <c>Gate</c>.</param>
 		public SocialLikeGate(string id, Provider provider, string pageName)
 			: base(id, provider)
 		{

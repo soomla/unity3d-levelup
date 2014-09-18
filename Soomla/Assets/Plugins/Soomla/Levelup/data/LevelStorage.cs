@@ -24,10 +24,8 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class LevelStorage
 	{
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
-		protected const string TAG = "SOOMLA LevelStorage"; // used for Log error messages
+
+		protected const string TAG = "SOOMLA LevelStorage"; 
 
 		/// <summary>
 		/// Holds an instance of <c>LevelStorage</c> or <c>LevelStorageAndroid</c> or <c>LevelStorageIOS</c>.

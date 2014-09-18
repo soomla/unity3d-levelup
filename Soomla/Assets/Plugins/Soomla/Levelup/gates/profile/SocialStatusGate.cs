@@ -20,25 +20,25 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
-	/// order to unlock the <c>Gate</c>. Currently, the social provider that's available 
+	/// order to open the <c>Gate</c>. Currently, the social provider that's available 
 	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
 	/// providers will be added.
 	/// 
 	/// A specific type of <c>Gate</c> that has an associated status. The <c>Gate</c> 
-	/// is unlocked once the player posts the status.   
+	/// is opened once the player posts the status.   
 	/// </summary>
 	public class SocialStatusGate : SocialActionGate
 	{
-		private const string TAG = "SOOMLA SocialStatusGate"; // used for Log error messages
+		private const string TAG = "SOOMLA SocialStatusGate";
 
-		public string Status; // the status to post in order to unlock this Gate.
+		public string Status; // the status to post in order to open this Gate.
 
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
 		/// <param name="id"><c>Gate</c> ID.</param>
 		/// <param name="provider">Social provider.</param>
-		/// <param name="status">Status to post in order to unlock this <c>Gate</c>.</param>
+		/// <param name="status">Status to post in order to open this <c>Gate</c>.</param>
 		public SocialStatusGate(string id, Provider provider, string status)
 			: base(id, provider)
 		{

@@ -23,10 +23,8 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class ScoreStorage
 	{
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
-		protected const string TAG = "SOOMLA ScoreStorage"; // used for Log error messages
+
+		protected const string TAG = "SOOMLA ScoreStorage";
 
 		/// <summary>
 		/// Holds an instance of <c>ScoreStorage</c> or <c>ScoreStorageAndroid</c> or <c>ScoreStorageIOS</c>.

@@ -20,7 +20,7 @@ namespace Soomla.Levelup
 {
 	/// <summary>
 	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
-	/// order to unlock the <c>Gate</c>. Currently, the social provider that's available 
+	/// order to open the <c>Gate</c>. Currently, the social provider that's available 
 	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
 	/// providers will be added. 
 	/// 
@@ -28,7 +28,7 @@ namespace Soomla.Levelup
 	/// </summary>
 	public abstract class SocialActionGate : Gate
 	{
-		private const string TAG = "SOOMLA SocialActionGate"; // used for Log error messages
+		private const string TAG = "SOOMLA SocialActionGate"; 
 
 		public Provider Provider; // The related social provider.
 
@@ -66,8 +66,7 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Checks if this <c>Gate</c> meets its criteria for opening. For <c>SocialActionGate</c>, 
-		/// it is always true because at any time the user may perform a social action to open the gate.
+		/// Checks if this <c>Gate</c> meets its criteria for opening.
 		/// </summary>
 		/// <returns>Always <c>true</c>.</returns>
 		protected override bool canOpenInner() {

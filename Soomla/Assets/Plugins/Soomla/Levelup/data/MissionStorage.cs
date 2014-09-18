@@ -25,10 +25,7 @@ namespace Soomla.Levelup
 	public class MissionStorage
 	{
 
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
-		protected const string TAG = "SOOMLA MissionStorage"; // used for Log error messages
+		protected const string TAG = "SOOMLA MissionStorage"; 
 
 		/// <summary>
 		/// Holds an instance of <c>MissionStorage</c> or <c>MissionStorageAndroid</c> or <c>MissionStorageIOS</c>.

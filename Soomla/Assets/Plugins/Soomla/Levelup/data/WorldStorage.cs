@@ -24,10 +24,8 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class WorldStorage
 	{
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
-		protected const string TAG = "SOOMLA WorldStorage"; // used for Log error messages
+
+		protected const string TAG = "SOOMLA WorldStorage";
 
 		/// <summary>
 		/// Holds an instance of <c>WorldStorage</c> or <c>WorldStorageAndroid</c> or <c>WorldStorageIOS</c>.

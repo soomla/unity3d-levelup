@@ -23,10 +23,8 @@ namespace Soomla.Levelup
 	/// </summary>
 	public class GateStorage
 	{
-		/// <summary>
-		/// Used in log error messages.
-		/// </summary>
-		protected const string TAG = "SOOMLA GateStorage"; // used for Log error messages
+
+		protected const string TAG = "SOOMLA GateStorage";
 
 		/// <summary>
 		/// Holds an instance of <c>GateStorage</c> or <c>GateStorageAndroid</c> or <c>GateStorageIOS</c>.
