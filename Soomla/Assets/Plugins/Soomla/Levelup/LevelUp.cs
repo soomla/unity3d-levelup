@@ -26,9 +26,6 @@ namespace Soomla.Levelup {
 	/// </summary>
 	public class LevelUp {
 
-		/// <summary>
-		/// Used in log messages.
-		/// </summary>
 		public static readonly string DB_KEY_PREFIX = "soomla.levelup.";
 
 		private const string TAG = "SOOMLA LevelUp";
@@ -238,10 +235,6 @@ namespace Soomla.Levelup {
 //			// KeyValueStorage.setValue(key, lu_json);
 //		}
 
-		/// <summary>
-		/// Converts this instance of <c>LevelUp</c> to a JSONObject.
-		/// </summary>
-		/// <returns>A <c>JSONObject</c> representation of this instance of <c>LevelUp</c>.</returns>
 		private JSONObject toJSONObject() {
 			JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
 
@@ -250,12 +243,6 @@ namespace Soomla.Levelup {
 			return jsonObject;
 		}
 
-		/// <summary>
-		/// Retrieves the <c>Score</c> with the given ID from the given <c>World</c>s.
-		/// </summary>
-		/// <returns>The <c>Score</c> that was searched for.</returns>
-		/// <param name="scoreId">ID of the <c>Score</c> to search for.</param>
-		/// <param name="worlds">Worlds to search.</param>
 		private Score fetchScoreFromWorlds(string scoreId, Dictionary<string, World> worlds) {
 			Score retScore = null;
 			foreach (World world in worlds.Values) {
@@ -271,12 +258,6 @@ namespace Soomla.Levelup {
 			return retScore;
 		}
 
-		/// <summary>
-		/// Retrieves the <c>World</c> with the given ID from the given <c>World</c>s. 
-		/// </summary>
-		/// <returns>The <c>World</c> that was searched for.</returns>
-		/// <param name="worldId">ID of the <c>World</c> to search for.</param>
-		/// <param name="worlds">Worlds to search.</param>
 		private World fetchWorld(string worldId, Dictionary<string, World> worlds) {
 			World retWorld;
 			worlds.TryGetValue(worldId, out retWorld);
@@ -292,12 +273,6 @@ namespace Soomla.Levelup {
 			return retWorld;
 		}
 
-		/// <summary>
-		/// Retrieves the <c>Mission</c> with the given ID from the given <c>World</c>s. 
-		/// </summary>
-		/// <returns>The <c>Mission</c> that was searched for.</returns>
-		/// <param name="missionId">ID of the <c>Mission</c> to search for.</param>
-		/// <param name="worlds">Worlds to search.</param>
 		private Mission fetchMission(string missionId, IEnumerable<World> worlds) {
 			foreach (World world in worlds) {
 				Mission mission = (from m in world.Missions
@@ -315,20 +290,19 @@ namespace Soomla.Levelup {
 			return null;
 		}
 
-		/// <summary>
-		/// Retrieves the <c>Gate</c> with the given ID from the given <c>World</c>s.
-		/// </summary>
-		/// <returns>The <c>Gate</c> that was searched for.</returns>
-		/// <param name="gateId">ID of the <c>Gate</c> to search for.</param>
-		/// <param name="worlds">Worlds to search.</param>
 		private Gate fetchGate(string gateId, IEnumerable<World> worlds) {
 			if (worlds == null) {
 				return null;
 			}
 
-			Gate retGate = (from world in worlds
-			                where (world.Gate!= null && world.Gate.ID==gateId)
-			                select world.Gate).SingleOrDefault();
+			Gate retGate = null;
+			foreach (var world in worlds) {
+				retGate = fetchGate(gateId, world.Gate);
+				if (retGate != null) {
+					return retGate;
+				}
+			}
+
 			if (retGate == null) {
 				foreach (World world in worlds) {
 					retGate = fetchGate(gateId, world.Missions);
@@ -347,16 +321,17 @@ namespace Soomla.Levelup {
 			return retGate;
 		}
 
-		/// <summary>
-		/// Retrieves the <c>Gate</c> with the given ID from the given <c>Mission</c>s.
-		/// </summary>
-		/// <returns>The <c>Gate</c> that was searched for.</returns>
-		/// <param name="gateId">ID of the <c>Gate</c> to search for.</param>
-		/// <param name="missions">Missions to search.</param>
+
 		private Gate fetchGate(string gateId, List<Mission> missions) {
-			Gate retGate = (from m in missions
-			                where (m.Gate!= null && m.Gate.ID==gateId)
-			                select m.Gate).SingleOrDefault();
+
+			Gate retGate = null;
+			foreach (var mission in missions) {
+				retGate = fetchGate(gateId, mission.Gate);
+				if (retGate != null) {
+					return retGate;
+				}
+			}
+
 			if (retGate == null) {
 				foreach (Mission mission in missions) {
 					if (mission is Challenge) {
@@ -371,15 +346,32 @@ namespace Soomla.Levelup {
 			return retGate;
 		}
 
-		/// <summary>
-		/// Sums up ALL of the inner <c>World</c>s of the given <c>World</c> that 
-		/// answer the given predicate.
-		/// </summary>
-		/// <returns>The number of inner <c>World</c>s that answer the given 
-		/// predicate.</returns>
-		/// <param name="world">Initial <c>World</c> to start with.</param>
-		/// <param name="isAccepted">Predicate function to apply to all inner 
-		/// <c>World</c>s of the given <c>World</c>.</param>
+
+		private Gate fetchGate(string gateId, Gate targetGate) {
+			if (targetGate == null) {
+				return null;
+			}
+
+			if ((targetGate != null) && (targetGate.ID == gateId)) {
+				return targetGate;
+			}
+
+			Gate result = null;
+			GatesList gatesList = targetGate as GatesList;
+
+			if (gatesList != null) {
+				for (int i = 0; i < gatesList.Count; i++) {
+					result = fetchGate(gateId, gatesList[i]);
+					if (result != null) {
+						return result;
+					}
+				}
+			}
+			
+			return result;
+		}
+
+
 		private int getRecursiveCount(World world, Func<World, bool> isAccepted) {
 			int count = 0;
 			

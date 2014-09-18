@@ -235,12 +235,10 @@ namespace Soomla.Levelup {
 				LevelUpEvents.OnGateOpened += onGateOpened;
 			}
 		}
-		
-		/// <summary>
-		/// Sets this <c>Mission</c> as completed if the <c>Gate</c> that was opened is 
-		/// this <c>Mission</c>'s gate.
-		/// </summary>
-		/// <param name="gate">The <c>Gate</c> that was opened.</param>
+
+
+		/** PRIVATE FUNCTIONS **/
+
 		private void onGateOpened(Gate gate) {
 			if(this.Gate == gate) {
 				Gate.ForceOpen(false);
@@ -248,18 +246,12 @@ namespace Soomla.Levelup {
 			}
 		}
 
-		/// <summary>
-		/// Takes this <c>Mission</c>'s <c>Reward</c>s.
-		/// </summary>
 		private void takeRewards() {
 			foreach (Reward reward in Rewards) {
 				reward.Take();
 			}
 		}
 
-		/// <summary>
-		/// Gives this <c>Mission</c>'s <c>Reward</c>s.
-		/// </summary>
 		private void giveRewards() {
 			foreach (Reward reward in Rewards) {
 				reward.Give();

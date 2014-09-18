@@ -227,14 +227,7 @@ namespace Soomla.Levelup {
 		/// Override this method to add specific <c>Score</c> behavior.
 		/// </summary>
 		protected virtual void performSaveActions() {}
-		
-		/// <summary>
-		/// Determines which of the two given <c>Score</c>s is better (based on this <c>Score</c>'s 
-		/// definition of better - higher or lower).
-		/// </summary>
-		/// <returns>If score1 is higher than score2 returns <c>true</c>; otherwise <c>false</c>.</returns>
-		/// <param name="score1">Score1 to compare.</param>
-		/// <param name="score2">Score2 to compare.</param>
+
 		private bool HasScoreReached(double score1, double score2) {
 			return this.HigherBetter ?
 				(score1 >= score2) :
