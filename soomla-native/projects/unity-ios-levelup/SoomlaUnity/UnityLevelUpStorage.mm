@@ -3,15 +3,10 @@
 #import "UnityCommons.h"
 #import "SoomlaUtils.h"
 
-#import "Gate.h"
 #import "GateStorage.h"
-#import "Level.h"
 #import "LevelStorage.h"
-#import "Mission.h"
 #import "MissionStorage.h"
-#import "Score.h"
 #import "ScoreStorage.h"
-#import "World.h"
 #import "WorldStorage.h"
 
 

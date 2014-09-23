@@ -1,11 +1,6 @@
 
 #import "UnityLevelUpEventDispatcher.h"
 #import "LevelUpEventHandling.h"
-#import "Gate.h"
-#import "Level.h"
-#import "World.h"
-#import "Mission.h"
-#import "Score.h"
 #import "SoomlaUtils.h"
 
 extern "C" {
