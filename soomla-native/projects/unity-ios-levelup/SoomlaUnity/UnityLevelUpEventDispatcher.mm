@@ -40,6 +40,9 @@ extern "C" {
 	    NSString* levelId = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
         UnitySendMessage("LevelUpEvents", "onLevelStarted", [levelId UTF8String]);
 	}
+	else if ([notification.name isEqualToString:EVENT_LEVEL_UP_INITIALIZED]) {
+        UnitySendMessage("LevelUpEvents", "onLevelUpInitialized", "");
+	}
 	else if ([notification.name isEqualToString:EVENT_MISSION_COMPLETED]) {
 	    NSString* missionId = [[notification userInfo] objectForKey:DICT_ELEMENT_MISSION];
         UnitySendMessage("LevelUpEvents", "onMissionCompleted", [missionId UTF8String]);

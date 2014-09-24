@@ -92,6 +92,12 @@ namespace Soomla.Levelup {
 			LevelUpEvents.OnLevelStarted(level);
 		}
 
+		public void onLevelUpInitialized(string message) {
+			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelStarted");
+			
+			LevelUpEvents.OnLevelUpInitialized();
+		}
+
 		public void onMissionCompleted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onMissionCompleted with message: " + message);
 
@@ -142,6 +148,8 @@ namespace Soomla.Levelup {
 		public static Action<Level> OnLevelEnded = delegate {};
 
 		public static Action<Level> OnLevelStarted = delegate {};
+
+		public static Action OnLevelUpInitialized = delegate {};
 
 		public static Action<Mission> OnMissionCompleted = delegate {};
 
