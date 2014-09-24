@@ -30,7 +30,7 @@ extern "C" {
 
 	if ([notification.name isEqualToString:EVENT_GATE_OPENED]) {
         NSString* gateId = [[notification userInfo] objectForKey:DICT_ELEMENT_GATE];
-        UnitySendMessage("LevelUpEvents", "onGateOpended", [gateId UTF8String]);
+        UnitySendMessage("LevelUpEvents", "onGateOpened", [gateId UTF8String]);
 	}
 	else if ([notification.name isEqualToString:EVENT_LEVEL_ENDED]) {
         NSString* levelId = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
