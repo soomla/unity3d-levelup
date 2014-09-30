@@ -51,7 +51,11 @@ namespace Soomla.Levelup
 				return _instance;
 			}
 		}
-			
+
+		public static void InitLevelUp(string levelUpJSON)
+		{
+			instance._initLevelUp(levelUpJSON);
+		}
 
 		/** The following functions call the relevant instance-specific functions. **/
 
@@ -88,6 +92,17 @@ namespace Soomla.Levelup
 		/** Unity-Editor Functions **/
 	
 		/// <summary>
+		/// Initializes <c>LevelUp</c>
+		/// </summary>
+		/// <param name="levelUpJSON">LevelUp object JSON string</param>
+		protected void _initLevelUp(string levelUpJSON)
+		{
+			#if UNITY_EDITOR
+			LevelUpEvents.OnLevelUpInitialized();
+			#endif
+		}
+
+		/// <summary>
 		/// Sets the given <c>World</c> as completed if <c>completed</c> is <c>true</c>.
 		/// </summary>
 		/// <param name="world"><c>World</c> to set as completed.</param>
@@ -109,7 +124,7 @@ namespace Soomla.Levelup
 			}
 #endif
 		}
-		
+
 		/// <summary>
 		/// Determines if the given <c>World</c> is completed.
 		/// </summary>

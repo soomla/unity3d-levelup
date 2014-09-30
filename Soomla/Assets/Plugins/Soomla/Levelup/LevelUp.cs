@@ -61,6 +61,8 @@ namespace Soomla.Levelup {
 				}
 				Rewards = rewardMap;
 			}
+
+			WorldStorage.InitLevelUp(this.toJSONObject().ToString());
 		}
 
 		/// <summary>
@@ -236,11 +238,18 @@ namespace Soomla.Levelup {
 //		}
 
 		private JSONObject toJSONObject() {
-			JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
+			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
 
-			jsonObject.AddField(LUJSONConsts.LU_MAIN_WORLD, InitialWorld.toJSONObject());
-			
-			return jsonObject;
+			obj.AddField(LUJSONConsts.LU_MAIN_WORLD, InitialWorld.toJSONObject());
+
+			JSONObject rewardsArr = new JSONObject(JSONObject.Type.ARRAY);
+			foreach(Reward reward in this.Rewards.Values) {
+				rewardsArr.Add(reward.toJSONObject());
+			}
+
+			obj.AddField(LUJSONConsts.LU_REWARDS, rewardsArr);
+
+			return obj;
 		}
 
 		private Score fetchScoreFromWorlds(string scoreId, Dictionary<string, World> worlds) {
