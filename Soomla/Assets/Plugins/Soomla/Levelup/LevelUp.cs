@@ -243,9 +243,10 @@ namespace Soomla.Levelup {
 			obj.AddField(LUJSONConsts.LU_MAIN_WORLD, InitialWorld.toJSONObject());
 
 			JSONObject rewardsArr = new JSONObject(JSONObject.Type.ARRAY);
-			foreach(Reward reward in this.Rewards.Values) {
-				rewardsArr.Add(reward.toJSONObject());
-			}
+
+			if (this.Rewards != null)
+				foreach(Reward reward in this.Rewards.Values)
+					rewardsArr.Add(reward.toJSONObject());
 
 			obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
 

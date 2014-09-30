@@ -54,7 +54,7 @@ namespace Soomla.Levelup
 
 		public static void InitLevelUp(JSONObject levelUpJSON)
 		{
-			instance._initLevelUp(levelUpJSON);
+			instance._initLevelUp(levelUpJSON.ToString());
 		}
 
 		/** The following functions call the relevant instance-specific functions. **/
@@ -95,7 +95,7 @@ namespace Soomla.Levelup
 		/// Initializes <c>LevelUp</c>
 		/// </summary>
 		/// <param name="levelUpJSON">LevelUp object JSON string</param>
-		protected void _initLevelUp(JSONObject levelUpJSON)
+		protected virtual void _initLevelUp(string levelUpJSON)
 		{
 			#if UNITY_EDITOR
 			LevelUpEvents.OnLevelUpInitialized();
