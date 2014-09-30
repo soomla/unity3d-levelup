@@ -26,7 +26,6 @@ namespace Soomla.Levelup {
 		public const string LU_MAIN_WORLD        = "mainWorld";
 		public const string LU_ASSOCITEMID 		 = "associatedItemId";
 		public const string LU_DESIRED_BALANCE 	 = "desiredBalance";
-		public const string LU_REWARDS 			 = "rewards";
 
 		/** Score **/
 		public const string LU_SCORES            = "scores";

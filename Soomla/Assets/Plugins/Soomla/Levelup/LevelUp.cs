@@ -62,7 +62,7 @@ namespace Soomla.Levelup {
 				Rewards = rewardMap;
 			}
 
-			WorldStorage.InitLevelUp(this.toJSONObject().ToString());
+			WorldStorage.InitLevelUp(this.toJSONObject());
 		}
 
 		/// <summary>
@@ -247,7 +247,7 @@ namespace Soomla.Levelup {
 				rewardsArr.Add(reward.toJSONObject());
 			}
 
-			obj.AddField(LUJSONConsts.LU_REWARDS, rewardsArr);
+			obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
 
 			return obj;
 		}
