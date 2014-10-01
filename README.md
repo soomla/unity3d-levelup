@@ -19,7 +19,7 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
     - [Reward](#reward)
 - [Getting Started](#getting-started)
     - [Cloning](#cloning)
-    - [Integration with Soomla unity3d-store](#integration-with-soomla-unity3d-store)
+    - [Integration with SOOMLA unity3d-store](#integration-with-soomla-unity3d-store)
     - [Integration with SOOMLA unity3d-profile](#integration-with-soomla-unity3d-profile)
 - [Debugging](#debugging)
 - [Example Usages](#example-usages)
@@ -106,7 +106,7 @@ There are some necessary files in submodules lined with symbolic links. If you'r
 $ git clone --recursive git@github.com:soomla/unity3d-levelup.git
 ```
 
-### Integration with Soomla unity3d-store
+### Integration with SOOMLA unity3d-store
 
 Please follow the steps in [unity3d-store](https://github.com/soomla/unity3d-store) for the _Store_ part of the setup.
 Then, you can use the **store-related _LevelUp_ classes**, such as _VirtualItemScore_ or _VirtualItemReward_ or _BalanceGate_.
