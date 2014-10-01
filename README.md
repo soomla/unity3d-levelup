@@ -12,7 +12,7 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 ## Contents
 
 - [Model Overview](#model-overview)
-    - [World / Level](#world-level)
+    - [World / Level](#world--level)
     - [Score](#score)
     - [Gate](#gate)
     - [Mission/Challenge](#missionchallenge)
