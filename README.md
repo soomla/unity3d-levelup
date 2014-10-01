@@ -5,10 +5,7 @@
 <!-- updates when you have any -->
 <!-- end updates -->
 
-unity3d-levelup is an open code initiative as part of The SOOMLA Project. It organizes and simplifies structuring of games for user progress.
-
-It acts as sort of a 'blueprint' for the game, modeling worlds/levels, gates to levels, missions and rewards that can be completed and achieved.
-All this is backed by Soomla's core tools, and can be easily integrated with more Soomla modules, like unity3d-store for IAP, or unity3d-profile for social related functions.
+unity3d-levelup is a library built for easily modeling game structure and user progression, and allows rapid protoyping using a standard and simplified model.  It acts as sort of a 'blueprint' for the game, modeling worlds/levels, gates to levels, missions and rewards that can be completed and achieved.  All this is backed by SOOMLA's core tools, and can be easily integrated with more SOOMLA modules, like unity3d-store for IAP, or unity3d-profile for social related functions.
 
 unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 
@@ -19,28 +16,28 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 <!-- attach UML style simple diagram -->
 
 
-Generally, the Soomla sources contain detailed documentation on the different entities and how to use them, but here's a quick glance:
+Generally, the SOOMLA sources contain detailed documentation on the different entities and how to use them, but here's a quick glance:
 
-###World/Level
+###World / Level
 
 A _Level_ is pretty clear, and most games have them.
 A simple example is an Angry Birds single level, where you need to knock out all the pigs.
 It measures specific things, such as duration it takes to complete, and can be started and ended.
 
-A _World_ is a more general concept than a Level (a Level **Is-a** World), and can have innerWorlds to create hierarchies. Another example from Angry Birds is level pages and episodes, which contain the actual levels.
+A _World_ is a more general concept than a Level (a Level **Is-a** World), and can have `innerWorlds` to create hierarchies. Another example from Angry Birds is level pages and episodes, which contain the actual levels.
 
 The _Initial World_ is a container world for all worlds and levels in the game. We use the _Initial World_ to intialize the LevelUp module.
 
 ###Score
 
 A _Score_ is something which can be accumulated or measured within a _World_ (or _Level_ of course).
-It can be incremented or decremented based on user actions, and recorded at the completion of the _World/Level_.
+It can be incremented or decremented based on user actions, and recorded at the completion of the _World / Level_.
 
 This, in turn, can later be applied to high scores or best times, or treated as collectibles that can be awarded upon completion.
 
 ###Gate
 
-A _Gate_ is a closed portal from one _World_ to the next. It can be unlocked in many different ways (according to _Gate_ type), and can also be combined into _GatesList_ to build more complex _Gates_.
+A _Gate_ is a closed portal from one _World_ to the next. It can be unlocked in many different ways (according to _Gate_ type), and can also be combined into a _GatesList_ to build more complex _Gates_.
 
 ###Mission/Challenge
 
@@ -69,7 +66,7 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 3. Drag the "CoreEvents", "StoreEvents", "ProfileEvents" and "LevelUpEvents" Prefabs from `../Assets/Soomla/Prefabs` into your scene. You should see it listed in the "Hierarchy" panel. [This step MUST be done for unity3d-levelup to work properly]
 4. On the menu bar click "Window -> Soomla -> Edit Settings" and change the value for "Soomla Secret" (also setup Public Key if you're building for Google Play):
     - _Soomla Secret_ - is an encryption secret you provide that will be used to secure your data. (If you used versions before v1.5.2 this secret MUST be the same as Custom Secret)  
-    **Choose the secret wisely. You can't change them after you launch your game!**
+    **Choose the secret wisely. You can't change it after you launch your game!**
     - _Public Key_ - is the public key given to you from Google. (iOS doesn't have a public key).
 5. Create your own _Initial World_ which should contain all the 'blueprint' of the game (see [Model Overview](#model-overview)). Initialize _LevelUp_ with the class you just created:
 
@@ -85,14 +82,14 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 
 And that's it ! You have game architecture capabilities at your fingertips.
 
-### Integration with Soomla unity3d-store
+### Integration with SOOMLA unity3d-store
 
-Please follow steps in [unity3d-store](https://github.com/soomla/unity3d-store) for the _Store_ part of the setup.
+Please follow the steps in [unity3d-store](https://github.com/soomla/unity3d-store) for the _Store_ part of the setup.
 Then, you can use the **store-related _LevelUp_ classes**, such as _VirtualItemScore_ or _VirtualItemReward_ or _BalanceGate_.
 
-### Integration with Soomla unity3d-profile
+### Integration with SOOMLA unity3d-profile
 
-Please follow steps in [unity3d-profile](https://github.com/soomla/unity3d-profile) for the _Profile_ part of the setup.
+Please follow the steps in [unity3d-profile](https://github.com/soomla/unity3d-profile) for the _Profile_ part of the setup.
 Then, you can use the **profile-related _LevelUp_ classes**, such as _SocialLikeMission_.
 
 Event Handling
@@ -143,7 +140,7 @@ $ git clone --recursive git@github.com:soomla/unity3d-levelup.git
 
 ## Example Usages
 
-  > Examples using virtual items are dependent on unity3d-store module, with proper SoomlaStore initialization and IStoreAssets definitions. See the unity3d-store integration section for more details.
+  > Examples using virtual items are dependent on unity3d-store module, with proper `SoomlaStore` initialization and `IStoreAssets` definitions. See the unity3d-store integration section for more details.
 
 * Mission with Reward (collect 5 stars to get 1 mega star)
 
