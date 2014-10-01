@@ -9,16 +9,34 @@ unity3d-levelup is a library built for easily modeling game structure and user p
 
 unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 
+## Contents
+
+- [Model Overview](#model-overview)
+    - [World / Level](#world-level)
+    - [Score](#score)
+    - [Gate](#gate)
+    - [Mission/Challenge](#missionchallenge)
+    - [Reward](#reward)
+- [Getting Started](#getting-started)
+    - [Cloning](#cloning)
+    - [Integration with Soomla unity3d-store](#integration-with-soomla-unitydstore)
+    - [Integration with SOOMLA unity3d-profile](#integration-with-soomla-unitydprofile)
+- [Debugging](#debugging)
+- [Example Usages](#example-usages)
+
+<!-- end toc -->
+
 <!-- Check out our [Wiki] (https://github.com/soomla/android-store/wiki) for more information about the project and how to use it better. -->
 
 ## Model Overview
 
 <!-- attach UML style simple diagram -->
 
-
 Generally, the SOOMLA sources contain detailed documentation on the different entities and how to use them, but here's a quick glance:
 
-###World / Level
+![SOOMLA's LevelUp Model](http://know.soom.la/img/tutorial_img/soomla_diagrams/levelup.png)
+
+### World / Level
 
 A _Level_ is pretty clear, and most games have them.
 A simple example is an Angry Birds single level, where you need to knock out all the pigs.
@@ -28,29 +46,27 @@ A _World_ is a more general concept than a Level (a Level **Is-a** World), and c
 
 The _Initial World_ is a container world for all worlds and levels in the game. We use the _Initial World_ to intialize the LevelUp module.
 
-###Score
+### Score
 
 A _Score_ is something which can be accumulated or measured within a _World_ (or _Level_ of course).
 It can be incremented or decremented based on user actions, and recorded at the completion of the _World / Level_.
 
 This, in turn, can later be applied to high scores or best times, or treated as collectibles that can be awarded upon completion.
 
-###Gate
+### Gate
 
 A _Gate_ is a closed portal from one _World_ to the next. It can be unlocked in many different ways (according to _Gate_ type), and can also be combined into a _GatesList_ to build more complex _Gates_.
 
-###Mission/Challenge
+### Mission/Challenge
 
 A _Mission_ is a single task a player can complete in a game, usually for a _Reward_.
 
 A _Challenge_ is a set of _Missions_ that need to be completed, so it's a big _Mission_ built out of several smaller _Missions_.
 
-###Reward
+### Reward
 
 A _Reward_ is some kind of perk or status a player can achieve in the game.
 This can be either a badge, a virtual item from the game's economy (sword, coins etc.) or anything you can think of, really (unlocking game content or levels comes to mind).
-
-![SOOMLA's LevelUp Model](http://know.soom.la/img/tutorial_img/soomla_diagrams/levelup.png)
 
 ## Getting Started
 > NOTE: LevelUp depends on SOOMLA's other modules: Core, Store, and Profile. This document assumes that you are new to SOOMLA and have not worked with any of the other SOOMLA modules. If this is not the case, and you already *have* some or all of the other modules, please follow these directions only for the modules you are missing and of course, for the **LevelUp** module.
@@ -82,7 +98,15 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 
 And that's it ! You have game architecture capabilities at your fingertips.
 
-### Integration with SOOMLA unity3d-store
+### Cloning
+
+There are some necessary files in submodules lined with symbolic links. If you're cloning the project make sure you clone it with the `--recursive` flag.
+
+```
+$ git clone --recursive git@github.com:soomla/unity3d-levelup.git
+```
+
+### Integration with Soomla unity3d-store
 
 Please follow the steps in [unity3d-store](https://github.com/soomla/unity3d-store) for the _Store_ part of the setup.
 Then, you can use the **store-related _LevelUp_ classes**, such as _VirtualItemScore_ or _VirtualItemReward_ or _BalanceGate_.
@@ -99,19 +123,19 @@ SOOMLA lets you subscribe to _LevelUp_ events, get notified and implement your o
 
 > Your behavior is an addition to the default behavior implemented by SOOMLA. You don't replace SOOMLA's behavior.
 
-The 'Events' class is where all event go through. To handle various events, just add your specific behavior to the delegates in the Events class.
+The _Events_ class is where all event go through. To handle various events, just add your specific behavior to the delegates in the _Events_ class.
 
 For example, if you want to 'listen' to a WorldCompleted event:
 
 ```cs
-StoreEvents.OnWorldCompleted += onWorldCompleted;
+LevelUpEvents.OnWorldCompleted += onWorldCompleted;
 
 public void onWorldCompleted(World world) {
     Debug.Log("The world " + world.ID + " was COMPLETED!");
 }
 ```
 
-One thing you need to make sure is that you instantiate your EventHandler before LevelUp.  
+One thing you need to make sure is that you instantiate your `EventHandler` before LevelUp.  
 So if you have:
 ````
 private static Soomla.Example.ExampleEventHandler handler;
@@ -129,14 +153,6 @@ Soomla.Levelup.LevelUp.GetInstance ().Initialize (initialWorld);
 
 If you want to see full debug messages from android-levelup and ios-levelup you just need to check the box that says "Debug Messages" in the SOOMLA Settings.
 Unity debug messages will only be printed out if you build the project with _Development Build_ checked.
-
-## Cloning
-
-There are some necessary files in submodules lined with symbolic links. If you're cloning the project make sure you clone it with the `--recursive` flag.
-
-```
-$ git clone --recursive git@github.com:soomla/unity3d-levelup.git
-```
 
 ## Example Usages
 
@@ -253,48 +269,45 @@ $ git clone --recursive git@github.com:soomla/unity3d-levelup.git
 
   ```cs
   string scoreId = "main_score";
-  Score score = new Score(scoreId);
+	Score score = new Score(scoreId);
 
-  Mission mission1 = new RecordMission("record1_mission", "Record 1 mission",
-      scoreId, 10.0);
-  Mission mission2 = new RecordMission("record2_mission", "Record 2 mission",
-      scoreId, 100.0);
-  List<Mission> missions = new List<Mission>();
-  missions.Add(mission1);
-  missions.Add(mission2);
+	Mission mission1 = new RecordMission("record1_mission", "Record 1 mission",
+	                                     scoreId, 10.0);
+	Mission mission2 = new RecordMission("record2_mission", "Record 2 mission",
+	                                     scoreId, 100.0);
+	List<Mission> missions = new List<Mission>() { mission1, mission2 };
 
-  BadgeReward badgeReward = new BadgeReward("challenge_badge_reward_id",
-      "ChallengeBadgeRewardId");
-  List<Reward> rewards = new List<Reward>();
-  rewards.Add(badgeReward);
+	BadgeReward badgeReward = new BadgeReward("challenge_badge_reward_id",
+	                                          "ChallengeBadgeRewardId");
+	List<Reward> rewards = new List<Reward>() { badgeReward };
 
-  Challenge challenge = new Challenge("challenge_id", "Challenge", missions, rewards);
+	Challenge challenge = new Challenge("challenge_id", "Challenge", missions, rewards);
 
-  challenge.IsCompleted(); //false
+	challenge.IsCompleted(); //false
 
-  World world = new World("initial_world");
-  world.AddMission(challenge);
-  world.AddScore(score);
+	World world = new World("initial_world");
+	world.AddMission(challenge);
+	world.AddScore(score);
 
-  LevelUp.GetInstance().Initialize(world);
+	LevelUp.GetInstance().Initialize(world);
 
-  score.SetTempScore(20.0);
-  score.Reset(true);
+	score.SetTempScore(20.0);
+	score.Reset(true);
 
-  // events:
-  // OnMissionCompleted (mission1) (LevelUp events)
-  // [OnScoreRecordReached] - if record is broken
+	// events:
+	// OnMissionCompleted (mission1) (LevelUp events)
+	// [OnScoreRecordReached] - if record is broken
 
-  score.SetTempScore(120.0);
-  score.Reset(true);
+	score.SetTempScore(120.0);
+	score.Reset(true);
 
-  // events:
-  // OnMissionCompleted (mission2) (LevelUp events)
-  // OnMissionCompleted (challenge) (LevelUp events)
-  // OnRewardGivenEvent (badgeReward) (Core events)
+	// events:
+	// OnMissionCompleted (mission2) (LevelUp events)
+	// OnMissionCompleted (challenge) (LevelUp events)
+	// OnRewardGivenEvent (badgeReward) (Core events)
 
-  challenge.IsCompleted(); // true
-  badgeReward.Owned; // true
+	challenge.IsCompleted(); // true
+	badgeReward.Owned; // true
   ```
 
 * GatesList
@@ -320,9 +333,7 @@ $ git clone --recursive git@github.com:soomla/unity3d-levelup.git
   RecordGate recordGate1 = new RecordGate(recordGateId1, scoreId1, desiredRecord1);
   RecordGate recordGate2 = new RecordGate(recordGateId2, scoreId2, desiredRecord2);
 
-  List<Gate> gates = new List<Gate>();
-  gates.Add(recordGate1);
-  gates.Add(recordGate2);
+  List<Gate> gates = new List<Gate>() { recordGate1, recordGate2 };
 
   GatesListOR gatesListOR = new GatesListOR("gate_list_OR_id", gates);
 
