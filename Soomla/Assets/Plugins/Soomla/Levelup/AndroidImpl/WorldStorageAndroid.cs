@@ -25,6 +25,14 @@ namespace Soomla.Levelup
 	public class WorldStorageAndroid : WorldStorage {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	
+		override protected void _initLevelUp(string levelUpJSON)
+		{
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
+				jniWorldStorage.CallStatic("initLevelUp", levelUpJSON);
+			}
+		}
+
 		override protected void _setCompleted(World world, bool completed, bool notify) {
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
