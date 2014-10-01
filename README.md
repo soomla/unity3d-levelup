@@ -19,8 +19,8 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
     - [Reward](#reward)
 - [Getting Started](#getting-started)
     - [Cloning](#cloning)
-    - [Integration with Soomla unity3d-store](#integration-with-soomla-unitydstore)
-    - [Integration with SOOMLA unity3d-profile](#integration-with-soomla-unitydprofile)
+    - [Integration with Soomla unity3d-store](#integration-with-soomla-unityd-store)
+    - [Integration with SOOMLA unity3d-profile](#integration-with-soomla-unityd-profile)
 - [Debugging](#debugging)
 - [Example Usages](#example-usages)
 
