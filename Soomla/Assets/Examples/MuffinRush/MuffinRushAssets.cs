@@ -20,7 +20,7 @@ namespace Soomla.Store.Example {
 
 	/// <summary>
 	/// This class defines our game's economy, which includes virtual goods, virtual currencies
-	/// and currency packs, virtual categories, and non-consumable items.
+	/// and currency packs, virtual categories
 	/// </summary>
 	public class MuffinRushAssets : IStoreAssets{
 
@@ -42,7 +42,7 @@ namespace Soomla.Store.Example {
 		/// see parent.
 		/// </summary>
 	    public VirtualGood[] GetGoods() {
-			return new VirtualGood[] {MUFFINCAKE_GOOD, PAVLOVA_GOOD,CHOCLATECAKE_GOOD, CREAMCUP_GOOD};
+			return new VirtualGood[] {MUFFINCAKE_GOOD, PAVLOVA_GOOD,CHOCLATECAKE_GOOD, CREAMCUP_GOOD, NO_ADS_LTVG};
 		}
 
 		/// <summary>
@@ -59,15 +59,8 @@ namespace Soomla.Store.Example {
 			return new VirtualCategory[]{GENERAL_CATEGORY};
 		}
 
-		/// <summary>
-		/// see parent.
-		/// </summary>
-	    public NonConsumableItem[] GetNonConsumableItems() {
-			return new NonConsumableItem[]{NO_ADDS_NONCONS};
-		}
-		
 	    /** Static Final Members **/
-	
+
 	    public const string MUFFIN_CURRENCY_ITEM_ID      = "currency_muffin";
 
 	    public const string TENMUFF_PACK_PRODUCT_ID      = "android.test.refunded";
@@ -78,8 +71,6 @@ namespace Soomla.Store.Example {
 
 	    public const string THOUSANDMUFF_PACK_PRODUCT_ID = "2500_pack";
 
-	    public const string NO_ADDS_NONCONS_PRODUCT_ID   = "no_ads";
-			   	     
 	    public const string MUFFINCAKE_ITEM_ID   = "fruit_cake";
 
 	    public const string PAVLOVA_ITEM_ID   = "pavlova";
@@ -88,7 +79,9 @@ namespace Soomla.Store.Example {
 
 	    public const string CREAMCUP_ITEM_ID   = "cream_cup";
 
-	
+		public const string NO_ADS_LIFETIME_PRODUCT_ID = "no_ads";
+
+
 	    /** Virtual Currencies **/
 
 	    public static VirtualCurrency MUFFIN_CURRENCY = new VirtualCurrency(
@@ -96,10 +89,10 @@ namespace Soomla.Store.Example {
 	            "",												// description
 	            MUFFIN_CURRENCY_ITEM_ID							// item id
 	    );
-		
+
 
 	    /** Virtual Currency Packs **/
-	
+
 	    public static VirtualCurrencyPack TENMUFF_PACK = new VirtualCurrencyPack(
 	            "10 Muffins",                                   // name
 	            "Test refund of an item",                       // description
@@ -108,7 +101,7 @@ namespace Soomla.Store.Example {
 	            MUFFIN_CURRENCY_ITEM_ID,                        // the currency associated with this pack
 	            new PurchaseWithMarket(TENMUFF_PACK_PRODUCT_ID, 0.99)
 		);
-	
+
 	    public static VirtualCurrencyPack FIFTYMUFF_PACK = new VirtualCurrencyPack(
 	            "50 Muffins",                                   // name
 	            "Test cancellation of an item",                 // description
@@ -117,7 +110,7 @@ namespace Soomla.Store.Example {
 				MUFFIN_CURRENCY_ITEM_ID,                        // the currency associated with this pack
 	            new PurchaseWithMarket(FIFTYMUFF_PACK_PRODUCT_ID, 1.99)
 		);
-		
+
 		public static VirtualCurrencyPack FOURHUNDMUFF_PACK = new VirtualCurrencyPack(
 	            "400 Muffins",                                  // name
 	            "Test purchase of an item",                 	// description
@@ -126,7 +119,7 @@ namespace Soomla.Store.Example {
 				MUFFIN_CURRENCY_ITEM_ID,                        // the currency associated with this pack
 	            new PurchaseWithMarket(FOURHUNDMUFF_PACK_PRODUCT_ID, 4.99)
 		);
-		
+
 		public static VirtualCurrencyPack THOUSANDMUFF_PACK = new VirtualCurrencyPack(
 	            "1000 Muffins",                                 // name
 	            "Test item unavailable",                 		// description
@@ -135,51 +128,49 @@ namespace Soomla.Store.Example {
 				MUFFIN_CURRENCY_ITEM_ID,                        // the currency associated with this pack
 	            new PurchaseWithMarket(THOUSANDMUFF_PACK_PRODUCT_ID, 8.99)
 		);
-	
+
 	    /** Virtual Goods **/
-		
+
 	    public static VirtualGood MUFFINCAKE_GOOD = new SingleUseVG(
 	            "Fruit Cake",                                       		// name
 	            "Customers buy a double portion on each purchase of this cake", // description
 	            "fruit_cake",                                       		// item id
 	            new PurchaseWithVirtualItem(MUFFIN_CURRENCY_ITEM_ID, 225)); // the way this virtual good is purchased
-	
+
 	    public static VirtualGood PAVLOVA_GOOD = new SingleUseVG(
 	            "Pavlova",                                         			// name
 	            "Gives customers a sugar rush and they call their friends", // description
 	            "pavlova",                                          		// item id
 	            new PurchaseWithVirtualItem(MUFFIN_CURRENCY_ITEM_ID, 175)); // the way this virtual good is purchased
-	
+
 	    public static VirtualGood CHOCLATECAKE_GOOD = new SingleUseVG(
 	            "Chocolate Cake",                                   		// name
 	            "A classic cake to maximize customer satisfaction",	 		// description
 	            "chocolate_cake",                                   		// item id
 	            new PurchaseWithVirtualItem(MUFFIN_CURRENCY_ITEM_ID, 250)); // the way this virtual good is purchased
-	
-	
+
+
 	    public static VirtualGood CREAMCUP_GOOD = new SingleUseVG(
 	            "Cream Cup",                                        		// name
 	            "Increase bakery reputation with this original pastry",   	// description
 	            "cream_cup",                                        		// item id
 	            new PurchaseWithVirtualItem(MUFFIN_CURRENCY_ITEM_ID, 50));  // the way this virtual good is purchased
-		
-		
+
+
 	    /** Virtual Categories **/
 	    // The muffin rush theme doesn't support categories, so we just put everything under a general category.
 	    public static VirtualCategory GENERAL_CATEGORY = new VirtualCategory(
 	            "General", new List<string>(new string[] { MUFFINCAKE_ITEM_ID, PAVLOVA_ITEM_ID, CHOCLATECAKE_ITEM_ID, CREAMCUP_ITEM_ID })
 	    );
-		
-		
-	    /** Market MANAGED Items **/
-	
-	    public static NonConsumableItem NO_ADDS_NONCONS  = new NonConsumableItem(
-            "No Ads",
-            "Test purchase of MANAGED item.",
-            "no_ads",
-            new PurchaseWithMarket(new MarketItem(NO_ADDS_NONCONS_PRODUCT_ID, MarketItem.Consumable.NONCONSUMABLE , 1.99))
-    	);
-		
+
+
+	    /** LifeTimeVGs **/
+		// Note: create non-consumable items using LifeTimeVG with PuchaseType of PurchaseWithMarket
+		public static VirtualGood NO_ADS_LTVG = new LifetimeVG(
+			"No Ads", 														// name
+			"No More Ads!",				 									// description
+			"no_ads",														// item id
+			new PurchaseWithMarket(NO_ADS_LIFETIME_PRODUCT_ID, 0.99));	// the way this virtual good is purchased
 	}
-	
+
 }

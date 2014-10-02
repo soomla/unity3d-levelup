@@ -51,17 +51,5 @@ public class TestAssets : IStoreAssets {
 	public VirtualCategory[] GetCategories() {
 		return new VirtualCategory[0];
 	}
-	
-	public NonConsumableItem[] GetNonConsumableItems() {
-		int i = 2;
-		NonConsumableItem[] nonConsumableItems = new NonConsumableItem[i];
-		nonConsumableItems[--i] = new NonConsumableItem("ItemPurchaseGateWithMarket",
-		                                                "", ITEM_ID_PURCHASE_GATE_VI,
-		                                                new PurchaseWithMarket(ITEM_ID_PURCHASE_GATE_VI, 10));
-		nonConsumableItems[--i] = new NonConsumableItem("ItemPurchaseGateWithVI",
-		                                                "", ITEM_ID_PURCHASE_GATE_MARKET,
-		                                                new PurchaseWithMarket(ITEM_ID_PURCHASE_GATE_MARKET, 2));
-		return nonConsumableItems;
-	}
 }
 }
