@@ -71,7 +71,7 @@ namespace Soomla.Levelup {
 		public void onGateOpened(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onGateOpened with message: " + message);
 
-			Gate gate = LevelUp.GetInstance().GetGate(message);
+			Gate gate = SoomlaLevelUp.GetInstance().GetGate(message);
 
 			LevelUpEvents.OnGateOpened(gate);
 		}
@@ -79,7 +79,7 @@ namespace Soomla.Levelup {
 		public void onLevelEnded(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelEnded with message: " + message);
 			
-			Level level = (Level) LevelUp.GetInstance().GetWorld(message);
+			Level level = (Level) SoomlaLevelUp.GetInstance().GetWorld(message);
 
 			LevelUpEvents.OnLevelEnded(level);
 		}
@@ -87,7 +87,7 @@ namespace Soomla.Levelup {
 		public void onLevelStarted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelStarted with message: " + message);
 
-			Level level = (Level) LevelUp.GetInstance().GetWorld(message);
+			Level level = (Level) SoomlaLevelUp.GetInstance().GetWorld(message);
 			
 			LevelUpEvents.OnLevelStarted(level);
 		}
@@ -101,7 +101,7 @@ namespace Soomla.Levelup {
 		public void onMissionCompleted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onMissionCompleted with message: " + message);
 
-			Mission mission = LevelUp.GetInstance().GetMission(message);
+			Mission mission = SoomlaLevelUp.GetInstance().GetMission(message);
 
 			LevelUpEvents.OnMissionCompleted(mission);
 		}
@@ -109,7 +109,7 @@ namespace Soomla.Levelup {
 		public void onMissionCompletionRevoked(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onMissionCompletionRevoked with message: " + message);
 			
-			Mission mission = LevelUp.GetInstance().GetMission(message);
+			Mission mission = SoomlaLevelUp.GetInstance().GetMission(message);
 
 			LevelUpEvents.OnMissionCompletionRevoked(mission);
 		}
@@ -117,7 +117,7 @@ namespace Soomla.Levelup {
 		public void onScoreRecordChanged(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onScoreRecordChanged with message: " + message);
 			
-			Score score = LevelUp.GetInstance().GetScore(message);
+			Score score = SoomlaLevelUp.GetInstance().GetScore(message);
 
 			LevelUpEvents.OnScoreRecordChanged(score);
 		}
@@ -125,7 +125,7 @@ namespace Soomla.Levelup {
 		public void onWorldCompleted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onWorldCompleted with message: " + message);
 			
-			World world = LevelUp.GetInstance().GetWorld(message);
+			World world = SoomlaLevelUp.GetInstance().GetWorld(message);
 
 			LevelUpEvents.OnWorldCompleted(world);
 		}
@@ -133,7 +133,7 @@ namespace Soomla.Levelup {
 		public void onWorldAssignedReward(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onWorldAssignedReward with message: " + message);
 			
-			World world = LevelUp.GetInstance().GetWorld(message);
+			World world = SoomlaLevelUp.GetInstance().GetWorld(message);
 			
 			LevelUpEvents.OnWorldAssignedReward(world);
 		}

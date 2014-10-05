@@ -110,7 +110,7 @@ namespace Soomla.Levelup
 		/// </summary>
 		/// <returns>If the <c>Gate</c> can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
-			Score score = LevelUp.GetInstance().GetScore(AssociatedScoreId);
+			Score score = SoomlaLevelUp.GetInstance().GetScore(AssociatedScoreId);
 			if (score == null) {
 				SoomlaUtils.LogError(TAG, "(canOpenInner) couldn't find score with scoreId: " + AssociatedScoreId);
 				return false;

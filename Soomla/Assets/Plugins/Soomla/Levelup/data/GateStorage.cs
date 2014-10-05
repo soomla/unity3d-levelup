@@ -116,7 +116,7 @@ namespace Soomla.Levelup
 		}
 
 		private static string keyGates(string gateId, string postfix) {
-			return LevelUp.DB_KEY_PREFIX + "gates." + gateId + "." + postfix;
+			return SoomlaLevelUp.DB_KEY_PREFIX + "gates." + gateId + "." + postfix;
 		}
 #endif
 	}

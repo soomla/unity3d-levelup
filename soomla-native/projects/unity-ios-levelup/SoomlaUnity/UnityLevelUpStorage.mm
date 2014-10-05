@@ -110,11 +110,9 @@ extern "C" {
 
     }
     
-    void worldStorage_InitLevelUp(const char *levelUpJSON)
+    void worldStorage_InitLevelUp()
     {
-        NSString *levelUpJSONS = [NSString stringWithUTF8String:levelUpJSON];
-        NSDictionary *metadata = [SoomlaUtils jsonStringToDict:levelUpJSONS];
-        [WorldStorage initLevelUp:metadata];
+        [WorldStorage initLevelUp];
     }
     
     void worldStorage_SetCompleted(const char* worldId, bool completed, bool notify) {

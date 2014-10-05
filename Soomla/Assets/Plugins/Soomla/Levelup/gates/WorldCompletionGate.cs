@@ -76,7 +76,7 @@ namespace Soomla.Levelup
 		/// </summary>
 		/// <returns>If this <c>World</c> can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
-			World world = LevelUp.GetInstance().GetWorld(AssociatedWorldId);
+			World world = SoomlaLevelUp.GetInstance().GetWorld(AssociatedWorldId);
 			return world != null && world.IsCompleted();
 		}
 

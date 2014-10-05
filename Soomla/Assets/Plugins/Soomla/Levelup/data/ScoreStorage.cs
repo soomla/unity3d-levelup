@@ -139,7 +139,7 @@ namespace Soomla.Levelup
 		/// </summary>
 #if UNITY_EDITOR
 		private static string keyScores(string scoreId, string postfix) {
-			return LevelUp.DB_KEY_PREFIX + "scores." + scoreId + "." + postfix;
+			return SoomlaLevelUp.DB_KEY_PREFIX + "scores." + scoreId + "." + postfix;
 		}
 		
 		private static string keyLatestScore(string scoreId) {

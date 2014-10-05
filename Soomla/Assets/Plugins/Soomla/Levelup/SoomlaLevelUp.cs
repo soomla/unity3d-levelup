@@ -24,16 +24,16 @@ namespace Soomla.Levelup {
 	/// It stores the configurations of the game's world-hierarchy and provides
 	/// lookup functions for levelup model elements.
 	/// </summary>
-	public class LevelUp {
+	public class SoomlaLevelUp {
 
 		public static readonly string DB_KEY_PREFIX = "soomla.levelup.";
 
-		private const string TAG = "SOOMLA LevelUp";
+		private const string TAG = "SOOMLA SoomlaLevelUp";
 
 		/// <summary>
-		/// The instance of <c>LevelUp</c> for this game.
+		/// The instance of <c>SoomlaLevelUp</c> for this game.
 		/// </summary>
-		private static LevelUp instance = null;
+		private static SoomlaLevelUp instance = null;
 
 		/// <summary>
 		/// Initial <c>World</c> to begin the game.
@@ -52,7 +52,6 @@ namespace Soomla.Levelup {
 		/// <param name="rewards">Rewards.</param>
 		public void Initialize(World initialWorld, List<Reward> rewards = null) {
 			InitialWorld = initialWorld;
-//			save();
 
 			if (rewards != null) {
 				Dictionary<string, Reward> rewardMap = new Dictionary<string, Reward> ();
@@ -62,7 +61,9 @@ namespace Soomla.Levelup {
 				Rewards = rewardMap;
 			}
 
-			WorldStorage.InitLevelUp(this.toJSONObject());
+			save();
+
+			WorldStorage.InitLevelUp();
 		}
 
 		/// <summary>
@@ -211,12 +212,12 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Retrieves this instance of <c>LevelUp</c>. Used when initializing LevelUp.
+		/// Retrieves this instance of <c>SoomlaLevelUp</c>. Used when initializing SoomlaLevelUp.
 		/// </summary>
-		/// <returns>This instance of <c>LevelUp</c>.</returns>
-		public static LevelUp GetInstance() {
+		/// <returns>This instance of <c>SoomlaLevelUp</c>.</returns>
+		public static SoomlaLevelUp GetInstance() {
 			if (instance == null) {
-				instance = new LevelUp();
+				instance = new SoomlaLevelUp();
 			}
 			return instance;
 		}
@@ -224,18 +225,15 @@ namespace Soomla.Levelup {
 
 		/** PRIVATE FUNCTIONS **/
 
-		private LevelUp() {}
+		private SoomlaLevelUp() {}
 
-		// NOTE: Not sure we need a save function.
+		private void save() {
+			string lu_json = toJSONObject().print();
+			SoomlaUtils.LogDebug(TAG, "saving SoomlaLevelUp to DB. json is: " + lu_json);
+			string key = DB_KEY_PREFIX + "model";
 
-//		private void save() {
-//			string lu_json = toJSONObject().print();
-//			SoomlaUtils.LogDebug(TAG, "saving LevelUp to DB. json is: " + lu_json);
-//			string key = DB_KEY_PREFIX + "model";
-//
-//			// TODO: save on Android and iOS with KeyValueStorage
-//			// KeyValueStorage.setValue(key, lu_json);
-//		}
+			KeyValueStorage.SetValue(key, lu_json);
+		}
 
 		private JSONObject toJSONObject() {
 			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);

@@ -297,7 +297,7 @@ namespace Soomla.Levelup
 
 #if UNITY_EDITOR
 		private static string keyLevels(string levelId, string postfix) {
-			return LevelUp.DB_KEY_PREFIX + "levels." + levelId + "." + postfix;
+			return SoomlaLevelUp.DB_KEY_PREFIX + "levels." + levelId + "." + postfix;
 		}
 		
 		private static string keyTimesStarted(string levelId) {

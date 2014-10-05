@@ -52,9 +52,9 @@ namespace Soomla.Levelup
 			}
 		}
 
-		public static void InitLevelUp(JSONObject levelUpJSON)
+		public static void InitLevelUp()
 		{
-			instance._initLevelUp(levelUpJSON.ToString());
+			instance._initLevelUp();
 		}
 
 		/** The following functions call the relevant instance-specific functions. **/
@@ -92,10 +92,9 @@ namespace Soomla.Levelup
 		/** Unity-Editor Functions **/
 	
 		/// <summary>
-		/// Initializes <c>LevelUp</c>
+		/// Initializes <c>SoomlaLevelUp</c>
 		/// </summary>
-		/// <param name="levelUpJSON">LevelUp object JSON string</param>
-		protected virtual void _initLevelUp(string levelUpJSON)
+		protected virtual void _initLevelUp()
 		{
 			#if UNITY_EDITOR
 			LevelUpEvents.OnLevelUpInitialized();
@@ -180,7 +179,7 @@ namespace Soomla.Levelup
 
 #if UNITY_EDITOR
 		private static string keyWorlds(string worldId, string postfix) {
-			return LevelUp.DB_KEY_PREFIX + "worlds." + worldId + "." + postfix;
+			return SoomlaLevelUp.DB_KEY_PREFIX + "worlds." + worldId + "." + postfix;
 		}
 		
 		private static string keyWorldCompleted(string worldId) {

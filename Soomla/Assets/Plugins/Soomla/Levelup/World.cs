@@ -17,7 +17,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Soomla;
 
 namespace Soomla.Levelup {
 	
@@ -457,7 +456,7 @@ namespace Soomla.Levelup {
 		public void AssignReward(Reward reward) {
 			String olderReward = GetAssignedRewardId();
 			if (!string.IsNullOrEmpty(olderReward)) {
-				Reward oldReward = LevelUp.GetInstance().GetReward(olderReward);
+				Reward oldReward = SoomlaLevelUp.GetInstance().GetReward(olderReward);
 				if (oldReward != null) {
 					oldReward.Take();
 				}

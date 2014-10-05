@@ -43,8 +43,8 @@ namespace Soomla.Levelup
 		[DllImport ("__Internal")]
 		private static extern void worldStorage_InitLevelUp(string levelUpJSON);
 
-		override protected void _initLevelUp(string levelUpJSON) {
-			worldStorage_InitLevelUp(levelUpJSON);
+		override protected void _initLevelUp() {
+			worldStorage_InitLevelUp();
 		}
 
 		override protected void _setCompleted(World world, bool completed, bool notify) {
