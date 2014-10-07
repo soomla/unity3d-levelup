@@ -19,14 +19,32 @@ using UnityEngine;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
+	/// order to open the <c>Gate</c>. Currently, the social provider that's available 
+	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
+	/// providers will be added.
+	/// 
+	/// A specific type of <c>Gate</c> that has an associated image. The <c>Gate</c> 
+	/// is opened once the player uploads the image.   
+	/// </summary>
 	public class SocialUploadGate : SocialActionGate
 	{
-		private const string TAG = "SOOMLA SocialUploadGate";
+		private const string TAG = "SOOMLA SocialUploadGate"; 
 
+		/** Components of a social Upload: **/
 		public string FileName;
 		public string Message;
 		public Texture2D ImgTexture;
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id"><c>Gate</c> ID.</param>
+		/// <param name="provider">Social provider.</param>
+		/// <param name="fileName">Name of file to upload.</param>
+		/// <param name="message">Message.</param>
+		/// <param name="texture">Texture.</param>
 		public SocialUploadGate(string id, Provider provider, string fileName, string message, Texture2D texture)
 			: base(id, provider)
 		{
@@ -36,8 +54,10 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
+		/// Generates an instance of <c>SocialUploadGate</c> from the given JSONObject. 
 		/// </summary>
+		/// <param name="jsonGate">Json gate.</param>
 		public SocialUploadGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -45,9 +65,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this <c>SocialUploadGate</c> to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
@@ -56,6 +76,11 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> by uploading the associated image.
+		/// </summary>
+		/// <returns>If the image was successfully uploaded returns <c>true</c>; otherwise 
+		/// <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
 

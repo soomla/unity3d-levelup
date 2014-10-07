@@ -18,24 +18,50 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Mission</c> that has an associated <c>World</c>. The <c>Mission</c> 
+	/// is complete once the <c>World</c> has been completed.
+	/// </summary>
 	public class WorldCompletionMission : Mission
 	{
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
+		/// <param name="associatedWorldId">World that needs to be completed.</param>
 		public WorldCompletionMission(string id, string name, string associatedWorldId)
 			: base(id, name, typeof(WorldCompletionGate), new object[] { associatedWorldId })
 		{
 		}
 
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
+		/// <param name="rewards">Rewards for this mission.</param>
+		/// <param name="associatedWorldId">World that needs to be completed.</param>
 		public WorldCompletionMission(string id, string name, List<Reward> rewards, string associatedWorldId)
 			: base(id, name, rewards, typeof(WorldCompletionGate), new object[] { associatedWorldId })
 		{
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// Generates a <c>WorldCompletionMission</c> from the given JSONObject.
+		/// </summary>
+		/// <param name="jsonMission">JSON mission.</param>
 		public WorldCompletionMission(JSONObject jsonMission)
 			: base(jsonMission)
 		{
 			// TODO: implement this when needed. It's irrelevant now.
 		}
 
+		/// <summary>
+		/// Converts this <c>WorldCompletion</c> to a JSONObject.
+		/// </summary>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			

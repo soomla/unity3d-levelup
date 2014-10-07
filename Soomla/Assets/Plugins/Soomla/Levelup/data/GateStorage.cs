@@ -17,12 +17,25 @@ using System;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A utility class for persisting and querying the state of <c>Gate</c>s.
+	/// Use this class to check if a certain <c>Gate</c> is open, or to open it.
+	/// </summary>
 	public class GateStorage
 	{
 
-		protected const string TAG = "SOOMLA GateStorage"; // used for Log error messages
+		protected const string TAG = "SOOMLA GateStorage";
 
+		/// <summary>
+		/// Holds an instance of <c>GateStorage</c> or <c>GateStorageAndroid</c> or <c>GateStorageIOS</c>.
+		/// </summary>
 		static GateStorage _instance = null;
+
+		/// <summary>
+		/// Determines which <c>GateStorage</c> to use according to the platform in use
+		/// and if the Unity Editor is being used. 
+		/// </summary>
+		/// <value>The instance to use.</value>
 		static GateStorage instance {
 			get {
 				if(_instance == null) {
@@ -39,10 +52,11 @@ namespace Soomla.Levelup
 		}
 			
 
+		/** The following functions call the relevant instance-specific functions. **/
+
 		public static void SetOpen(Gate gate, bool open) {
 			instance._setOpen(gate, open, true);
 		}
-
 		public static void SetOpen(Gate gate, bool open, bool notify) {
 			instance._setOpen(gate, open, notify);
 		}
@@ -52,6 +66,15 @@ namespace Soomla.Levelup
 		}
 
 
+		/** Unity-Editor Functions **/
+
+		/// <summary>
+		/// Sets the given <c>Gate</c> as open if <c>open</c> is <c>true.</c>
+		/// Otherwise sets as closed. 
+		/// </summary>
+		/// <param name="gate">The <c>Gate</c> to open/close.</param>
+		/// <param name="open">If set to <c>true</c> set the <c>Gate</c> to open; 
+		/// <param name="notify">If set to <c>true</c> trigger event.</param>
 		protected virtual void _setOpen(Gate gate, bool open, bool notify) {
 #if UNITY_EDITOR
 			string key = keyGateOpen(gate.ID);
@@ -68,6 +91,12 @@ namespace Soomla.Levelup
 #endif
 		}
 
+		/// <summary>
+		/// Determines if the given <c>Gate</c> is open.
+		/// </summary>
+		/// <returns>If the given <c>Gate</c> is open returns <c>true</c>; 
+		/// otherwise, <c>false</c>.</returns>
+		/// <param name="gate"><c>Gate</c> to check if is open.</param>
 		protected virtual bool _isOpen(Gate gate) {
 #if UNITY_EDITOR
 			string key = keyGateOpen(gate.ID);
@@ -79,14 +108,15 @@ namespace Soomla.Levelup
 		}
 
 
-		/** keys **/
+		/** Keys (private helper functions if Unity Editor is being used.) **/
+
 #if UNITY_EDITOR
 		private static string keyGateOpen(string gateId) {
 			return keyGates(gateId, "open");
 		}
 
 		private static string keyGates(string gateId, string postfix) {
-			return LevelUp.DB_KEY_PREFIX + "gates." + gateId + "." + postfix;
+			return SoomlaLevelUp.DB_KEY_PREFIX + "gates." + gateId + "." + postfix;
 		}
 #endif
 	}

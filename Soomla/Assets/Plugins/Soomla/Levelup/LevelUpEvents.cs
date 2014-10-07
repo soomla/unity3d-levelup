@@ -24,12 +24,17 @@ namespace Soomla.Levelup {
 	/// This class provides functions for event handling.
 	/// </summary>
 	public class LevelUpEvents : MonoBehaviour {
-		private const string TAG = "SOOMLA LevelUpEvents";
+
+		private const string TAG = "SOOMLA LevelUpEvents"; 
 
 #if UNITY_IOS && !UNITY_EDITOR
 		[DllImport ("__Internal")]
 		private static extern void soomlaLevelup_Init();
 #endif
+
+		/// <summary>
+		/// The instance of <c>LevelUpEvents</c> for this game.
+		/// </summary>
 		private static LevelUpEvents instance = null;
 
 		/// <summary>
@@ -45,6 +50,9 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		/// <summary>
+		/// Initializes this instance.
+		/// </summary>
 		public static void Initialize() {
 			SoomlaUtils.LogDebug (TAG, "Initialize");
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -58,10 +66,12 @@ namespace Soomla.Levelup {
 #endif
 		}
 
+		/** Functions that handle various events that are fired throughout the code. **/
+
 		public void onGateOpened(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onGateOpened with message: " + message);
 
-			Gate gate = LevelUp.GetInstance().GetGate(message);
+			Gate gate = SoomlaLevelUp.GetInstance().GetGate(message);
 
 			LevelUpEvents.OnGateOpened(gate);
 		}
@@ -69,7 +79,7 @@ namespace Soomla.Levelup {
 		public void onLevelEnded(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelEnded with message: " + message);
 			
-			Level level = (Level) LevelUp.GetInstance().GetWorld(message);
+			Level level = (Level) SoomlaLevelUp.GetInstance().GetWorld(message);
 
 			LevelUpEvents.OnLevelEnded(level);
 		}
@@ -77,15 +87,21 @@ namespace Soomla.Levelup {
 		public void onLevelStarted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelStarted with message: " + message);
 
-			Level level = (Level) LevelUp.GetInstance().GetWorld(message);
+			Level level = (Level) SoomlaLevelUp.GetInstance().GetWorld(message);
 			
 			LevelUpEvents.OnLevelStarted(level);
+		}
+
+		public void onLevelUpInitialized(string message) {
+			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelStarted");
+			
+			LevelUpEvents.OnLevelUpInitialized();
 		}
 
 		public void onMissionCompleted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onMissionCompleted with message: " + message);
 
-			Mission mission = LevelUp.GetInstance().GetMission(message);
+			Mission mission = SoomlaLevelUp.GetInstance().GetMission(message);
 
 			LevelUpEvents.OnMissionCompleted(mission);
 		}
@@ -93,7 +109,7 @@ namespace Soomla.Levelup {
 		public void onMissionCompletionRevoked(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onMissionCompletionRevoked with message: " + message);
 			
-			Mission mission = LevelUp.GetInstance().GetMission(message);
+			Mission mission = SoomlaLevelUp.GetInstance().GetMission(message);
 
 			LevelUpEvents.OnMissionCompletionRevoked(mission);
 		}
@@ -101,7 +117,7 @@ namespace Soomla.Levelup {
 		public void onScoreRecordChanged(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onScoreRecordChanged with message: " + message);
 			
-			Score score = LevelUp.GetInstance().GetScore(message);
+			Score score = SoomlaLevelUp.GetInstance().GetScore(message);
 
 			LevelUpEvents.OnScoreRecordChanged(score);
 		}
@@ -109,7 +125,7 @@ namespace Soomla.Levelup {
 		public void onWorldCompleted(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onWorldCompleted with message: " + message);
 			
-			World world = LevelUp.GetInstance().GetWorld(message);
+			World world = SoomlaLevelUp.GetInstance().GetWorld(message);
 
 			LevelUpEvents.OnWorldCompleted(world);
 		}
@@ -117,12 +133,13 @@ namespace Soomla.Levelup {
 		public void onWorldAssignedReward(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onWorldAssignedReward with message: " + message);
 			
-			World world = LevelUp.GetInstance().GetWorld(message);
+			World world = SoomlaLevelUp.GetInstance().GetWorld(message);
 			
 			LevelUpEvents.OnWorldAssignedReward(world);
 		}
 
 
+		/** To handle various events, just add your specific behavior to the following delegates. **/
 
 		public delegate void Action();
 
@@ -131,6 +148,8 @@ namespace Soomla.Levelup {
 		public static Action<Level> OnLevelEnded = delegate {};
 
 		public static Action<Level> OnLevelStarted = delegate {};
+
+		public static Action OnLevelUpInitialized = delegate {};
 
 		public static Action<Mission> OnMissionCompleted = delegate {};
 

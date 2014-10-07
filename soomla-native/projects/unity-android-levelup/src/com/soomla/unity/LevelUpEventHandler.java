@@ -4,6 +4,7 @@ import com.soomla.BusProvider;
 import com.soomla.levelup.events.GateOpenedEvent;
 import com.soomla.levelup.events.LevelEndedEvent;
 import com.soomla.levelup.events.LevelStartedEvent;
+import com.soomla.levelup.events.LevelUpInitializedEvent;
 import com.soomla.levelup.events.MissionCompletedEvent;
 import com.soomla.levelup.events.MissionCompletionRevokedEvent;
 import com.soomla.levelup.events.ScoreRecordChangedEvent;
@@ -33,6 +34,11 @@ public class LevelUpEventHandler {
     @Subscribe
     public void onLevelEndedEvent(LevelEndedEvent levelEndedEvent) {
         UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelEnded", levelEndedEvent.LevelId);
+    }
+
+    @Subscribe
+    public void onLevelUpInitializedEvent(LevelUpInitializedEvent levelUpInitializedEvent) {
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLevelUpInitialized", "");
     }
 
     @Subscribe

@@ -1,11 +1,6 @@
 
 #import "UnityLevelUpEventDispatcher.h"
 #import "LevelUpEventHandling.h"
-#import "Gate.h"
-#import "Level.h"
-#import "World.h"
-#import "Mission.h"
-#import "Score.h"
 #import "SoomlaUtils.h"
 
 extern "C" {
@@ -35,7 +30,7 @@ extern "C" {
 
 	if ([notification.name isEqualToString:EVENT_GATE_OPENED]) {
         NSString* gateId = [[notification userInfo] objectForKey:DICT_ELEMENT_GATE];
-        UnitySendMessage("LevelUpEvents", "onGateOpended", [gateId UTF8String]);
+        UnitySendMessage("LevelUpEvents", "onGateOpened", [gateId UTF8String]);
 	}
 	else if ([notification.name isEqualToString:EVENT_LEVEL_ENDED]) {
         NSString* levelId = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
@@ -44,6 +39,9 @@ extern "C" {
 	else if ([notification.name isEqualToString:EVENT_LEVEL_STARTED]) {
 	    NSString* levelId = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
         UnitySendMessage("LevelUpEvents", "onLevelStarted", [levelId UTF8String]);
+	}
+	else if ([notification.name isEqualToString:EVENT_LEVEL_UP_INITIALIZED]) {
+        UnitySendMessage("LevelUpEvents", "onLevelUpInitialized", "");
 	}
 	else if ([notification.name isEqualToString:EVENT_MISSION_COMPLETED]) {
 	    NSString* missionId = [[notification userInfo] objectForKey:DICT_ELEMENT_MISSION];

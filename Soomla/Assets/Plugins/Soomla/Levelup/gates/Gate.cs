@@ -18,34 +18,61 @@ using System.Collections.Generic;
 using Soomla;
 
 namespace Soomla.Levelup {
-	
+
+	/// <summary>
+	/// A <c>Gate</c> is an object that defines certain criteria, and is opened when this criteria is met. 
+	/// <c>Gate</c>s are usually associated with <c>Mission</c>s - each <c>Mission</c> has a <c>Gate</c>
+	/// that needs to be opened in order for the <c>Mission</c> to be complete. 
+	/// </summary>
 	public abstract class Gate : SoomlaEntity<Gate> {
 
 		private const string TAG = "SOOMLA Gate";
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
 		protected Gate (string id)
 			: this(id, "")
 		{
 		}
 
+		/// <summary>
+		/// Contructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="name">Name.</param>
 		protected Gate (string id, string name)
 			: base(id, name, "")
 		{
 			registerEvents();
 		}
 
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="jsonObj">JSON object.</param>
 		public Gate(JSONObject jsonObj) 
 			: base(jsonObj)
 		{
 			registerEvents();
 		}
 
+		/// <summary>
+		/// Converts this <c>Gate</c> to a JSONObject.
+		/// </summary>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			
 			return obj;
 		}
 
+		/// <summary>
+		/// Converts the given JSONObject into a <c>Gate</c>. 
+		/// </summary>
+		/// <returns>The JSON object.</returns>
+		/// <param name="gateObj">Gate object.</param>
 		public static Gate fromJSONObject(JSONObject gateObj) {
 			string className = gateObj[JSONConsts.SOOM_CLASSNAME].str;
 			
@@ -54,35 +81,48 @@ namespace Soomla.Levelup {
 			return gate;
 		}
 
+		/// <summary>
+		/// Attempts to open this <c>Gate</c>, if it has not been opened aready. 
+		/// </summary>
 		public bool Open() {
-			//  check in gate storage if it's already open
+			//  check in gate storage if it's already open.
 			if (GateStorage.IsOpen(this)) {
 				return true;
 			}
 			return openInner();
 		}
 
+		/// <summary>
+		/// Sets the <c>Gate</c> to open without checking if the <c>Gate</c> meets its criteria.
+		/// </summary>
+		/// <param name="open">If set to <c>true</c> open the <c>Gate</c>.</param>
 		public void ForceOpen(bool open) {
 			bool isOpen = IsOpen();
 			if (isOpen == open) {
 				// if it's already open why open it again?
 				return;
 			}
-
 			GateStorage.SetOpen(this, open);
 			if (open) {
 				unregisterEvents();
 			} else {
-				// we can do this here ONLY becasue we check 'isOpen == open' a few lines above.
+				// we can do this here ONLY because we check 'isOpen == open' a few lines above.
 				registerEvents();
 			}
 		}
 
+		/// <summary>
+		/// Determines whether this <c>Gate</c> is open.
+		/// </summary>
+		/// <returns>If this <c>Gate</c> is open returns <c>true</c>; otherwise, <c>false</c>.</returns>
 		public bool IsOpen() {
 			return GateStorage.IsOpen(this);
 		}
 
-		// answers the question: can i open this gate ?!
+		/// <summary>
+		/// Checks if this <c>Gate</c> meets its criteria for opening.
+		/// </summary>
+		/// <returns>If this <c>Gate</c> can be opened returns <c>true</c>; otherwise, <c>false</c>.</returns>
 		public bool CanOpen() {
 			// check in gate storage if the gate is open.
 			// gates are only opened once
@@ -93,17 +133,41 @@ namespace Soomla.Levelup {
 			return canOpenInner();
 		}
 
-		protected abstract void registerEvents();
-		protected abstract void unregisterEvents();
-
-		protected abstract bool canOpenInner();
-		protected abstract bool openInner();
-
-//		public abstract void OnInitialize();
-
+		/// <summary>
+		/// Clones this <c>Gate</c> and gives it the given ID.
+		/// </summary>
+		/// <param name="newGateId">Cloned gate ID.</param>
 		public override Gate Clone(string newGateId) {
 			return (Gate) base.Clone(newGateId);
 		}
+
+		/// <summary>
+		/// Registers relevant events. Each specific type of <c>Gate</c> must implement this method. 
+		/// </summary>
+		protected abstract void registerEvents();
+
+		/// <summary>
+		/// Unregisters relevant events. Each specific type of <c>Gate</c> must implement this method. 
+		/// </summary>
+		protected abstract void unregisterEvents();
+
+		/// <summary>
+		/// Checks if this <c>Gate</c> meets its criteria for opening.
+		/// Each specific type of <c>Gate</c> must implement this method to 
+		/// add specific <c>Gate</c> criteria.
+		/// </summary>
+		/// <returns>If the criteria is met for opening this <c>Gate</c> returns <c>true</c>; 
+		/// otherwise <c>false</c>.</returns>
+		protected abstract bool canOpenInner();
+
+		/// <summary>
+		/// Opens this <c>Gate</c>.
+		/// </summary>
+		/// <returns>If this <c>Gate</c> was opened returns <c>true</c>; otherwise <c>false</c>.</returns>
+		protected abstract bool openInner();
+
+		//	public abstract void OnInitialize();
+
 	}
 }
 

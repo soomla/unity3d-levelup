@@ -17,33 +17,58 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>GatesList</c> that can be opened only if <b>ALL</b> 
+	/// <c>Gate</c>s in its list are open.
+	/// </summary>
 	public class GatesListAND : GatesList
 	{
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
 		public GatesListAND(string id)
 			: base(id)
 		{
 			Gates = new List<Gate>();
 		}
 
+		/// <summary>
+		/// Constructor for <c>GatesList</c> with one <c>Gate</c>.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="singleGate">Single <c>Gate</c> in this <c>GatesList</c>.</param>
 		public GatesListAND(string id, Gate singleGate)
 			: base(id, singleGate)
 		{
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="gates">List of <c>Gate</c>s.</param>
 		public GatesListAND(string id, List<Gate> gates)
 			: base(id, gates)
 		{
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
 		/// </summary>
+		/// <param name="jsonGate">JSON gate.</param>
 		public GatesListAND(JSONObject jsonGate)
 			: base(jsonGate)
 		{
 		}
 
+		/// <summary>
+		/// Checks if this <c>GatesList</c> meets its criteria for opening, by checking that ALL 
+		/// <c>Gate</c>s in the list are open. 
+		/// </summary>
+		/// <returns>If ALL <c>Gate</c>s in this <c>GatesList</c> are open returns <c>true</c>; 
+		/// otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
 			foreach (Gate gate in Gates) {
 				if (!gate.IsOpen()) {

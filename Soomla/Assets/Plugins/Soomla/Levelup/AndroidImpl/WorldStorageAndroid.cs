@@ -17,9 +17,23 @@ using System;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// <c>WorldStorage</c> for Android.
+	/// A utility class for persisting and querying <c>World</c>s.
+	/// Use this class to get or set the completion of <c>World</c>s and assign <c>Reward</c>s.
+	/// </summary>
 	public class WorldStorageAndroid : WorldStorage {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	
+		override protected void _initLevelUp()
+		{
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
+				jniWorldStorage.CallStatic("initLevelUp");
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+		}
+
 		override protected void _setCompleted(World world, bool completed, bool notify) {
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {

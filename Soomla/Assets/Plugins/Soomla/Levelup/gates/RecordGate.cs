@@ -18,13 +18,32 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Gate</c> that has an associated score and a desired record. 
+	/// The <c>Gate</c> opens once the player achieves the desired record for the given score.
+	/// </summary>
 	public class RecordGate : Gate
 	{
+
 		private const string TAG = "SOOMLA RecordGate";
 
+		/// <summary>
+		/// ID of the <c>Score</c> whose record is examined.
+		/// </summary>
 		public string AssociatedScoreId;
+
+		/// <summary>
+		/// The desired record of the associated <c>Score</c>.
+		/// </summary>
 		public double DesiredRecord;
 
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="associatedScoreId">Associated score ID.</param>
+		/// <param name="desiredRecord">Desired record.</param>
 		public RecordGate(string id, string associatedScoreId, double desiredRecord)
 			: base(id)
 		{
@@ -33,8 +52,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
 		/// </summary>
+		/// <param name="jsonGate">JSON gate.</param>
 		public RecordGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -43,9 +63,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this <c>Gate</c> to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(LUJSONConsts.LU_ASSOCSCOREID, this.AssociatedScoreId);
@@ -54,45 +74,60 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> if the score-record-changed event causes the <c>Gate</c>'s criteria to be met.
+		/// </summary>
+		/// <param name="score">The <c>Score</c> whose record has changed.</param>
+		public void onScoreRecordChanged(Score score) {
+			if (score.ID == AssociatedScoreId &&
+			    score.HasRecordReached(DesiredRecord)) {
+				// If the score's record is reached mutiple times, don't worry about this function 
+				// being called over and over again - that won't happen because `ForceOpen(true)` 
+				// calls`unregisterEvents` inside.
+				ForceOpen(true);
+			}
+		}
+
+		/// <summary>
+		/// Registers relevant events: score-record changed event.
+		/// </summary>
 		protected override void registerEvents() {
 			if (!IsOpen ()) {
 				LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
 			}
 		}
 
+		/// <summary>
+		/// Unregisters relevant events: score-record changed event.
+		/// </summary>
 		protected override void unregisterEvents() {
 			LevelUpEvents.OnScoreRecordChanged -= onScoreRecordChanged;
 		}
 
-		public void onScoreRecordChanged(Score score) {
-			if (score.ID == AssociatedScoreId &&
-			    score.HasRecordReached(DesiredRecord)) {
-				// We were thinking what will happen if the score's record will be broken over and over again.
-				// It might have made this function being called over and over again.
-				// It won't be called b/c ForceOpen(true) calls 'unregisterEvents' inside.
-				ForceOpen(true);
-			}
-		}
-
+		/// <summary>
+		/// Checks if this <c>Gate</c> meets its criteria for opening, by checking if this <c>Gate</c>'s
+		/// associated <c>Score</c> has reached the desired record. 
+		/// </summary>
+		/// <returns>If the <c>Gate</c> can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
-			Score score = LevelUp.GetInstance().GetScore(AssociatedScoreId);
+			Score score = SoomlaLevelUp.GetInstance().GetScore(AssociatedScoreId);
 			if (score == null) {
 				SoomlaUtils.LogError(TAG, "(canOpenInner) couldn't find score with scoreId: " + AssociatedScoreId);
 				return false;
 			}
-
 			return score.HasRecordReached(DesiredRecord);
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> if it can be opened (its criteria has been met).
+		/// </summary>
+		/// <returns>Upon success of opening returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
-
 				// There's nothing to do here... If the DesiredRecord was reached then the gate is just open.
-
 				ForceOpen(true);
 				return true;
 			}
-			
 			return false;
 		}
 

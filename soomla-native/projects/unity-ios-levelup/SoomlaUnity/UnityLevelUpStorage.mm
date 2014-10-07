@@ -3,15 +3,10 @@
 #import "UnityCommons.h"
 #import "SoomlaUtils.h"
 
-#import "Gate.h"
 #import "GateStorage.h"
-#import "Level.h"
 #import "LevelStorage.h"
-#import "Mission.h"
 #import "MissionStorage.h"
-#import "Score.h"
 #import "ScoreStorage.h"
-#import "World.h"
 #import "WorldStorage.h"
 
 
@@ -113,6 +108,11 @@ extern "C" {
         NSString* scoreIdS = [NSString stringWithUTF8String:scoreId];
         return [ScoreStorage getRecordScore:scoreIdS];
 
+    }
+    
+    void worldStorage_InitLevelUp()
+    {
+        [WorldStorage initLevelUp];
     }
     
     void worldStorage_SetCompleted(const char* worldId, bool completed, bool notify) {

@@ -17,18 +17,41 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A challenge is a specific type of <c>Mission</c> which holds a collection
+	/// of <c>Mission</c>s. The user is required to complete all these <c>Mission</c>s in order  
+	/// to earn the <c>Reward</c> associated with the <c>Challenge</c>.
+	/// </summary>
 	public class Challenge : Mission
 	{
+
 		private const string TAG = "SOOMLA Challenge";
 
+		/// <summary>
+		/// The missions that belong to this <c>Challenge</c>.
+		/// </summary>
 		public List<Mission> Missions = new List<Mission>();
 
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id"><c>Challenge</c> ID.</param>
+		/// <param name="name"><c>Challenge</c> name.</param>
+		/// <param name="missions"><c>Mission</c>s that belong to this <c>Challenge</c>.</param>
 		public Challenge(string id, string name, List<Mission> missions)
 			: base(id, name)
 		{
 			Missions = missions;
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id"><c>Challenge</c> ID.</param>
+		/// <param name="name"><c>Challenge</c> name.</param>
+		/// <param name="missions"><c>Mission</c>s that belong to this <c>Challenge</c>.</param>
+		/// <param name="rewards"><c>Reward</c>s associated with this <c>Challenge</c>.</param>
 		public Challenge(string id, string name, List<Mission> missions, List<Reward> rewards)
 			: base(id, name, rewards)
 		{
@@ -36,8 +59,10 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor. 
+		/// Generates an instance of <c>Challenge</c> from the given JSONObject.
 		/// </summary>
+		/// <param name="jsonMission">JSON mission.</param>
 		public Challenge(JSONObject jsonMission)
 			: base(jsonMission)
 		{
@@ -49,9 +74,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this <c>Challenge</c> to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
@@ -64,9 +89,14 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Checks if this <c>Mission</c> has ever been completed - no matter how many times.
+		/// </summary>
+		/// <returns>If this instance is completed returns <c>true</c>; 
+		/// otherwise <c>false</c>.</returns>
 		public override bool IsCompleted() {
-			// could happen in construction
-			// need to return false in order to register for child events
+			// Scenario that could happen in construction - need to return false 
+			// in order to register for child events.
 			if(Missions == null || Missions.Count == 0) {
 				return false;
 			}
@@ -81,11 +111,10 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// Handles mission completion events. Checks if all missions included
-		/// in the challenge are completed, and if so, sets the challenge as completed.
+		/// Handles mission-completion events. Checks if all <c>Mission</c>s included in this 
+		/// <c>Challenge</c> are completed, and if so, sets the <c>Challenge</c> as completed.
 		/// </summary>
-		/// <param name="completedMission">Completed mission.</param>
-		/// @Subscribe
+		/// <param name="completedMission">The <c>Mission</c> that triggered the event.</param>
 		public void onMissionCompleted(Mission completedMission) {
 			SoomlaUtils.LogDebug (TAG, "onMissionCompleted");
 			if (Missions.Contains(completedMission)) {
@@ -107,20 +136,21 @@ namespace Soomla.Levelup
 		}
 
 		/// <summary>
-		/// handle child mission revoked.
+		/// Handles mission-revoked events. If the <c>Challenge</c> was completed before, but now 
+		/// one of its child <c>Mission</c>s is incomplete, the <c>Challenge</c> is revoked as well.
 		/// </summary>
-		/// <param name="mission">Mission.</param>
-		/// @Subscribe
+		/// <param name="mission">The <c>Mission</c> that triggered the event.</param>
 		public void onMissionCompletionRevoked(Mission mission) {
 			if (Missions.Contains(mission)) {
-				// if the challenge was completed before, but now one of its child missions
-				// was uncompleted - the challenge is revoked as well
 				if (MissionStorage.IsCompleted(this)) {
 					setCompletedInner(false);
 				}
 			}
 		}
 
+		/// <summary>
+		/// Registers relevant events: <c>OnMissionCompleted</c> and <c>OnMissionCompletionRevoked</c>.
+		/// </summary>
 		protected override void registerEvents() {
 			SoomlaUtils.LogDebug (TAG, "registerEvents called");
 			if (!IsCompleted()) {

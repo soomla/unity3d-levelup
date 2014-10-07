@@ -19,12 +19,25 @@ using Soomla.Store;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Gate</c> that has an associated virtual item. The <c>Gate</c> 
+	/// opens once the item has been purchased. 
+	/// </summary>
 	public class PurchasableGate : Gate
 	{
+
 		private const string TAG = "SOOMLA PurchasableGate";
 
+		/// <summary>
+		/// ID of the item who needs to be purchased.
+		/// </summary>
 		public string AssociatedItemId;
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="associatedItemId">Associated item ID.</param>
 		public PurchasableGate(string id, string associatedItemId)
 			: base(id)
 		{
@@ -32,8 +45,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor.
 		/// </summary>
+		/// <param name="jsonGate">JSON gate.</param>
 		public PurchasableGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -41,9 +55,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this <c>Gate</c> to JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(LUJSONConsts.LU_ASSOCITEMID, this.AssociatedItemId);
@@ -51,31 +65,46 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
-		protected override void registerEvents() {
-			if (!IsOpen()) {
-				StoreEvents.OnItemPurchased += onItemPurchased;
-			}
-		}
-
-		protected override void unregisterEvents() {
-			StoreEvents.OnItemPurchased -= onItemPurchased;
-		}
-
 		/// <summary>
-		/// Handles an item purchase started event. 
+		/// Opens this <c>Gate</c> if the item-purchased event causes the <c>Gate</c>'s criteria to be met.
 		/// </summary>
-		/// <param name="pvi">Purchasable virtual item.</param>
-		/// @Subscribe
+		/// <param name="pvi">The item that was purchased.</param>
+		/// <param name="payload">Payment ID of the item purchased.</param>
 		public void onItemPurchased(PurchasableVirtualItem pvi, string payload) {
 			if (pvi.ItemId == AssociatedItemId && payload == this._id) {
 				ForceOpen(true);
 			}
 		}
 
+		/// <summary>
+		/// Registers relevant events: item-purchased event.
+		/// </summary>
+		protected override void registerEvents() {
+			if (!IsOpen()) {
+				StoreEvents.OnItemPurchased += onItemPurchased;
+			}
+		}
+		
+		/// <summary>
+		/// Unregisters relevant events: item-purchased event.
+		/// </summary>
+		protected override void unregisterEvents() {
+			StoreEvents.OnItemPurchased -= onItemPurchased;
+		}
+
+		/// <summary>
+		/// Checks if this <c>Gate</c> meets its criteria for opening. 
+		/// </summary>
+		/// <returns>Always <c>true</c>.</returns>
 		protected override bool canOpenInner() {
 			return true;
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> by buying its associated item.
+		/// </summary>
+		/// <returns>If purchase was successfully made returns <c>true</c>; otherwise 
+		/// <c>false</c>.</returns>
 		protected override bool openInner() {
 			try {
 				StoreInventory.BuyItem(AssociatedItemId, this._id);

@@ -17,7 +17,8 @@ using System;
 namespace Soomla.Levelup {
 
 	/// <summary>
-	/// This class contains all string names of the keys/vals in the JSON being parsed all around the SDK.
+	/// This class contains all string names of the keys/vals in the JSON being 
+	/// parsed all around the SDK.
 	/// </summary>
 	public static class LUJSONConsts
 	{

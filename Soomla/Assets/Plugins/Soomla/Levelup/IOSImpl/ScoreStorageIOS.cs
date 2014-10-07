@@ -18,6 +18,11 @@ using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// <c>ScoreStorage</c> for iOS.
+	/// A utility class for persisting and querying <c>Score</c>s and records.
+	/// Use this class to get or set the values of <c>Score</c>s and records.
+	/// </summary>
 	public class ScoreStorageIOS : ScoreStorage {
 #if UNITY_IOS && !UNITY_EDITOR
 

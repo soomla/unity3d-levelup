@@ -18,6 +18,12 @@ using System.Runtime.InteropServices;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// <c>LevelStorage</c> for iOS.
+	/// A utility class for persisting and querying the state of <c>Level</c>s.
+	/// Use this class to get or set information about a <c>Level</c>, such as 
+	/// the play duration, start or end time, etc.
+	/// </summary>
 	public class LevelStorageIOS : LevelStorage {
 #if UNITY_IOS && !UNITY_EDITOR
 

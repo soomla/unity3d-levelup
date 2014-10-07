@@ -17,10 +17,23 @@ using System.Collections.Generic;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A specific type of <c>Gate</c> that has an associated world. The <c>Gate</c> opens 
+	/// once the <c>World</c> has been completed.
+	/// </summary>
 	public class WorldCompletionGate : Gate
 	{
+		/// <summary>
+		/// ID of the <c>World</c> that needs to be completed. 
+		/// </summary>
 		public string AssociatedWorldId;
 
+
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="associatedWorldId">Associated world ID.</param>
 		public WorldCompletionGate(string id, string associatedWorldId)
 			: base(id)
 		{
@@ -28,8 +41,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Contructor.
 		/// </summary>
+		/// <param name="jsonGate">JSON gate.</param>
 		public WorldCompletionGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -37,22 +51,40 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this <c>Gate</c> to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(LUJSONConsts.LU_ASSOCWORLDID, this.AssociatedWorldId);
 			return obj;
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> if the world-completed event causes the <c>Gate</c>'s criteria to be met.
+		/// </summary>
+		/// <param name="world"><c>World</c> to be compared to the associated <c>World</c>.</param>
+		public void onWorldCompleted(World world) {
+			if (world.ID == AssociatedWorldId) {
+				ForceOpen(true);
+			}
+		}
+
+		/// <summary>
+		/// Checks if this <c>Gate</c> meets its criteria for opening, by checking that the 
+		/// associated world is not null and has been completed. 
+		/// </summary>
+		/// <returns>If this <c>World</c> can be opened returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool canOpenInner() {
-			World world = LevelUp.GetInstance().GetWorld(AssociatedWorldId);
+			World world = SoomlaLevelUp.GetInstance().GetWorld(AssociatedWorldId);
 			return world != null && world.IsCompleted();
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> if it can be opened (its criteria has been met).
+		/// </summary>
+		/// <returns>Upon success of opening returns <c>true</c>; otherwise <c>false</c>.</returns>
 		protected override bool openInner() {
-
 			if (CanOpen()) {
 				ForceOpen(true);
 				return true;
@@ -61,22 +93,21 @@ namespace Soomla.Levelup
 			return false;
 		}
 
+		/// <summary>
+		/// Registers relevant events: world-completed event. 
+		/// </summary>
 		protected override void registerEvents() {
 			if (!IsOpen ()) {
 				LevelUpEvents.OnWorldCompleted += onWorldCompleted;
 			}
 		}
-		
+
+		/// <summary>
+		/// Unregisters relevant events: world-completed event. 
+		/// </summary>
 		protected override void unregisterEvents() {
 			LevelUpEvents.OnWorldCompleted -= onWorldCompleted;
 		}
-
-		public void onWorldCompleted(World world) {
-			if (world.ID == AssociatedWorldId) {
-				ForceOpen(true);
-			}
-		}
-
 	}
 }
 

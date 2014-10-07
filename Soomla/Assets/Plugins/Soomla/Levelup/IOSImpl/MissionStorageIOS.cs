@@ -19,6 +19,12 @@ using Soomla;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// <c>MissionStorage</c> for iOS.
+	/// A utility class for persisting and querying the state of <c>Mission</c>s.
+	/// Use this class to check if a certain <c>Mission</c> is complete, or to
+	/// set its completion status.
+	/// </summary>
 	public class MissionStorageIOS : MissionStorage {
 #if UNITY_IOS && !UNITY_EDITOR
 	

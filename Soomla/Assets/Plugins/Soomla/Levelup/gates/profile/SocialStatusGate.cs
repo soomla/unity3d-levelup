@@ -18,12 +18,27 @@ using Soomla.Profile;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
+	/// order to open the <c>Gate</c>. Currently, the social provider that's available 
+	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
+	/// providers will be added.
+	/// 
+	/// A specific type of <c>Gate</c> that has an associated status. The <c>Gate</c> 
+	/// is opened once the player posts the status.   
+	/// </summary>
 	public class SocialStatusGate : SocialActionGate
 	{
 		private const string TAG = "SOOMLA SocialStatusGate";
 
-		public string Status;
+		public string Status; // the status to post in order to open this Gate.
 
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id"><c>Gate</c> ID.</param>
+		/// <param name="provider">Social provider.</param>
+		/// <param name="status">Status to post in order to open this <c>Gate</c>.</param>
 		public SocialStatusGate(string id, Provider provider, string status)
 			: base(id, provider)
 		{
@@ -31,8 +46,10 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor. 
+		/// Generates an instance of <c>SocialStatusGate</c> from the given JSONObject.
 		/// </summary>
+		/// <param name="jsonGate">Json gate.</param>
 		public SocialStatusGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -40,9 +57,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this <c>SocialStatusGate</c> to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
@@ -51,6 +68,11 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> by posting the associated status.
+		/// </summary>
+		/// <returns>If the status was successfully posted returns <c>true</c>; otherwise 
+		/// <c>false</c>.</returns>
 		protected override bool openInner() {
 			if (CanOpen()) {
 

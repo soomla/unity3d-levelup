@@ -17,26 +17,67 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Soomla;
 
 namespace Soomla.Levelup {
-
+	
+	/// <summary>
+	/// A game can have multiple <c>World</c>s or a single one, and <c>World</c>s can also contain other 
+	/// <c>World</c>s in them. A <c>World</c> can contain a set of <c>Level</c>s, or multiple sets of  
+	/// <c>Level</c>s. A <c>World</c> can also have a <c>Gate</c> that defines the criteria to enter it. 
+	/// Games that don’t have the concept of <c>World</c>s can be modeled as single <c>World</c> games. 
+	/// 
+	/// Real Game Example: "Candy Crush" uses <c>World</c>s.
+	/// </summary>
 	public class World : SoomlaEntity<World> {
+
 		private static string TAG = "SOOMLA World";
 
+		/// <summary>
+		/// <c>Gate</c> that defines the criteria to enter this <c>World</c>.
+		/// </summary>
 		public Gate Gate;
+
+		/// <summary>
+		/// The <c>World</c>s included in this <c>World</c>.
+		/// </summary>
 		public Dictionary<string, World> InnerWorldsMap = new Dictionary<string, World>();
+
+		/// <summary>
+		/// Gets the inner worlds list.
+		/// </summary>
+		/// <value>The inner worlds list.</value>
 		public IEnumerable<World> InnerWorldsList {
 			get { return InnerWorldsMap.Values; }
 		}
+
+		/// <summary>
+		/// The <c>Score</c>s associated with this <c>World</c>.
+		/// </summary>
 		public Dictionary<string, Score> Scores = new Dictionary<string, Score>();
+
+		/// <summary>
+		/// <c>Missions</c> in this <c>World</c>.
+		/// </summary>
 		public List<Mission> Missions = new List<Mission>();
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
 		public World(String id)
 			: base(id)
 		{
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="gate">A <c>Gate</c> that needs to be opened in order to enter this 
+		/// <c>World</c>.</param>
+		/// <param name="innerWorlds">A list of <c>World</c>s contained within this one.</param>
+		/// <param name="scores">Scores of this <c>World</c>.</param>
+		/// <param name="missions"><c>Missions</c>s that are available in this <c>World</c>.</param>
 		public World(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Mission> missions)
 			: base(id)
 		{
@@ -46,14 +87,18 @@ namespace Soomla.Levelup {
 			this.Missions = (missions != null) ? missions : new List<Mission>();
 		}
 
+		/// <summary>
+		/// Constructs a <c>World</c> from a JSON object. 
+		/// </summary>
+		/// <param name="jsonWorld">Json World.</param>
 		public World(JSONObject jsonWorld)
 			: base(jsonWorld)
 		{
 			InnerWorldsMap = new Dictionary<string, World>();
 			List<JSONObject> worldsJSON = jsonWorld[LUJSONConsts.LU_WORLDS].list;
 
-			// Iterate over all inner worlds in the JSON array and for each one create
-			// an instance according to the world type
+			// Iterates over all inner worlds in the JSON array and for each one creates
+			// an instance according to the world type.
 			foreach (JSONObject worldJSON in worldsJSON) {
 				World innerWorld = World.fromJSONObject(worldJSON);
 				if (innerWorld != null) {
@@ -64,8 +109,8 @@ namespace Soomla.Levelup {
 			Scores = new Dictionary<String, Score>();
 			List<JSONObject> scoresJSON = jsonWorld[LUJSONConsts.LU_SCORES].list;
 
-			// Iterate over all scores in the JSON array and for each one create
-			// an instance according to the score type
+			// Iterates over all scores in the JSON array and for each one creates
+			// an instance according to the score type.
 			foreach (JSONObject scoreJSON in scoresJSON) {
 				Score score = Score.fromJSONObject(scoreJSON);
 				if (score != null) {
@@ -75,8 +120,8 @@ namespace Soomla.Levelup {
 
 			Missions = new List<Mission>();
 			List<JSONObject> missionsJSON = jsonWorld[LUJSONConsts.LU_MISSIONS].list;
-
-			// Iterate over all challenges in the JSON array and create an instance for each one
+			
+			// Iterates over all challenges in the JSON array and creates an instance for each one.
 			foreach (JSONObject missionJSON in missionsJSON) {
 				Missions.Add(Mission.fromJSONObject(missionJSON));
 			}
@@ -87,6 +132,10 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		/// <summary>
+		/// Converts this <c>World</c> into a JSON object. 
+		/// </summary>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 
@@ -113,6 +162,11 @@ namespace Soomla.Levelup {
 			return obj;
 		}
 
+		/// <summary>
+		/// Converts the given JSON object into a <c>World</c>.
+		/// </summary>
+		/// <returns>The JSON object to be converted.</returns>
+		/// <param name="worldObj">World object.</param>
 		public static World fromJSONObject(JSONObject worldObj) {
 			string className = worldObj[JSONConsts.SOOM_CLASSNAME].str;
 
@@ -121,15 +175,29 @@ namespace Soomla.Levelup {
 			return world;
 		}
 
+
 		/** Add elements to world. **/
+
+		/// <summary>
+		/// Adds the given inner <c>World</c> to this <c>World</c>.
+		/// </summary>
+		/// <param name="world">World to be added.</param>
 		public void AddInnerWorld(World world) {
 			InnerWorldsMap.Add(world._id, world);
 		}
 
+		/// <summary>
+		/// Adds the given <c>Mission</c> to this <c>World</c>.
+		/// </summary>
+		/// <param name="mission">Mission to be added.</param>
 		public void AddMission(Mission mission) {
 			Missions.Add(mission);
 		}
 
+		/// <summary>
+		/// Adds the given <c>Score</c> to this <c>World</c>.
+		/// </summary>
+		/// <param name="score">Score to be added.</param>
 		public void AddScore(Score score) {
 			Scores.Add(score.ID, score);
 		}
@@ -143,23 +211,14 @@ namespace Soomla.Levelup {
 			return InnerWorldsMap.Values.ElementAt(index);
 		}
 
-		/** Automatic generation of levels. **/
-		private string IdForAutoGeneratedLevel(string id, int idx) {
-			return id + "_level" + idx;
-		}
-		private string IdForAutoGeneratedScore(string id, int idx) {
-			return id + "_score" + idx;
-		}
-		private string IdForAutoGeneratedGate(string id) {
-			return id + "_gate";
-		}
-		private string IdForAutoGeneratedCompleteGate(string id, string previousId) {
-			return IdForAutoGeneratedGate(id + "_complete_" + previousId);
-		}
-		private string IdForAutoGeneratedMission(string id, int idx) {
-			return id + "_mission" + idx;
-		}
-
+		/// <summary>
+		/// Creates a batch of <c>Level</c>s and adds them to this <c>World</c>. This function will save you 
+		/// a lot of time - instead of creating many levels one by one, you can create them all at once.
+		/// </summary>
+		/// <param name="numLevels">The number of <c>Level</c>s to be added to this <c>World</c>.</param>
+		/// <param name="gateTemplate">The <c>Gate</c> for the levels.</param>
+		/// <param name="scoreTemplate"><c>Score</c> template for the <c>Level</c>s.</param>
+		/// <param name="missionTemplate"><c>Mission</c> template for the <c>Level</c>s.</param>
 		public void BatchAddLevelsWithTemplates(int numLevels, Gate gateTemplate, Score scoreTemplate, Mission missionTemplate) {
 			List<Score> scoreTemplates = new List<Score>();
 			if (scoreTemplate != null) {
@@ -172,7 +231,6 @@ namespace Soomla.Levelup {
 
 			BatchAddLevelsWithTemplates(numLevels, gateTemplate, scoreTemplates, missionTemplates);
 		}
-
 		public void BatchAddLevelsWithTemplates(int numLevels, Gate gateTemplate, List<Score> scoreTemplates, List<Mission>missionTemplates) {
 			for (int i=0; i<numLevels; i++) {
 				string lvlId = IdForAutoGeneratedLevel(_id, i);
@@ -187,6 +245,13 @@ namespace Soomla.Levelup {
 			}
 		}
 
+		/// <summary>
+		/// Creates a batch of <c>Level</c>s and adds them to this <c>World</c>. This function will save you 
+		/// a lot of time - instead of creating many levels one by one, you can create them all at once.
+		/// </summary>
+		/// <param name="numLevels">The number of <c>Level</c>s to be added to this <c>World</c>.</param>
+		/// <param name="scoreTemplate"><c>Score</c> template for the <c>Level</c>s.</param>
+		/// <param name="missionTemplate"><c>Mission</c> template for the <c>Level</c>s.</param>
 		public void BatchAddDependentLevelsWithTemplates(int numLevels, Score scoreTemplate, Mission missionTemplate) {
 			List<Score> scoreTemplates = new List<Score>();
 			if (scoreTemplate != null) {
@@ -199,7 +264,6 @@ namespace Soomla.Levelup {
 			
 			BatchAddDependentLevelsWithTemplates(numLevels, scoreTemplates, missionTemplates);
 		}
-		
 		public void BatchAddDependentLevelsWithTemplates(int numLevels, List<Score> scoreTemplates, List<Mission>missionTemplates) {
 			string previousLvlId = null;
 
@@ -216,6 +280,217 @@ namespace Soomla.Levelup {
 				previousLvlId = lvlId;
 			}
 		}
+
+
+		/** For Single Score **/
+
+		/// <summary>
+		/// Sets the single <c>Score</c> value to the given amount.
+		/// </summary>
+		/// <param name="amount">Amount to set.</param>
+		public void SetSingleScoreValue(double amount) {
+			if (Scores.Count() == 0) {
+				return;
+			}
+			SetScoreValue(Scores.First().Value.ID, amount);
+		}
+
+		/// <summary>
+		/// Decreases the single <c>Score</c> value by the given amount.
+		/// </summary>
+		/// <param name="amount">Amount to decrease by.</param>
+		public void DecSingleScore(double amount) {
+			if (Scores.Count() == 0) {
+				return;
+			}
+			DecScore(Scores.First().Value.ID, amount);
+		}
+
+		/// <summary>
+		/// Increases the single <c>Score</c> value by the given amount.
+		/// </summary>
+		/// <param name="amount">Amount to increase by.</param>
+		public void IncSingleScore(double amount) {
+			if (Scores.Count() == 0) {
+				return;
+			}
+			IncScore(Scores.First().Value.ID, amount);
+		}
+
+		/// <summary>
+		/// Retrieves the single <c>Score</c> value.
+		/// </summary>
+		/// <returns>The single score.</returns>
+		public Score GetSingleScore() {
+			if (Scores.Count() == 0) {
+				return null;
+			}
+			return Scores.First().Value;
+		}
+
+		/// <summary>
+		/// Sums the inner <c>World</c> records.
+		/// </summary>
+		/// <returns>The sum of inner <c>World</c> records.</returns>
+		public double SumInnerWorldsRecords() {
+			double ret = 0;
+			foreach(World world in InnerWorldsList) {
+				ret += world.GetSingleScore().Record;
+			}
+			return ret;
+		}
+
+
+		/** For more than one Score **/
+
+		/// <summary>
+		/// Resets the <c>Score</c>s for this <c>World</c>.
+		/// </summary>
+		/// <param name="save">If set to <c>true</c> save.</param>
+		public void ResetScores(bool save) {
+			if (Scores == null || Scores.Count == 0) {
+				SoomlaUtils.LogError(TAG, "(ResetScores) You don't have any scores defined in this world. World id: " + _id);
+				return;
+			}
+
+			foreach (Score score in Scores.Values) {
+				score.Reset(save);
+			}
+		}
+
+		/// <summary>
+		/// Decreases the <c>Score</c> with the given ID by the given amount.
+		/// </summary>
+		/// <param name="scoreId">ID of the <c>Score</c> to be decreased.</param>
+		/// <param name="amount">Amount to decrease by.</param>
+		public void DecScore(string scoreId, double amount) {
+			Scores[scoreId].Dec(amount);
+		}
+
+		/// <summary>
+		/// Increases the <c>Score</c> with the given ID by the given amount.
+		/// </summary>
+		/// <param name="scoreId">ID of the <c>Score</c> to be increased.</param>
+		/// <param name="amount">Amount.</param>
+		public void IncScore(string scoreId, double amount) {
+			Scores[scoreId].Inc(amount);
+		}
+
+		/// <summary>
+		/// Retrieves the record <c>Score</c>s.
+		/// </summary>
+		/// <returns>The record <c>Score</c>s - each <c>Score</c> ID with its record.</returns>
+		public Dictionary<string, double> GetRecordScores() {
+			Dictionary<string, double> records = new Dictionary<string, double>();
+			foreach(Score score in Scores.Values) {
+				records.Add(score.ID, score.Record);
+			}
+
+			return records;
+		}
+
+		/// <summary>
+		/// Retrieves the latest <c>Score</c>s.
+		/// </summary>
+		/// <returns>The latest <c>Score</c>s - each <c>Score</c> ID with its record.</returns>
+		public Dictionary<string, double> GetLatestScores() {
+			Dictionary<string, double> latest = new Dictionary<string, double>();
+			foreach (Score score in Scores.Values) {
+				latest.Add(score.ID, score.Latest);
+			}
+
+			return latest;
+		}
+
+		/// <summary>
+		/// Sets the <c>Score</c> with the given ID to have the given value.
+		/// </summary>
+		/// <param name="id"><c>Score</c> whose value is to be set.</param>
+		/// <param name="scoreVal">Value to set.</param>
+		public void SetScoreValue(string id, double scoreVal) {
+			SetScoreValue(id, scoreVal, false);
+		}
+		public void SetScoreValue(string id, double scoreVal, bool onlyIfBetter) {
+			Score score = Scores[id];
+			if (score == null) {
+				SoomlaUtils.LogError(TAG, "(setScore) Can't find score id: " + id + "  world id: " + this._id);
+				return;
+			}
+			score.SetTempScore(scoreVal, onlyIfBetter);
+		}
+
+
+		/** Completion **/
+
+		/// <summary>
+		/// Determines whether this <c>World</c> is completed.
+		/// </summary>
+		/// <returns><c>true</c> if this instance is completed; otherwise, <c>false</c>.</returns>
+		public bool IsCompleted() {
+			return WorldStorage.IsCompleted(this);
+		}
+
+		/// <summary>
+		/// Sets this <c>World</c> as completed.
+		/// </summary>
+		/// <param name="completed">If set to <c>true</c> completed.</param>
+		public virtual void SetCompleted(bool completed) {
+			SetCompleted(completed, false);
+		}
+		public void SetCompleted(bool completed, bool recursive) {
+			if (recursive) {
+				foreach (World world in InnerWorldsMap.Values) {
+					world.SetCompleted(completed, true);
+				}
+			}
+			WorldStorage.SetCompleted(this, completed);
+		}
+
+
+		/** Reward Association **/
+
+		/// <summary>
+		/// Assigns the given reward to this <c>World</c>.
+		/// </summary>
+		/// <param name="reward">Reward to assign.</param>
+		public void AssignReward(Reward reward) {
+			String olderReward = GetAssignedRewardId();
+			if (!string.IsNullOrEmpty(olderReward)) {
+				Reward oldReward = SoomlaLevelUp.GetInstance().GetReward(olderReward);
+				if (oldReward != null) {
+					oldReward.Take();
+				}
+			}
+
+			// We have to make sure the assigned reward can be assigned unlimited times.
+			// There's no real reason why it won't be.
+			if (reward.Schedule.ActivationLimit > 0) {
+				reward.Schedule.ActivationLimit = 0;
+			}
+
+			reward.Give();
+			WorldStorage.SetReward(this, reward.ID);
+		}
+
+		/// <summary>
+		/// Retrieves the assigned reward ID.
+		/// </summary>
+		/// <returns>The assigned reward ID.</returns>
+		public String GetAssignedRewardId() {
+			return WorldStorage.GetAssignedReward(this);
+		}
+
+		/// <summary>
+		/// Determines if this world is available for starting, based on either if there 
+		/// is no <c>Gate</c> for this <c>World</c>, or if the <c>Gate</c> is open.
+		/// </summary>
+		/// <returns><c>true</c> if this instance can start; otherwise, <c>false</c>.</returns>
+		public bool CanStart() {
+			return Gate == null || Gate.IsOpen();
+		}
+
+
+		/** PRIVATE FUNCTIONS **/
 
 		private void createAddAutoLevel(string id, Level target, Gate targetGate, List<Score> scoreTemplates, List<Mission>missionTemplates) {
 			if (targetGate != null) {
@@ -237,146 +512,21 @@ namespace Soomla.Levelup {
 			this.InnerWorldsMap.Add(id, target);
 		}
 
-		/** For Single Score **/
-
-		public void SetSingleScoreValue(double amount) {
-			if (Scores.Count() == 0) {
-				return;
-			}
-			SetScoreValue(Scores.First().Value.ID, amount);
+		/** Automatic generation of levels. **/
+		private string IdForAutoGeneratedLevel(string id, int idx) {
+			return id + "_level" + idx;
 		}
-
-		public void DecSingleScore(double amount) {
-			if (Scores.Count() == 0) {
-				return;
-			}
-			DecScore(Scores.First().Value.ID, amount);
+		private string IdForAutoGeneratedScore(string id, int idx) {
+			return id + "_score" + idx;
 		}
-
-		public void IncSingleScore(double amount) {
-			if (Scores.Count() == 0) {
-				return;
-			}
-			IncScore(Scores.First().Value.ID, amount);
+		private string IdForAutoGeneratedGate(string id) {
+			return id + "_gate";
 		}
-
-		public Score GetSingleScore() {
-			if (Scores.Count() == 0) {
-				return null;
-			}
-			return Scores.First().Value;
+		private string IdForAutoGeneratedCompleteGate(string id, string previousId) {
+			return IdForAutoGeneratedGate(id + "_complete_" + previousId);
 		}
-
-		public double SumInnerWorldsRecords() {
-			double ret = 0;
-			foreach(World world in InnerWorldsList) {
-				ret += world.GetSingleScore().Record;
-			}
-			return ret;
-		}
-
-
-
-
-		/** For more than one Score **/
-
-		public void ResetScores(bool save) {
-			if (Scores == null || Scores.Count == 0) {
-				SoomlaUtils.LogError(TAG, "(ResetScores) You don't have any scores defined in this world. World id: " + _id);
-				return;
-			}
-
-			foreach (Score score in Scores.Values) {
-				score.Reset(save);
-			}
-		}
-
-		public void DecScore(string scoreId, double amount) {
-			Scores[scoreId].Dec(amount);
-		}
-
-		public void IncScore(string scoreId, double amount) {
-			Scores[scoreId].Inc(amount);
-		}
-
-		public Dictionary<string, double> GetRecordScores() {
-			Dictionary<string, double> records = new Dictionary<string, double>();
-			foreach(Score score in Scores.Values) {
-				records.Add(score.ID, score.Record);
-			}
-
-			return records;
-		}
-
-		public Dictionary<string, double> GetLatestScores() {
-			Dictionary<string, double> latest = new Dictionary<string, double>();
-			foreach (Score score in Scores.Values) {
-				latest.Add(score.ID, score.Latest);
-			}
-
-			return latest;
-		}
-
-		public void SetScoreValue(string id, double scoreVal) {
-			SetScoreValue(id, scoreVal, false);
-		}
-
-		public void SetScoreValue(string id, double scoreVal, bool onlyIfBetter) {
-			Score score = Scores[id];
-			if (score == null) {
-				SoomlaUtils.LogError(TAG, "(setScore) Can't find score id: " + id + "  world id: " + this._id);
-				return;
-			}
-			score.SetTempScore(scoreVal, onlyIfBetter);
-		}
-
-
-		/** Completion **/
-
-		public bool IsCompleted() {
-			return WorldStorage.IsCompleted(this);
-		}
-
-		public virtual void SetCompleted(bool completed) {
-			SetCompleted(completed, false);
-		}
-		public void SetCompleted(bool completed, bool recursive) {
-			if (recursive) {
-				foreach (World world in InnerWorldsMap.Values) {
-					world.SetCompleted(completed, true);
-				}
-			}
-			WorldStorage.SetCompleted(this, completed);
-		}
-
-
-		/** Reward Association **/
-
-		public void AssignReward(Reward reward) {
-			String olderReward = GetAssignedRewardId();
-			if (!string.IsNullOrEmpty(olderReward)) {
-				Reward oldReward = LevelUp.GetInstance().GetReward(olderReward);
-				if (oldReward != null) {
-					oldReward.Take();
-				}
-			}
-
-			// We have to make sure the assigned reward can be assigned unlimited times.
-			// There's no real reason why it won't be.
-			if (reward.Schedule.ActivationLimit > 0) {
-				reward.Schedule.ActivationLimit = 0;
-			}
-
-			reward.Give();
-			WorldStorage.SetReward(this, reward.ID);
-		}
-
-		public String GetAssignedRewardId() {
-			return WorldStorage.GetAssignedReward(this);
-		}
-
-		public bool CanStart() {
-			return Gate == null || Gate.IsOpen();
+		private string IdForAutoGeneratedMission(string id, int idx) {
+			return id + "_mission" + idx;
 		}
 
 	}

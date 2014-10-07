@@ -18,12 +18,25 @@ using Soomla.Profile;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// NOTE: Social <c>Gate</c>s require the user to perform a specific social action in
+	/// order to open the <c>Gate</c>. Currently, the social provider that's available 
+	/// is Facebook, so the <c>Gates</c>s are FB-oriented. In the future, more social 
+	/// providers will be added. 
+	/// 
+	/// This is an abstract class that all social <c>Gate</c>s must implement.
+	/// </summary>
 	public abstract class SocialActionGate : Gate
 	{
-		private const string TAG = "SOOMLA SocialActionGate";
+		private const string TAG = "SOOMLA SocialActionGate"; 
 
-		public Provider Provider;
+		public Provider Provider; // The related social provider.
 
+		/// <summary>
+		/// Constructor. 
+		/// </summary>
+		/// <param name="id"><c>Gate</c> ID.</param>
+		/// <param name="provider">Social provider.</param>
 		public SocialActionGate(string id, Provider provider)
 			: base(id)
 		{
@@ -31,8 +44,10 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// see parent.
+		/// Constructor. 
+		/// Generates an instance of <c>SocialActionGate</c> from the given JSONObject. 
 		/// </summary>
+		/// <param name="jsonGate">Json gate.</param>
 		public SocialActionGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
@@ -40,9 +55,9 @@ namespace Soomla.Levelup
 		}
 		
 		/// <summary>
-		/// Constructor.
+		/// Converts this <c>SocialActionGate</c> to a JSONObject.
 		/// </summary>
-		/// <returns>see parent</returns>
+		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(LUJSONConsts.LU_SOCIAL_PROVIDER, Provider.ToString());
@@ -50,22 +65,39 @@ namespace Soomla.Levelup
 			return obj;
 		}
 
+		/// <summary>
+		/// Checks if this <c>Gate</c> meets its criteria for opening.
+		/// </summary>
+		/// <returns>Always <c>true</c>.</returns>
 		protected override bool canOpenInner() {
 			return true;
 		}
 
+		/// <summary>
+		/// Opens this <c>Gate</c> if the social action that was finished causes the 
+		/// <c>Gate</c>'s criteria to be met.
+		/// </summary>
+		/// <param name="provider">Social provider related to the action that was finished.</param>
+		/// <param name="socialActionType">The type of the social action that was finished.</param>
+		/// <param name="payload">Payload to compare with this <c>Gate</c>'s ID.</param>
 		protected void onSocialActionFinished(Provider provider, SocialActionType socialActionType, string payload) {
 			if (payload == this.ID) {
 				ForceOpen(true);
 			}
 		}
 
+		/// <summary>
+		/// Registers relevant events: social-action-finished event.
+		/// </summary>
 		protected override void registerEvents() {
 			if (!IsOpen()) {
 				ProfileEvents.OnSocialActionFinished += onSocialActionFinished;
 			}
 		}
 
+		/// <summary>
+		/// Unregisters relevant events: social-action-finished event.
+		/// </summary>
 		protected override void unregisterEvents() {
 			ProfileEvents.OnSocialActionFinished -= onSocialActionFinished;
 		}

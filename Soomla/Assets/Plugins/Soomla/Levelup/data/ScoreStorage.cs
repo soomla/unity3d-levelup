@@ -17,12 +17,25 @@ using System;
 
 namespace Soomla.Levelup
 {
+	/// <summary>
+	/// A utility class for persisting and querying <c>Score</c>s and records.
+	/// Use this class to get or set the values of <c>Score</c>s and records.
+	/// </summary>
 	public class ScoreStorage
 	{
 
-		protected const string TAG = "SOOMLA ScoreStorage"; // used for Log error messages
+		protected const string TAG = "SOOMLA ScoreStorage";
 
+		/// <summary>
+		/// Holds an instance of <c>ScoreStorage</c> or <c>ScoreStorageAndroid</c> or <c>ScoreStorageIOS</c>.
+		/// </summary>
 		static ScoreStorage _instance = null;
+
+		/// <summary>
+		/// Determines which <c>ScoreStorage</c> to use according to the platform in use
+		/// and if the Unity Editor is being used. 
+		/// </summary>
+		/// <value>The instance to use.</value>
 		static ScoreStorage instance {
 			get {
 				if(_instance == null) {
@@ -37,8 +50,10 @@ namespace Soomla.Levelup
 				return _instance;
 			}
 		}
-			
 
+
+		/** The following functions call the relevant instance-specific functions. **/
+			
 		public static void SetLatestScore(Score score, double latest) {
 			instance._setLatestScore (score, latest);
 		}
@@ -56,7 +71,13 @@ namespace Soomla.Levelup
 		}
 
 
+		/** Unity-Editor Functions **/
 
+		/// <summary>
+		/// Sets the given <c>Score</c> to the given value.
+		/// </summary>
+		/// <param name="score"><c>Score</c> to set.</param>
+		/// <param name="latest">The value to set for the <c>Score</c>.</param>
 		protected virtual void _setLatestScore(Score score, double latest) {
 #if UNITY_EDITOR
 			string key = keyLatestScore (score.ID);
@@ -64,7 +85,12 @@ namespace Soomla.Levelup
 			PlayerPrefs.SetString (key, val);
 #endif
 		}
-		
+
+		/// <summary>
+		/// Retrieves the most recently saved value of the given <c>Score</c>.
+		/// </summary>
+		/// <returns>The latest <c>Score</c>.</returns>
+		/// <param name="score">Score whose most recent value it to be retrieved.</param>
 		protected virtual double _getLatestScore(Score score) {
 #if UNITY_EDITOR
 			string key = keyLatestScore (score.ID);
@@ -74,7 +100,12 @@ namespace Soomla.Levelup
 			return score.StartValue;
 #endif
 		}
-		
+
+		/// <summary>
+		/// Sets the given record for the given <c>Score</c>.
+		/// </summary>
+		/// <param name="score"><c>Score</c> whose record is to change.</param>
+		/// <param name="record">The new record.</param>
 		protected virtual void _setRecordScore(Score score, double record) {
 #if UNITY_EDITOR
 			string key = keyRecordScore (score.ID);
@@ -84,7 +115,12 @@ namespace Soomla.Levelup
 			LevelUpEvents.OnScoreRecordChanged (score);
 #endif
 		}
-		
+
+		/// <summary>
+		/// Retrieves the record of the given <c>Score</c>.
+		/// </summary>
+		/// <returns>The record value of the given <c>Score</c>.</returns>
+		/// <param name="score"><c>Score</c> whose record is to be retrieved.</param>
 		protected virtual double _getRecordScore(Score score) {
 #if UNITY_EDITOR
 			string key = keyRecordScore (score.ID);
@@ -96,11 +132,14 @@ namespace Soomla.Levelup
 		}
 
 
+		/** Keys (private helper functions if Unity Editor is being used.) **/
 
-		/** keys **/
+		/// <summary>
+		/// Private helper functions if Unity Editor is being used. 
+		/// </summary>
 #if UNITY_EDITOR
 		private static string keyScores(string scoreId, string postfix) {
-			return LevelUp.DB_KEY_PREFIX + "scores." + scoreId + "." + postfix;
+			return SoomlaLevelUp.DB_KEY_PREFIX + "scores." + scoreId + "." + postfix;
 		}
 		
 		private static string keyLatestScore(string scoreId) {
