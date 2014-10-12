@@ -13,7 +13,7 @@ using Soomla.Store;
 
 namespace Soomla.Test
 {
-	public class SoomlaTest
+	public abstract class SoomlaTest
 	{
 		public Queue<Dictionary<string, object>> EventQueue
 		{
@@ -29,16 +29,11 @@ namespace Soomla.Test
 		public virtual void Cleanup()
 		{
 			PlayerPrefs.DeleteAll();
-
-			//Unsubscribe from events
-			LevelUpEvents.OnLevelStarted -= onLevelStarted;
-			LevelUpEvents.OnLevelEnded -= onLevelEnded;
-			LevelUpEvents.OnLevelUpInitialized -= onLevelUpInitialized;
+			UnsubscribeFromEvents ();
 		}
 
-		public virtual void onLevelStarted(Level level){}
-		public virtual void onLevelEnded(Level level){}
-		public virtual void onLevelUpInitialized(){}
+		public abstract void SubscribeToEvents();
+		public abstract void UnsubscribeFromEvents();
 
 	    Queue<Dictionary<string, object>> _eventQueue; 
 	}

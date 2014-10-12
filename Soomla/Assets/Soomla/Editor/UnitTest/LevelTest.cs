@@ -35,6 +35,16 @@ namespace Soomla.Test
 		{
 			base.Cleanup ();
 		}
+
+		public override void SubscribeToEvents ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public override void UnsubscribeFromEvents ()
+		{
+			throw new NotImplementedException ();
+		}
 		
 		/// <summary>
 		/// Check if newly instantiated level has is Idle
@@ -248,12 +258,12 @@ namespace Soomla.Test
 			_level.End (true);	
 		}
 		
-		public override void onLevelStarted(Level level)
+		public void onLevelStarted(Level level)
 		{
 			onEventFired (level, System.Reflection.MethodBase.GetCurrentMethod ().Name);
 		}
 		
-		public override void onLevelEnded(Level level)
+		public void onLevelEnded(Level level)
 		{
 			onEventFired (level, System.Reflection.MethodBase.GetCurrentMethod ().Name);
 		}

@@ -22,7 +22,6 @@ namespace Soomla.Test
 		public override void Init()
 		{
 			base.Init ();
-			_levelUp = SoomlaLevelUp.GetInstance ();
 		}
 
 		/// <summary>
@@ -32,6 +31,16 @@ namespace Soomla.Test
 		public override void Cleanup()
 		{
 			base.Cleanup ();
+		}
+
+		public override void SubscribeToEvents()
+		{
+			LevelUpEvents.OnLevelUpInitialized += onLevelUpInitialized;
+		}
+
+		public override void UnsubscribeFromEvents()
+		{
+			LevelUpEvents.OnLevelUpInitialized -= onLevelUpInitialized;
 		}
 
 		/// <summary>
@@ -57,7 +66,14 @@ namespace Soomla.Test
 			BadgeReward goldMedal = new BadgeReward("badge_goldMedal", "Gold Medal");
 			VirtualItemReward perfectMedal = new VirtualItemReward("item_perfectMedal", "Perfect Medal", "perfect_medal", 1);
 
-			_levelUp.Initialize (mainWorld, new List<Reward> () { bronzeMedal, silverMedal, goldMedal, perfectMedal });
+			SoomlaLevelUp.Initialize (mainWorld, new List<Reward> () { bronzeMedal, silverMedal, goldMedal, perfectMedal });
+
+			//basic asserts
+			Assert.AreEqual (SoomlaLevelUp.GetWorld ("main_world").ID, "main_world");
+			Assert.AreEqual (SoomlaLevelUp.GetReward ("badge_bronzeMedal").ID, "badge_bronzeMedal");
+			Assert.AreEqual (SoomlaLevelUp.InitialWorld.ID, "main_world");
+			Assert.AreEqual (Convert.ToString (SoomlaLevelUp.GetLevelCount ()), "0");
+			Assert.AreEqual (Convert.ToString (SoomlaLevelUp.Rewards.Count), "4");
 		}
 
 		/// <summary>
@@ -72,7 +88,7 @@ namespace Soomla.Test
 			
 			BadgeReward bronzeMedal = new BadgeReward("badge_bronzeMedal", "Bronze Medal");
 			
-			_levelUp.Initialize (mainWorld, new List<Reward> () { bronzeMedal });
+			SoomlaLevelUp.Initialize (mainWorld, new List<Reward> () { bronzeMedal });
 
 			string json = KeyValueStorage.GetValue ("soomla.levelup.model");
 
@@ -81,15 +97,12 @@ namespace Soomla.Test
 			Assert.AreEqual ("Dummy", json); //should fail
 		}
 
-		public override void onLevelUpInitialized()
+		void onLevelUpInitialized()
 		{
 			Dictionary<string, object> expected = EventQueue.Dequeue ();
 			
 			Assert.AreEqual(expected["handler"], "onLevelUpInitialized");
 		}
-	
-		//Private test components
-		SoomlaLevelUp _levelUp;
 	}
 }
 
