@@ -373,7 +373,7 @@ namespace Soomla.Test {
 			BadgeReward goldMedal = new BadgeReward("badge_goldMedal", "Gold Medal");
 			VirtualItemReward perfectMedal = new VirtualItemReward("item_perfectMedal", "Perfect Medal", "perfect_medal", 1);
 
-			SoomlaLevelUp.GetInstance().Initialize(mainWorld, new List<Reward>() { bronzeMedal, silverMedal, goldMedal, perfectMedal });
+			SoomlaLevelUp.Initialize(mainWorld, new List<Reward>() { bronzeMedal, silverMedal, goldMedal, perfectMedal });
 //			((Level)LevelUp.GetInstance().GetWorld("machine_a_level_1")).Start();
 			/** Testing **/
 
@@ -402,7 +402,7 @@ namespace Soomla.Test {
 			// setup SoomlaLevelUp structure/objects
 			Level lvl1 = new Level("lvl1");
 			lvl1.AddScore(new Score("numberScore"));
-			SoomlaLevelUp.GetInstance().Initialize(lvl1);
+			SoomlaLevelUp.Initialize(lvl1);
 			
 			// no gates
 			Assert.assertTrue(lvl1.CanStart());
@@ -504,7 +504,7 @@ namespace Soomla.Test {
 
 			Level lvl = new Level ("lvl_testScoreAsc");
 			lvl.AddScore(scoreAsc);
-			SoomlaLevelUp.GetInstance ().Initialize (lvl);
+			SoomlaLevelUp.Initialize (lvl);
 //			LevelUp.GetInstance ().InitialWorld.Scores.Add (scoreAsc);
 
 			_eventQueue.Clear ();
@@ -590,7 +590,7 @@ namespace Soomla.Test {
 
 			Level lvl = new Level ("lvl_testScoreDsc");
 			lvl.AddScore(scoreDsc);
-			SoomlaLevelUp.GetInstance ().Initialize (lvl);
+			SoomlaLevelUp.Initialize (lvl);
 //			LevelUp.GetInstance ().InitialWorld.Scores.Add (scoreDsc);
 
 			_eventQueue.Clear ();
@@ -666,9 +666,9 @@ namespace Soomla.Test {
 			string scoreIdDown = "testRangeScoreOverflow_score_down_id";
 			RangeScore rangeScoreDown = new RangeScore(scoreIdDown, "RangeScore", false, new RangeScore.SRange(0, 100));
 
-			SoomlaLevelUp.GetInstance ().Initialize (new Level ("testRangeScoreOverflow"));
-			SoomlaLevelUp.GetInstance ().InitialWorld.Scores.Add (scoreIdUp, rangeScoreUp);
-			SoomlaLevelUp.GetInstance ().InitialWorld.Scores.Add (scoreIdDown, rangeScoreDown);
+			SoomlaLevelUp.Initialize (new Level ("testRangeScoreOverflow"));
+			SoomlaLevelUp.InitialWorld.Scores.Add (scoreIdUp, rangeScoreUp);
+			SoomlaLevelUp.InitialWorld.Scores.Add (scoreIdDown, rangeScoreDown);
 
 			_eventQueue.Clear ();
 
@@ -737,8 +737,8 @@ namespace Soomla.Test {
 
 			Level lvl1 = new Level ("lvl_testRecordMission");
 			Challenge challenge = new Challenge("challenge_record_mission", "ChlgRecordMission", new List<Mission> {recordMission});
-			SoomlaLevelUp.GetInstance ().Initialize (lvl1);
-			SoomlaLevelUp.GetInstance().InitialWorld.Missions.Add(challenge);
+			SoomlaLevelUp.Initialize (lvl1);
+			SoomlaLevelUp.InitialWorld.Missions.Add(challenge);
 
 			_eventQueue.Clear ();
 			//mExpectedScoreEventId = scoreId;
@@ -818,8 +818,8 @@ namespace Soomla.Test {
 
 			Level lvl1 = new Level ("lvl_testBalanceMission");
 			Challenge challenge = new Challenge("challenge_balance_mission", "ChlgBalanceMission", new List<Mission> {balanceMission});
-			SoomlaLevelUp.GetInstance ().Initialize (lvl1);
-			SoomlaLevelUp.GetInstance().InitialWorld.Missions.Add(challenge);
+			SoomlaLevelUp.Initialize (lvl1);
+			SoomlaLevelUp.InitialWorld.Missions.Add(challenge);
 
 			_eventQueue.Clear ();
 
@@ -1072,9 +1072,9 @@ namespace Soomla.Test {
 			lvl1.Scores.Add(scoreId, rangeScore);
 
 
-			SoomlaLevelUp.GetInstance().Initialize(world);
-			SoomlaLevelUp.GetInstance ().InitialWorld.AddInnerWorld (lvl1);
-			SoomlaLevelUp.GetInstance ().InitialWorld.AddInnerWorld (lvl2);
+			SoomlaLevelUp.Initialize(world);
+			SoomlaLevelUp.InitialWorld.AddInnerWorld (lvl1);
+			SoomlaLevelUp.InitialWorld.AddInnerWorld (lvl2);
 			
 			// open level
 			Assert.assertTrue(lvl1.CanStart());
