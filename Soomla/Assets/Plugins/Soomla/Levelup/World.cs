@@ -456,7 +456,7 @@ namespace Soomla.Levelup {
 		public void AssignReward(Reward reward) {
 			String olderReward = GetAssignedRewardId();
 			if (!string.IsNullOrEmpty(olderReward)) {
-				Reward oldReward = SoomlaLevelUp.GetInstance().GetReward(olderReward);
+				Reward oldReward = SoomlaLevelUp.GetReward(olderReward);
 				if (oldReward != null) {
 					oldReward.Take();
 				}

@@ -38,19 +38,19 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// Initial <c>World</c> to begin the game.
 		/// </summary>
-		public World InitialWorld;
+		public static World InitialWorld;
 
 		/// <summary>
 		/// Potential rewards of the <c>InitialWorld</c>.
 		/// </summary>
-		public Dictionary<string, Reward> Rewards;
+		public static Dictionary<string, Reward> Rewards;
 
 		/// <summary>
 		/// Initializes the specified <c>InitialWorld</c> and rewards.
 		/// </summary>
 		/// <param name="initialWorld">Initial world.</param>
 		/// <param name="rewards">Rewards.</param>
-		public void Initialize(World initialWorld, List<Reward> rewards = null) {
+		public static void Initialize(World initialWorld, List<Reward> rewards = null) {
 			InitialWorld = initialWorld;
 
 			if (rewards != null) {
@@ -71,7 +71,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The reward that was fetched.</returns>
 		/// <param name="rewardId">ID of the <c>Reward</c> to be fetched.</param>
-		public Reward GetReward(string rewardId) {
+		public static Reward GetReward(string rewardId) {
 			if (Rewards == null) {
 				return null;
 			}
@@ -86,7 +86,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The score.</returns>
 		/// <param name="scoreId">ID of the <c>Score</c> to be fetched.</param>
-		public Score GetScore(string scoreId) {
+		public static Score GetScore(string scoreId) {
 			Score retScore = null;
 			InitialWorld.Scores.TryGetValue(scoreId, out retScore);
 			if (retScore == null) {
@@ -101,7 +101,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The world.</returns>
 		/// <param name="worldId">World ID of the <c>Score</c> to be fetched.</param>
-		public World GetWorld(string worldId) {
+		public static World GetWorld(string worldId) {
 			if (InitialWorld.ID == worldId) {
 				return InitialWorld;
 			}
@@ -110,7 +110,7 @@ namespace Soomla.Levelup {
 		}
 
 
-		public Level GetLevel(string levelId) {
+		public static Level GetLevel(string levelId) {
 			return GetWorld(levelId) as Level;
 		}
 
@@ -119,7 +119,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The gate.</returns>
 		/// <param name="gateId">ID of the <c>Gate</c> to be fetched.</param>
-		public Gate GetGate(string gateId) {
+		public static Gate GetGate(string gateId) {
 			if (InitialWorld.Gate != null &&
 			    InitialWorld.Gate.ID == gateId) {
 				return InitialWorld.Gate;
@@ -138,7 +138,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The mission.</returns>
 		/// <param name="missionId">ID of the <c>Mission</c> to be fetched.</param>
-		public Mission GetMission(string missionId) {
+		public static Mission GetMission(string missionId) {
 			Mission mission = (from m in InitialWorld.Missions
 			 where m.ID == missionId
 			 select m).SingleOrDefault();
@@ -155,7 +155,7 @@ namespace Soomla.Levelup {
 		/// starting from the <c>InitialWorld</c>.
 		/// </summary>
 		/// <returns>The number of levels in all worlds and their inner worlds.</returns>
-		public int GetLevelCount() {
+		public static int GetLevelCount() {
 			return GetLevelCountInWorld(InitialWorld);
 		}
 
@@ -165,7 +165,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <param name="world">The world to examine.</param>
 		/// <returns>The number of levels in the given world and its inner worlds.</returns>
-		public int GetLevelCountInWorld(World world) {
+		public static int GetLevelCountInWorld(World world) {
 			int count = 0;
 			foreach (World initialWorld in world.InnerWorldsMap.Values) {
 				count += getRecursiveCount(initialWorld, (World innerWorld) => {
@@ -181,7 +181,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <param name="withLevels">Indicates whether to count <c>Level</c>s also.</param>
 		/// <returns>The number of <c>World</c>s, and optionally their inner <c>Level</c>s.</returns>
-		public int GetWorldCount(bool withLevels) {
+		public static int GetWorldCount(bool withLevels) {
 			return getRecursiveCount(InitialWorld, (World innerWorld) => {
 				return withLevels ?
 					(innerWorld.GetType() == typeof(World) || innerWorld.GetType() == typeof(Level)) :
@@ -194,7 +194,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The number of completed <c>Level</c>s and their inner completed 
 		/// <c>Level</c>s.</returns>
-		public int GetCompletedLevelCount() {
+		public static int GetCompletedLevelCount() {
 			return getRecursiveCount(InitialWorld, (World innerWorld) => {
 				return innerWorld.GetType() == typeof(Level) && innerWorld.IsCompleted();
 			});
@@ -205,7 +205,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The number of completed <c>World</c>s and their inner completed 
 		/// <c>World</c>s.</returns>
-		public int GetCompletedWorldCount() {
+		public static int GetCompletedWorldCount() {
 			return getRecursiveCount(InitialWorld, (World innerWorld) => {
 				return innerWorld.GetType() == typeof(World) && innerWorld.IsCompleted();
 			});
@@ -215,7 +215,7 @@ namespace Soomla.Levelup {
 		/// Retrieves this instance of <c>SoomlaLevelUp</c>. Used when initializing SoomlaLevelUp.
 		/// </summary>
 		/// <returns>This instance of <c>SoomlaLevelUp</c>.</returns>
-		public static SoomlaLevelUp GetInstance() {
+		static SoomlaLevelUp Instance() {
 			if (instance == null) {
 				instance = new SoomlaLevelUp();
 			}
@@ -227,7 +227,7 @@ namespace Soomla.Levelup {
 
 		private SoomlaLevelUp() {}
 
-		private void save() {
+		static void save() {
 			string lu_json = toJSONObject().print();
 			SoomlaUtils.LogDebug(TAG, "saving SoomlaLevelUp to DB. json is: " + lu_json);
 			string key = DB_KEY_PREFIX + "model";
@@ -235,15 +235,15 @@ namespace Soomla.Levelup {
 			KeyValueStorage.SetValue(key, lu_json);
 		}
 
-		private JSONObject toJSONObject() {
+	     static JSONObject toJSONObject() {
 			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
 
 			obj.AddField(LUJSONConsts.LU_MAIN_WORLD, InitialWorld.toJSONObject());
 
 			JSONObject rewardsArr = new JSONObject(JSONObject.Type.ARRAY);
 
-			if (this.Rewards != null)
-				foreach(Reward reward in this.Rewards.Values)
+			if (Rewards != null)
+				foreach(Reward reward in Rewards.Values)
 					rewardsArr.Add(reward.toJSONObject());
 
 			obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
@@ -251,7 +251,7 @@ namespace Soomla.Levelup {
 			return obj;
 		}
 
-		private Score fetchScoreFromWorlds(string scoreId, Dictionary<string, World> worlds) {
+		static Score fetchScoreFromWorlds(string scoreId, Dictionary<string, World> worlds) {
 			Score retScore = null;
 			foreach (World world in worlds.Values) {
 				world.Scores.TryGetValue(scoreId, out retScore);
@@ -266,7 +266,7 @@ namespace Soomla.Levelup {
 			return retScore;
 		}
 
-		private World fetchWorld(string worldId, Dictionary<string, World> worlds) {
+		static World fetchWorld(string worldId, Dictionary<string, World> worlds) {
 			World retWorld;
 			worlds.TryGetValue(worldId, out retWorld);
 			if (retWorld == null) {
@@ -281,7 +281,7 @@ namespace Soomla.Levelup {
 			return retWorld;
 		}
 
-		private Mission fetchMission(string missionId, IEnumerable<World> worlds) {
+		static Mission fetchMission(string missionId, IEnumerable<World> worlds) {
 			foreach (World world in worlds) {
 				Mission mission = (from m in world.Missions
 				                   where m.ID == missionId
@@ -298,7 +298,7 @@ namespace Soomla.Levelup {
 			return null;
 		}
 
-		private Gate fetchGate(string gateId, IEnumerable<World> worlds) {
+		static Gate fetchGate(string gateId, IEnumerable<World> worlds) {
 			if (worlds == null) {
 				return null;
 			}
@@ -330,7 +330,7 @@ namespace Soomla.Levelup {
 		}
 
 
-		private Gate fetchGate(string gateId, List<Mission> missions) {
+		static Gate fetchGate(string gateId, List<Mission> missions) {
 
 			Gate retGate = null;
 			foreach (var mission in missions) {
@@ -355,7 +355,7 @@ namespace Soomla.Levelup {
 		}
 
 
-		private Gate fetchGate(string gateId, Gate targetGate) {
+		static Gate fetchGate(string gateId, Gate targetGate) {
 			if (targetGate == null) {
 				return null;
 			}
@@ -380,7 +380,7 @@ namespace Soomla.Levelup {
 		}
 
 
-		private int getRecursiveCount(World world, Func<World, bool> isAccepted) {
+		static int getRecursiveCount(World world, Func<World, bool> isAccepted) {
 			int count = 0;
 			
 			// If the predicate is true, increment

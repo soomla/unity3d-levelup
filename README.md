@@ -87,7 +87,7 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 5. Create your own _Initial World_ which should contain all the 'blueprint' of the game (see [Model Overview](#model-overview)). Initialize _LevelUp_ with the class you just created:
 
     ```cs
-    LevelUp.GetInstance ().Initialize (initialWorld);
+    SoomlaLevelUp.Initialize (initialWorld);
     ```
 
     > Initialize _LevelUp_ ONLY ONCE when your application loads.
@@ -146,7 +146,7 @@ handler = new Soomla.Example.ExampleEventHandler();
 ````
 before
 ````
-Soomla.Levelup.LevelUp.GetInstance ().Initialize (initialWorld);
+Soomla.Levelup.SoomlaLevelUp.Initialize (initialWorld);
 ````
 
 ## Debugging
@@ -205,7 +205,7 @@ Unity debug messages will only be printed out if you build the project with _Dev
   world.AddInnerWorld(lvl1);
   world.AddInnerWorld(lvl2);
 
-  LevelUp.GetInstance().Initialize(world);
+  SoomlaLevelUp.Initialize(world);
 
   lvl1.Start();
 
@@ -245,7 +245,7 @@ Unity debug messages will only be printed out if you build the project with _Dev
 
   world.AddInnerWorld(lvl1);
 
-  LevelUp.GetInstance().Initialize(world);
+  SoomlaLevelUp.Initialize(world);
 
   lvl1.Start();
   // events posted:
@@ -289,7 +289,7 @@ Unity debug messages will only be printed out if you build the project with _Dev
 	world.AddMission(challenge);
 	world.AddScore(score);
 
-	LevelUp.GetInstance().Initialize(world);
+	SoomlaLevelUp.Initialize(world);
 
 	score.SetTempScore(20.0);
 	score.Reset(true);
@@ -339,7 +339,7 @@ Unity debug messages will only be printed out if you build the project with _Dev
 
   GatesListAND gatesListAND = new GatesListAND("gate_list_AND_id", gates);
 
-  LevelUp.GetInstance().Initialize(world);
+  SoomlaLevelUp.Initialize(world);
 
   score1.SetTempScore(desiredRecord1);
   score1.Reset(true);
