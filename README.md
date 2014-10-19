@@ -364,7 +364,7 @@ SOOMLA appreciates code contributions! You are more than welcome to extend the c
 
 Fork -> Clone -> Implement -> Add documentation -> Test -> Pull-Request.
 
-IMPORTANT: If you would like to contribute, please follow our [Documentation Guidelines](https://github.com/soomla/ios-store/blob/master/documentation.md). Clear, consistent comments will make our code easy to understand.
+IMPORTANT: If you would like to contribute, please follow our [Documentation Guidelines](https://github.com/soomla/unity3d-store/blob/master/documentation.md). Clear, consistent comments will make our code easy to understand.
 
 ## SOOMLA, Elsewhere ...
 
