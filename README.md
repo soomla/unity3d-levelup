@@ -369,7 +369,7 @@ IMPORTANT: If you would like to contribute, please follow our [Documentation Gui
 ## SOOMLA, Elsewhere ...
 
 + [Framework Website](http://www.soom.la/)
-+ [Knowledge Base](http://www.know.soom.la/)
++ [Knowledge Base](http://know.soom.la/)
 
 
 <a href="https://www.facebook.com/pages/The-SOOMLA-Project/389643294427376"><img src="http://know.soom.la/img/tutorial_img/social/Facebook.png"></a><a href="https://twitter.com/Soomla"><img src="http://know.soom.la/img/tutorial_img/social/Twitter.png"></a><a href="https://plus.google.com/+SoomLa/posts"><img src="http://know.soom.la/img/tutorial_img/social/GoogleP.png"></a><a href ="https://www.youtube.com/channel/UCR1-D9GdSRRLD0fiEDkpeyg"><img src="http://know.soom.la/img/tutorial_img/social/Youtube.png"></a>
