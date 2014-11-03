@@ -55,7 +55,7 @@ namespace Soomla.Store.Example {
 		/// </summary>
 		/// <param name="pvi">Purchasable virtual item.</param>
 		/// <param name="purchaseToken">Purchase token.</param>
-		public void onMarketPurchase(PurchasableVirtualItem pvi, string purchaseToken, string payload, string orderId) {
+		public void onMarketPurchase(PurchasableVirtualItem pvi, string payload, Dictionary<string, string> extra) {
 			
 		}
 
@@ -154,7 +154,7 @@ namespace Soomla.Store.Example {
 		/// <param name="balance">Balance of the given virtual currency.</param>
 		/// <param name="amountAdded">Amount added to the balance.</param>
 		public void onCurrencyBalanceChanged(VirtualCurrency virtualCurrency, int balance, int amountAdded) {
-			ExampleLocalStoreInfo.UpdateBalances();
+
 		}
 
 		/// <summary>
@@ -164,7 +164,7 @@ namespace Soomla.Store.Example {
 		/// <param name="balance">Balance.</param>
 		/// <param name="amountAdded">Amount added.</param>
 		public void onGoodBalanceChanged(VirtualGood good, int balance, int amountAdded) {
-			ExampleLocalStoreInfo.UpdateBalances();
+
 		}
 
 		/// <summary>
@@ -186,14 +186,13 @@ namespace Soomla.Store.Example {
 		/// Handles a store controller initialized event.
 		/// </summary>
 		public void onSoomlaStoreInitialized() {
-			ExampleLocalStoreInfo.Init();
 			
 			// some usage examples for add/remove currency
             // some examples
-            if (ExampleLocalStoreInfo.VirtualCurrencies.Count>0) {
+            if (StoreInfo.Currencies.Count>0) {
                 try {
-                    StoreInventory.GiveItem(ExampleLocalStoreInfo.VirtualCurrencies[0].ItemId,4000);
-                    SoomlaUtils.LogDebug("SOOMLA ExampleEventHandler", "Currency balance:" + StoreInventory.GetItemBalance(ExampleLocalStoreInfo.VirtualCurrencies[0].ItemId));
+					StoreInventory.GiveItem(StoreInfo.Currencies[0].ItemId,4000);
+					SoomlaUtils.LogDebug("SOOMLA ExampleEventHandler", "Currency balance:" + StoreInventory.GetItemBalance(StoreInfo.Currencies[0].ItemId));
                 } catch (VirtualItemNotFoundException ex){
                     SoomlaUtils.LogError("SOOMLA ExampleEventHandler", ex.Message);
                 }

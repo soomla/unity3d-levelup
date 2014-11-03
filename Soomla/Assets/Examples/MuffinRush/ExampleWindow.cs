@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using Soomla;
+using Soomla.Store;
 
 namespace Soomla.Store.Example {
 
@@ -109,10 +110,10 @@ namespace Soomla.Store.Example {
 		public void setupItemsTextures() {
 			itemsTextures = new Dictionary<string, Texture2D>();
 
-			foreach(VirtualGood vg in ExampleLocalStoreInfo.VirtualGoods){
+			foreach(VirtualGood vg in StoreInfo.Goods){
 				itemsTextures[vg.ItemId] = (Texture2D)Resources.Load("SoomlaStore/images/" + vg.Name);
 			}
-			foreach(VirtualCurrencyPack vcp in ExampleLocalStoreInfo.VirtualCurrencyPacks){
+			foreach(VirtualCurrencyPack vcp in StoreInfo.CurrencyPacks){
 				itemsTextures[vcp.ItemId] = (Texture2D)Resources.Load("SoomlaStore/images/" + vcp.Name);
 			}
 		}
@@ -240,7 +241,7 @@ namespace Soomla.Store.Example {
 			GUI.Label(new Rect(10,10,Screen.width-10,Screen.height-10),"SOOMLA Example Store");
 			GUI.color = Color.black;
 			GUI.skin.label.alignment = TextAnchor.UpperRight;
-			GUI.Label(new Rect(10,10,Screen.width-40,Screen.height),""+ ExampleLocalStoreInfo.CurrencyBalance);
+			GUI.Label(new Rect(10,10,Screen.width-40,Screen.height),""+ StoreInventory.GetItemBalance(StoreInfo.Currencies[0].ItemId));
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 			GUI.skin.label.font = fTitle;
 			GUI.Label(new Rect(0,Screen.height/8f,Screen.width,Screen.height/8f),"Virtual Goods");
@@ -248,13 +249,13 @@ namespace Soomla.Store.Example {
 			GUI.color = backupColor;
 			GUI.DrawTexture(new Rect(Screen.width-30,10,30,30), tMuffins);
 			float productSize = Screen.width*0.30f;
-			float totalHeight = ExampleLocalStoreInfo.VirtualGoods.Count*productSize;
+			float totalHeight = StoreInfo.Goods.Count*productSize;
 			//Here we start a scrollView, the first rectangle is the position of the scrollView on the screen,
 			//the second rectangle is the size of the panel inside the scrollView.
 			//All rectangles after this point are relative to the position of the scrollView.
 			goodsScrollPosition = GUI.BeginScrollView(new Rect(0,Screen.height*2f/8f,Screen.width,Screen.height*5f/8f),goodsScrollPosition,new Rect(0,0,Screen.width,totalHeight));
 			float y = 0;
-			foreach(VirtualGood vg in ExampleLocalStoreInfo.VirtualGoods){
+			foreach(VirtualGood vg in StoreInfo.Goods){
 				GUI.color = backupColor;
 				if(GUI.Button(new Rect(0,y,Screen.width,productSize),"") && !isDragging){
 					Debug.Log("SOOMLA/UNITY wants to buy: " + vg.Name);
@@ -282,7 +283,7 @@ namespace Soomla.Store.Example {
 					GUI.Label(new Rect(Screen.width/2f,y+productSize*2/3f,Screen.width,productSize/3f),"price:" + ((PurchaseWithVirtualItem)vg.PurchaseType).Amount);
 				else
 					GUI.Label(new Rect(Screen.width/2f,y+productSize*2/3f,Screen.width,productSize/3f),"price:$ " + ((PurchaseWithMarket)vg.PurchaseType).MarketItem.Price.ToString("0.00"));
-				GUI.Label(new Rect(Screen.width*3/4f,y+productSize*2/3f,Screen.width,productSize/3f), "Balance:" + ExampleLocalStoreInfo.GoodsBalances[vg.ItemId]);
+				GUI.Label(new Rect(Screen.width*3/4f,y+productSize*2/3f,Screen.width,productSize/3f), "Balance:" + StoreInventory.GetItemBalance(vg.ItemId));
 				GUI.skin.label.alignment = TextAnchor.UpperRight;
 				GUI.skin.label.font = fBuy;
 				GUI.Label(new Rect(0,y,Screen.width-10,productSize),"Click to buy");
@@ -330,7 +331,7 @@ namespace Soomla.Store.Example {
 			GUI.Label(new Rect(10,10,Screen.width-10,Screen.height-10),"SOOMLA Example Store");
 			GUI.color = Color.black;
 			GUI.skin.label.alignment = TextAnchor.UpperRight;
-			GUI.Label(new Rect(10,10,Screen.width-40,Screen.height),""+ExampleLocalStoreInfo.CurrencyBalance);
+			GUI.Label(new Rect(10,10,Screen.width-40,Screen.height),""+StoreInventory.GetItemBalance(StoreInfo.Currencies[0].ItemId));
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 			GUI.skin.label.font = tTitle;
 			GUI.Label(new Rect(0,Screen.height/8f,Screen.width,Screen.height/8f),"Virtual Currency Packs");
@@ -338,13 +339,13 @@ namespace Soomla.Store.Example {
 			GUI.color = backupColor;
 			GUI.DrawTexture(new Rect(Screen.width-30,10,30,30),tMuffins);
 			float productSize = Screen.width*0.30f;
-			float totalHeight = ExampleLocalStoreInfo.VirtualGoods.Count*productSize;
+			float totalHeight = StoreInfo.CurrencyPacks.Count*productSize;
 			//Here we start a scrollView, the first rectangle is the position of the scrollView on the screen,
 			//the second rectangle is the size of the panel inside the scrollView.
 			//All rectangles after this point are relative to the position of the scrollView.
 			productScrollPosition = GUI.BeginScrollView(new Rect(0,Screen.height*2f/8f,Screen.width,Screen.height*5f/8f),productScrollPosition,new Rect(0,0,Screen.width,totalHeight));
 			float y = 0;
-			foreach(VirtualCurrencyPack cp in ExampleLocalStoreInfo.VirtualCurrencyPacks){
+			foreach(VirtualCurrencyPack cp in StoreInfo.CurrencyPacks){
 				GUI.color = backupColor;
 				//We draw a button so we can detect a touch and then draw an image on top of it.
 				if(GUI.Button(new Rect(0,y,Screen.width,productSize),"") && !isDragging){
