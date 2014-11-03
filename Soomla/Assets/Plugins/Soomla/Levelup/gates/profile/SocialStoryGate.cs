@@ -33,7 +33,7 @@ namespace Soomla.Levelup
 
 		/** Components of a social Story: **/
 		public string Message; 
-		public string Name;
+		public string StoreName;
 		public string Caption;
 		public string Link;
 		public string ImgUrl;
@@ -48,11 +48,11 @@ namespace Soomla.Levelup
 		/// <param name="caption">Caption for the story image.</param>
 		/// <param name="link">Link for the story.</param>
 		/// <param name="imgUrl">Image URL for the story.</param>
-		public SocialStoryGate(string id, Provider provider, string message, string name, string caption, string link, string imgUrl)
+		public SocialStoryGate(string id, Provider provider, string message, string storyName, string caption, string link, string imgUrl)
 			: base(id, provider)
 		{
 			Message = message;
-			Name = name;
+			StoreName = storyName;
 			Caption = caption;
 			Link = link;
 			ImgUrl = imgUrl;
@@ -91,7 +91,7 @@ namespace Soomla.Levelup
 
 				SoomlaProfile.UpdateStory(Provider,
 				                          Message,
-				                          Name,
+				                          StoreName,
 				                          Caption,
 				                          Link,
 				                          ImgUrl,
