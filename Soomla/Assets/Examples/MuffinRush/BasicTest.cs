@@ -189,7 +189,7 @@ namespace Soomla.Test {
 			UnityEngine.Debug.LogWarning ("TESTING-> deleted?=" + deleted);
 #elif UNITY_IOS
 			// clear last DB storage so test run anew
-			string dbName = "store.kv.db";
+//			string dbName = "store.kv.db";
 			string dbPath = null;
 			
 			dbPath = "/private" + Application.persistentDataPath + "/../Library/Application Support/" + dbName;
@@ -373,7 +373,7 @@ namespace Soomla.Test {
 			BadgeReward goldMedal = new BadgeReward("badge_goldMedal", "Gold Medal");
 			VirtualItemReward perfectMedal = new VirtualItemReward("item_perfectMedal", "Perfect Medal", "perfect_medal", 1);
 
-			SoomlaLevelUp.Initialize(mainWorld, new List<Reward>() { bronzeMedal, silverMedal, goldMedal, perfectMedal });
+			SoomlaLevelUp.Initialize(mainWorld);
 //			((Level)LevelUp.GetInstance().GetWorld("machine_a_level_1")).Start();
 			/** Testing **/
 

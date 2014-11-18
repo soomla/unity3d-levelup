@@ -33,6 +33,7 @@ echo "creating unitypackage for SOOMLA All-In-One Baby !"
     Assets/Plugins/Soomla/Profile \
     Assets/Soomla/Editor/build-tools/Soomla_ProfileRunner.py \
     Assets/Soomla/Prefabs/ProfileEvents.prefab \
+    Assets/WebPlayerTemplates \
     Assets/Plugins/Android/AndroidLevelUp.jar \
     Assets/Plugins/Android/UnityAndroidLevelup.jar \
     Assets/Plugins/iOS/libSoomlaiOSLevelUp.a \

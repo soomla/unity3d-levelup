@@ -41,25 +41,11 @@ namespace Soomla.Levelup {
 		public static World InitialWorld;
 
 		/// <summary>
-		/// Potential rewards of the <c>InitialWorld</c>.
-		/// </summary>
-		public static Dictionary<string, Reward> Rewards;
-
-		/// <summary>
 		/// Initializes the specified <c>InitialWorld</c> and rewards.
 		/// </summary>
 		/// <param name="initialWorld">Initial world.</param>
-		/// <param name="rewards">Rewards.</param>
-		public static void Initialize(World initialWorld, List<Reward> rewards = null) {
+		public static void Initialize(World initialWorld) {
 			InitialWorld = initialWorld;
-
-			if (rewards != null) {
-				Dictionary<string, Reward> rewardMap = new Dictionary<string, Reward> ();
-				foreach (Reward reward in rewards) {
-						rewardMap.Add (reward.ID, reward);
-				}
-				Rewards = rewardMap;
-			}
 
 			save();
 
@@ -72,13 +58,7 @@ namespace Soomla.Levelup {
 		/// <returns>The reward that was fetched.</returns>
 		/// <param name="rewardId">ID of the <c>Reward</c> to be fetched.</param>
 		public static Reward GetReward(string rewardId) {
-			if (Rewards == null) {
-				return null;
-			}
-
-			Reward reward = null;
-			Rewards.TryGetValue(rewardId, out reward);
-			return reward;
+			return Reward.GetReward (rewardId);
 		}
 
 		/// <summary>
@@ -242,9 +222,8 @@ namespace Soomla.Levelup {
 
 			JSONObject rewardsArr = new JSONObject(JSONObject.Type.ARRAY);
 
-			if (Rewards != null)
-				foreach(Reward reward in Rewards.Values)
-					rewardsArr.Add(reward.toJSONObject());
+			foreach(Reward reward in Reward.GetRewards())
+				rewardsArr.Add(reward.toJSONObject());
 
 			obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
 

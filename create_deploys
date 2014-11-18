@@ -55,6 +55,8 @@ echo "creating unitypackage for SOOMLA Profile"
     Assets/Plugins/Soomla/Profile \
     Assets/Soomla/Editor/build-tools/Soomla_ProfileRunner.py \
     Assets/Soomla/Prefabs/ProfileEvents.prefab \
+    Assets/Soomla/compilations \
+    Assets/WebPlayerTemplates \
   $PWD/soomla-unity3d-profile.unitypackage \
   -quit
 
