@@ -66,7 +66,7 @@ namespace Soomla.Levelupd
 		}
 		
 		public void OnInfoGUI() {
-			SoomlaEditorScript.SelectableLabelField(profileVersion, "1.0");
+			SoomlaEditorScript.SelectableLabelField(profileVersion, "1.0.1");
 			SoomlaEditorScript.SelectableLabelField(profileBuildVersion, "1");
 			EditorGUILayout.Space();
 		}
