@@ -201,8 +201,9 @@ namespace Soomla.Levelup {
 		/// <param name="completed">If set to <c>true</c> completed.</param>
 		public void End(bool completed) {
 			
-			// check end() called without matching start()
-			if(StartTime == 0) {
+			// check end() called without matching start(),
+			// i.e, the level is not running nor paused
+			if(State != LevelState.Running && State != LevelState.Paused) {
 				SoomlaUtils.LogError(TAG, "end() called without prior start()! ignoring.");
 				return;
 			}
@@ -228,13 +229,13 @@ namespace Soomla.Levelup {
 
 				// Count number of times this level was played
 				LevelStorage.IncTimesPlayed(this);
-				
-				// reset timers
-				StartTime = 0;
-				Elapsed = 0;
 
 				SetCompleted(true);
 			}
+
+			// reset timers
+			StartTime = 0;
+			Elapsed = 0;
 		}
 
 		/// <summary>
