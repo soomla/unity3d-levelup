@@ -161,6 +161,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		public bool Start() {
 			if (State == LevelState.Running) {
+				SoomlaUtils.LogError(TAG, "Can't start a level that is already running. state=" + State);
 				return false;
 			}
 
@@ -185,6 +186,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		public void Pause() {
 			if (State != LevelState.Running) {
+				SoomlaUtils.LogError(TAG, "Can't pause a level that is not running. state=" + State);
 				return;
 			}
 			
