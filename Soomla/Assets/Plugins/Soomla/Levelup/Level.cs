@@ -212,6 +212,9 @@ namespace Soomla.Levelup {
 
 			State = LevelState.Ended;
 
+			// Count number of times this level was played
+			LevelStorage.IncTimesPlayed(this);
+
 			if (completed) {
 				long duration = GetPlayDurationMillis();
 				
@@ -220,8 +223,10 @@ namespace Soomla.Levelup {
 				if (duration > GetSlowestDurationMillis()) {
 					LevelStorage.SetSlowestDurationMillis(this, duration);
 				}
-				
-				if (duration < GetFastestDurationMillis()) {
+
+				// We assume that levels' duration is never 0
+				long fastest = GetFastestDurationMillis();
+				if (fastest == 0 || duration < GetFastestDurationMillis()) {
 					LevelStorage.SetFastestDurationMillis(this, duration);
 				}
 				
@@ -229,15 +234,8 @@ namespace Soomla.Levelup {
 					score.Reset(true); // resetting scores
 				}
 
-				// Count number of times this level was played
-				LevelStorage.IncTimesPlayed(this);
-
 				SetCompleted(true);
 			}
-
-			// reset timers
-			StartTime = 0;
-			Elapsed = 0;
 		}
 
 		/// <summary>
