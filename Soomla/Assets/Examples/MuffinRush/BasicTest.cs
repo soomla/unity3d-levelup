@@ -450,7 +450,7 @@ namespace Soomla.Test {
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
 			sTestLog += "playDuration = " + playDuration + "\n";
 			Assert.assertTrue(playDuration >= 1000);
-			Assert.assertFalse(playDuration > 2100);
+			Assert.assertFalse(playDuration > 2500);
 
 			lvl1.Pause();
 			yield return new WaitForSeconds(1);
@@ -459,7 +459,7 @@ namespace Soomla.Test {
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
 			sTestLog += "playDuration = " + playDuration + "\n";;
 			Assert.assertTrue(playDuration >= 1000);
-			Assert.assertFalse(playDuration > 2100);
+			Assert.assertFalse(playDuration > 2500);
 			Assert.assertTrue(lvl1.State == Level.LevelState.Paused);
 			
 			lvl1.Start();
@@ -469,7 +469,7 @@ namespace Soomla.Test {
 			SoomlaUtils.LogDebug(TAG, "playDuration = " + playDuration);
 			sTestLog += "playDuration = " + playDuration + "\n";;
 			Assert.assertTrue(playDuration >= 2000);
-			Assert.assertFalse(playDuration > 3100);
+			Assert.assertFalse(playDuration > 3500);
 			Assert.assertTrue(lvl1.State == Level.LevelState.Running);
 
 			lvl1.End(true);

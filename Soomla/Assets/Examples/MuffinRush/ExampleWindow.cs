@@ -27,26 +27,26 @@ namespace Soomla.Store.Example {
 	public class ExampleWindow : MonoBehaviour {
 
 		private static ExampleWindow instance = null;
-		
+
 		private GUIState guiState = GUIState.WELCOME;
 		private Vector2 goodsScrollPosition = Vector2.zero;
 		private Vector2 productScrollPosition = Vector2.zero;
 		private bool isDragging = false;
 		private Vector2 startTouch = Vector2.zero;
 		private static ExampleEventHandler handler;
-		
+
 		public string fontSuffix = "";
-	
+
 		private enum GUIState{
 			WELCOME,
 			PRODUCTS,
 			GOODS
 		}
-		
+
 		private static bool isVisible = false;
 
 		/// <summary>
-		/// Initializes the game state before the game starts. 
+		/// Initializes the game state before the game starts.
 		/// </summary>
 		void Awake(){
 			if(instance == null){ 	//making sure we only initialize one instance.
@@ -55,10 +55,10 @@ namespace Soomla.Store.Example {
 			} else {					//Destroying unused instances.
 				GameObject.Destroy(this);
 			}
-			
+
 			//FONT
 			//using max to be certain we have the longest side of the screen, even if we are in portrait.
-			if(Mathf.Max(Screen.width, Screen.height) > 640){ 
+			if(Mathf.Max(Screen.width, Screen.height) > 640){
 				fontSuffix = "_2X"; //a nice suffix to show the fonts are twice as big as the original
 			}
 		}
@@ -85,7 +85,7 @@ namespace Soomla.Store.Example {
 		/// </summary>
 		void Start () {
 			handler = new ExampleEventHandler();
-			
+
 			SoomlaStore.Initialize(new MuffinRushAssets());
 
 			tImgDirect = (Texture2D)Resources.Load("SoomlaStore/images/img_direct");
@@ -119,7 +119,7 @@ namespace Soomla.Store.Example {
 		}
 
 		/// <summary>
-		/// Sets the window to open, and sets the GUI state to welcome. 
+		/// Sets the window to open, and sets the GUI state to welcome.
 		/// </summary>
 		public static void OpenWindow(){
 			instance.guiState = GUIState.WELCOME;
@@ -127,15 +127,15 @@ namespace Soomla.Store.Example {
 		}
 
 		/// <summary>
-		/// Sets the window to closed. 
+		/// Sets the window to closed.
 		/// </summary>
 		public static void CloseWindow(){
 			isVisible = false;
 		}
 
 		/// <summary>
-		/// Implements the game behavior of MuffinRush. 
-		/// Overrides the superclass function in order to provide functionality for our game. 
+		/// Implements the game behavior of MuffinRush.
+		/// Overrides the superclass function in order to provide functionality for our game.
 		/// </summary>
 		void Update () {
 			if(isVisible){
@@ -183,7 +183,7 @@ namespace Soomla.Store.Example {
 			//GUI.skin.horizontalScrollbar.fixedHeight = 0;
 			GUI.skin.horizontalScrollbar = GUIStyle.none;
 			GUI.skin.verticalScrollbar = GUIStyle.none;
-			
+
 			//disabling warnings because we use GUIStyle.none which result in warnings
 			if(guiState == GUIState.WELCOME){
 				welcomeScreen();
@@ -191,11 +191,11 @@ namespace Soomla.Store.Example {
 				goodsScreen();
 			}else if(guiState == GUIState.PRODUCTS){
 				currencyScreen();
-			}	
+			}
 		}
-	
+
 		/// <summary>
-		/// Displays the welcome screen of the game. 
+		/// Displays the welcome screen of the game.
 		/// </summary>
 		void welcomeScreen()
 		{
@@ -224,9 +224,9 @@ namespace Soomla.Store.Example {
 			//set alignment to backup
 			GUI.skin.label.alignment = backupAlignment;
 		}
-	
+
 		/// <summary>
-		/// Display the goods screen of the game's store. 
+		/// Display the goods screen of the game's store.
 		/// </summary>
 		void goodsScreen()
 		{
@@ -235,7 +235,7 @@ namespace Soomla.Store.Example {
 			Color backupColor = GUI.color;
 			TextAnchor backupAlignment = GUI.skin.label.alignment;
 			Font backupFont = GUI.skin.label.font;
-			
+
 			GUI.color = Color.red;
 			GUI.skin.label.alignment = TextAnchor.UpperLeft;
 			GUI.Label(new Rect(10,10,Screen.width-10,Screen.height-10),"SOOMLA Example Store");
@@ -245,7 +245,7 @@ namespace Soomla.Store.Example {
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 			GUI.skin.label.font = fTitle;
 			GUI.Label(new Rect(0,Screen.height/8f,Screen.width,Screen.height/8f),"Virtual Goods");
-			
+
 			GUI.color = backupColor;
 			GUI.DrawTexture(new Rect(Screen.width-30,10,30,30), tMuffins);
 			float productSize = Screen.width*0.30f;
@@ -296,7 +296,7 @@ namespace Soomla.Store.Example {
 			GUI.skin.label.alignment = backupAlignment;
 			GUI.color = backupColor;
 			GUI.skin.label.font = backupFont;
-			
+
 			float height = Screen.height/8f;
 			float borderSize = height/8f;
 			float buttonHeight = height-2*borderSize;
@@ -314,9 +314,9 @@ namespace Soomla.Store.Example {
 			}
 			GUI.DrawTexture(new Rect(Screen.width*5f/7f-width/2f,Screen.height*7f/8f+borderSize,width,buttonHeight),tGetMore);
 		}
-	
+
 		/// <summary>
-		/// Displays the currencies screen of the game's store. 
+		/// Displays the currencies screen of the game's store.
 		/// </summary>
 		void currencyScreen()
 		{
@@ -325,7 +325,7 @@ namespace Soomla.Store.Example {
 			Color backupColor = GUI.color;
 			TextAnchor backupAlignment = GUI.skin.label.alignment;
 			Font backupFont = GUI.skin.label.font;
-			
+
 			GUI.color = Color.red;
 			GUI.skin.label.alignment = TextAnchor.UpperLeft;
 			GUI.Label(new Rect(10,10,Screen.width-10,Screen.height-10),"SOOMLA Example Store");
@@ -335,7 +335,7 @@ namespace Soomla.Store.Example {
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 			GUI.skin.label.font = tTitle;
 			GUI.Label(new Rect(0,Screen.height/8f,Screen.width,Screen.height/8f),"Virtual Currency Packs");
-			
+
 			GUI.color = backupColor;
 			GUI.DrawTexture(new Rect(Screen.width-30,10,30,30),tMuffins);
 			float productSize = Screen.width*0.30f;
@@ -379,7 +379,7 @@ namespace Soomla.Store.Example {
 			GUI.skin.label.alignment = backupAlignment;
 			GUI.color = backupColor;
 			GUI.skin.label.font = backupFont;
-			
+
 			float height = Screen.height/8f;
 			float borderSize = height/8f;
 			float buttonHeight = height-2*borderSize;
@@ -389,7 +389,6 @@ namespace Soomla.Store.Example {
 			}
 			GUI.DrawTexture(new Rect(Screen.width/2f-width/2f,Screen.height*7f/8f+borderSize,width,buttonHeight),tBack);
 		}
-	
+
 	}
 }
-
