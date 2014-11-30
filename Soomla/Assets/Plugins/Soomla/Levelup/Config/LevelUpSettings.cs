@@ -22,7 +22,7 @@ using System.Linq;
 using UnityEditor;
 #endif
 
-namespace Soomla.Levelupd
+namespace Soomla.Levelup
 {
 	
 	#if UNITY_EDITOR
