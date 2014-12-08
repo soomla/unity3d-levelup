@@ -47,6 +47,12 @@ namespace Soomla.Levelup
 	private static extern int levelStorage_DecTimesPlayed(string levelId);
 	[DllImport ("__Internal")]
 	private static extern int levelStorage_GetTimesPlayed(string levelId);
+	[DllImport ("__Internal")]
+	private static extern int levelStorage_IncTimesCompleted(string levelId);
+	[DllImport ("__Internal")]
+	private static extern int levelStorage_DecTimesCompleted(string levelId);
+	[DllImport ("__Internal")]
+	private static extern int levelStorage_GetTimesCompleted(string levelId);
 
 
 	protected override void _setSlowestDurationMillis(Level level, long duration) {
@@ -93,6 +99,20 @@ namespace Soomla.Levelup
 	
 	protected override int _getTimesPlayed(Level level) {
 		return levelStorage_GetTimesPlayed(level.ID);
+	}
+
+	/** Level Times Completed **/
+	
+	protected override int _incTimesCompleted(Level level) {
+		return levelStorage_IncTimesCompleted(level.ID);
+	}
+	
+	protected override int _decTimesCompleted(Level level) {
+		return levelStorage_DecTimesCompleted(level.ID);
+	} 
+	
+	protected override int _getTimesCompleted(Level level) {
+		return levelStorage_GetTimesCompleted(level.ID);
 	}
 
 

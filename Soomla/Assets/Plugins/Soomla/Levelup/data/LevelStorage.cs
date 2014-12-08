@@ -101,6 +101,20 @@ namespace Soomla.Levelup
 			return instance._getTimesPlayed (level);
 		}
 
+		/** LEVEL TIMES COMPLETED **/
+		
+		public static int IncTimesCompleted(Level level) {
+			return instance._incTimesCompleted (level);
+		}
+		
+		public static int DecTimesCompleted(Level level){
+			return instance._decTimesCompleted (level);
+		} 
+		
+		public static int GetTimesCompleted(Level level) {
+			return instance._getTimesCompleted (level);
+		}
+
 
 		/** Unity-Editor Functions **/
 
@@ -292,6 +306,69 @@ namespace Soomla.Levelup
 #endif
 		}
 
+		/// <summary>
+		/// Increases by 1 the number of times the given <c>Level</c> has been played. 
+		/// </summary>
+		/// <returns>The number of times played after increasing.</returns>
+		/// <param name="level"><c>Level</c> to increase its times played.</param>
+		protected virtual int _incTimesCompleted(Level level) {
+			#if UNITY_EDITOR
+			int completed = _getTimesCompleted(level);
+			if (completed < 0) { /* can't be negative */
+				completed = 0;
+			}
+			string completedStr = (completed + 1).ToString();
+			string key = keyTimesCompleted(level.ID);
+			PlayerPrefs.SetString (key, completedStr);
+			
+			return completed + 1;
+			#else
+			return 0;
+			#endif
+		}
+		
+		/// <summary>
+		/// Decreases by 1 the number of times the given <c>Level</c> has been played. 
+		/// </summary>
+		/// <returns>The number of times played after decreasing.</returns>
+		/// <param name="level"><c>Level</c> to decrease its times played.</param>
+		protected virtual int _decTimesCompleted(Level level){
+			#if UNITY_EDITOR
+			int completed = _getTimesCompleted(level);
+			if (completed <= 0) { /* can't be negative or zero */
+				return 0;
+			}
+			string completedStr = (completed - 1).ToString();
+			string key = keyTimesCompleted(level.ID);
+			PlayerPrefs.SetString (key, completedStr);
+			
+			return completed - 1;
+			#else
+			return 0;
+			#endif
+		} 
+		
+		/// <summary>
+		/// Retrieves the number of times this <c>Level</c> has been played. 
+		/// </summary>
+		/// <returns>The number of times played.</returns>
+		/// <param name="level"><c>Level</c> whose times played is to be retrieved.</param>
+		protected virtual int _getTimesCompleted(Level level) {
+			#if UNITY_EDITOR
+			string key = keyTimesCompleted(level.ID);
+			string val = PlayerPrefs.GetString (key);
+			
+			int completed = 0;
+			if (!string.IsNullOrEmpty(val)) {
+				completed = int.Parse(val);
+			}
+			
+			return completed;
+			#else
+			return 0;
+			#endif
+		}
+
 
 		/** Keys (private helper functions if Unity Editor is being used.) **/
 
@@ -306,6 +383,10 @@ namespace Soomla.Levelup
 		
 		private static string keyTimesPlayed(string levelId) {
 			return keyLevels(levelId, "played");
+		}
+
+		private static string keyTimesCompleted(string levelId) {
+			return keyLevels(levelId, "timesCompleted");
 		}
 		
 		private static string keySlowestDuration(string levelId) {

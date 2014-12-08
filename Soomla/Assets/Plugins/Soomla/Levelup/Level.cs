@@ -254,7 +254,12 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <param name="completed">If set to <c>true</c> completed.</param>
 		public override void SetCompleted(bool completed) {
-			State = LevelState.Completed;
+			if (completed) {
+				State = LevelState.Completed;
+				LevelStorage.IncTimesCompleted(this);
+			} else {
+				State = LevelState.Idle;
+			}
 			base.SetCompleted(completed);
 		}
 	}

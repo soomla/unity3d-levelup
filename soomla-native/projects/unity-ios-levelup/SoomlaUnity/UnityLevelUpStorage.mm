@@ -77,6 +77,23 @@ extern "C" {
         return [LevelStorage getTimesPlayedForLevel:levelIdS];
     }
     
+    int levelStorage_IncTimesCompleted(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage incTimesCompletedForLevel:levelIdS];
+        
+    }
+    
+    int levelStorage_DecTimesCompleted(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage decTimesCompletedForLevel:levelIdS];
+        
+    }
+    
+    int levelStorage_GetTimesCompleted(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage getTimesCompletedForLevel:levelIdS];
+    }
+    
     void missionStorage_SetCompleted(const char* missionId, bool completed, bool notify) {
         NSString* missionIdS = [NSString stringWithUTF8String:missionId];
         [MissionStorage setCompleted:completed forMission:missionIdS andNotify:notify];

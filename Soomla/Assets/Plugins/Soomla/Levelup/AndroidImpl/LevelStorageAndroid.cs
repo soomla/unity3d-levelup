@@ -26,108 +26,140 @@ namespace Soomla.Levelup
 	public class LevelStorageAndroid : LevelStorage {
 	#if UNITY_ANDROID && !UNITY_EDITOR
 
-	protected override void _setSlowestDurationMillis(Level level, long duration) {
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			jniLevelStorage.CallStatic("setSlowestDurationMillis", level.ID, duration);
+		protected override void _setSlowestDurationMillis(Level level, long duration) {
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				jniLevelStorage.CallStatic("setSlowestDurationMillis", level.ID, duration);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-	}
-	
-	protected override long _getSlowestDurationMillis(Level level) {
-		long duration = 0;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			duration = jniLevelStorage.CallStatic<long>("getSlowestDurationMillis", level.ID);
+		
+		protected override long _getSlowestDurationMillis(Level level) {
+			long duration = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				duration = jniLevelStorage.CallStatic<long>("getSlowestDurationMillis", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return duration;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return duration;
-	}
-	
-	protected override void _setFastestDurationMillis(Level level, long duration) {
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			jniLevelStorage.CallStatic("setFastestDurationMillis", level.ID, duration);
+		
+		protected override void _setFastestDurationMillis(Level level, long duration) {
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				jniLevelStorage.CallStatic("setFastestDurationMillis", level.ID, duration);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-	}
-	
-	protected override long _getFastestDurationMillis(Level level) {
-		long duration = 0;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			duration = jniLevelStorage.CallStatic<long>("getSlowestDurationMillis", level.ID);
+		
+		protected override long _getFastestDurationMillis(Level level) {
+			long duration = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				duration = jniLevelStorage.CallStatic<long>("getSlowestDurationMillis", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return duration;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return duration;
-	}
-	
-	
-	
-	/** Level Times Started **/
-	
-	protected override int _incTimesStarted(Level level) {
-		int timesStarted = 0;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			timesStarted = jniLevelStorage.CallStatic<int>("incTimesStarted", level.ID);
+		
+		
+		
+		/** Level Times Started **/
+		
+		protected override int _incTimesStarted(Level level) {
+			int timesStarted = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesStarted = jniLevelStorage.CallStatic<int>("incTimesStarted", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesStarted;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return timesStarted;
-	}
-	
-	protected override int _decTimesStarted(Level level) {
-		int timesStarted = 0;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			timesStarted = jniLevelStorage.CallStatic<int>("decTimesStarted", level.ID);
+		
+		protected override int _decTimesStarted(Level level) {
+			int timesStarted = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesStarted = jniLevelStorage.CallStatic<int>("decTimesStarted", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesStarted;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return timesStarted;
-	}
-	
-	protected override int _getTimesStarted(Level level) {
-		int timesStarted = 0;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			timesStarted = jniLevelStorage.CallStatic<int>("getTimesStarted", level.ID);
+		
+		protected override int _getTimesStarted(Level level) {
+			int timesStarted = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesStarted = jniLevelStorage.CallStatic<int>("getTimesStarted", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesStarted;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return timesStarted;
-	}
-	
-	
-	/** Level Times Played **/
-	
-	protected override int _incTimesPlayed(Level level) {
-		int timesPlayed = 0;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			timesPlayed = jniLevelStorage.CallStatic<int>("incTimesPlayed", level.ID);
+		
+		
+		/** Level Times Played **/
+		
+		protected override int _incTimesPlayed(Level level) {
+			int timesPlayed = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesPlayed = jniLevelStorage.CallStatic<int>("incTimesPlayed", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesPlayed;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return timesPlayed;
-	}
-	
-	protected override int _decTimesPlayed(Level level){
-		int timesPlayed = 0;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			timesPlayed = jniLevelStorage.CallStatic<int>("decTimesPlayed", level.ID);
+		
+		protected override int _decTimesPlayed(Level level){
+			int timesPlayed = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesPlayed = jniLevelStorage.CallStatic<int>("decTimesPlayed", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesPlayed;
+		} 
+		
+		protected override int _getTimesPlayed(Level level) {
+			int timesPlayed = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesPlayed = jniLevelStorage.CallStatic<int>("getTimesPlayed", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesPlayed;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return timesPlayed;
-	} 
-	
-	protected override int _getTimesPlayed(Level level) {
-		int timesPlayed = 0;
-		AndroidJNI.PushLocalFrame(100);
-		using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-			timesPlayed = jniLevelStorage.CallStatic<int>("getTimesPlayed", level.ID);
+
+		/** Level Times Completed **/
+		
+		protected override int _incTimesCompleted(Level level) {
+			int timesCompleted = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesCompleted = jniLevelStorage.CallStatic<int>("incTimesCompleted", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesCompleted;
 		}
-		AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		return timesPlayed;
-	}
+		
+		protected override int _decTimesCompleted(Level level){
+			int timesCompleted = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesCompleted = jniLevelStorage.CallStatic<int>("decTimesCompleted", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesCompleted;
+		} 
+		
+		protected override int _getTimesCompleted(Level level) {
+			int timesCompleted = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
+				timesCompleted = jniLevelStorage.CallStatic<int>("getTimesCompleted", level.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return timesCompleted;
+		}
 
 	//TODO: what's this? error?
 //	override protected void _setLatestLevel(Level level, long latest) {
