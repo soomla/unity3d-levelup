@@ -27,7 +27,11 @@ public class TestAssets : IStoreAssets {
 		VirtualGood[] virtualGoods = new VirtualGood[i];
 		virtualGoods[--i] = new SingleUseVG("ItemBalanceGate",
 		                                    "", ITEM_ID_BALANCE_GATE,
-		                                    new PurchaseWithMarket(ITEM_ID_BALANCE_GATE, 1));
+#if UNITY_ANDROID
+			                                    new PurchaseWithMarket("android.test.purchased", 1));
+#else
+												new PurchaseWithMarket("noads3", 1));
+#endif
 		virtualGoods[--i] = new SingleUseVG("ItemBalanceMission",
 		                                    "", ITEM_ID_BALANCE_MISSION,
 		                                    new PurchaseWithMarket(ITEM_ID_BALANCE_MISSION, 1));

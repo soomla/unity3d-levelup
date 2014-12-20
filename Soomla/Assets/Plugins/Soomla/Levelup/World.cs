@@ -346,7 +346,7 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// Resets the <c>Score</c>s for this <c>World</c>.
 		/// </summary>
-		/// <param name="save">If set to <c>true</c> save.</param>
+		/// <param name="save">If set to <c>true</c>, will also calculate and save the record and latest scores.</param>
 		public void ResetScores(bool save) {
 			if (Scores == null || Scores.Count == 0) {
 				SoomlaUtils.LogError(TAG, "(ResetScores) You don't have any scores defined in this world. World id: " + _id);

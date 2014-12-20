@@ -145,25 +145,6 @@ namespace Soomla.Test {
 			// init log and queue
 			sTestLog = "";
 			_eventQueue = new Queue<Dictionary<string, object>> ();
-
-			// register events
-			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
-			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
-
-			LevelUpEvents.OnGateOpened += onGateOpen;
-			LevelUpEvents.OnLevelEnded += onLevelEnded;
-			LevelUpEvents.OnLevelStarted += onLevelStarted;
-			LevelUpEvents.OnMissionCompleted += onMissionCompleted;
-			LevelUpEvents.OnMissionCompletionRevoked += onMissionCompletedRevoked;
-			LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
-			LevelUpEvents.OnWorldCompleted += onWorldCompleted;
-
-			CoreEvents.OnRewardGiven += onRewardGiven;
-			CoreEvents.OnRewardTaken += onRewardTaken;
-
-			// delete sqlite or PlayerPrefs before running tests
-			// otherwise stuff will be completed from last test runs etc.
-			deleteLocalDB ();
 		}
 
 		/// <summary>
@@ -216,6 +197,26 @@ namespace Soomla.Test {
 			_textStyle.richText = true;	
 			_textStyle.normal.textColor = Color.white;
 			_textStyle.fontSize = Screen.width / 30;
+			
+			// register events
+			StoreEvents.OnSoomlaStoreInitialized += onSoomlaStoreInitialized;
+			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
+			StoreEvents.OnMarketItemsRefreshFinished += onMarketItemsRefreshFinished;
+			
+			LevelUpEvents.OnGateOpened += onGateOpen;
+			LevelUpEvents.OnLevelEnded += onLevelEnded;
+			LevelUpEvents.OnLevelStarted += onLevelStarted;
+			LevelUpEvents.OnMissionCompleted += onMissionCompleted;
+			LevelUpEvents.OnMissionCompletionRevoked += onMissionCompletedRevoked;
+			LevelUpEvents.OnScoreRecordChanged += onScoreRecordChanged;
+			LevelUpEvents.OnWorldCompleted += onWorldCompleted;
+			
+			CoreEvents.OnRewardGiven += onRewardGiven;
+			CoreEvents.OnRewardTaken += onRewardTaken;
+			
+			// delete sqlite or PlayerPrefs before running tests
+			// otherwise stuff will be completed from last test runs etc.
+			deleteLocalDB ();
 
 			// TBD: these are are initialized internally
 			// TBD: is that ok, or from outside?
@@ -226,11 +227,17 @@ namespace Soomla.Test {
 			IStoreAssets testAssets = new TestAssets();
 			SoomlaUtils.LogDebug(TAG, "IStoreAssets:" + testAssets.ToString ());
 			SoomlaStore.Initialize (testAssets);
+
+			Soomla.Profile.SoomlaProfile.Initialize();
 		}
 
 		// run tests after store is initialized
 		public void onSoomlaStoreInitialized() {
 			StartCoroutine(runTests());
+		}
+
+		public void onMarketItemsRefreshFinished(List<MarketItem> items) {
+//			StoreInventory.BuyItem("item_balance_gate");
 		}
 
 		/// <summary>
