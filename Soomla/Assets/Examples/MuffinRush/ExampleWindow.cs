@@ -18,6 +18,10 @@ using System.Collections.Generic;
 using System;
 using Soomla;
 using Soomla.Store;
+using Soomla.Levelup;
+using Soomla.Profile;
+using Soomla.Highway;
+using Soomla.Sync;
 
 namespace Soomla.Store.Example {
 
@@ -84,9 +88,38 @@ namespace Soomla.Store.Example {
 		/// Use this for initialization.
 		/// </summary>
 		void Start () {
+			HighwayEvents.OnMetaDataSyncStarted += () => {
+				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnMetaDataSyncStarted !!!");
+			};
+			HighwayEvents.OnMetaDataSyncFinished += (IList<String> components) => {
+				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnMetaDataSyncFinished !!!");
+			};
+			HighwayEvents.OnMetaDataSyncFailed += (MetaDataSyncErrorCode code, String message) => {
+				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnMetaDataSyncFailed !!!");
+			};
+			HighwayEvents.OnStateSyncStarted += () => {
+				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnStateSyncStarted !!!");
+			};
+			HighwayEvents.OnStateSyncFinished += (IList<String> successComps, IList<String> failedComps) => {
+				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnStateSyncFinished !!!");
+			};
+			HighwayEvents.OnStateSyncFailed += (StateSyncErrorCode code, String message) => {
+				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnStateSyncFailed !!!");
+			};
+
 			handler = new ExampleEventHandler();
 
+			SoomlaHighway.Initialize ();
+			SoomlaSync.Initialize (true, true);
+
 			SoomlaStore.Initialize(new MuffinRushAssets());
+
+			SoomlaProfile.Initialize ();
+
+			//levelup
+			World mainWorld = WorldGenerator.GenerateCustomWorld ();
+			SoomlaLevelUp.Initialize (mainWorld);
+//			WorldGenerator.Play (mainWorld);
 
 			tImgDirect = (Texture2D)Resources.Load("SoomlaStore/images/img_direct");
 			fgoodDog = (Font)Resources.Load("SoomlaStore/GoodDog" + fontSuffix);
@@ -245,6 +278,10 @@ namespace Soomla.Store.Example {
 			GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 			GUI.skin.label.font = fTitle;
 			GUI.Label(new Rect(0,Screen.height/8f,Screen.width,Screen.height/8f),"Virtual Goods");
+
+			if(GUI.Button(new Rect(10,30,Screen.width-40,20), "Login")){
+				SoomlaProfile.Login(Provider.GOOGLE, "", null);
+			}
 
 			GUI.color = backupColor;
 			GUI.DrawTexture(new Rect(Screen.width-30,10,30,30), tMuffins);
