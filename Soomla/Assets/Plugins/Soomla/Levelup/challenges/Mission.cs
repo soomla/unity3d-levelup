@@ -144,7 +144,10 @@ namespace Soomla.Levelup {
 			}
 			obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
 
-			obj.AddField(LUJSONConsts.LU_GATE, Gate.toJSONObject());
+			// Special Challenge case
+			if (Gate != null) {
+				obj.AddField(LUJSONConsts.LU_GATE, Gate.toJSONObject());
+			}
 			obj.AddField(JSONConsts.SOOM_SCHEDULE, Schedule.toJSONObject());
 
 			return obj;
