@@ -69,3 +69,5 @@ proguard/
 **/.idea/misc.xml
 **/.idea/dictionaries
 .idea/libraries
+
+create_deploys_aio_hw
