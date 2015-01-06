@@ -262,9 +262,7 @@ namespace Soomla.Levelup {
 
 		static Mission fetchMission(string missionId, IEnumerable<World> worlds) {
 			foreach (World world in worlds) {
-				Mission mission = (from m in world.Missions
-				                   where m.ID == missionId
-				                   select m).SingleOrDefault();
+				Mission mission = fetchMission(missionId, world.Missions);
 				if (mission != null) {
 					return mission;
 				}
@@ -275,6 +273,37 @@ namespace Soomla.Levelup {
 			}
 
 			return null;
+		}
+
+		static Mission fetchMission(string missionId, IEnumerable<Mission> missions) {
+			Mission retMission = null;
+			foreach (var mission in missions) {
+				retMission = fetchMission(missionId, mission);
+				if (retMission != null) {
+					return retMission;
+				}
+			}
+
+			return retMission;
+		}
+
+		static Mission fetchMission(string missionId, Mission targetMission) {
+			if (targetMission == null) {
+				return null;
+			}
+			
+			if ((targetMission != null) && (targetMission.ID == missionId)) {
+				return targetMission;
+			}
+			
+			Mission result = null;
+			Challenge challenge = targetMission as Challenge;
+			
+			if (challenge != null) {
+				return fetchMission(missionId, challenge.Missions);
+			}
+			
+			return result;
 		}
 
 		static Gate fetchGate(string gateId, IEnumerable<World> worlds) {

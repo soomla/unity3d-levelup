@@ -132,6 +132,8 @@ namespace Soomla.Levelup {
 		/// <param name="save">If set to <c>true</c> save.</param>
 		public void Reset(bool save) {
 			if (save) {
+				ScoreStorage.SetLatestScore(this, _tempScore);
+
 				double record = ScoreStorage.GetRecordScore(this);
 				if (HasTempReached(record)) {
 					ScoreStorage.SetRecordScore(this, _tempScore);
@@ -139,8 +141,6 @@ namespace Soomla.Levelup {
 				}
 				
 				performSaveActions();
-				
-				ScoreStorage.SetLatestScore(this, _tempScore);
 			}
 
 			SetTempScore(StartValue);
