@@ -24,25 +24,25 @@ using UnityEditor;
 
 namespace Soomla.Levelup
 {
-	
+
 	#if UNITY_EDITOR
 	[InitializeOnLoad]
 	#endif
 	/// <summary>
-	/// This class holds the levelup's configurations. 
+	/// This class holds the levelup's configurations.
 	/// </summary>
 	public class LevelUpSettings : ISoomlaSettings
 	{
-		
+
 		#if UNITY_EDITOR
-		
+
 		static LevelUpSettings instance = new LevelUpSettings();
 		static LevelUpSettings()
 		{
 			SoomlaEditorScript.addSettings(instance);
 		}
 
-//		BuildTargetGroup[] supportedPlatforms = { BuildTargetGroup.Android, BuildTargetGroup.iPhone, 
+//		BuildTargetGroup[] supportedPlatforms = { BuildTargetGroup.Android, BuildTargetGroup.iPhone,
 //			BuildTargetGroup.WebPlayer, BuildTargetGroup.Standalone};
 
 		GUIContent profileVersion = new GUIContent("LevelUp Version [?]", "The SOOMLA LevelUp version. ");
@@ -57,30 +57,30 @@ namespace Soomla.Levelup
 			// Generating AndroidManifest.xml
 			//			ManifestTools.GenerateManifest();
 		}
-		
+
 		public void OnModuleGUI() {
 //			AndroidGUI();
 //			EditorGUILayout.Space();
 //			IOSGUI();
 
 		}
-		
+
 		public void OnInfoGUI() {
-			SoomlaEditorScript.SelectableLabelField(profileVersion, "1.0.1");
+			SoomlaEditorScript.SelectableLabelField(profileVersion, "1.0.4");
 			SoomlaEditorScript.SelectableLabelField(profileBuildVersion, "1");
 			EditorGUILayout.Space();
 		}
-		
+
 		public void OnSoomlaGUI() {
 		}
-		
-		
-		
-		#endif
-		
-		
 
-		
+
+
+		#endif
+
+
+
+
 		/** LevelUp Specific Variables **/
 
 	}

@@ -1,3 +1,11 @@
+### v1.0.4 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.3...v1.0.4)
+
+* Fixes
+  * Fixed issues with missions and scores
+
+* New Features
+  * Updated new features from submodules
+
 ### v1.0.3 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.2...v1.0.3)
 
 * Changes
