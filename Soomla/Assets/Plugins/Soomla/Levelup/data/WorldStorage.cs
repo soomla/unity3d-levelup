@@ -34,7 +34,7 @@ namespace Soomla.Levelup
 
 		/// <summary>
 		/// Determines which <c>Worldtorage</c> to use according to the platform in use
-		/// and if the Unity Editor is being used. 
+		/// and if the Unity Editor is being used.
 		/// </summary>
 		/// <value>The instance to use.</value>
 		static WorldStorage instance {
@@ -59,18 +59,12 @@ namespace Soomla.Levelup
 
 		/** The following functions call the relevant instance-specific functions. **/
 
-		/** WORLD COMPLETION **/ 
+		/** WORLD COMPLETION **/
 
 		public static void SetCompleted(World world, bool completed) {
 			SetCompleted(world, completed, true);
 		}
 		public static void SetCompleted(World world, bool completed, bool notify) {
-			bool currentStatus = IsCompleted(world);
-			if (currentStatus == completed) {
-				// we don't need to set the status of a world to the same status over and over again.
-				return;
-			}
-
 			instance._setCompleted(world, completed, notify);
 		}
 
@@ -90,7 +84,7 @@ namespace Soomla.Levelup
 
 
 		/** Unity-Editor Functions **/
-	
+
 		/// <summary>
 		/// Initializes <c>SoomlaLevelUp</c>
 		/// </summary>
@@ -105,16 +99,16 @@ namespace Soomla.Levelup
 		/// Sets the given <c>World</c> as completed if <c>completed</c> is <c>true</c>.
 		/// </summary>
 		/// <param name="world"><c>World</c> to set as completed.</param>
-		/// <param name="completed">If set to <c>true</c> the <c>World</c> will be set 
+		/// <param name="completed">If set to <c>true</c> the <c>World</c> will be set
 		/// as completed.</param>
 		/// <param name="notify">If set to <c>true</c> trigger events.</param>
 		protected virtual void _setCompleted(World world, bool completed, bool notify) {
 #if UNITY_EDITOR
 			string key = keyWorldCompleted(world.ID);
-			
+
 			if (completed) {
 				PlayerPrefs.SetString(key, "yes");
-				
+
 				if (notify) {
 					LevelUpEvents.OnWorldCompleted(world);
 				}
@@ -127,7 +121,7 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Determines if the given <c>World</c> is completed.
 		/// </summary>
-		/// <returns>If the given <c>World</c> is completed returns <c>true</c>; 
+		/// <returns>If the given <c>World</c> is completed returns <c>true</c>;
 		/// otherwise <c>false</c>.</returns>
 		/// <param name="world"><c>World</c> to determine if completed.</param>
 		protected virtual bool _isCompleted(World world) {
@@ -140,9 +134,9 @@ namespace Soomla.Levelup
 #endif
 		}
 
-		
+
 		/// <summary>
-		/// Assigns the reward with the given reward ID to the given <c>World</c>. 
+		/// Assigns the reward with the given reward ID to the given <c>World</c>.
 		/// </summary>
 		/// <param name="world"><c>World</c> to assign a reward to.</param>
 		/// <param name="rewardId">ID of reward to assign.</param>
@@ -159,7 +153,7 @@ namespace Soomla.Levelup
 			LevelUpEvents.OnWorldAssignedReward(world);
 #endif
 		}
-		
+
 		/// <summary>
 		/// Retrieves the given <c>World</c>'s assigned reward.
 		/// </summary>
@@ -181,15 +175,14 @@ namespace Soomla.Levelup
 		private static string keyWorlds(string worldId, string postfix) {
 			return SoomlaLevelUp.DB_KEY_PREFIX + "worlds." + worldId + "." + postfix;
 		}
-		
+
 		private static string keyWorldCompleted(string worldId) {
 			return keyWorlds(worldId, "completed");
 		}
-		
+
 		private static string keyReward(string worldId) {
 			return keyWorlds(worldId, "assignedReward");
 		}
 #endif
 	}
 }
-
