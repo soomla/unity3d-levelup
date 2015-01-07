@@ -20,9 +20,9 @@ using Soomla;
 namespace Soomla.Levelup {
 
 	/// <summary>
-	/// A <c>Gate</c> is an object that defines certain criteria, and is opened when this criteria is met. 
+	/// A <c>Gate</c> is an object that defines certain criteria, and is opened when this criteria is met.
 	/// <c>Gate</c>s are usually associated with <c>Mission</c>s - each <c>Mission</c> has a <c>Gate</c>
-	/// that needs to be opened in order for the <c>Mission</c> to be complete. 
+	/// that needs to be opened in order for the <c>Mission</c> to be complete.
 	/// </summary>
 	public abstract class Gate : SoomlaEntity<Gate> {
 
@@ -46,17 +46,15 @@ namespace Soomla.Levelup {
 		protected Gate (string id, string name)
 			: base(id, name, "")
 		{
-			onInitialize();
 		}
 
 		/// <summary>
-		/// Constructor. 
+		/// Constructor.
 		/// </summary>
 		/// <param name="jsonObj">JSON object.</param>
-		public Gate(JSONObject jsonObj) 
+		public Gate(JSONObject jsonObj)
 			: base(jsonObj)
 		{
-			registerEvents();
 		}
 
 		/// <summary>
@@ -65,25 +63,25 @@ namespace Soomla.Levelup {
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			
+
 			return obj;
 		}
 
 		/// <summary>
-		/// Converts the given JSONObject into a <c>Gate</c>. 
+		/// Converts the given JSONObject into a <c>Gate</c>.
 		/// </summary>
 		/// <returns>The JSON object.</returns>
 		/// <param name="gateObj">Gate object.</param>
 		public static Gate fromJSONObject(JSONObject gateObj) {
 			string className = gateObj[JSONConsts.SOOM_CLASSNAME].str;
-			
+
 			Gate gate = (Gate) Activator.CreateInstance(Type.GetType("Soomla.Levelup." + className), new object[] { gateObj });
-			
+
 			return gate;
 		}
 
 		/// <summary>
-		/// Attempts to open this <c>Gate</c>, if it has not been opened aready. 
+		/// Attempts to open this <c>Gate</c>, if it has not been opened aready.
 		/// </summary>
 		public bool Open() {
 			//  check in gate storage if it's already open.
@@ -150,7 +148,7 @@ namespace Soomla.Levelup {
 			registerEvents();
 			eventsRegistered = true;
 		}
-		
+
 		internal void OnDetached() {
 			if (!eventsRegistered) {
 				return;
@@ -165,21 +163,21 @@ namespace Soomla.Levelup {
 		}
 
 		/// <summary>
-		/// Registers relevant events. Each specific type of <c>Gate</c> must implement this method. 
+		/// Registers relevant events. Each specific type of <c>Gate</c> must implement this method.
 		/// </summary>
 		protected abstract void registerEvents();
 
 		/// <summary>
-		/// Unregisters relevant events. Each specific type of <c>Gate</c> must implement this method. 
+		/// Unregisters relevant events. Each specific type of <c>Gate</c> must implement this method.
 		/// </summary>
 		protected abstract void unregisterEvents();
 
 		/// <summary>
 		/// Checks if this <c>Gate</c> meets its criteria for opening.
-		/// Each specific type of <c>Gate</c> must implement this method to 
+		/// Each specific type of <c>Gate</c> must implement this method to
 		/// add specific <c>Gate</c> criteria.
 		/// </summary>
-		/// <returns>If the criteria is met for opening this <c>Gate</c> returns <c>true</c>; 
+		/// <returns>If the criteria is met for opening this <c>Gate</c> returns <c>true</c>;
 		/// otherwise <c>false</c>.</returns>
 		protected abstract bool canOpenInner();
 
@@ -192,4 +190,3 @@ namespace Soomla.Levelup {
 		//	public abstract void OnInitialize();
 	}
 }
-
