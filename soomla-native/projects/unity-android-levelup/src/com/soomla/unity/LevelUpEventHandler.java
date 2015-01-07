@@ -54,8 +54,8 @@ public class LevelUpEventHandler {
     }
 
     @Subscribe
-    public void onGateOpenedEvent(GateClosedEvent gateOpenedEvent) {
-        UnityPlayer.UnitySendMessage("LevelUpEvents", "onGateClosed", gateOpenedEvent.GateId);
+    public void onGateOpenedEvent(GateClosedEvent gateClosedEvent) {
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onGateClosed", gateClosedEvent.GateId);
     }
 
     @Subscribe
