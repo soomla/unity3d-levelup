@@ -1,3 +1,13 @@
+### v1.0.5 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.4...v1.0.5)
+
+* New Features
+  * Added event when latest score is changed
+  * Added event when gate is closing
+  *
+* Fixes
+  * Attaching gate to events only when needed
+  * WorldStorage should set completed each time
+
 ### v1.0.4 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.3...v1.0.4)
 
 * Fixes
