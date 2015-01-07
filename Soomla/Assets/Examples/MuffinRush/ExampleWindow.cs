@@ -20,8 +20,6 @@ using Soomla;
 using Soomla.Store;
 using Soomla.Levelup;
 using Soomla.Profile;
-//using Soomla.Highway;
-//using Soomla.Sync;
 
 namespace Soomla.Store.Example {
 
@@ -88,29 +86,8 @@ namespace Soomla.Store.Example {
 		/// Use this for initialization.
 		/// </summary>
 		void Start () {
-//			HighwayEvents.OnMetaDataSyncStarted += () => {
-//				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnMetaDataSyncStarted !!!");
-//			};
-//			HighwayEvents.OnMetaDataSyncFinished += (IList<String> components) => {
-//				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnMetaDataSyncFinished !!!");
-//			};
-//			HighwayEvents.OnMetaDataSyncFailed += (MetaDataSyncErrorCode code, String message) => {
-//				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnMetaDataSyncFailed !!!");
-//			};
-//			HighwayEvents.OnStateSyncStarted += () => {
-//				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnStateSyncStarted !!!");
-//			};
-//			HighwayEvents.OnStateSyncFinished += (IList<String> successComps, IList<String> failedComps) => {
-//				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnStateSyncFinished !!!");
-//			};
-//			HighwayEvents.OnStateSyncFailed += (StateSyncErrorCode code, String message) => {
-//				SoomlaUtils.LogError("SOOMLA ExampleWindow", "OnStateSyncFailed !!!");
-//			};
 
 			handler = new ExampleEventHandler();
-
-//			SoomlaHighway.Initialize ();
-//			SoomlaSync.Initialize (true, true);
 
 			SoomlaStore.Initialize(new MuffinRushAssets());
 
