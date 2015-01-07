@@ -76,6 +76,14 @@ namespace Soomla.Levelup {
 			LevelUpEvents.OnGateOpened(gate);
 		}
 
+		public void onGateClosed(string message) {
+			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onGateClosed with message: " + message);
+			
+			Gate gate = SoomlaLevelUp.GetGate(message);
+			
+			LevelUpEvents.OnGateClosed(gate);
+		}
+
 		public void onLevelEnded(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLevelEnded with message: " + message);
 			
@@ -152,6 +160,8 @@ namespace Soomla.Levelup {
 		public delegate void Action();
 
 		public static Action<Gate> OnGateOpened = delegate {};
+
+		public static Action<Gate> OnGateClosed = delegate {};
 
 		public static Action<Level> OnLevelEnded = delegate {};
 

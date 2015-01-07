@@ -124,6 +124,7 @@ namespace Soomla.Levelup
 		/// </summary>
 		/// <param name="gate">Gate to add.</param>
 		public void Add(Gate gate) {
+			gate.OnAttached();
 			Gates.Add(gate);
 		}
 
@@ -133,6 +134,7 @@ namespace Soomla.Levelup
 		/// <param name="gate">Gate to remove.</param>
 		public void Remove(Gate gate) {
 			Gates.Remove(gate);
+			gate.OnDetached();
 		}
 
 		/// <summary>
@@ -158,7 +160,18 @@ namespace Soomla.Levelup
 		/// <param name="idx">Index.</param>
 		public Gate this[int idx] {
 			get { return Gates[idx]; }
-			set {  Gates[idx] = value; }
+			set {
+				Gate indexGate = Gates[idx];
+				if (indexGate != value) {
+					if (indexGate != null) {
+						indexGate.OnDetached();
+					}
+					Gates[idx] = value; 
+					if (value != null) {
+						value.OnAttached();
+					}
+				}
+			}
 		}
 
 		/// <summary>

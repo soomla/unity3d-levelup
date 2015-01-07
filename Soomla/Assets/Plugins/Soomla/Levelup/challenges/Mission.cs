@@ -45,7 +45,21 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// The <c>Gate</c> that needs to be opened in order to complete this <c>Mission</c>.
 		/// </summary>
-		public Gate Gate;
+		private Gate gate;
+		public Gate Gate {
+			get { return gate; }
+			set {
+				if (value != gate) {
+					if (gate != null) {
+						gate.OnDetached();
+					}
+					gate = value;
+					if (gate != null) {
+						gate.OnAttached();
+					}
+				}
+			}
+		}
 
 
 		/// <summary>

@@ -27,6 +27,7 @@ namespace Soomla.Levelup {
 	public abstract class Gate : SoomlaEntity<Gate> {
 
 		private const string TAG = "SOOMLA Gate";
+		private bool eventsRegistered = false;
 
 		/// <summary>
 		/// Constructor.
@@ -45,7 +46,7 @@ namespace Soomla.Levelup {
 		protected Gate (string id, string name)
 			: base(id, name, "")
 		{
-			registerEvents();
+			onInitialize();
 		}
 
 		/// <summary>
@@ -141,6 +142,28 @@ namespace Soomla.Levelup {
 			return (Gate) base.Clone(newGateId);
 		}
 
+		internal void OnAttached() {
+			if (eventsRegistered) {
+				return;
+			}
+
+			registerEvents();
+			eventsRegistered = true;
+		}
+		
+		internal void OnDetached() {
+			if (!eventsRegistered) {
+				return;
+			}
+
+			unregisterEvents();
+			eventsRegistered = false;
+		}
+
+		private void onInitialize() {
+			OnAttached();
+		}
+
 		/// <summary>
 		/// Registers relevant events. Each specific type of <c>Gate</c> must implement this method. 
 		/// </summary>
@@ -167,7 +190,6 @@ namespace Soomla.Levelup {
 		protected abstract bool openInner();
 
 		//	public abstract void OnInitialize();
-
 	}
 }
 

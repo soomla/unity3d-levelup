@@ -32,6 +32,10 @@ extern "C" {
         NSString* gateId = [[notification userInfo] objectForKey:DICT_ELEMENT_GATE];
         UnitySendMessage("LevelUpEvents", "onGateOpened", [gateId UTF8String]);
 	}
+    else if ([notification.name isEqualToString:EVENT_GATE_CLOSED]) {
+        NSString* gateId = [[notification userInfo] objectForKey:DICT_ELEMENT_GATE];
+        UnitySendMessage("LevelUpEvents", "onGateClosed", [gateId UTF8String]);
+    }
 	else if ([notification.name isEqualToString:EVENT_LEVEL_ENDED]) {
         NSString* levelId = [[notification userInfo] objectForKey:DICT_ELEMENT_LEVEL];
         UnitySendMessage("LevelUpEvents", "onLevelEnded", [levelId UTF8String]);

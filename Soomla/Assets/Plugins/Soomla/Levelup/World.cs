@@ -35,7 +35,21 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// <c>Gate</c> that defines the criteria to enter this <c>World</c>.
 		/// </summary>
-		public Gate Gate;
+		private Gate gate;
+		public Gate Gate {
+			get { return gate; }
+			set {
+				if (value != gate) {
+					if (gate != null) {
+						gate.OnDetached();
+					}
+					gate = value;
+					if (gate != null) {
+						gate.OnAttached();
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// The <c>World</c>s included in this <c>World</c>.
