@@ -83,6 +83,8 @@ namespace Soomla.Levelup
 			string key = keyLatestScore (score.ID);
 			string val = latest.ToString ();
 			PlayerPrefs.SetString (key, val);
+
+			LevelUpEvents.OnLatestScoreChanged (score);
 #endif
 		}
 

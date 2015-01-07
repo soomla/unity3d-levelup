@@ -2,6 +2,7 @@ package com.soomla.unity;
 
 import com.soomla.BusProvider;
 import com.soomla.levelup.events.GateOpenedEvent;
+import com.soomla.levelup.events.LatestScoreChangedEvent;
 import com.soomla.levelup.events.LevelEndedEvent;
 import com.soomla.levelup.events.LevelStartedEvent;
 import com.soomla.levelup.events.LevelUpInitializedEvent;
@@ -64,6 +65,11 @@ public class LevelUpEventHandler {
     @Subscribe
     public void onScoreRecordChangedEvent(ScoreRecordChangedEvent scoreRecordChangedEvent) {
         UnityPlayer.UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", scoreRecordChangedEvent.ScoreId);
+    }
+
+    @Subscribe
+    public void onLatestScoreChangedEvent(LatestScoreChangedEvent latestScoreChangedEvent) {
+        UnityPlayer.UnitySendMessage("LevelUpEvents", "onLatestScoreChanged", latestScoreChangedEvent.ScoreId);
     }
 
     @Subscribe

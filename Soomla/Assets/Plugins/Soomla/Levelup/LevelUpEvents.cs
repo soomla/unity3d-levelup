@@ -114,6 +114,14 @@ namespace Soomla.Levelup {
 			LevelUpEvents.OnMissionCompletionRevoked(mission);
 		}
 
+		public void onLatestScoreChanged(string message) {
+			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLatestScoreChanged with message: " + message);
+			
+			Score score = SoomlaLevelUp.GetScore(message);
+			
+			LevelUpEvents.OnLatestScoreChanged(score);
+		}
+
 		public void onScoreRecordChanged(string message) {
 			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onScoreRecordChanged with message: " + message);
 			
@@ -156,6 +164,8 @@ namespace Soomla.Levelup {
 		public static Action<Mission> OnMissionCompletionRevoked = delegate {};
 
 		public static Action<Score> OnScoreRecordChanged = delegate {};
+
+		public static Action<Score> OnLatestScoreChanged = delegate {};
 
 		public static Action<World> OnWorldCompleted = delegate {};
 

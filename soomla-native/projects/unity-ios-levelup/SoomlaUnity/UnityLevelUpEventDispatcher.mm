@@ -50,15 +50,14 @@ extern "C" {
 	else if ([notification.name isEqualToString:EVENT_MISSION_COMPLETION_REVOKED]) {
         NSString* missionId = [[notification userInfo] objectForKey:DICT_ELEMENT_MISSION];
         UnitySendMessage("LevelUpEvents", "onMissionCompletionRevoked", [missionId UTF8String]);
-
     }
 	else if ([notification.name isEqualToString:EVENT_SCORE_RECORD_CHANGED]) {
         NSString* scoreId = [[notification userInfo] objectForKey:DICT_ELEMENT_SCORE];
         UnitySendMessage("LevelUpEvents", "onScoreRecordChanged", [scoreId UTF8String]);
     }
-	else if ([notification.name isEqualToString:EVENT_SCORE_RECORD_REACHED]) {
+	else if ([notification.name isEqualToString:EVENT_SCORE_LATEST_CHANGED]) {
         NSString* scoreId = [[notification userInfo] objectForKey:DICT_ELEMENT_SCORE];
-        UnitySendMessage("LevelUpEvents", "onScoreRecordReached", [scoreId UTF8String]);
+        UnitySendMessage("LevelUpEvents", "onLatestScoreChanged", [scoreId UTF8String]);
     }
 	else if ([notification.name isEqualToString:EVENT_WORLD_COMPLETED]) {
         NSString* worldId = [[notification userInfo] objectForKey:DICT_ELEMENT_WORLD];

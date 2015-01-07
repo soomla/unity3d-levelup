@@ -80,7 +80,6 @@ extern "C" {
     int levelStorage_IncTimesCompleted(const char* levelId) {
         NSString* levelIdS = [NSString stringWithUTF8String:levelId];
         return [LevelStorage incTimesCompletedForLevel:levelIdS];
-        
     }
     
     int levelStorage_DecTimesCompleted(const char* levelId) {
