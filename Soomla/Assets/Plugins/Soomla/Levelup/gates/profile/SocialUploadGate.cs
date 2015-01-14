@@ -85,9 +85,9 @@ namespace Soomla.Levelup
 			if (CanOpen()) {
 
 				SoomlaProfile.UploadImage(Provider.FACEBOOK,
-				                          ImgTexture,
-				                          FileName,
 				                          Message,
+				                          FileName,
+				                          ImgTexture,
 				                          this.ID);
 
 				return true;
