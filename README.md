@@ -39,7 +39,7 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 [unity3d-profile v2.0.3](http://library.soom.la/fetch/unity3d-profile/2.0.3?cf=github)  
 [unity3d-levelup v1.0.6](http://library.soom.la/fetch/unity3d-levelup/1.0.6?cf=github)  
 
-[all-in-one package](http://library.soom.la/fetch/unity3d-allinone/1.0.2?cf=github)  
+[all-in-one package](http://library.soom.la/fetch/unity3d-allinone/1.0.3?cf=github)  
 
 ## Model Overview
 
