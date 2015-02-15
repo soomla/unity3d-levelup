@@ -135,7 +135,7 @@ namespace Soomla.Levelup {
 				ScoreStorage.SetLatestScore(this, _tempScore);
 
 				double record = ScoreStorage.GetRecordScore(this);
-				if (HasTempReached(record)) {
+				if (record == -1 || HasTempReached(record)) {
 					ScoreStorage.SetRecordScore(this, _tempScore);
 					_scoreRecordReachedSent = false;
 				}
