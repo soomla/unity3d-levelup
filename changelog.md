@@ -1,3 +1,12 @@
+### v1.0.8 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.7...v1.0.8)
+
+* Fixes
+  * Fixing GatesList creation
+  * Fixing score not saving at init
+
+* Changes
+  * Updated new features from submodules
+
 ### v1.0.7 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.6...v1.0.7)
 
 * Changes
