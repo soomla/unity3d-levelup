@@ -154,6 +154,19 @@ namespace Soomla.Levelup {
 			LevelUpEvents.OnWorldAssignedReward(world);
 		}
 
+		public void onLastCompletedInnerWorldChanged(string message) {
+			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onLastCompletedInnerWorldChanged with message: " + message);
+
+			JSONObject eventJSON = new JSONObject(message);
+
+			string worldId = eventJSON["worldId"].str;
+			string innerWorldId = eventJSON["innerWorldId"].str;
+
+			World world = SoomlaLevelUp.GetWorld(worldId);
+			
+			LevelUpEvents.OnLastCompletedInnerWorldChanged(world, innerWorldId);
+		}
+
 
 		/** To handle various events, just add your specific behavior to the following delegates. **/
 
@@ -180,6 +193,8 @@ namespace Soomla.Levelup {
 		public static Action<World> OnWorldCompleted = delegate {};
 
 		public static Action<World> OnWorldAssignedReward = delegate {};
+
+		public static Action<World, string> OnLastCompletedInnerWorldChanged = delegate {};
 
 		public static Action<Score> OnScoreRecordReached = delegate {}; 
 
