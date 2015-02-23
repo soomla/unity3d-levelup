@@ -1,3 +1,9 @@
+### v1.0.9 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.8...v1.0.9)
+
+* New Features
+  * Adding ParentWorld property to World
+  * Last completed inner world ID getter and event
+
 ### v1.0.8 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.7...v1.0.8)
 
 * Fixes
