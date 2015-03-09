@@ -1,3 +1,8 @@
+### v1.0.11 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.10...v1.0.11)
+
+* Changes
+  * Updated to Unity 5 compatible submodules
+
 ### v1.0.10 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.9...v1.0.10)
 
 * Changes

@@ -26,7 +26,6 @@ echo "creating unitypackage for SOOMLA All-In-One Baby !"
     Assets/Plugins/Soomla/Store \
     Assets/Soomla/Editor/build-tools/Soomla_StoreRunner.py \
     Assets/Soomla/Prefabs/StoreEvents.prefab \
-    Assets/Soomla/compilations \
     Assets/Plugins/Android/AndroidProfile.jar \
     Assets/Plugins/Android/UnityAndroidProfile.jar \
     Assets/Plugins/iOS/libSoomlaiOSProfile.a \

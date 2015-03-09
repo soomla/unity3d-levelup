@@ -35,10 +35,10 @@ echo "creating unitypackage for SOOMLA Store"
     Assets/Plugins/iOS/libSoomlaiOSStore.a \
     Assets/Plugins/iOS/libUnityiOSStore.a \
     Assets/Plugins/Soomla/Store \
-    Assets/Soomla/compilations \
     Assets/Soomla/Editor/build-tools/Soomla_StoreRunner.py \
     Assets/Soomla/Prefabs/StoreEvents.prefab \
     Assets/Soomla/Resources \
+    Assets/WebPlayerTemplates/SoomlaConfig/android/android-billing-services \
   $PWD/soomla-unity3d-store.unitypackage \
   -quit
 
@@ -56,8 +56,10 @@ echo "creating unitypackage for SOOMLA Profile"
     Assets/Plugins/Soomla/Profile \
     Assets/Soomla/Editor/build-tools/Soomla_ProfileRunner.py \
     Assets/Soomla/Prefabs/ProfileEvents.prefab \
-    Assets/Soomla/compilations \
-    Assets/WebPlayerTemplates \
+    Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-google \
+    Assets/WebPlayerTemplates/SoomlaConfig/android/android-profile-twitter \
+    Assets/WebPlayerTemplates/SoomlaConfig/ios/ios-profile-google \
+    Assets/WebPlayerTemplates/SoomlaConfig/ios/ios-profile-twitter \
   $PWD/soomla-unity3d-profile.unitypackage \
   -quit
 
