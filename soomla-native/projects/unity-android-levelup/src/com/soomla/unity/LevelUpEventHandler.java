@@ -3,6 +3,7 @@ package com.soomla.unity;
 import com.soomla.BusProvider;
 import com.soomla.levelup.events.GateClosedEvent;
 import com.soomla.levelup.events.GateOpenedEvent;
+import com.soomla.levelup.events.LastCompletedInnerWorldChanged;
 import com.soomla.levelup.events.LatestScoreChangedEvent;
 import com.soomla.levelup.events.LevelEndedEvent;
 import com.soomla.levelup.events.LevelStartedEvent;
@@ -15,6 +16,9 @@ import com.soomla.levelup.events.WorldAssignedRewardEvent;
 import com.soomla.levelup.events.WorldCompletedEvent;
 import com.squareup.otto.Subscribe;
 import com.unity3d.player.UnityPlayer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LevelUpEventHandler {
     private static LevelUpEventHandler mLocalEventHandler;
@@ -88,4 +92,16 @@ public class LevelUpEventHandler {
         UnityPlayer.UnitySendMessage("LevelUpEvents", "onWorldAssignedReward", worldAssignedRewardEvent.WorldId);
     }
 
+    @Subscribe
+    public void onLastCompletedInnerWorldChanged(LastCompletedInnerWorldChanged lastCompletedInnerWorldChanged) {
+        JSONObject eventJSON = new JSONObject();
+        try {
+            eventJSON.put("worldId", lastCompletedInnerWorldChanged.WorldId);
+            eventJSON.put("innerWorldId", lastCompletedInnerWorldChanged.InnerWorldId);
+
+            UnityPlayer.UnitySendMessage("LevelUpEvents", "onLastCompletedInnerWorldChanged", eventJSON.toString());
+        } catch (JSONException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 }

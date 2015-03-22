@@ -69,6 +69,24 @@ namespace Soomla.Levelup
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 			return rewardId;
 		}
+
+		override protected void _setLastCompletedInnerWorld(World world, string innerWorldId) {
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
+				jniWorldStorage.CallStatic("setLastCompletedInnerWorld", world.ID, innerWorldId);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+		}
+		
+		override protected string _getLastCompletedInnerWorld(World world) {
+			string innerWorldId;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniWorldStorage = new AndroidJavaClass("com.soomla.levelup.data.WorldStorage")) {
+				innerWorldId = jniWorldStorage.CallStatic<string>("getLastCompletedInnerWorld", world.ID);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return innerWorldId;
+		}
 	
 #endif
 	}

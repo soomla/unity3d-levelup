@@ -156,4 +156,21 @@ extern "C" {
         NSString* rewardIdS = [NSString stringWithUTF8String:rewardId];
         [WorldStorage setReward:rewardIdS forWorld:worldIdS];
     }
+    
+    void worldStorage_SetLastCompletedInnerWorld(const char* worldId, const char* innerWorldId) {
+        NSString* worldIdS = [NSString stringWithUTF8String:worldId];
+        NSString* innerWorldIdS = [NSString stringWithUTF8String:innerWorldId];
+        [WorldStorage setLastCompletedInnerWorld:innerWorldIdS forWorld:worldIdS];
+    }
+    
+    void worldStorage_GetLastCompletedInnerWorld(const char* worldId, char** json) {
+        NSString* worldIdS = [NSString stringWithUTF8String:worldId];
+        NSString* innerWorldId = [WorldStorage getLastCompletedInnerWorld:worldIdS];
+        if (!innerWorldId) {
+            innerWorldId = @"";
+        }
+        
+        *json = Soom_AutonomousStringCopy([innerWorldId UTF8String]);
+    }
+
 }

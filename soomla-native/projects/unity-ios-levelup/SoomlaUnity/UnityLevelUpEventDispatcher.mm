@@ -71,6 +71,14 @@ extern "C" {
         NSString* worldId = [[notification userInfo] objectForKey:DICT_ELEMENT_WORLD];
         UnitySendMessage("LevelUpEvents", "onWorldAssignedReward", [worldId UTF8String]);
     }
+    else if ([notification.name isEqualToString:EVENT_LAST_COMPLETED_INNER_WORLD_CHANGED]) {
+        NSDictionary* userInfo = [notification userInfo];
+        NSString* jsonStr = [SoomlaUtils dictToJsonString:@{
+                                                            @"worldId": [userInfo objectForKey:DICT_ELEMENT_WORLD],
+                                                            @"innerWorldId": [userInfo objectForKey:DICT_ELEMENT_INNER_WORLD] ?: @""
+                                                            }];
+        UnitySendMessage("LevelUpEvents", "onLastCompletedInnerWorldChanged", [jsonStr UTF8String]);
+    }
 }
 
 @end

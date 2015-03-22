@@ -374,10 +374,10 @@ namespace Soomla.Test {
 			machineC.BatchAddLevelsWithTemplates(20, null, s, null);
 			machineD.BatchAddLevelsWithTemplates(20, null, s, null);
 
-			mainWorld.InnerWorldsMap.Add(machineA.ID, machineA);
-			mainWorld.InnerWorldsMap.Add(machineB.ID, machineB);
-			mainWorld.InnerWorldsMap.Add(machineC.ID, machineC);
-			mainWorld.InnerWorldsMap.Add(machineD.ID, machineD);
+			mainWorld.AddInnerWorld(machineA);
+			mainWorld.AddInnerWorld(machineB);
+			mainWorld.AddInnerWorld(machineC);
+			mainWorld.AddInnerWorld(machineD);
 
 			BadgeReward bronzeMedal = new BadgeReward("badge_bronzeMedal", "Bronze Medal");
 			BadgeReward silverMedal = new BadgeReward("badge_silverMedal", "Silver Medal");

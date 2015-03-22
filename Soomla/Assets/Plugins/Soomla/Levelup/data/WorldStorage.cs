@@ -82,6 +82,17 @@ namespace Soomla.Levelup
 			return instance._getAssignedReward(world);
 		}
 
+		/** LAST COMPLETED INNER WORLD **/
+
+		public static void SetLastCompletedInnerWorld(World world, string innerWorldId)
+		{
+			instance._setLastCompletedInnerWorld(world, innerWorldId);
+		}
+
+		public static string GetLastCompletedInnerWorld(World world)
+		{
+			return instance._getLastCompletedInnerWorld(world);
+		}
 
 		/** Unity-Editor Functions **/
 
@@ -168,6 +179,30 @@ namespace Soomla.Levelup
 #endif
 		}
 
+		protected virtual void _setLastCompletedInnerWorld(World world, string innerWorldId)
+		{
+#if UNITY_EDITOR
+			string key = keyLastCompletedInnerWorld(world.ID);
+			if (!string.IsNullOrEmpty(innerWorldId)) {
+				PlayerPrefs.SetString(key, innerWorldId);
+			} else {
+				PlayerPrefs.DeleteKey(key);
+			}
+			
+			// Notify world had inner level complete
+			LevelUpEvents.OnLastCompletedInnerWorldChanged(world, innerWorldId);
+#endif
+		}
+
+		protected virtual string _getLastCompletedInnerWorld(World world)
+		{
+#if UNITY_EDITOR
+			string key = keyLastCompletedInnerWorld(world.ID);
+			return PlayerPrefs.GetString(key);
+#else
+			return null;
+#endif
+		}
 
 		/** Keys (private helper functions if Unity Editor is being used.) **/
 
@@ -182,6 +217,10 @@ namespace Soomla.Levelup
 
 		private static string keyReward(string worldId) {
 			return keyWorlds(worldId, "assignedReward");
+		}
+
+		private static string keyLastCompletedInnerWorld(string worldId) {
+			return keyWorlds(worldId, "lastCompletedInnerWorld");
 		}
 #endif
 	}

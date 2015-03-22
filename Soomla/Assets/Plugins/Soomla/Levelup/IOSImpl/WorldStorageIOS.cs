@@ -41,6 +41,12 @@ namespace Soomla.Levelup
 		private static extern void worldStorage_GetAssignedReward(string worldId, out IntPtr json);
 
 		[DllImport ("__Internal")]
+		private static extern void worldStorage_SetLastCompletedInnerWorld(string worldId, string innerWorldId);
+
+		[DllImport ("__Internal")]
+		private static extern void worldStorage_GetLastCompletedInnerWorld(string worldId, out IntPtr json);
+
+		[DllImport ("__Internal")]
 		private static extern void worldStorage_InitLevelUp();
 
 		override protected void _initLevelUp() {
@@ -69,6 +75,20 @@ namespace Soomla.Levelup
 			Marshal.FreeHGlobal(p);
 
 			return rewardId;
+		}
+
+		override protected void _setLastCompletedInnerWorld(World world, string innerWorldId) {
+			worldStorage_SetLastCompletedInnerWorld(world.ID, innerWorldId);
+		}
+		
+		override protected string _getLastCompletedInnerWorld(World world) {
+			IntPtr p = IntPtr.Zero;
+			worldStorage_GetLastCompletedInnerWorld(world.ID, out p);
+			
+			string innerWorldId = Marshal.PtrToStringAnsi(p);
+			Marshal.FreeHGlobal(p);
+			
+			return innerWorldId;
 		}
 #endif
 	}
