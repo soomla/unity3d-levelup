@@ -47,7 +47,7 @@ namespace Soomla.Levelup
 		public GatesList(string id, Gate singleGate)
 			: base(id)
 		{
-			Gates.Add(singleGate);
+			Add(singleGate);
 		}
 
 		/// <summary>
@@ -61,7 +61,7 @@ namespace Soomla.Levelup
 			// Iterate over gates in given list and add them to Gates making a 
 			// copy and attaching listeners
 			foreach (Gate gate in gates) {
-				Gates.Add(gate);
+				Add(gate);
 			}
 		}
 		
@@ -79,7 +79,7 @@ namespace Soomla.Levelup
 			foreach (JSONObject gateJSON in gatesJSON) {
 				Gate gate = Gate.fromJSONObject(gateJSON);
 				if (gate != null) {
-					Gates.Add(gate);
+					Add(gate);
 				}
 			}
 		}
