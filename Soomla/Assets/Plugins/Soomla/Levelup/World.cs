@@ -355,17 +355,51 @@ namespace Soomla.Levelup {
 			return Scores.First().Value;
 		}
 
-		/// <summary>
-		/// Sums the inner <c>World</c> records.
-		/// </summary>
-		/// <returns>The sum of inner <c>World</c> records.</returns>
-		public double SumInnerWorldsRecords() {
-			double ret = 0;
-			foreach(World world in InnerWorldsList) {
-				ret += ( world.GetSingleScore() ?? new Score("DUMMY") ).Record;
-			}
-			return ret;
-		}
+        /// <summary>
+        /// Sums up this world's total <c>Score</c> value.
+        /// </summary>
+        /// <returns>The total world score.</returns>
+        public double SumWorldScoreRecords() {
+            return Scores.Sum( s => s.Value.Record );
+        }
+
+        /// <summary>
+        /// Sums the inner <c>World</c> records.
+        /// </summary>
+        /// <returns>The sum of inner <c>World</c> records.</returns>
+        [Obsolete( "This method is obsolete, use SumInnerWorldSingleRecords() instead." )]
+        public double SumInnerWorldsRecords() {
+            double ret = 0;
+            foreach( World world in InnerWorldsList ) {
+                ret += ( world.GetSingleScore() ?? new Score( "DUMMY" ) ).Record;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// Sums the inner <c>World</c> single score records, non-recursive.
+        /// </summary>
+        /// <returns>The sum of inner <c>World</c> records.</returns>
+        public double SumInnerWorldSingleRecords() {
+            double ret = 0;
+            foreach( World world in InnerWorldsList ) {
+                ret += ( world.GetSingleScore() ?? new Score( "DUMMY" ) ).Record;
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// Sums up all the inner <c>World</c> records, recursively.
+        /// </summary>
+        /// <returns>The sum of inner <c>World</c> records.</returns>
+        public double SumAllInnerWorldsRecords() {
+            double ret = 0;
+            foreach( World world in InnerWorldsList ) {
+                ret += world.SumWorldScoreRecords();
+                ret += world.SumAllInnerWorldsRecords();
+            }
+            return ret;
+        }
 
 
 		/** For more than one Score **/
