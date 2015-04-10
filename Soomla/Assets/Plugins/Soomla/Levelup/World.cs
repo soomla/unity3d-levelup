@@ -362,7 +362,7 @@ namespace Soomla.Levelup {
 		public double SumInnerWorldsRecords() {
 			double ret = 0;
 			foreach(World world in InnerWorldsList) {
-				ret += world.GetSingleScore().Record;
+				ret += ( world.GetSingleScore() ?? new Score("DUMMY") ).Record;
 			}
 			return ret;
 		}
