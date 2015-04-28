@@ -360,7 +360,7 @@ namespace Soomla.Levelup {
         /// </summary>
         /// <returns>The total world score.</returns>
         public double SumWorldScoreRecords() {
-            return Scores.Sum( s => s.Value.Record );
+            return Scores.Select( s => s.Value.Record <= s.Value.StartValue ? s.Value.StartValue : s.Value.Record ).Sum( s => s );
         }
 
         /// <summary>
