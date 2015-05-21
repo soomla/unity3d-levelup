@@ -1,3 +1,15 @@
+### v1.0.12 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.11...v1.0.12)
+
+* Fixes
+  * Making list gates attach
+  * GetGate function now checks children of InitialWorld.Gate GateList (thanks @altunsercan)
+  * Fixed issue where calling world.SumInnerWorldsRecords() will result in a NullReferenceException if any level of the hierarchy doesn't contain a score. (thanks @FanerYedermann)
+  * Fixed bug where android storage returns -1 if not yet stored once. (thanks @FanerYedermann)
+
+* New Features
+  * Added recursive sum of all scores in a world and its inner worlds (thanks @FanerYedermann)
+
+
 ### v1.0.11 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.10...v1.0.11)
 
 * Changes
