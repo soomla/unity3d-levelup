@@ -360,7 +360,7 @@ namespace Soomla.Levelup {
         /// </summary>
         /// <returns>The total world score.</returns>
         public double SumWorldScoreRecords() {
-			return Scores.Select( s => s.Value.Record <= s.Value.StartValue ? 0 : s.Value.Record ).Sum( s => s );
+			return Scores.Select( s => s.Value.Record < 0 ? 0 : s.Value.Record ).Sum( s => s );
         }
 
         /// <summary>
@@ -379,8 +379,9 @@ namespace Soomla.Levelup {
 		public double SumInnerWorldSingleRecords() {
 			double ret = 0;
 			foreach( World world in InnerWorldsList ) {
-				if (world.GetSingleScore() != null) {
-					double record = world.GetSingleScore().Record;
+				Score singleScore = world.GetSingleScore();
+				if (singleScore != null) {
+					double record = singleScore.Record;
 					if (record > -1) {
 						ret += record;
 					}
