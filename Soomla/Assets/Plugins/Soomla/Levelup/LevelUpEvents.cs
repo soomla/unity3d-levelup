@@ -43,6 +43,7 @@ namespace Soomla.Levelup {
 		void Awake(){
 			if(instance == null){ 	// making sure we only initialize one instance.
 				instance = this;
+                gameObject.name = "LevelUpEvents";
 				GameObject.DontDestroyOnLoad(this.gameObject);
 				Initialize();
 			} else {				// Destroying unused instances.
