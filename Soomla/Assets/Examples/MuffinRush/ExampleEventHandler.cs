@@ -37,7 +37,7 @@ namespace Soomla.Store.Example {
 			StoreEvents.OnBillingNotSupported += onBillingNotSupported;
 			StoreEvents.OnMarketPurchaseStarted += onMarketPurchaseStarted;
 			StoreEvents.OnItemPurchaseStarted += onItemPurchaseStarted;
-			StoreEvents.OnUnexpectedErrorInStore += onUnexpectedErrorInStore;
+			StoreEvents.OnUnexpectedStoreError += onUnexpectedStoreError;
 			StoreEvents.OnCurrencyBalanceChanged += onCurrencyBalanceChanged;
 			StoreEvents.OnGoodBalanceChanged += onGoodBalanceChanged;
 			StoreEvents.OnMarketPurchaseCancelled += onMarketPurchaseCancelled;
@@ -143,7 +143,7 @@ namespace Soomla.Store.Example {
 		/// Handles an unexpected error in store event.
 		/// </summary>
 		/// <param name="message">Error message.</param>
-		public void onUnexpectedErrorInStore(string message) {
+		public void onUnexpectedStoreError(int errorCode) {
 			
 		}
 
