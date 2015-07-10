@@ -6,6 +6,9 @@
   * Fixed issue where calling world.SumInnerWorldsRecords() will result in a NullReferenceException if any level of the hierarchy doesn't contain a score. (thanks @FanerYedermann)
   * Fixed bug where android storage returns -1 if not yet stored once. (thanks @FanerYedermann)
 
+* Changes
+  * Get methods on ScoreStorage, now retrieve -1 when there is no value, summing methods enhanced accordingly.
+
 * New Features
   * Added recursive sum of all scores in a world and its inner worlds (thanks @FanerYedermann)
 
