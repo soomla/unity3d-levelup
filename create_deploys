@@ -24,6 +24,7 @@ echo "creating unitypackage for SOOMLA Core"
     Assets/Soomla/Prefabs/CoreEvents.prefab \
     Assets/Soomla/Resources/SoomlaEditorScript.asset \
     Assets/Soomla/Resources/soom_logo.png \
+    Assets/WebPlayerTemplates/SoomlaConfig/wp8 \
   $PWD/soomla-unity3d-core.unitypackage \
   -quit
 
@@ -41,6 +42,7 @@ echo "creating unitypackage for SOOMLA Store"
     Assets/Plugins/WP8/IAPMock.xml \
     Assets/Plugins/WP8/wp-store.dll \
     Assets/Plugins/Soomla/Store \
+    Assets/Plugins/wp-store.dll \
     Assets/Soomla/Editor/build-tools/Soomla_StoreRunner.py \
     Assets/Soomla/Prefabs/StoreEvents.prefab \
     Assets/WebPlayerTemplates/SoomlaConfig/android/android-billing-services \
