@@ -35,11 +35,11 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 ### Pre baked unitypackages:
 
 [soomla-unity3d-core v1.0.8](http://library.soom.la/fetch/unity3d-core/1.0.8?cf=github)  
-[unity3d-store v1.8.0](http://library.soom.la/fetch/unity3d-store/1.8.0?cf=github)  
-[unity3d-profile v2.1.2](http://library.soom.la/fetch/unity3d-profile/2.1.2?cf=github)  
-[unity3d-levelup v1.0.13](http://library.soom.la/fetch/unity3d-levelup/1.0.13?cf=github)  
+[unity3d-store v1.8.1](http://library.soom.la/fetch/unity3d-store/1.8.1?cf=github)  
+[unity3d-profile v2.1.3](http://library.soom.la/fetch/unity3d-profile/2.1.3?cf=github)  
+[unity3d-levelup v1.0.14](http://library.soom.la/fetch/unity3d-levelup/1.0.14?cf=github)  
 
-[all-in-one package](http://library.soom.la/fetch/unity3d-allinone/1.0.13?cf=github)  
+[all-in-one package](http://library.soom.la/fetch/unity3d-allinone/1.0.14?cf=github)  
 
 ## Model Overview
 
@@ -85,10 +85,10 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 > NOTE: LevelUp depends on SOOMLA's other modules: Core, Store, and Profile. This document assumes that you are new to SOOMLA and have not worked with any of the other SOOMLA modules. If this is not the case, and you already *have* some or all of the other modules, please follow these directions only for the modules you are missing and of course, for the **LevelUp** module.
 
 1. Download the following unitypackages:
-    - [soomla-unity3d-core](http://library.soom.la/fetch/unity3d-core/1.0.8?cf=github)  
-    - [unity3d-store](http://library.soom.la/fetch/unity3d-store/1.8.0?cf=github)  
-    - [unity3d-profile](http://library.soom.la/fetch/unity3d-profile/2.1.2?cf=github)  
-    - [unity3d-levelup](http://library.soom.la/fetch/unity3d-levelup/1.0.13?cf=github)  
+    - [soomla-unity3d-core](http://library.soom.la/fetch/unity3d-core/latest?cf=github)  
+    - [unity3d-store](http://library.soom.la/fetch/unity3d-store/latest?cf=github)  
+    - [unity3d-profile](http://library.soom.la/fetch/unity3d-profile/latest?cf=github)  
+    - [unity3d-levelup](http://library.soom.la/fetch/unity3d-levelup/latest?cf=github)  
 2. Double-click on them following the order they appear above. It'll import all the necessary files into your project.
 > If you are completely new to SOOMLA you can use the [All-in-One](https://github.com/soomla/unity3d-levelup/raw/master/soomla-unity3d-all-in-one.unitypackage) unitypackage which contains all the above packages in one package. Importing it is equivalent to preforming the above steps.
 

@@ -1,4 +1,9 @@
-### v1.0.12 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.11...v1.0.12)
+### v1.0.14 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.13...v1.0.14)
+
+* Changes
+  * Merged with latest versions of all submodules. See their changelog.md for details.
+
+### v1.0.13 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.11...v1.0.13)
 
 * Fixes
   * Making list gates attach
