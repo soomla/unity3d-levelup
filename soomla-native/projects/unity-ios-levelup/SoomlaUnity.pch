@@ -8,7 +8,9 @@
 #endif
 
 #include "UnityTrampolineConfigure.h"
+#if !defined(UNITY_5_0_0)
 #include "iPhone_Common.h"
+#endif
 #include "UnityInterface.h"
 
 #ifdef __cplusplus
