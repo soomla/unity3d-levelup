@@ -5,8 +5,3 @@ cd -
 cd soomla-native/projects/unity-ios-levelup
 ./build_all
 cd -
-./create_deploys
-./create_deploys_aio
-rm -rf build
-mkdir build
-cp *unitypackage build/

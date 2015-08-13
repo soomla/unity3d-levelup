@@ -18,6 +18,8 @@ Soomla/ProjectSettings
 #create_deploys
 create_unity.log
 
+build.log
+
 # Xcode
 build/
 *.pbxuser
