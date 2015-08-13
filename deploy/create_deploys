@@ -1,0 +1,62 @@
+DEPLOY_PATH=out
+PACKAGE_NAME_CORE=soomla-unity3d-core.unitypackage
+PACKAGE_NAME_STORE=soomla-unity3d-store.unitypackage
+PACKAGE_NAME_PROFILE=soomla-unity3d-profile.unitypackage
+PACKAGE_NAME_LEVELUP=soomla-unity3d-levelup.unitypackage
+mkdir -p $DEPLOY_PATH
+rm -f $DEPLOY_PATH/$PACKAGE_NAME_CORE
+rm -f $DEPLOY_PATH/$PACKAGE_NAME_STORE
+rm -f $DEPLOY_PATH/$PACKAGE_NAME_PROFILE
+rm -f $DEPLOY_PATH/$PACKAGE_NAME_LEVELUP
+
+CORE_FILES=$(<../submodules/soomla-unity3d-core/deploy/file_list)
+STORE_FILES=$(<../submodules/unity3d-store/deploy/file_list)
+PROFILE_FILES=$(<../submodules/unity3d-profile/deploy/file_list)
+LEVELUP_FILES=$(<file_list)
+
+echo "creating unitypackage for SOOMLA Core"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -logFile create_unity_core.log \
+  -projectPath $PWD/../Soomla/ \
+  -exportPackage \
+    $CORE_FILES \
+  $PWD/$DEPLOY_PATH/$PACKAGE_NAME_CORE \
+  -quit
+
+
+echo "creating unitypackage for SOOMLA Store"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+    -batchmode \
+    -logFile create_unity_store.log \
+    -projectPath $PWD/../Soomla/ \
+    -exportPackage \
+      $STORE_FILES \
+    $PWD/$DEPLOY_PATH/$PACKAGE_NAME_STORE \
+    -quit
+
+
+echo "creating unitypackage for SOOMLA Profile"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+    -batchmode \
+    -logFile create_unity_profile.log \
+    -projectPath $PWD/../Soomla/ \
+    -exportPackage \
+    $PROFILE_FILES \
+    $PWD/$DEPLOY_PATH/$PACKAGE_NAME_PROFILE \
+    -quit
+
+
+echo "creating unitypackage for SOOMLA LevelUp"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -logFile create_unity_levelup.log \
+  -projectPath $PWD/../Soomla/ \
+  -exportPackage \
+    $LEVELUP_FILES \
+  $PWD/$DEPLOY_PATH/$PACKAGE_NAME_LEVELUP \
+  -quit

@@ -1,0 +1,20 @@
+DEPLOY_PATH=out
+PACKAGE_NAME=soomla-unity3d-all-in-one.unitypackage
+mkdir -p $DEPLOY_PATH
+rm -f $DEPLOY_PATH/$PACKAGE_NAME
+
+AIO_FILES=$(<../submodules/soomla-unity3d-core/deploy/file_list)$'\n'
+AIO_FILES+=$(<../submodules/unity3d-store/deploy/file_list)$'\n'
+AIO_FILES+=$(<../submodules/unity3d-profile/deploy/file_list)$'\n'
+AIO_FILES+=$(<file_list)
+
+echo "creating unitypackage for SOOMLA All-In-One Baby !"
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+  -batchmode \
+  -logFile create_unity_aio.log \
+  -projectPath $PWD/../Soomla/ \
+  -exportPackage \
+    $AIO_FILES \
+  $PWD/$DEPLOY_PATH/$PACKAGE_NAME \
+  -quit

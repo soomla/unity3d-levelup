@@ -16,8 +16,7 @@ Soomla/ProjectSettings
 
 # xcode
 #create_deploys
-create_unity.log
-
+create_unity*.log
 build.log
 
 # Xcode
