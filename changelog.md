@@ -1,3 +1,8 @@
+### v1.0.15 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.14...v1.0.15)
+
+* Changes
+  * New build way
+
 ### v1.0.14 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.13...v1.0.14)
 
 * Changes
