@@ -38,14 +38,8 @@ namespace Soomla.Levelup
 		/// <value>The instance to use.</value>
 		static GateStorage instance {
 			get {
-				if(_instance == null) {
-					#if UNITY_ANDROID && !UNITY_EDITOR
-					_instance = new GateStorageAndroid();
-					#elif UNITY_IOS && !UNITY_EDITOR
-					_instance = new GateStorageIOS();
-					#else
+				if(_instance == null) {					
 					_instance = new GateStorage();
-					#endif
 				}
 				return _instance;
 			}
@@ -76,19 +70,20 @@ namespace Soomla.Levelup
 		/// <param name="open">If set to <c>true</c> set the <c>Gate</c> to open; 
 		/// <param name="notify">If set to <c>true</c> trigger event.</param>
 		protected virtual void _setOpen(Gate gate, bool open, bool notify) {
-#if UNITY_EDITOR
+
 			string key = keyGateOpen(gate.ID);
 			
 			if (open) {
-				PlayerPrefs.SetString(key, "yes");
+				KeyValueStorage.SetValue(key, "yes");
+
 
 				if (notify) {
 					LevelUpEvents.OnGateOpened(gate);
 				}
 			} else {
-				PlayerPrefs.DeleteKey(key);
+                KeyValueStorage.DeleteKeyValue(key);
 			}
-#endif
+
 		}
 
 		/// <summary>
@@ -98,19 +93,17 @@ namespace Soomla.Levelup
 		/// otherwise, <c>false</c>.</returns>
 		/// <param name="gate"><c>Gate</c> to check if is open.</param>
 		protected virtual bool _isOpen(Gate gate) {
-#if UNITY_EDITOR
+
 			string key = keyGateOpen(gate.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue (key);
 			return !string.IsNullOrEmpty(val);
-#else
-			return false;
-#endif
+
 		}
 
 
 		/** Keys (private helper functions if Unity Editor is being used.) **/
 
-#if UNITY_EDITOR
+
 		private static string keyGateOpen(string gateId) {
 			return keyGates(gateId, "open");
 		}
@@ -118,7 +111,7 @@ namespace Soomla.Levelup
 		private static string keyGates(string gateId, string postfix) {
 			return SoomlaLevelUp.DB_KEY_PREFIX + "gates." + gateId + "." + postfix;
 		}
-#endif
+
 	}
 }
 

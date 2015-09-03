@@ -39,14 +39,8 @@ namespace Soomla.Levelup
 		/// <value>The instance to use.</value>
 		static LevelStorage instance {
 			get {
-				if(_instance == null) {
-					#if UNITY_ANDROID && !UNITY_EDITOR
-					_instance = new LevelStorageAndroid();
-					#elif UNITY_IOS && !UNITY_EDITOR
-					_instance = new LevelStorageIOS();
-					#else
+				if(_instance == null) {					
 					_instance = new LevelStorage();
-					#endif
 				}
 				return _instance;
 			}
@@ -124,11 +118,11 @@ namespace Soomla.Levelup
 		/// <param name="level"><c>Level</c> to set slowest duration.</param>
 		/// <param name="duration">Duration to set.</param>
 		protected virtual void _setSlowestDurationMillis(Level level, long duration) {
-#if UNITY_EDITOR
+
 			string key = keySlowestDuration (level.ID);
 			string val = duration.ToString ();
-			PlayerPrefs.SetString (key, val);
-#endif
+			KeyValueStorage.SetValue (key, val);
+
 		}
 
 		/// <summary>
@@ -137,13 +131,11 @@ namespace Soomla.Levelup
 		/// <returns>The slowest duration of the given <c>Level</c>.</returns>
 		/// <param name="level"><c>Level</c> to get slowest duration.</param>
 		protected virtual long _getSlowestDurationMillis(Level level) {
-#if UNITY_EDITOR
+
 			string key = keySlowestDuration (level.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue (key);
 			return (string.IsNullOrEmpty(val)) ? 0 : long.Parse (val);
-#else
-			return 0;
-#endif
+
 		}
 
 		/// <summary>
@@ -152,11 +144,11 @@ namespace Soomla.Levelup
 		/// <param name="level"><c>Level</c> to set fastest duration.</param>
 		/// <param name="duration">Duration to set.</param>
 		protected virtual void _setFastestDurationMillis(Level level, long duration) {
-#if UNITY_EDITOR
+
 			string key = keyFastestDuration (level.ID);
 			string val = duration.ToString ();
-			PlayerPrefs.SetString (key, val);
-#endif
+			KeyValueStorage.SetValue (key, val);
+
 		}
 		
 		/// <summary>
@@ -165,13 +157,11 @@ namespace Soomla.Levelup
 		/// <returns>The fastest duration of the given <c>Level</c>.</returns>
 		/// <param name="level"><c>Level</c> to get fastest duration.</param>
 		protected virtual long _getFastestDurationMillis(Level level) {
-#if UNITY_EDITOR
+
 			string key = keyFastestDuration (level.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue (key);
 			return (string.IsNullOrEmpty(val)) ? 0 : long.Parse (val);
-#else
-			return 0;
-#endif
+
 		}
 		
 		/// <summary>
@@ -180,22 +170,20 @@ namespace Soomla.Levelup
 		/// <returns>The number of times started after increasing.</returns>
 		/// <param name="level"><c>Level</c> to increase its times started.</param>
 		protected virtual int _incTimesStarted(Level level) {
-#if UNITY_EDITOR
+
 			int started = _getTimesStarted(level);
 			if (started < 0) { /* can't be negative */
 				started = 0;
 			}
 			string startedStr = (started + 1).ToString();
 			string key = keyTimesStarted(level.ID);
-			PlayerPrefs.SetString (key, startedStr);
+			KeyValueStorage.SetValue (key, startedStr);
 
 			// Notify level has started
 			LevelUpEvents.OnLevelStarted (level);
 
 			return started + 1;
-#else
-			return 0;
-#endif
+
 		}
 		
 		/// <summary>
@@ -204,19 +192,17 @@ namespace Soomla.Levelup
 		/// <returns>The number of times started after decreasing.</returns>
 		/// <param name="level"><c>Level</c> to decrease its times started.</param>
 		protected virtual int _decTimesStarted(Level level) {
-#if UNITY_EDITOR
+
 			int started = _getTimesStarted(level);
 			if (started <= 0) { /* can't be negative or zero */
 				return 0;
 			}
 			string startedStr = (started - 1).ToString();
 			string key = keyTimesStarted(level.ID);
-			PlayerPrefs.SetString (key, startedStr);
+			KeyValueStorage.SetValue (key, startedStr);
 
 			return started - 1;
-#else
-			return 0;
-#endif
+
 		}
 		
 		/// <summary>
@@ -225,9 +211,9 @@ namespace Soomla.Levelup
 		/// <returns>The number of times started.</returns>
 		/// <param name="level"><c>Level</c> whose times started is to be retrieved.</param>
 		protected virtual int _getTimesStarted(Level level) {
-#if UNITY_EDITOR
+
 			string key = keyTimesStarted(level.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue (key);
 			
 			int started = 0;
 			if (!string.IsNullOrEmpty(val)) {
@@ -235,9 +221,7 @@ namespace Soomla.Levelup
 			}
 			
 			return started;
-#else
-			return 0;
-#endif
+
 		}
 
 		/// <summary>
@@ -246,22 +230,20 @@ namespace Soomla.Levelup
 		/// <returns>The number of times played after increasing.</returns>
 		/// <param name="level"><c>Level</c> to increase its times played.</param>
 		protected virtual int _incTimesPlayed(Level level) {
-#if UNITY_EDITOR
+
 			int played = _getTimesPlayed(level);
 			if (played < 0) { /* can't be negative */
 				played = 0;
 			}
 			string playedStr = (played + 1).ToString();
 			string key = keyTimesPlayed(level.ID);
-			PlayerPrefs.SetString (key, playedStr);
+			KeyValueStorage.SetValue (key, playedStr);
 			
 			// Notify level has ended
 			LevelUpEvents.OnLevelEnded (level);
 			
 			return played + 1;
-#else
-			return 0;
-#endif
+
 		}
 		
 		/// <summary>
@@ -270,19 +252,17 @@ namespace Soomla.Levelup
 		/// <returns>The number of times played after decreasing.</returns>
 		/// <param name="level"><c>Level</c> to decrease its times played.</param>
 		protected virtual int _decTimesPlayed(Level level){
-#if UNITY_EDITOR
+
 			int played = _getTimesPlayed(level);
 			if (played <= 0) { /* can't be negative or zero */
 				return 0;
 			}
 			string playedStr = (played - 1).ToString();
 			string key = keyTimesPlayed(level.ID);
-			PlayerPrefs.SetString (key, playedStr);
+			KeyValueStorage.SetValue (key, playedStr);
 			
 			return played - 1;
-#else
-			return 0;
-#endif
+
 		} 
 		
 		/// <summary>
@@ -291,9 +271,9 @@ namespace Soomla.Levelup
 		/// <returns>The number of times played.</returns>
 		/// <param name="level"><c>Level</c> whose times played is to be retrieved.</param>
 		protected virtual int _getTimesPlayed(Level level) {
-#if UNITY_EDITOR
+
 			string key = keyTimesPlayed(level.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue (key);
 			
 			int played = 0;
 			if (!string.IsNullOrEmpty(val)) {
@@ -301,9 +281,6 @@ namespace Soomla.Levelup
 			}
 			
 			return played;
-#else
-			return 0;
-#endif
 		}
 
 		/// <summary>
@@ -312,19 +289,17 @@ namespace Soomla.Levelup
 		/// <returns>The number of times played after increasing.</returns>
 		/// <param name="level"><c>Level</c> to increase its times played.</param>
 		protected virtual int _incTimesCompleted(Level level) {
-			#if UNITY_EDITOR
+			
 			int completed = _getTimesCompleted(level);
 			if (completed < 0) { /* can't be negative */
 				completed = 0;
 			}
 			string completedStr = (completed + 1).ToString();
 			string key = keyTimesCompleted(level.ID);
-			PlayerPrefs.SetString (key, completedStr);
+			KeyValueStorage.SetValue (key, completedStr);
 			
 			return completed + 1;
-			#else
-			return 0;
-			#endif
+			
 		}
 		
 		/// <summary>
@@ -333,19 +308,17 @@ namespace Soomla.Levelup
 		/// <returns>The number of times played after decreasing.</returns>
 		/// <param name="level"><c>Level</c> to decrease its times played.</param>
 		protected virtual int _decTimesCompleted(Level level){
-			#if UNITY_EDITOR
+			
 			int completed = _getTimesCompleted(level);
 			if (completed <= 0) { /* can't be negative or zero */
 				return 0;
 			}
 			string completedStr = (completed - 1).ToString();
 			string key = keyTimesCompleted(level.ID);
-			PlayerPrefs.SetString (key, completedStr);
+			KeyValueStorage.SetValue (key, completedStr);
 			
 			return completed - 1;
-			#else
-			return 0;
-			#endif
+			
 		} 
 		
 		/// <summary>
@@ -354,9 +327,9 @@ namespace Soomla.Levelup
 		/// <returns>The number of times played.</returns>
 		/// <param name="level"><c>Level</c> whose times played is to be retrieved.</param>
 		protected virtual int _getTimesCompleted(Level level) {
-			#if UNITY_EDITOR
+			
 			string key = keyTimesCompleted(level.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue (key);
 			
 			int completed = 0;
 			if (!string.IsNullOrEmpty(val)) {
@@ -364,15 +337,13 @@ namespace Soomla.Levelup
 			}
 			
 			return completed;
-			#else
-			return 0;
-			#endif
+			
 		}
 
 
 		/** Keys (private helper functions if Unity Editor is being used.) **/
 
-#if UNITY_EDITOR
+
 		private static string keyLevels(string levelId, string postfix) {
 			return SoomlaLevelUp.DB_KEY_PREFIX + "levels." + levelId + "." + postfix;
 		}
@@ -396,7 +367,7 @@ namespace Soomla.Levelup
 		private static string keyFastestDuration(string levelId) {
 			return keyLevels(levelId, "fastest");
 		}
-#endif
+
 	}
 }
 

@@ -38,14 +38,8 @@ namespace Soomla.Levelup
 		/// <value>The instance to use.</value>
 		static ScoreStorage instance {
 			get {
-				if(_instance == null) {
-					#if UNITY_ANDROID && !UNITY_EDITOR
-					_instance = new ScoreStorageAndroid();
-					#elif UNITY_IOS && !UNITY_EDITOR
-					_instance = new ScoreStorageIOS();
-					#else
-					_instance = new ScoreStorage();
-					#endif
+				if(_instance == null) {					
+					_instance = new ScoreStorage();					
 				}
 				return _instance;
 			}
@@ -79,13 +73,13 @@ namespace Soomla.Levelup
 		/// <param name="score"><c>Score</c> to set.</param>
 		/// <param name="latest">The value to set for the <c>Score</c>.</param>
 		protected virtual void _setLatestScore(Score score, double latest) {
-#if UNITY_EDITOR
+
 			string key = keyLatestScore (score.ID);
 			string val = latest.ToString ();
-			PlayerPrefs.SetString (key, val);
+			KeyValueStorage.SetValue (key, val);
 
 			LevelUpEvents.OnLatestScoreChanged (score);
-#endif
+
 		}
 
 		/// <summary>
@@ -94,13 +88,11 @@ namespace Soomla.Levelup
 		/// <returns>The latest <c>Score</c>.</returns>
 		/// <param name="score">Score whose most recent value it to be retrieved.</param>
 		protected virtual double _getLatestScore(Score score) {
-#if UNITY_EDITOR
+
 			string key = keyLatestScore (score.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue(key);
 			return (string.IsNullOrEmpty(val)) ? -1 : double.Parse (val);
-#else
-			return score.StartValue;
-#endif
+
 		}
 
 		/// <summary>
@@ -109,13 +101,13 @@ namespace Soomla.Levelup
 		/// <param name="score"><c>Score</c> whose record is to change.</param>
 		/// <param name="record">The new record.</param>
 		protected virtual void _setRecordScore(Score score, double record) {
-#if UNITY_EDITOR
+
 			string key = keyRecordScore (score.ID);
 			string val = record.ToString ();
-			PlayerPrefs.SetString (key, val);
+			KeyValueStorage.SetValue (key, val);
 
 			LevelUpEvents.OnScoreRecordChanged (score);
-#endif
+
 		}
 
 		/// <summary>
@@ -124,13 +116,11 @@ namespace Soomla.Levelup
 		/// <returns>The record value of the given <c>Score</c>.</returns>
 		/// <param name="score"><c>Score</c> whose record is to be retrieved.</param>
 		protected virtual double _getRecordScore(Score score) {
-#if UNITY_EDITOR
+
 			string key = keyRecordScore (score.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue (key);
 			return (string.IsNullOrEmpty(val)) ? -1 : double.Parse (val);
-#else
-			return score.StartValue;
-#endif
+
 		}
 
 
@@ -139,7 +129,7 @@ namespace Soomla.Levelup
 		/// <summary>
 		/// Private helper functions if Unity Editor is being used. 
 		/// </summary>
-#if UNITY_EDITOR
+
 		private static string keyScores(string scoreId, string postfix) {
 			return SoomlaLevelUp.DB_KEY_PREFIX + "scores." + scoreId + "." + postfix;
 		}
@@ -151,7 +141,7 @@ namespace Soomla.Levelup
 		private static string keyRecordScore(string scoreId) {
 			return keyScores(scoreId, "record");
 		}
-#endif
+
 	}
 }
 

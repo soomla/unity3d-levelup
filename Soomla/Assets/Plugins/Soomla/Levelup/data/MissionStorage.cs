@@ -39,14 +39,8 @@ namespace Soomla.Levelup
 		/// <value>The instance to use.</value>
 		static MissionStorage instance {
 			get {
-				if(_instance == null) {
-					#if UNITY_ANDROID && !UNITY_EDITOR
-					_instance = new MissionStorageAndroid();
-					#elif UNITY_IOS && !UNITY_EDITOR
-					_instance = new MissionStorageIOS();
-					#else
+				if(_instance == null) {				
 					_instance = new MissionStorage();
-					#endif
 				}
 				return _instance;
 			}
@@ -92,12 +86,12 @@ namespace Soomla.Levelup
 		
 
 		protected virtual void _setCompleted(Mission mission, bool up, bool notify) {
-#if UNITY_EDITOR
+
 			int total = _getTimesCompleted(mission) + (up ? 1 : -1);
 			if(total<0) total = 0;
 
 			string key = keyMissionTimesCompleted(mission.ID);
-			PlayerPrefs.SetString(key, total.ToString());
+			KeyValueStorage.SetValue(key, total.ToString());
 			
 			if (notify) {
 				if (up) {
@@ -106,7 +100,7 @@ namespace Soomla.Levelup
 					LevelUpEvents.OnMissionCompletionRevoked(mission);
 				}
 			}
-#endif
+
 		}
 
 		/// <summary>
@@ -115,22 +109,20 @@ namespace Soomla.Levelup
 		/// <returns>The number of times the given mission has been completed.</returns>
 		/// <param name="mission">Mission.</param> 
 		protected virtual int _getTimesCompleted(Mission mission) {
-#if UNITY_EDITOR
+
 			string key = keyMissionTimesCompleted(mission.ID);
-			string val = PlayerPrefs.GetString (key);
+			string val = KeyValueStorage.GetValue (key);
 			if (string.IsNullOrEmpty(val)) {
 				return 0;
 			}
 			return int.Parse(val);
-#else
-			return 0;
-#endif
+
 		}
 
 
 		/** Keys (private helper functions if Unity Editor is being used.) **/
 
-#if UNITY_EDITOR
+
 		private static string keyMissions(string missionId, string postfix) {
 			return SoomlaLevelUp.DB_KEY_PREFIX + "missions." + missionId + "." + postfix;
 		}
@@ -138,7 +130,7 @@ namespace Soomla.Levelup
 		private static string keyMissionTimesCompleted(string missionId) {
 			return keyMissions(missionId, "timesCompleted");
 		}
-#endif
+
 
 	}
 }
