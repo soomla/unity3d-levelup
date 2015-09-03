@@ -1,3 +1,8 @@
+### v1.0.16 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.15...v1.0.16)
+
+* Changes
+  * Supporting changes in submodules
+
 ### v1.0.15 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.14...v1.0.15)
 
 * Changes
