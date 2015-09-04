@@ -153,13 +153,16 @@ namespace Soomla.Levelup {
 			JSONObject obj = base.toJSONObject();
 
 			JSONObject rewardsArr = new JSONObject(JSONObject.Type.ARRAY);
-			foreach(Reward reward in this.Rewards) {
-				rewardsArr.Add(reward.toJSONObject());
-			}
-			obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
 
-			// Special Challenge case
-			if (Gate != null) {
+            if (Rewards != null) { 
+			    foreach(Reward reward in this.Rewards) {
+				    rewardsArr.Add(reward.toJSONObject());
+			    }
+			    obj.AddField(JSONConsts.SOOM_REWARDS, rewardsArr);
+            }
+
+            // Special Challenge case
+            if (Gate != null) {
 				obj.AddField(LUJSONConsts.LU_GATE, Gate.toJSONObject());
 			}
 			obj.AddField(JSONConsts.SOOM_SCHEDULE, Schedule.toJSONObject());
@@ -264,13 +267,15 @@ namespace Soomla.Levelup {
 		}
 
 		private void takeRewards() {
-			foreach (Reward reward in Rewards) {
-				reward.Take();
-			}
+            if(Rewards!=null)
+			    foreach (Reward reward in Rewards) {
+				    reward.Take();
+			    }
 		}
 
 		private void giveRewards() {
-			foreach (Reward reward in Rewards) {
+            if (Rewards != null)
+                foreach (Reward reward in Rewards) {
 				reward.Give();
 			}
 		}
