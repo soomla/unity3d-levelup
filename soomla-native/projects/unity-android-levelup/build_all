@@ -1,1 +1,8 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
+
 ant -buildfile unity-android-levelup.xml -Dsoomla.filename="UnityAndroidLevelup" all
+
+cd - > /dev/null

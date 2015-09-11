@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+$DIR/android-levelup/build_all
+$DIR/ios-levelup/build_all
+$DIR/soomla-unity3d-core/build_all
+$DIR/unity3d-store/build_all
+$DIR/unity3d-profile/build_all

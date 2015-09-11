@@ -1,3 +1,8 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
+
 DEPLOY_PATH=out
 PACKAGE_NAME=soomla-unity3d-all-in-one.unitypackage
 mkdir -p $DEPLOY_PATH
@@ -18,3 +23,5 @@ echo "creating unitypackage for SOOMLA All-In-One Baby !"
     $AIO_FILES \
   $PWD/$DEPLOY_PATH/$PACKAGE_NAME \
   -quit
+
+cd - > /dev/null

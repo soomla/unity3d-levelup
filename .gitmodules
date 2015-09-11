@@ -1,9 +1,3 @@
-[submodule "submodules/ios-store"]
-	path = submodules/ios-store
-	url = git@github.com:soomla/ios-store.git
-[submodule "submodules/android-store"]
-	path = submodules/android-store
-	url = git@github.com:soomla/android-store.git
 [submodule "submodules/soomla-unity3d-core"]
 	path = submodules/soomla-unity3d-core
 	url = git@github.com:soomla/soomla-unity3d-core.git
@@ -16,9 +10,6 @@
 [submodule "submodules/unity3d-store"]
 	path = submodules/unity3d-store
 	url = git@github.com:soomla/unity3d-store.git
-[submodule "submodules/soomla-android-core"]
-	path = submodules/soomla-android-core
-	url = git@github.com:soomla/soomla-android-core.git
 [submodule "submodules/unity3d-profile"]
 	path = submodules/unity3d-profile
 	url = git@github.com:soomla/unity3d-profile.git

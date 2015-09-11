@@ -1,3 +1,8 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
+
 DEPLOY_PATH=out
 PACKAGE_NAME_CORE=soomla-unity3d-core.unitypackage
 PACKAGE_NAME_STORE=soomla-unity3d-store.unitypackage
@@ -60,3 +65,5 @@ echo "creating unitypackage for SOOMLA LevelUp"
     $LEVELUP_FILES \
   $PWD/$DEPLOY_PATH/$PACKAGE_NAME_LEVELUP \
   -quit
+
+cd - > /dev/null
