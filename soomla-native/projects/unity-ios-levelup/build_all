@@ -1,6 +1,10 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
 
 rm -rf build
 
 xcodebuild -configuration Release -sdk iphoneos -project UnityiOSLevelUp.xcodeproj -target UnityiOSLevelUp clean build CREATING_UNIVERSAL_DIR=$PWD/build/release
 
-cp build/release/libUnityiOSLevelUp.a ../../../Soomla/Assets/Plugins/iOS/
+cd - > /dev/null
