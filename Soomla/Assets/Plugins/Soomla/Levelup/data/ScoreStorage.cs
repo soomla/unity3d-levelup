@@ -26,7 +26,10 @@ namespace Soomla.Levelup
 
 		protected const string TAG = "SOOMLA ScoreStorage";
 
-		/// <summary>
+        public static readonly string DB_SCORE_KEY_PREFIX = "soomla.levelup.scores.";
+
+
+        /// <summary>
 		/// Holds an instance of <c>ScoreStorage</c> or <c>ScoreStorageAndroid</c> or <c>ScoreStorageIOS</c>.
 		/// </summary>
 		static ScoreStorage _instance = null;
@@ -152,6 +155,9 @@ namespace Soomla.Levelup
 			return keyScores(scoreId, "record");
 		}
 #endif
+        public static string getKeyScorePrefix() {
+            return DB_SCORE_KEY_PREFIX;
+        }
 	}
 }
 
