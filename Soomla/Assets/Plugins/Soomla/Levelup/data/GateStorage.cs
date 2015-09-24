@@ -26,6 +26,8 @@ namespace Soomla.Levelup
 
 		protected const string TAG = "SOOMLA GateStorage";
 
+        public static readonly string DB_GATE_KEY_PREFIX = "soomla.levelup.gates.";
+
 		/// <summary>
 		/// Holds an instance of <c>GateStorage</c> or <c>GateStorageAndroid</c> or <c>GateStorageIOS</c>.
 		/// </summary>
@@ -73,7 +75,7 @@ namespace Soomla.Levelup
 		/// Otherwise sets as closed. 
 		/// </summary>
 		/// <param name="gate">The <c>Gate</c> to open/close.</param>
-		/// <param name="open">If set to <c>true</c> set the <c>Gate</c> to open; 
+		/// <param name="open">If set to <c>true</c> set the <c>Gate</c> to open;</param>
 		/// <param name="notify">If set to <c>true</c> trigger event.</param>
 		protected virtual void _setOpen(Gate gate, bool open, bool notify) {
 #if UNITY_EDITOR
@@ -118,7 +120,12 @@ namespace Soomla.Levelup
 		private static string keyGates(string gateId, string postfix) {
 			return SoomlaLevelUp.DB_KEY_PREFIX + "gates." + gateId + "." + postfix;
 		}
+
 #endif
+
+        public static string getKeyGatePrefix() {
+            return DB_GATE_KEY_PREFIX;
+        }
 	}
 }
 

@@ -25,6 +25,8 @@ namespace Soomla.Levelup
 	public class WorldStorage
 	{
 
+        public static readonly string DB_WORLD_KEY_PREFIX = "soomla.levelup.worlds.";
+
 		protected const string TAG = "SOOMLA WorldStorage";
 
 		/// <summary>
@@ -222,6 +224,12 @@ namespace Soomla.Levelup
 		private static string keyLastCompletedInnerWorld(string worldId) {
 			return keyWorlds(worldId, "lastCompletedInnerWorld");
 		}
+
+		public static string getKeyWorldPrefix() {
+			return DB_WORLD_KEY_PREFIX;
+		}
 #endif
+
+
 	}
 }

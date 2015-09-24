@@ -25,7 +25,9 @@ namespace Soomla.Levelup
 	public class MissionStorage
 	{
 
-		protected const string TAG = "SOOMLA MissionStorage"; 
+		protected const string TAG = "SOOMLA MissionStorage";
+
+        public static readonly string DB_MISSION_KEY_PREFIX = "soomla.levelup.missions.";
 
 		/// <summary>
 		/// Holds an instance of <c>MissionStorage</c> or <c>MissionStorageAndroid</c> or <c>MissionStorageIOS</c>.
@@ -138,8 +140,12 @@ namespace Soomla.Levelup
 		private static string keyMissionTimesCompleted(string missionId) {
 			return keyMissions(missionId, "timesCompleted");
 		}
+
 #endif
 
+        public static string getKeyMissionPrefix() {
+            return DB_MISSION_KEY_PREFIX;
+        }
 	}
 }
 

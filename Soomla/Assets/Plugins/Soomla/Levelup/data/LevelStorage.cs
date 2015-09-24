@@ -25,7 +25,9 @@ namespace Soomla.Levelup
 	public class LevelStorage
 	{
 
-		protected const string TAG = "SOOMLA LevelStorage"; 
+		protected const string TAG = "SOOMLA LevelStorage";
+
+        public static readonly string DB_LEVEL_KEY_PREFIX = "soomla.levelup.levels.";
 
 		/// <summary>
 		/// Holds an instance of <c>LevelStorage</c> or <c>LevelStorageAndroid</c> or <c>LevelStorageIOS</c>.
@@ -263,7 +265,7 @@ namespace Soomla.Levelup
 			return 0;
 #endif
 		}
-		
+
 		/// <summary>
 		/// Decreases by 1 the number of times the given <c>Level</c> has been played. 
 		/// </summary>
@@ -397,6 +399,9 @@ namespace Soomla.Levelup
 			return keyLevels(levelId, "fastest");
 		}
 #endif
+		public static string getKeyLevelPrefix() {
+			return DB_LEVEL_KEY_PREFIX;
+		}
 	}
 }
 

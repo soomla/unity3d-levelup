@@ -191,7 +191,25 @@ namespace Soomla.Levelup {
 			});
 		}
 
-		/// <summary>
+        void ClearCurrentState() {
+            List<String> allKeys = KeyValueStorage.GetEncryptedKeys();
+			if (allKeys != null) {
+                foreach (string key in allKeys) {
+                    if (key.StartsWith(GateStorage.getKeyGatePrefix()) ||
+							key.StartsWith(LevelStorage.getKeyLevelPrefix()) ||
+							key.StartsWith(MissionStorage.getKeyMissionPrefix()) ||
+							key.StartsWith(ScoreStorage.getKeyScorePrefix()) ||
+							key.StartsWith(WorldStorage.getKeyWorldPrefix())) {
+
+						KeyValueStorage.DeleteKeyValue(key);
+					}
+				}
+
+			}
+		}
+
+
+        /// <summary>
 		/// Retrieves this instance of <c>SoomlaLevelUp</c>. Used when initializing SoomlaLevelUp.
 		/// </summary>
 		/// <returns>This instance of <c>SoomlaLevelUp</c>.</returns>
