@@ -1,3 +1,8 @@
+### v1.0.17 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.16...v1.0.17)
+
+* Changes
+  * Added clean up progress in LevelUp
+
 ### v1.0.16 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.15...v1.0.16)
 
 * Changes
