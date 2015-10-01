@@ -27,10 +27,6 @@ namespace Soomla.Levelup {
 
 		private const string TAG = "SOOMLA LevelUpEvents"; 
 
-#if UNITY_IOS && !UNITY_EDITOR
-		[DllImport ("__Internal")]
-		private static extern void soomlaLevelup_Init();
-#endif
 
 		/// <summary>
 		/// The instance of <c>LevelUpEvents</c> for this game.
@@ -56,15 +52,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		public static void Initialize() {
 			SoomlaUtils.LogDebug (TAG, "Initialize");
-#if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJNI.PushLocalFrame(100);
-			using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.LevelUpEventHandler")) {
-				jniEventHandler.CallStatic("initialize");
-			}
-			AndroidJNI.PopLocalFrame(IntPtr.Zero);
-#elif UNITY_IOS && !UNITY_EDITOR
-			soomlaLevelup_Init();
-#endif
+
 		}
 
 		/** Functions that handle various events that are fired throughout the code. **/
