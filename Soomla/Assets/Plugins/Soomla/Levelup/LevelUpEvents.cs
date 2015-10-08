@@ -17,14 +17,13 @@ using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-
+using Soomla.Singletons;
 namespace Soomla.Levelup {
 
 	/// <summary>
 	/// This class provides functions for event handling.
 	/// </summary>
-	public class LevelUpEvents : MonoBehaviour {
-
+	public class LevelUpEvents : CodeGeneratedSingleton {
 		private const string TAG = "SOOMLA LevelUpEvents"; 
 
 #if UNITY_IOS && !UNITY_EDITOR
@@ -35,20 +34,21 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// The instance of <c>LevelUpEvents</c> for this game.
 		/// </summary>
-		private static LevelUpEvents instance = null;
-
+		private static LevelUpEvents instance {
+			get { return GetSynchronousCodeGeneratedInstance<LevelUpEvents>(); }
+		}
+		protected override bool DontDestroySingleton
+		{
+			get { return true; }
+		}
+			    
 		/// <summary>
 		/// Initializes game state before the game starts.
 		/// </summary>
-		void Awake(){
-			if(instance == null){ 	// making sure we only initialize one instance.
-				instance = this;
-                gameObject.name = "LevelUpEvents";
-				GameObject.DontDestroyOnLoad(this.gameObject);
-				Initialize();
-			} else {				// Destroying unused instances.
-				GameObject.Destroy(this.gameObject);
-			}
+		protected override void InitAfterRegisteringAsSingleInstance()
+	    {
+		    base.InitAfterRegisteringAsSingleInstance();
+			Initialize();
 		}
 
 		/// <summary>
