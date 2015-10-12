@@ -1,3 +1,8 @@
+### v1.0.18 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.17...v1.0.18)
+
+* Fixes
+  * Can't read DB_WORLD_KEY_PREFIX from real device
+
 ### v1.0.17 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.16...v1.0.17)
 
 * Changes
