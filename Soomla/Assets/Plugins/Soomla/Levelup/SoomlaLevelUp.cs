@@ -39,6 +39,11 @@ namespace Soomla.Levelup {
 		/// Initial <c>World</c> to begin the game.
 		/// </summary>
 		public static World InitialWorld;
+		
+		/// <summary>
+		/// Take into account "Time.timeScale" in calculating the time of passage of levels.
+		/// </summary>
+		public static bool EnableTimeScale = false;
 
 		/// <summary>
 		/// Initializes the specified <c>InitialWorld</c> and rewards.
