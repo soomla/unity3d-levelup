@@ -39,7 +39,7 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 [all-in-one package](http://library.soom.la/fetch/unity3d-allinone/latest?cf=github)  
 
 ### From sources:
- - Clone this repository;
+ - Clone this repository recursively: `git clone --recursive https://github.com/soomla/unity3d-levelup.git`;
  - Run `./build_all` from project directory;
  - Take created binaries from `build` directory and use it!
 
