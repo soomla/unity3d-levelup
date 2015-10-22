@@ -1,6 +1,6 @@
-Assets/Plugins/Android/AndroidLevelUp.jar
-Assets/Plugins/Android/UnityAndroidLevelup.jar
-Assets/Plugins/iOS/libSoomlaiOSLevelUp.a
-Assets/Plugins/iOS/libUnityiOSLevelUp.a
+Assets/Plugins/Android/SOOMLA/libs/AndroidLevelUp.jar
+Assets/Plugins/Android/SOOMLA/libs/UnityAndroidLevelup.jar
+Assets/Plugins/iOS/SOOMLA/libSoomlaiOSLevelUp.a
+Assets/Plugins/iOS/SOOMLA/libUnityiOSLevelUp.a
 Assets/Plugins/Soomla/Levelup
 Assets/Soomla/Editor/build-tools/Soomla_LevelupRunner.py
