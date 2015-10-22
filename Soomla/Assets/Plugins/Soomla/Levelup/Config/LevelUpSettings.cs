@@ -46,7 +46,6 @@ namespace Soomla.Levelup
 //			BuildTargetGroup.WebPlayer, BuildTargetGroup.Standalone};
 
 		GUIContent profileVersion = new GUIContent("LevelUp Version [?]", "The SOOMLA LevelUp version. ");
-		GUIContent profileBuildVersion = new GUIContent("LevelUp Build [?]", "The SOOMLA LevelUp build.");
 
 		private LevelUpSettings()
 		{
@@ -67,7 +66,7 @@ namespace Soomla.Levelup
 
 		public void OnInfoGUI() {
 			SoomlaEditorScript.SelectableLabelField(profileVersion, "1.0.17");
-			SoomlaEditorScript.SelectableLabelField(profileBuildVersion, "1");
+			SoomlaEditorScript.LatestVersionField ("unity3d-levelup", "1.0.17");
 			EditorGUILayout.Space();
 		}
 
