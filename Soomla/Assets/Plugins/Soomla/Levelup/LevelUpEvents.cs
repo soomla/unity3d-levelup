@@ -55,6 +55,9 @@ namespace Soomla.Levelup {
 		/// Initializes this instance.
 		/// </summary>
 		public static void Initialize() {
+			//instantiate core events singleton
+			CoreEvents.Initialize();
+
 			SoomlaUtils.LogDebug (TAG, "Initialize");
 #if UNITY_ANDROID && !UNITY_EDITOR
 			AndroidJNI.PushLocalFrame(100);
