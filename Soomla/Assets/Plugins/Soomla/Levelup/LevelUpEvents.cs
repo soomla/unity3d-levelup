@@ -34,40 +34,32 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// The instance of <c>LevelUpEvents</c> for this game.
 		/// </summary>
-		private static LevelUpEvents instance {
-			get { return GetSynchronousCodeGeneratedInstance<LevelUpEvents>(); }
-		}
+		public static LevelUpEvents Instance = null;
+
 		protected override bool DontDestroySingleton
 		{
 			get { return true; }
-		}
-			    
-		/// <summary>
-		/// Initializes game state before the game starts.
-		/// </summary>
-		protected override void InitAfterRegisteringAsSingleInstance()
-	    {
-		    base.InitAfterRegisteringAsSingleInstance();
-			Initialize();
 		}
 
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
 		public static void Initialize() {
-			//instantiate core events singleton
-			CoreEvents.Initialize();
-
-			SoomlaUtils.LogDebug (TAG, "Initialize");
+			if (Instance == null) {
+				CoreEvents.Initialize();
+				Instance = GetSynchronousCodeGeneratedInstance<LevelUpEvents>();
+				
+				SoomlaUtils.LogDebug (TAG, "Initialize");
 #if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJNI.PushLocalFrame(100);
-			using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.LevelUpEventHandler")) {
-				jniEventHandler.CallStatic("initialize");
-			}
-			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+				AndroidJNI.PushLocalFrame(100);
+				using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.LevelUpEventHandler")) {
+					jniEventHandler.CallStatic("initialize");
+				}
+				AndroidJNI.PopLocalFrame(IntPtr.Zero);
 #elif UNITY_IOS && !UNITY_EDITOR
-			soomlaLevelup_Init();
+				soomlaLevelup_Init();
 #endif
+			}
 		}
 
 		/** Functions that handle various events that are fired throughout the code. **/
