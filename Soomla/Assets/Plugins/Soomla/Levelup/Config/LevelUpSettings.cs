@@ -66,7 +66,7 @@ namespace Soomla.Levelup
 
 		public void OnInfoGUI() {
 			SoomlaEditorScript.SelectableLabelField(profileVersion, "1.0.17");
-			SoomlaEditorScript.LatestVersionField ("unity3d-levelup", "1.0.17");
+			SoomlaEditorScript.LatestVersionField ("unity3d-levelup", "1.0.17", "New LevelUp version available!", "http://library.soom.la/fetch/unity3d-levelup/latest?cf=unity");
 			EditorGUILayout.Space();
 		}
 
