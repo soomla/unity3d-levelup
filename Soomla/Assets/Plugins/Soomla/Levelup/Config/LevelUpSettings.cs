@@ -37,6 +37,9 @@ namespace Soomla.Levelup
 		#if UNITY_EDITOR
 
 		static LevelUpSettings instance = new LevelUpSettings();
+
+		static string currentModuleVersion = "1.0.18";
+
 		static LevelUpSettings()
 		{
 			SoomlaEditorScript.addSettings(instance);
@@ -46,7 +49,6 @@ namespace Soomla.Levelup
 //			BuildTargetGroup.WebPlayer, BuildTargetGroup.Standalone};
 
 		GUIContent profileVersion = new GUIContent("LevelUp Version [?]", "The SOOMLA LevelUp version. ");
-		GUIContent profileBuildVersion = new GUIContent("LevelUp Build [?]", "The SOOMLA LevelUp build.");
 
 		private LevelUpSettings()
 		{
@@ -66,8 +68,8 @@ namespace Soomla.Levelup
 		}
 
 		public void OnInfoGUI() {
-			SoomlaEditorScript.SelectableLabelField(profileVersion, "1.0.18");
-			SoomlaEditorScript.SelectableLabelField(profileBuildVersion, "1");
+			SoomlaEditorScript.SelectableLabelField(profileVersion, currentModuleVersion);
+			SoomlaEditorScript.LatestVersionField ("unity3d-levelup", currentModuleVersion, "New LevelUp version available!", "http://library.soom.la/fetch/unity3d-levelup/latest?cf=unity");
 			EditorGUILayout.Space();
 		}
 

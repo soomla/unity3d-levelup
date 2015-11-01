@@ -17,14 +17,13 @@ using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-
+using Soomla.Singletons;
 namespace Soomla.Levelup {
 
 	/// <summary>
 	/// This class provides functions for event handling.
 	/// </summary>
-	public class LevelUpEvents : MonoBehaviour {
-
+	public class LevelUpEvents : CodeGeneratedSingleton {
 		private const string TAG = "SOOMLA LevelUpEvents"; 
 
 #if UNITY_IOS && !UNITY_EDITOR
@@ -35,36 +34,32 @@ namespace Soomla.Levelup {
 		/// <summary>
 		/// The instance of <c>LevelUpEvents</c> for this game.
 		/// </summary>
-		private static LevelUpEvents instance = null;
+		public static LevelUpEvents Instance = null;
 
-		/// <summary>
-		/// Initializes game state before the game starts.
-		/// </summary>
-		void Awake(){
-			if(instance == null){ 	// making sure we only initialize one instance.
-				instance = this;
-                gameObject.name = "LevelUpEvents";
-				GameObject.DontDestroyOnLoad(this.gameObject);
-				Initialize();
-			} else {				// Destroying unused instances.
-				GameObject.Destroy(this.gameObject);
-			}
+		protected override bool DontDestroySingleton
+		{
+			get { return true; }
 		}
 
 		/// <summary>
 		/// Initializes this instance.
 		/// </summary>
 		public static void Initialize() {
-			SoomlaUtils.LogDebug (TAG, "Initialize");
+			if (Instance == null) {
+				CoreEvents.Initialize();
+				Instance = GetSynchronousCodeGeneratedInstance<LevelUpEvents>();
+				
+				SoomlaUtils.LogDebug (TAG, "Initialize");
 #if UNITY_ANDROID && !UNITY_EDITOR
-			AndroidJNI.PushLocalFrame(100);
-			using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.LevelUpEventHandler")) {
-				jniEventHandler.CallStatic("initialize");
-			}
-			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+				AndroidJNI.PushLocalFrame(100);
+				using(AndroidJavaClass jniEventHandler = new AndroidJavaClass("com.soomla.unity.LevelUpEventHandler")) {
+					jniEventHandler.CallStatic("initialize");
+				}
+				AndroidJNI.PopLocalFrame(IntPtr.Zero);
 #elif UNITY_IOS && !UNITY_EDITOR
-			soomlaLevelup_Init();
+				soomlaLevelup_Init();
 #endif
+			}
 		}
 
 		/** Functions that handle various events that are fired throughout the code. **/

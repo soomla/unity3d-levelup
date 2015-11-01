@@ -17,34 +17,34 @@
   <path id="unityandroidlevelup.module.production.classpath">
     <path refid="${module.jdk.classpath.unityandroidlevelup}"/>
     <pathelement location="${basedir}/libs/unity-classes.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/AndroidLevelUp.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/SoomlaAndroidCore.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/square-otto-1.3.2.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/AndroidLevelUp.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/SoomlaAndroidCore.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/square-otto-1.3.2.jar"/>
   </path>
 
   <path id="unityandroidlevelup.runtime.production.module.classpath">
     <pathelement location="${unityandroidlevelup.output.dir}"/>
     <pathelement location="${basedir}/libs/unity-classes.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/AndroidLevelUp.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/SoomlaAndroidCore.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/square-otto-1.3.2.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/AndroidLevelUp.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/SoomlaAndroidCore.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/square-otto-1.3.2.jar"/>
   </path>
 
   <path id="unityandroidlevelup.module.classpath">
     <path refid="${module.jdk.classpath.unityandroidlevelup}"/>
     <pathelement location="${unityandroidlevelup.output.dir}"/>
     <pathelement location="${basedir}/libs/unity-classes.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/AndroidLevelUp.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/SoomlaAndroidCore.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/square-otto-1.3.2.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/AndroidLevelUp.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/SoomlaAndroidCore.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/square-otto-1.3.2.jar"/>
   </path>
 
   <path id="unityandroidlevelup.runtime.module.classpath">
     <pathelement location="${unityandroidlevelup.output.dir}"/>
     <pathelement location="${basedir}/libs/unity-classes.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/AndroidLevelUp.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/SoomlaAndroidCore.jar"/>
-    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/square-otto-1.3.2.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/AndroidLevelUp.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/SoomlaAndroidCore.jar"/>
+    <pathelement location="${basedir}/../../../Soomla/Assets/Plugins/Android/Soomla/libs/square-otto-1.3.2.jar"/>
   </path>
 
 

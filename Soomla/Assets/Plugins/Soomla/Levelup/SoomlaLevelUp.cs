@@ -45,6 +45,7 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <param name="initialWorld">Initial world.</param>
 		public static void Initialize(World initialWorld) {
+			LevelUpEvents.Initialize();
 			InitialWorld = initialWorld;
 
 			save();
