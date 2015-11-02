@@ -3,4 +3,5 @@ Assets/Plugins/Android/Soomla/libs/UnityAndroidLevelup.jar
 Assets/Plugins/iOS/Soomla/libSoomlaiOSLevelUp.a
 Assets/Plugins/iOS/Soomla/libUnityiOSLevelUp.a
 Assets/Plugins/Soomla/Levelup
+Assets/Soomla/levelup_file_list
 Assets/Soomla/Editor/build-tools/Soomla_LevelupRunner.py
