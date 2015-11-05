@@ -217,6 +217,8 @@ namespace Soomla.Levelup {
 
 			if (completed) {
 				long duration = GetPlayDurationMillis();
+
+				LevelStorage.SetLastDurationMillis(this, duration);
 				
 				// Calculate the slowest \ fastest durations of level play
 				

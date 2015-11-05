@@ -28,6 +28,10 @@ namespace Soomla.Levelup
 #if UNITY_IOS && !UNITY_EDITOR
 
 	[DllImport ("__Internal")]
+	private static extern void levelStorage_SetLastDurationMillis(string levelId, long duration);
+	[DllImport ("__Internal")]
+	private static extern long levelStorage_GetLastDurationMillis(string levelId);
+	[DllImport ("__Internal")]
 	private static extern void levelStorage_SetSlowestDurationMillis(string levelId, long duration);
 	[DllImport ("__Internal")]
 	private static extern long levelStorage_GetSlowestDurationMillis(string levelId);
@@ -54,6 +58,14 @@ namespace Soomla.Levelup
 	[DllImport ("__Internal")]
 	private static extern int levelStorage_GetTimesCompleted(string levelId);
 
+
+	protected override void _setLastDurationMillis(Level level, long duration) {
+		levelStorage_SetLastDurationMillis(level.ID, duration);
+	}
+	
+	protected override long _getLastDurationMillis(Level level) {
+		return levelStorage_GetLastDurationMillis(level.ID);
+	}
 
 	protected override void _setSlowestDurationMillis(Level level, long duration) {
 		levelStorage_SetSlowestDurationMillis(level.ID, duration);
