@@ -74,7 +74,7 @@ namespace Soomla.Levelup
 			long duration = 0;
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniLevelStorage = new AndroidJavaClass("com.soomla.levelup.data.LevelStorage")) {
-				duration = jniLevelStorage.CallStatic<long>("getSlowestDurationMillis", level.ID);
+				duration = jniLevelStorage.CallStatic<long>("getFastestDurationMillis", level.ID);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 			return duration;

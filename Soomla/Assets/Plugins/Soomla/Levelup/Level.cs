@@ -225,7 +225,7 @@ namespace Soomla.Levelup {
 
 				// We assume that levels' duration is never 0
 				long fastest = GetFastestDurationMillis ();
-				if (fastest == 0 || duration < GetFastestDurationMillis ()) {
+				if (fastest == 0 || duration < fastest) {
 					LevelStorage.SetFastestDurationMillis (this, duration);
 				}
 			}
