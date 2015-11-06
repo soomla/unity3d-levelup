@@ -230,9 +230,6 @@ namespace Soomla.Levelup {
 				}
 			}
 
-			// Count number of times this level was played
-			LevelStorage.IncTimesPlayed(this);
-
 			if (completed) {
 				
 				foreach (Score score in Scores.Values) {
@@ -242,6 +239,8 @@ namespace Soomla.Levelup {
 				SetCompleted(true);
 			}
 
+			// Count number of times this level was played
+			LevelStorage.IncTimesPlayed(this);
 		}
 
 		/// <summary>
