@@ -58,6 +58,14 @@ namespace Soomla.Levelup
 		/** The following functions call the relevant instance-specific functions. **/
 			
 		/** LEVEL DURATIONS **/
+
+		public static void SetLastDurationMillis(Level level, long duration) {
+			instance._setLastDurationMillis(level, duration);	
+		}
+		
+		public static long GetLastDurationMillis(Level level) {
+			return instance._getLastDurationMillis(level);
+		}
 	
 		public static void SetSlowestDurationMillis(Level level, long duration) {
 			instance._setSlowestDurationMillis(level, duration);	
@@ -119,6 +127,34 @@ namespace Soomla.Levelup
 
 
 		/** Unity-Editor Functions **/
+
+		/// <summary>
+		/// Sets the slowest (given) duration for the given level.
+		/// </summary>
+		/// <param name="level"><c>Level</c> to set slowest duration.</param>
+		/// <param name="duration">Duration to set.</param>
+		protected virtual void _setLastDurationMillis(Level level, long duration) {
+#if UNITY_EDITOR
+			string key = keyLastDuration (level.ID);
+			string val = duration.ToString ();
+			PlayerPrefs.SetString (key, val);
+#endif
+		}
+		
+		/// <summary>
+		/// Retrieves the slowest duration for the given level.
+		/// </summary>
+		/// <returns>The slowest duration of the given <c>Level</c>.</returns>
+		/// <param name="level"><c>Level</c> to get slowest duration.</param>
+		protected virtual long _getLastDurationMillis(Level level) {
+#if UNITY_EDITOR
+			string key = keyLastDuration (level.ID);
+			string val = PlayerPrefs.GetString (key);
+			return (string.IsNullOrEmpty (val)) ? 0 : long.Parse (val);
+#else
+			return 0;
+#endif
+		}
 
 		/// <summary>
 		/// Sets the slowest (given) duration for the given level.
@@ -390,7 +426,11 @@ namespace Soomla.Levelup
 		private static string keyTimesCompleted(string levelId) {
 			return keyLevels(levelId, "timesCompleted");
 		}
-		
+
+		private static string keyLastDuration(string levelId) {
+			return keyLevels(levelId, "last");
+		}
+
 		private static string keySlowestDuration(string levelId) {
 			return keyLevels(levelId, "slowest");
 		}
