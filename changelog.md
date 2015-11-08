@@ -1,3 +1,16 @@
+### v1.1.0 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.18...v1.1.0)
+
+* Features
+  * Added checking for latest version in Soomla Settings panel
+  * Added "Remove Soomla" to Soomla menu
+  * Added a new way of event handling without prefabs
+
+* Fixes
+  * Minor fixes to Level
+
+* Changes
+  * Moved all SOOMLA plugins into 'Soomla' folders
+
 ### v1.0.18 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.17...v1.0.18)
 
 * Fixes

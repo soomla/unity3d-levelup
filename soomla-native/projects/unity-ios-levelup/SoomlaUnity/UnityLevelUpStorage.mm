@@ -22,6 +22,16 @@ extern "C" {
         return [GateStorage isOpen:gateIdS];
     }
     
+  
+    void levelStorage_SetLastDurationMillis(const char* levelId, long long duration) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        [LevelStorage setLastDurationMillis:duration forLevel:levelIdS];
+    }
+    
+    long long levelStorage_GetLastDurationMillis(const char* levelId) {
+        NSString* levelIdS = [NSString stringWithUTF8String:levelId];
+        return [LevelStorage getLastDurationMillisForLevel:levelIdS];
+    }
     
 	void levelStorage_SetSlowestDurationMillis(const char* levelId, long long duration) {
         NSString* levelIdS = [NSString stringWithUTF8String:levelId];
