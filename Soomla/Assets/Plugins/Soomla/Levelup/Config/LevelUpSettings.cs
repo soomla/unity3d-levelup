@@ -71,7 +71,7 @@ namespace Soomla.Levelup
 
 		public void OnInfoGUI() {
 			SoomlaEditorScript.RemoveSoomlaModuleButton(levelUpVersion, currentModuleVersion, "LevelUp");
-			SoomlaEditorScript.LatestVersionField ("unity3d-levelup", currentModuleVersion, "New LevelUp version available!", "http://library.soom.la/fetch/unity3d-levelup/latest?cf=unity");
+			SoomlaEditorScript.LatestVersionField ("unity3d-levelup", currentModuleVersion, "New version available!", "http://library.soom.la/fetch/unity3d-levelup-only/latest?cf=unity");
 			EditorGUILayout.Space();
 		}
 
