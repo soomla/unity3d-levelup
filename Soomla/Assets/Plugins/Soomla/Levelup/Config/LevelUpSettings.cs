@@ -44,8 +44,7 @@ namespace Soomla.Levelup
 		{
 			SoomlaEditorScript.addSettings(instance);
 
-			List<string> additionalDependFiles = new List<string>(); //Add files that not tracked in file_list
-			SoomlaEditorScript.addFileList("LevelUp", "Assets/Soomla/levelup_file_list", additionalDependFiles.ToArray());
+			SoomlaEditorScript.addFileList("LevelUp", "Assets/Soomla/levelup_file_list", new string[] {});
 		}
 
 //		BuildTargetGroup[] supportedPlatforms = { BuildTargetGroup.Android, BuildTargetGroup.iPhone,
