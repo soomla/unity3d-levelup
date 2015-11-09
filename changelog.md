@@ -1,3 +1,8 @@
+### v1.1.1 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.1.0...v1.1.1)
+
+* Changes
+  * Minor improvements to Editor script
+
 ### v1.1.0 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.0.18...v1.1.0)
 
 * Features
