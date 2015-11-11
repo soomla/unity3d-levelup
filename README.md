@@ -88,9 +88,9 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 
 1. Download the following unitypackages:
     - [soomla-unity3d-core](http://library.soom.la/fetch/unity3d-core/latest?cf=github)  
-    - [unity3d-store](http://library.soom.la/fetch/unity3d-store/latest?cf=github)  
-    - [unity3d-profile](http://library.soom.la/fetch/unity3d-profile/latest?cf=github)  
-    - [unity3d-levelup](http://library.soom.la/fetch/unity3d-levelup/latest?cf=github)  
+    - [unity3d-store](http://library.soom.la/fetch/unity3d-store-only/latest?cf=github)  
+    - [unity3d-profile](http://library.soom.la/fetch/unity3d-profile-only/latest?cf=github)  
+    - [unity3d-levelup](http://library.soom.la/fetch/unity3d-levelup-only/latest?cf=github)  
 2. Double-click on them following the order they appear above. It'll import all the necessary files into your project.
 > If you are completely new to SOOMLA you can use the [All-in-One](https://github.com/soomla/unity3d-levelup/raw/master/soomla-unity3d-all-in-one.unitypackage) unitypackage which contains all the above packages in one package. Importing it is equivalent to preforming the above steps.
 
