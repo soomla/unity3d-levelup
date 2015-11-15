@@ -74,6 +74,7 @@ namespace Soomla.Levelup {
 		/// <param name="gate">Gate to open this <c>Level</c>.</param>
 		/// <param name="scores">Scores of this <c>Level</c>.</param>
 		/// <param name="missions">Missions of this <c>Level</c>.</param>
+		/// <param name="useTimeScaling">Take Time.timeScale value into account while duration will be calculated.</param>
 		public Level(string id, Gate gate, Dictionary<string, Score> scores, List<Mission> missions, bool useTimeScaling)
 			: base(id, gate, new Dictionary<string, World>(), scores, missions)
 		{
@@ -100,6 +101,7 @@ namespace Soomla.Levelup {
 		/// <param name="innerWorlds">Inner <c>Level</c>s of this <c>Level</c>.</param>
 		/// <param name="scores">Scores of this <c>Level</c>.</param>
 		/// <param name="missions">Missions of this <c>Level</c>.</param>
+		/// <param name="useTimeScaling">Take Time.timeScale value into account while duration will be calculated.</param>
 		public Level(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Mission> missions, bool useTimeScaling)
 			: base(id, gate, innerWorlds, scores, missions)
 		{
