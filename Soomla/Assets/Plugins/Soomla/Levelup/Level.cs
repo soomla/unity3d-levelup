@@ -62,8 +62,19 @@ namespace Soomla.Levelup {
 		/// Constructor.
 		/// </summary>
 		/// <param name="id">ID.</param>
-		public Level(String id)
+		/// <param name="useTimeScaling">Take Time.timeScale value into account while duration will be calculated.</param>
+		public Level(String id, bool useTimeScaling)
 			: base(id) 
+		{
+			this.UseTimeScaling = useTimeScaling;
+		}
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		public Level(String id)
+			: this(id, false)
 		{
 		}
 
@@ -183,7 +194,7 @@ namespace Soomla.Levelup {
 			long now = this.UseTimeScaling ? Mathf.RoundToInt(Time.time * 1000) : DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			long duration = Elapsed;
 
-			if (StartTime != 0) {
+			if (StartTime != 0 || UseTimeScaling) {
 				duration += now - StartTime;
 			}
 
