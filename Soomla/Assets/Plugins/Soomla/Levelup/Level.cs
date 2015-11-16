@@ -41,7 +41,7 @@ namespace Soomla.Levelup {
 		/// The start time of this <c>Level</c>.
 		/// </summary>
 		private long StartTime;
-
+		       
 		/// <summary>
 		/// The elapsed time this <c>Level</c> is being played. 
 		/// </summary>
@@ -54,11 +54,27 @@ namespace Soomla.Levelup {
 		public LevelState State = LevelState.Idle;
 
 		/// <summary>
+		/// Determines that should time scaling will be taken into account.
+		/// </summary>
+		public readonly bool UseTimeScaling;
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="useTimeScaling">Take Time.timeScale value into account while duration will be calculated.</param>
+		public Level(String id, bool useTimeScaling)
+			: base(id) 
+		{
+			this.UseTimeScaling = useTimeScaling;
+		}
+
+		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="id">ID.</param>
 		public Level(String id)
-			: base(id) 
+			: this(id, false)
 		{
 		}
 
@@ -69,8 +85,22 @@ namespace Soomla.Levelup {
 		/// <param name="gate">Gate to open this <c>Level</c>.</param>
 		/// <param name="scores">Scores of this <c>Level</c>.</param>
 		/// <param name="missions">Missions of this <c>Level</c>.</param>
-		public Level(string id, Gate gate, Dictionary<string, Score> scores, List<Mission> missions)
+		/// <param name="useTimeScaling">Take Time.timeScale value into account while duration will be calculated.</param>
+		public Level(string id, Gate gate, Dictionary<string, Score> scores, List<Mission> missions, bool useTimeScaling)
 			: base(id, gate, new Dictionary<string, World>(), scores, missions)
+		{
+			this.UseTimeScaling = useTimeScaling;
+		}
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="gate">Gate to open this <c>Level</c>.</param>
+		/// <param name="scores">Scores of this <c>Level</c>.</param>
+		/// <param name="missions">Missions of this <c>Level</c>.</param>
+		public Level(string id, Gate gate, Dictionary<string, Score> scores, List<Mission> missions)
+			: this(id, gate, new Dictionary<string, World>(), scores, missions, false)
 		{
 		}
 
@@ -82,8 +112,23 @@ namespace Soomla.Levelup {
 		/// <param name="innerWorlds">Inner <c>Level</c>s of this <c>Level</c>.</param>
 		/// <param name="scores">Scores of this <c>Level</c>.</param>
 		/// <param name="missions">Missions of this <c>Level</c>.</param>
-		public Level(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Mission> missions)
+		/// <param name="useTimeScaling">Take Time.timeScale value into account while duration will be calculated.</param>
+		public Level(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Mission> missions, bool useTimeScaling)
 			: base(id, gate, innerWorlds, scores, missions)
+		{
+			this.UseTimeScaling = useTimeScaling;
+		}
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="id">ID.</param>
+		/// <param name="gate">Gate to open this <c>Level</c>.</param>
+		/// <param name="innerWorlds">Inner <c>Level</c>s of this <c>Level</c>.</param>
+		/// <param name="scores">Scores of this <c>Level</c>.</param>
+		/// <param name="missions">Missions of this <c>Level</c>.</param>
+		public Level(string id, Gate gate, Dictionary<string, World> innerWorlds, Dictionary<string, Score> scores, List<Mission> missions)
+			: this(id, gate, innerWorlds, scores, missions, false)
 		{
 		}
 
@@ -146,13 +191,13 @@ namespace Soomla.Levelup {
 		/// </summary>
 		/// <returns>The play duration in millis.</returns>
 		public long GetPlayDurationMillis() {
-			
-			long now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+			long now = this.UseTimeScaling ? Mathf.RoundToInt(Time.time * 1000) : DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			long duration = Elapsed;
-			if (StartTime != 0) {
+
+			if (StartTime != 0 || UseTimeScaling) {
 				duration += now - StartTime;
 			}
-			
+
 			return duration;
 		}
 
@@ -176,7 +221,7 @@ namespace Soomla.Levelup {
 				LevelStorage.IncTimesStarted(this);
 			}
 
-			StartTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+			StartTime = this.UseTimeScaling ? Mathf.RoundToInt(Time.time * 1000) : DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			State = LevelState.Running;
 			return true;
 		}
@@ -189,11 +234,12 @@ namespace Soomla.Levelup {
 				SoomlaUtils.LogError(TAG, "Can't pause a level that is not running. state=" + State);
 				return;
 			}
-			
-			long now = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
+			long now = this.UseTimeScaling ? Mathf.RoundToInt(Time.time * 1000) : DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
 			Elapsed += now - StartTime;
 			StartTime = 0;
-			
+
 			State = LevelState.Paused;
 		}
 
