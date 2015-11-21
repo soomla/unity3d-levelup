@@ -75,3 +75,6 @@ proguard/
 
 create_deploys_aio_hw
 soomla-unity3d-grow.unitypackage
+
+*.meta
+UnityTestTools/
