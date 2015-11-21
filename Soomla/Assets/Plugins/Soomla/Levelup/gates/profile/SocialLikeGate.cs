@@ -56,7 +56,7 @@ namespace Soomla.Levelup
 		public SocialLikeGate(JSONObject jsonGate)
 			: base(jsonGate)
 		{
-			// TODO: implement this when needed. It's irrelevant now.
+			this.PageName = jsonGate[LUJSONConsts.LU_SOCIAL_PAGE_NAME].str;
 		}
 		
 		/// <summary>
@@ -65,8 +65,7 @@ namespace Soomla.Levelup
 		/// <returns>The JSON object.</returns>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-
-			// TODO: implement this when needed. It's irrelevant now.
+			obj.AddField(LUJSONConsts.LU_SOCIAL_PAGE_NAME, this.PageName);
 
 			return obj;
 		}

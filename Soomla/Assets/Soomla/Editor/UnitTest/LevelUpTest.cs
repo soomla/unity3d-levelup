@@ -69,12 +69,15 @@ namespace Soomla.Test
 			SoomlaLevelUp.Initialize (mainWorld);
 
 			//basic asserts
-			Assert.AreEqual (SoomlaLevelUp.GetWorld ("main_world").ID, "main_world");
-			Assert.AreEqual (SoomlaLevelUp.GetReward ("badge_bronzeMedal").ID, "badge_bronzeMedal");
-			Assert.AreEqual (SoomlaLevelUp.GetReward ("badge_silverMedal").ID, "badge_silverMedal");
-			Assert.AreEqual (SoomlaLevelUp.InitialWorld.ID, "main_world");
-			Assert.AreEqual (Convert.ToString (SoomlaLevelUp.GetLevelCount ()), "0");
-			Assert.AreEqual (Convert.ToString (Reward.GetRewards().Count), "4");
+			Assert.AreEqual("main_world", SoomlaLevelUp.GetWorld ("main_world").ID);
+			Assert.AreEqual("badge_bronzeMedal", SoomlaLevelUp.GetReward ("badge_bronzeMedal").ID);
+			Assert.AreEqual("badge_silverMedal", SoomlaLevelUp.GetReward ("badge_silverMedal").ID);
+			Assert.AreEqual("main_world", SoomlaLevelUp.InitialWorld.ID);
+			Assert.AreEqual(0, SoomlaLevelUp.GetLevelCount());
+			Assert.AreEqual(bronzeMedal, Reward.GetReward("badge_bronzeMedal"));
+			Assert.AreEqual(silverMedal, Reward.GetReward("badge_silverMedal"));
+			Assert.AreEqual(goldMedal, Reward.GetReward("badge_goldMedal"));
+			Assert.AreEqual(perfectMedal, Reward.GetReward("item_perfectMedal"));
 		}
 
 		/// <summary>
@@ -95,9 +98,9 @@ namespace Soomla.Test
 
 			string json = KeyValueStorage.GetValue ("soomla.levelup.model");
 
-			Assert.IsNotEmpty (json); 
+			Assert.IsNotEmpty(json); 
 
-			Assert.AreNotEqual ("Dummy", json); //should fail
+			Assert.AreNotEqual("Dummy", json); //should fail
 		}
 
 		void onLevelUpInitialized()
