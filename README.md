@@ -11,7 +11,6 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 
 ## Contents
 
-- [Downloads](#downloads)
 - [Model Overview](#model-overview)
     - [World / Level](#world--level)
     - [Score](#score)
@@ -19,7 +18,6 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
     - [Mission/Challenge](#missionchallenge)
     - [Reward](#reward)
 - [Getting Started](#getting-started)
-    - [Cloning](#cloning)
     - [Integration with SOOMLA unity3d-store](#integration-with-soomla-unity3d-store)
     - [Integration with SOOMLA unity3d-profile](#integration-with-soomla-unity3d-profile)
 - [Debugging](#debugging)
@@ -29,19 +27,6 @@ unity3d-levelup is the implementation of the LevelUp module for Unity3d.
 
 <!-- Check out our [Wiki] (https://github.com/soomla/android-store/wiki) for more information about the project and how to use it better. -->
 
-
-## Downloads
-
-### Pre baked unitypackages:
-
-[unity3d-levelup v1.1.2](http://library.soom.la/fetch/unity3d-levelup/1.1.2?cf=github)
-
-[all-in-one package](http://library.soom.la/fetch/unity3d-allinone/latest?cf=github)  
-
-### From sources:
- - Clone this repository recursively: `git clone --recursive https://github.com/soomla/unity3d-levelup.git`
- - Run `./build_all` from project directory
- - Take created binaries from `build` directory and use it!
 
 ## Model Overview
 
@@ -86,17 +71,11 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 ## Getting Started
 > NOTE: LevelUp depends on SOOMLA's other modules: Core, Store, and Profile. This document assumes that you are new to SOOMLA and have not worked with any of the other SOOMLA modules. If this is not the case, and you already *have* some or all of the other modules, please follow these directions only for the modules you are missing and of course, for the **LevelUp** module.
 
-1. Download the following unitypackages:
-    - [soomla-unity3d-core](http://library.soom.la/fetch/unity3d-core/latest?cf=github)  
-    - [unity3d-store](http://library.soom.la/fetch/unity3d-store-only/latest?cf=github)  
-    - [unity3d-profile](http://library.soom.la/fetch/unity3d-profile-only/latest?cf=github)  
-    - [unity3d-levelup](http://library.soom.la/fetch/unity3d-levelup-only/latest?cf=github)  
-2. Double-click on them following the order they appear above. It'll import all the necessary files into your project.
-> If you are completely new to SOOMLA you can use the [All-in-One](http://library.soom.la/fetch/unity3d-allinone/latest?cf=github) unitypackage which contains all the above packages in one package. Importing it is equivalent to preforming the above steps.
+1. Clone this repository recursively: `git clone --recursive https://github.com/soomla/unity3d-levelup.git`
 
-3. ~~Drag the "CoreEvents", "StoreEvents", "ProfileEvents" and "LevelUpEvents" Prefabs from `../Assets/Soomla/Prefabs` into your scene. You should see it listed in the "Hierarchy" panel. [This step MUST be done for unity3d-levelup to work properly]~~
+2. Run `./build_all` from project directory
 
-    >This step is no longer required starting from LevelUp v1.1.0
+3. You can work with sources, or if you will run `deploy/create_deploys`, it will create packages that you can use in your project.
 
 4. On the menu bar click "Window -> Soomla -> Edit Settings" and change the value for "Soomla Secret" (also setup Public Key if you're building for Google Play):
     - _Soomla Secret_ - is an encryption secret you provide that will be used to secure your data. (If you used versions before v1.5.2 this secret MUST be the same as Custom Secret)  
@@ -115,14 +94,6 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 6. You'll need an event handler in order to be notified about _LevelUp_ related events. refer to the [Event Handling](#event-handling) section for more information.
 
 And that's it ! You have game architecture capabilities at your fingertips.
-
-### Cloning
-
-There are some necessary files in submodules lined with symbolic links. If you're cloning the project make sure you clone it with the `--recursive` flag.
-
-```
-$ git clone --recursive git@github.com:soomla/unity3d-levelup.git
-```
 
 ### Integration with SOOMLA unity3d-store
 
