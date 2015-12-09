@@ -812,7 +812,7 @@ namespace Soomla.Test
 		""high"":1
 	}
 }";
-				var score = Score.fromJSONObject(JSONObject.Create(expect)) as RangeScore;
+				var score = Soomla.Levelup.Score.fromJSONObject(JSONObject.Create(expect)) as RangeScore;
 				Assert.IsNotNull(score);
 				Assert.AreEqual("Test_RangeScore_Id", score.ID);
 				Assert.AreEqual(0, score.StartValue);
@@ -831,7 +831,7 @@ namespace Soomla.Test
 	""higherBetter"":true,
 	""associatedItemId"":""Test_Item_Id""
 }";
-				var score = Score.fromJSONObject(JSONObject.Create(expect)) as VirtualItemScore;
+				var score = Soomla.Levelup.Score.fromJSONObject(JSONObject.Create(expect)) as VirtualItemScore;
 				Assert.IsNotNull(score);
 				Assert.AreEqual("Test_VirtualItemScore_Id", score.ID);
 				Assert.AreEqual(0, score.StartValue);
@@ -942,7 +942,7 @@ namespace Soomla.Test
 		public void World_toJSONObject()
 		{
 			var innerWorlds = new Dictionary<string, World>();
-			var scores = new Dictionary<string, Score>();
+			var scores = new Dictionary<string, Soomla.Levelup.Score>();
 			scores.Add("Test_RangeScore_Id", new RangeScore("Test_RangeScore_Id", new RangeScore.SRange(0.0, 1.0)));
 			scores.Add("Test_VirtualItemScore_Id", new VirtualItemScore("Test_VirtualItemScore_Id", "Test_Item_Id"));
 			var missions = new List<Mission>();
