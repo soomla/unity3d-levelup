@@ -43,6 +43,8 @@ namespace Soomla.Levelup {
 		public const string LU_SOCIAL_ACTION_TYPE= "socialActionType";
 
 		public const string LU_SOCIAL_PROVIDER   = "provider";
+		public const string LU_SOCIAL_PAGE_NAME  = "pageName";
+		public const string LU_SOCIAL_STATUS     = "status";
 
 		/** Challenge **/
 		public const string LU_CHALLENGES        = "challenges";

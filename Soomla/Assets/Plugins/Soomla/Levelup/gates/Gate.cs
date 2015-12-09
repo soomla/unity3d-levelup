@@ -73,6 +73,11 @@ namespace Soomla.Levelup {
 		/// <returns>The JSON object.</returns>
 		/// <param name="gateObj">Gate object.</param>
 		public static Gate fromJSONObject(JSONObject gateObj) {
+			if (gateObj == null) {
+				// Challenge allows its gate undefined, and uses corresponding gates from missions.
+				return null;
+			}
+
 			string className = gateObj[JSONConsts.SOOM_CLASSNAME].str;
 
 			Gate gate = (Gate) Activator.CreateInstance(Type.GetType("Soomla.Levelup." + className), new object[] { gateObj });
