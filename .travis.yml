@@ -17,3 +17,4 @@ script:
     - ./soomla-native/projects/unity-android-levelup/build_all > build.log || cat build.log
     - ./soomla-native/projects/unity-ios-levelup/build_all > build.log || cat build.log
     - ./deploy/create_deploys
+    - cat deploy/create_unity_core.log
