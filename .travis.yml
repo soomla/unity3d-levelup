@@ -13,7 +13,7 @@ install:
     - curl -o Unity.pkg http://netstorage.unity3d.com/unity/3757309da7e7/MacEditorInstaller/Unity-5.2.2f1.pkg
     - sudo installer -dumplog -package Unity.pkg -target /
 script:
-    - ./submodules/build_all > build.log || cat build.log
-    - ./soomla-native/projects/unity-android-levelup/build_all > build.log || cat build.log
-    - ./soomla-native/projects/unity-ios-levelup/build_all > build.log || cat build.log
-    - ./deploy/create_deploys || cat deploy/create_unity_levelup.log || cat deploy/create_unity_profile.log || cat deploy/create_unity_store.log || cat deploy/create_unity_core.log
+    - ./submodules/build_all > build.log || (cat build.log && $(exit 1))
+    - ./soomla-native/projects/unity-android-levelup/build_all > build.log || (cat build.log && $(exit 1))
+    - ./soomla-native/projects/unity-ios-levelup/build_all > build.log || (cat build.log && $(exit 1))
+    - ./deploy/create_deploys || ((cat deploy/create_unity_levelup.log || cat deploy/create_unity_profile.log || cat deploy/create_unity_store.log || cat deploy/create_unity_core.log) && $(exit 1))
