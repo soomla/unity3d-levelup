@@ -1,3 +1,11 @@
+### v1.1.2 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.1.1...v1.1.2)
+
+* New Features
+  * Added taking "Time.timeScale" into account for level duration
+
+* Changes
+  * Minor improvements and rearrangements to Editor script
+
 ### v1.1.1 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.1.0...v1.1.1)
 
 * Changes
