@@ -1,0 +1,13 @@
+#!/bin/sh
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
+
+/Applications/Unity/Unity.app/Contents/MacOS/Unity \
+-batchmode \
+-projectPath $DIR/Soomla/ \
+-executeMethod UnityTest.Batch.RunUnitTests \
+-quit
+
+cat $DIR/Soomla/UnitTestResults.xml
+rm $DIR/Soomla/UnitTestResults.xml
