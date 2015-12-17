@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if SOOMLA_TEST
+using System;
 using System.Threading;
 using NUnit.Framework;
 using System.Collections;
@@ -290,3 +291,5 @@ namespace Soomla.Test
 		Level _level; 
 	}
 }
+
+#endif

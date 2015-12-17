@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if SOOMLA_TEST
+using System;
 using System.Threading;
 using NUnit.Framework;
 using System.Collections;
@@ -37,3 +38,5 @@ namespace Soomla.Test
 	    Queue<Dictionary<string, object>> _eventQueue; 
 	}
 }
+
+#endif

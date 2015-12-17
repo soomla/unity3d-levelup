@@ -95,6 +95,10 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 
 And that's it ! You have game architecture capabilities at your fingertips.
 
+### Using  unit tests
+
+To use SOOMLA unit tests download [NUnit](https://www.assetstore.unity3d.com/en/#!/content/13802) and import to your project. In the Other Settings panel of the Player Settings, you will see the Scripting Define Symbols, enter the name “SOOMLA_TEST”.
+
 ### Integration with SOOMLA unity3d-store
 
 Please follow the steps in [unity3d-store](https://github.com/soomla/unity3d-store) for the _Store_ part of the setup.

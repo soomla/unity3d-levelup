@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if SOOMLA_TEST
+using UnityEngine;
 using System.Collections;
 using NUnit.Framework;
 using Soomla.Levelup;
@@ -1597,3 +1598,5 @@ namespace Soomla.Test
 		}
 	}
 }
+
+#endif
