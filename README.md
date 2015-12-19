@@ -97,7 +97,7 @@ And that's it ! You have game architecture capabilities at your fingertips.
 
 ### Using  unit tests
 
-To use SOOMLA unit tests in the Other Settings panel of the Player Settings, you will see the Scripting Define Symbols, enter the name “SOOMLA_TEST”. If you using Unity version older 5.3.0, download [NUnit](https://www.assetstore.unity3d.com/en/#!/content/13802) and import to your project. 
+To use SOOMLA unit tests in the Other Settings panel of the Player Settings, you will see the Scripting Define Symbols, enter the name “SOOMLA_TEST”. If you are using Unity version older 5.3.0, download [NUnit](https://www.assetstore.unity3d.com/en/#!/content/13802) and import to your project. 
 
 ### Integration with SOOMLA unity3d-store
 
