@@ -1,0 +1,19 @@
+language: objective-c
+osx_image: xcode7.2
+install:
+    - git submodule update --init --recursive
+    - curl -o android-sdk.zip http://dl.google.com/android/android-sdk_r24.4.1-macosx.zip
+    - unzip android-sdk.zip
+    - export ANDROID_HOME=$PWD/android-sdk-macosx
+    - export PATH=$PATH:$ANDROID_HOME/tools
+    - export PATH=$PATH:$ANDROID_HOME/platform-tools
+    - export JAVA_HOME=$(/usr/libexec/java_home)
+    - echo "y" | android update sdk --no-ui --all --filter tool,platform-tool,android-19,build-tools-22.0.1
+    - brew install ant
+    - curl -o Unity.pkg http://download.unity3d.com/download_unity/3757309da7e7/MacEditorInstaller/Unity-5.2.2f1.pkg
+    - sudo installer -dumplog -package Unity.pkg -target /
+script:
+    - ./submodules/build_all > build.log || (cat build.log && $(exit 1))
+    - ./soomla-native/projects/unity-android-levelup/build_all > build.log || (cat build.log && $(exit 1))
+    - ./soomla-native/projects/unity-ios-levelup/build_all > build.log || (cat build.log && $(exit 1))
+    - ./deploy/create_deploys || ((cat deploy/create_unity_levelup.log || cat deploy/create_unity_profile.log || cat deploy/create_unity_store.log || cat deploy/create_unity_core.log) && $(exit 1))

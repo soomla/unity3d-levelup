@@ -75,7 +75,7 @@ This can be either a badge, a virtual item from the game's economy (sword, coins
 
 2. Run `./build_all` from project directory
 
-3. You can work with sources, or if you will run `deploy/create_deploys`, it will create packages that you can use in your project.
+3. You can work with sources, or if you run `deploy/create_deploys`, it will create packages that you can use in your project.
 
 4. On the menu bar click "Window -> Soomla -> Edit Settings" and change the value for "Soomla Secret" (also setup Public Key if you're building for Google Play):
     - _Soomla Secret_ - is an encryption secret you provide that will be used to secure your data. (If you used versions before v1.5.2 this secret MUST be the same as Custom Secret)  
@@ -97,7 +97,7 @@ And that's it ! You have game architecture capabilities at your fingertips.
 
 ### Using  unit tests
 
-To use SOOMLA unit tests in the Other Settings panel of the Player Settings, you will see the Scripting Define Symbols, enter the name “SOOMLA_TEST”. If you using Unity version older 5.3.0, download [NUnit](https://www.assetstore.unity3d.com/en/#!/content/13802) and import to your project. 
+To use SOOMLA unit tests in the Other Settings panel of the Player Settings, you will see the Scripting Define Symbols, enter the name “SOOMLA_TEST”. If you are using Unity version older 5.3.0, download [NUnit](https://www.assetstore.unity3d.com/en/#!/content/13802) and import to your project. 
 
 ### Integration with SOOMLA unity3d-store
 

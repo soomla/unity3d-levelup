@@ -1,15 +1,15 @@
 [submodule "submodules/soomla-unity3d-core"]
 	path = submodules/soomla-unity3d-core
-	url = git@github.com:soomla/soomla-unity3d-core.git
+	url = https://github.com/soomla/soomla-unity3d-core
 [submodule "submodules/android-levelup"]
 	path = submodules/android-levelup
-	url = git@github.com:soomla/android-levelup.git
+	url = https://github.com/soomla/android-levelup
 [submodule "submodules/ios-levelup"]
 	path = submodules/ios-levelup
-	url = git@github.com:soomla/ios-levelup.git
+	url = https://github.com/soomla/ios-levelup
 [submodule "submodules/unity3d-store"]
 	path = submodules/unity3d-store
-	url = git@github.com:soomla/unity3d-store.git
+	url = https://github.com/soomla/unity3d-store
 [submodule "submodules/unity3d-profile"]
 	path = submodules/unity3d-profile
-	url = git@github.com:soomla/unity3d-profile.git
+	url = https://github.com/soomla/unity3d-profile
