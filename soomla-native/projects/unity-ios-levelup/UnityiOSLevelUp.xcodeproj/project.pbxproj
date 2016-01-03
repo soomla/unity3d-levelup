@@ -231,6 +231,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"${UNITY_HEADERS45}/**",
 					"${UNITY_HEADERS43}/**",
+					"${UNITY_HEADERS53}/**",
 					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
 					"../../../submodules/soomla-unity3d-core/submodules/soomla-ios-core/SoomlaiOSCore/**",
 					"../../../submodules/soomla-unity3d-core/soomla-native/projects/unity-soomla-ios-core/SoomlaUnity/**",
@@ -243,8 +244,10 @@
 				SKIP_INSTALL = YES;
 				UNITY_HEADERS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Classes/";
 				UNITY_HEADERS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Classes/;
+				UNITY_HEADERS53 = /Applications/Unity/PlaybackEngines/iOSSupport/Trampoline/Classes/;
 				UNITY_LIBS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Libraries/";
 				UNITY_LIBS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Libraries/;
+				UNITY_LIBS53 = /Applications/Unity/PlaybackEngines/iOSSupport/Trampoline/Libraries/;
 			};
 			name = Debug;
 		};
@@ -260,6 +263,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"${UNITY_HEADERS45}/**",
 					"${UNITY_HEADERS43}/**",
+					"${UNITY_HEADERS53}/**",
 					"../../../submodules/ios-levelup/SoomlaiOSLevelUp/**",
 					"../../../submodules/soomla-unity3d-core/submodules/soomla-ios-core/SoomlaiOSCore/**",
 					"../../../submodules/soomla-unity3d-core/soomla-native/projects/unity-soomla-ios-core/SoomlaUnity/**",
@@ -273,8 +277,10 @@
 				SKIP_INSTALL = YES;
 				UNITY_HEADERS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Classes/";
 				UNITY_HEADERS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Classes/;
+				UNITY_HEADERS53 = /Applications/Unity/PlaybackEngines/iOSSupport/Trampoline/Classes/;
 				UNITY_LIBS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Libraries/";
 				UNITY_LIBS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Libraries/;
+				UNITY_LIBS53 = /Applications/Unity/PlaybackEngines/iOSSupport/Trampoline/Libraries/;
 			};
 			name = Release;
 		};
