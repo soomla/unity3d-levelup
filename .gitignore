@@ -2,6 +2,8 @@
 [Tt]emp/
 [Oo]bj/
 
+*.meta
+
 deploy/out/
 
 Soomla/ProjectSettings
