@@ -1,3 +1,12 @@
+### v1.1.3 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.1.2...v1.1.3)
+
+* Changes
+  * Removed binaries from repo
+  * Added Unit Tests from flyingbag PR
+
+* Fixes
+  * Fix iOS Native bridge to work with Unity 5.3
+
 ### v1.1.2 [view commit logs](https://github.com/soomla/unity3d-levelup/compare/v1.1.1...v1.1.2)
 
 * New Features

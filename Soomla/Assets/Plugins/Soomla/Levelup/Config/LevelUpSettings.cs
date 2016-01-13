@@ -38,7 +38,7 @@ namespace Soomla.Levelup
 
 		static LevelUpSettings instance = new LevelUpSettings();
 
-		static string currentModuleVersion = "1.1.2";
+		static string currentModuleVersion = "1.1.3";
 
 		static LevelUpSettings()
 		{
